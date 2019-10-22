@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
-import java.util.ArrayList
 
 class AnnounceListAdapter ( val mAnnouncements: MutableLiveData<List<Announcement>>?) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
 
