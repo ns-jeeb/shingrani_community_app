@@ -15,7 +15,7 @@ import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
 
 class AnnounceFragment : Fragment(),View.OnClickListener {
     override fun onClick(v: View?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     companion object {
