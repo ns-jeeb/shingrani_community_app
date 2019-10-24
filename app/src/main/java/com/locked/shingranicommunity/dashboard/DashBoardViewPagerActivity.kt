@@ -26,6 +26,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventFragment.OnEventFra
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_dash_borad_view_pager)
         initViews()
         setpuViewPager()
+        mBinding.txtAnnouncement.text = intent.getStringExtra("USER_NAME")
 
     }
 
