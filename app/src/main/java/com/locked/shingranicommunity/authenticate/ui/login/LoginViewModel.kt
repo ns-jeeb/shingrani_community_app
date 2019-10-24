@@ -17,7 +17,7 @@ import com.locked.shingranicommunity.tutorials.UserDatabase
 import javax.inject.Inject
 
 class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel(),LoginEvent{
-    override fun onLoginSuccess(user: User, isLogin: Boolean) {
+    override fun onLoginSuccess():Boolean {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

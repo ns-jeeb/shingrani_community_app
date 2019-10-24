@@ -27,8 +27,7 @@ import java.io.IOException
                     data?.forEach {
                         println(it)
                         fakeUser = LoggedInUser(data.get(0),it.token)
-                        loginEvent.onLoginSuccess(data.get(0),true)
-
+                        loginEvent.onLoginSuccess()
                     }
                 }
             }else{
