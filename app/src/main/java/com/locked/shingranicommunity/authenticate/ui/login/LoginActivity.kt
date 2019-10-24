@@ -28,19 +28,11 @@ import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), LoginEvent {
     override fun onLoginFailed(error: kotlin.Result<Any>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     private lateinit var mBinding : ActivityLoginBinding
-    override fun onLoginSuccess(user: User, isLogin: Boolean) {
-        //here launching the new activity
-        if (isLogin){
-            Log.d("LoginLog","user** ${user.token} isLogin** $isLogin")
-            this.finish()
-            var intent: Intent = Intent(this, DashBoardViewPagerActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-        }
+    override fun onLoginSuccess(): Boolean {
+        return true
     }
     private lateinit var loginViewModel: LoginViewModel
 
@@ -50,32 +42,25 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
 
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
-        val username = mBinding.username
-        val password = mBinding.password
-        val login = mBinding.login
-        val loading = mBinding.loading
-
-
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory(this)).get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
-            login.isEnabled = loginState.isDataValid
+            mBinding.btnLogin.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+                mBinding.loginEmail.error = getString(loginState.usernameError)
             }
             if (loginState.passwordError != null) {
-                password.error = getString(loginState.passwordError)
+                mBinding.loginPassword.error = getString(loginState.passwordError)
             }
         })
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
             if (loginResult.error != null) {
                 showLoginFailed(loginResult.error)
             }
@@ -84,23 +69,20 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
             }
             setResult(Activity.RESULT_OK)
 
-            //Complete and destroy login activity once successful
-//            finish()
-
         })
 
-        username.afterTextChanged {
+        mBinding.loginEmail.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
-                password.text.toString()
+                mBinding.loginEmail.text.toString(),
+                mBinding.loginPassword.text.toString()
             )
         }
 
-        password.apply {
+        mBinding.loginPassword.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
-                    password.text.toString()
+                    mBinding.loginEmail.text.toString(),
+                    mBinding.loginPassword.text.toString()
                 )
             }
 
@@ -108,34 +90,40 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
-                            username.text.toString(),
-                            password.text.toString()
+                            mBinding.loginEmail.text.toString(),
+                            mBinding.loginPassword.text.toString()
                         )
                 }
                 false
             }
 //            loginViewModel.auth()
-            login.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+            mBinding.btnLogin.setOnClickListener {
+                mBinding.loading.visibility = View.VISIBLE
+                loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
             }
+        }
+        mBinding.btnJoiningPermission.setOnClickListener{
+            var intent: Intent = Intent(this, RegistrationActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+            this.finish()
         }
     }
 
     private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        // TODO : initiate successful logged in experience
-//        Toast.makeText(
-//            applicationContext,
-//            "$welcome $displayName",
-//            Toast.LENGTH_LONG
-//        ).show()
+        if (onLoginSuccess())
+        mBinding.loginEmail.visibility = View.GONE
+
+        var intent: Intent = Intent(this, DashBoardViewPagerActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        this.finish()
+
 
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {
-//        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 }
 
