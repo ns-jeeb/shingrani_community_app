@@ -14,7 +14,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".dashboard.DashBoardViewPagerActivity" />
         <activity android:name=".events.CreateEventActivity" />
-        <activity android:name=".authenticate.ui.login.RegistrationActivity">
+        <activity android:name=".authenticate.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".authenticate.ui.login.LoginActivity" />
+        <activity android:name=".authenticate.ui.login.RegistrationActivity" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
