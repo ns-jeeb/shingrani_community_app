@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8cb49443a18a859f4e69f9303c0cd371",
+    "identityHash": "7d785189a6b51cd35bd4fc0db85f889d",
     "entities": [
       {
         "tableName": "user",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `username` TEXT NOT NULL, `token` TEXT NOT NULL, `name` TEXT NOT NULL, PRIMARY KEY(`_id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`_id` TEXT NOT NULL, `username` TEXT NOT NULL, `name` TEXT NOT NULL, `publicCreation` INTEGER NOT NULL, `administrator` INTEGER NOT NULL, PRIMARY KEY(`_id`))",
         "fields": [
           {
             "fieldPath": "_id",
@@ -21,15 +21,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "token",
-            "columnName": "token",
+            "fieldPath": "name",
+            "columnName": "name",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "name",
-            "columnName": "name",
-            "affinity": "TEXT",
+            "fieldPath": "publicCreation",
+            "columnName": "publicCreation",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "administrator",
+            "columnName": "administrator",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -45,7 +51,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8cb49443a18a859f4e69f9303c0cd371\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"7d785189a6b51cd35bd4fc0db85f889d\")"
     ]
   }
 }

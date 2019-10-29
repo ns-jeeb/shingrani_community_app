@@ -21,12 +21,12 @@ import java.io.IOException
             if (!token.isEmpty() ){
                 val db = UserDatabase(CommunityApp.instance)
                 GlobalScope.launch {
-                    db.loginDao().insertAll(User(user._id,user.username,token,user.name))
+                    db.loginDao().insertAll(User(user._id,user.username,user.name,user.administrator,user.publicCreation))
                     var data = db.loginDao().getAll()
 
                     data?.forEach {
                         println(it)
-                        fakeUser = LoggedInUser(data.get(0),it.token)
+                        fakeUser = LoggedInUser(data.get(0),token)
                         loginEvent.onLoginSuccess()
                     }
                 }

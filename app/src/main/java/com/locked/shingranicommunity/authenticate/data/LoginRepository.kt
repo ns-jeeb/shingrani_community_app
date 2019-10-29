@@ -45,7 +45,7 @@ class LoginRepository(val dataSource: LoginDataSource) {
         var bodyHashMap: HashMap<String, String> = HashMap()
         bodyHashMap.put("username",username)
         bodyHashMap.put("password",password)
-        var result : Result<LoggedInUser>? = dataSource.login(User("", "", "",""),"")
+        var result : Result<LoggedInUser>? = dataSource.login(User("", "", "",false,false),"")
         val call = lockedApiService.userLogin(bodyHashMap)
         call.enqueue(object : Callback, retrofit2.Callback<LoggedInUser> {
             override fun onResponse(call: Call<LoggedInUser>, response: Response<LoggedInUser>) {

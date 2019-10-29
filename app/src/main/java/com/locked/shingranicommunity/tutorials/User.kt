@@ -7,7 +7,8 @@ import androidx.room.PrimaryKey
 data class User(
     @PrimaryKey val _id: String,
     @ColumnInfo(name = "username")var username: String,
-    @ColumnInfo(name = "token")var token: String,
-    @ColumnInfo(name = "name")var name: String ) {
+    @ColumnInfo(name = "name")var name: String ,
+    @ColumnInfo(name = "publicCreation")var publicCreation: Boolean,
+    @ColumnInfo(name = "administrator")var administrator: Boolean) {
 
 }
