@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.authenticate.ui.login
+package com.locked.shingranicommunity.authenticate.register
 
 import androidx.lifecycle.ViewModel
 
