@@ -9,21 +9,16 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.authenticate.LoginEvent
+import com.locked.shingranicommunity.authenticate.register.RegistrationActivity
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
-import com.locked.shingranicommunity.databinding.ActivityMainBinding
-import com.locked.shingranicommunity.tutorials.User
-import kotlinx.android.synthetic.main.activity_login.*
 
 
 class LoginActivity : AppCompatActivity(), LoginEvent {

@@ -1,14 +1,14 @@
-package com.locked.shingranicommunity.authenticate.ui.login
+package com.locked.shingranicommunity.authenticate.register
 
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.authenticate.ui.login.LoginActivity
 import com.locked.shingranicommunity.databinding.RegisterationActivityBinding
 
 class RegistrationActivity : AppCompatActivity(),View.OnClickListener {
