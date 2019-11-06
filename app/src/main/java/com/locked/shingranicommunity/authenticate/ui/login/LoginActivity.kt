@@ -16,12 +16,9 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.authenticate.LoginEvent
-import com.locked.shingranicommunity.authenticate.data.Result
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
 import com.locked.shingranicommunity.authenticate.register.RegistrationActivity
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
-import kotlin.properties.Delegates
 
 
 class LoginActivity : AppCompatActivity(), LoginEvent {
@@ -42,7 +39,7 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory(this)).get(LoginViewModel::class.java)
 
-        loginViewModel.loginFormState.observe(this@LoginActivity, Observer {
+        loginViewModel.authenticFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
 
             // disable login button unless both username / password is valid
