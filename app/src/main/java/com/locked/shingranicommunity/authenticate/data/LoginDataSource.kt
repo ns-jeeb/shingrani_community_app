@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.authenticate.data
 
+import android.content.Context
 import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.authenticate.LoginEvent
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
@@ -43,6 +44,20 @@ import java.io.IOException
     }
 
     fun logout() {
+        var sheredPrfes = CommunityApp.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
+         sheredPrfes.edit().putString("","").apply()
+    }
+    fun logingWithToken(user: LoggedInUser?, token: String): Result<LoggedInUser> {
+
+        try {
+            if (token.isNotEmpty() && token !==""){
+                loginEvent.onLoginSuccess()
+            }
+            return Result.Success(user)
+        } catch (e: Throwable) {
+            return Result.Error(IOException("Error logging in", e))
+        }
+
 
     }
 }

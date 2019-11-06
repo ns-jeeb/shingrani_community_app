@@ -43,7 +43,7 @@
                     android:id="@+id/register_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ns.jeeb@gmail.com"
+                    android:hint="name"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -61,7 +61,7 @@
                     android:id="@+id/register_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="abc123"
+                    android:hint="email"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/registration_user"
                     android:imeOptions="actionUnspecified"
@@ -81,7 +81,7 @@
                     android:id="@+id/register_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="ns.jeeb@gmail.com"
+                    android:hint="password"
                     android:inputType="textEmailAddress"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -98,7 +98,7 @@
                     android:id="@+id/register_password_conform"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="abc123"
+                    android:hint="retype password"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/registration_user"
                     android:imeOptions="actionUnspecified"
@@ -141,7 +141,7 @@
                 android:gravity="center"
                 android:background="@drawable/auth_fields_bg"
                 android:layout_weight="0.4"
-                android:text="Invite?Login"/>
+                android:text="Existing?Login"/>
 
         </LinearLayout>
 
