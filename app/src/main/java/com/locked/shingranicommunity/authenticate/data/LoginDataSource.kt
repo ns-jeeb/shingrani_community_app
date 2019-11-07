@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.authenticate.data
 
+import android.content.Context
 import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.authenticate.LoginEvent
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
@@ -21,12 +22,12 @@ import java.io.IOException
             if (!token.isEmpty() ){
                 val db = UserDatabase(CommunityApp.instance)
                 GlobalScope.launch {
-                    db.loginDao().insertAll(User(user._id,user.username,token,user.name))
+                    db.loginDao().insertAll(User(user._id,user.username,user.name,user.administrator,user.publicCreation))
                     var data = db.loginDao().getAll()
 
                     data?.forEach {
                         println(it)
-                        fakeUser = LoggedInUser(data.get(0),it.token)
+                        fakeUser = LoggedInUser(data.get(0),token)
                         loginEvent.onLoginSuccess()
                     }
                 }
@@ -43,6 +44,20 @@ import java.io.IOException
     }
 
     fun logout() {
+        var sheredPrfes = CommunityApp.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
+         sheredPrfes.edit().putString("","").apply()
+    }
+    fun logingWithToken(user: LoggedInUser?, token: String): Result<LoggedInUser> {
+
+        try {
+            if (token.isNotEmpty() && token !==""){
+                loginEvent.onLoginSuccess()
+            }
+            return Result.Success(user)
+        } catch (e: Throwable) {
+            return Result.Error(IOException("Error logging in", e))
+        }
+
 
     }
 }
