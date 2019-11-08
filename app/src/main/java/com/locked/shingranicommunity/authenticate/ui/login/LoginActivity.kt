@@ -14,6 +14,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.authenticate.LoginEvent
 import com.locked.shingranicommunity.authenticate.register.RegistrationActivity
@@ -22,15 +23,16 @@ import com.locked.shingranicommunity.databinding.ActivityLoginBinding
 
 
 class LoginActivity : AppCompatActivity(), LoginEvent {
-    override fun onLoginFailed(error: kotlin.Result<Any>) {
+    override fun onLoginFailed(error: String) {
+        Toast.makeText(CommunityApp.instance,"Fails login",Toast.LENGTH_LONG).show()
     }
 
     private lateinit var mBinding : ActivityLoginBinding
     override fun onLoginSuccess(): Boolean {
-
         return true
     }
     private lateinit var loginViewModel: LoginViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,10 +54,12 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
                 mBinding.loginPassword.error = getString(loginState.passwordError)
             }
         })
-        loginViewModel.login(
-            mBinding.loginEmail.text.toString(),
-            mBinding.loginPassword.text.toString()
-        )
+        if (mBinding.loginEmail.text.toString().isNotEmpty() && mBinding.loginPassword.text.toString().isNotEmpty()){
+            loginViewModel.login(
+                mBinding.loginEmail.text.toString(),
+                mBinding.loginPassword.text.toString()
+            )
+        }
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
@@ -100,7 +104,6 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
             mBinding.btnLogin.setOnClickListener {
                 mBinding.loading.visibility = View.VISIBLE
                 loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
-//                loginViewModel.auth()
             }
         }
         mBinding.btnJoiningPermission.setOnClickListener{

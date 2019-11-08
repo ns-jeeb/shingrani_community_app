@@ -4,15 +4,18 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
+import androidx.lifecycle.LiveData
 import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
 import com.locked.shingranicommunity.authenticate.ui.login.LoggedInUserView
 import com.locked.shingranicommunity.authenticate.ui.login.LoginViewModel
+import com.locked.shingranicommunity.tutorials.RegisterUser
 import com.locked.shingranicommunity.tutorials.User
 import retrofit2.Call
 import retrofit2.Response
+import java.lang.Error
 import javax.security.auth.callback.Callback
 import kotlin.collections.HashMap
 
@@ -21,15 +24,19 @@ import kotlin.collections.HashMap
  * maintains an in-memory cache of login status and user credentials information.
  */
 
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class LoginRepository(val dataSource: LoginDataSource) {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
+class AuthenticationRepository(val dataSource: LoginDataSource) {
 
     // in-memory cache of the loggedInUser object
     private lateinit var lockedApiService: LockedApiServiceInterface
     var user: LoggedInUser? = null
     var logingEvent = LoginViewModel(this )
     var result : Result<LoggedInUser>? = null
+    private var onregisterSuccess: OnRegisterSuccess? = null
 
+    fun setOnClickListener(listener: OnRegisterSuccess){
+        onregisterSuccess = listener
+    }
     val isLoggedIn: Boolean
         get() = user != null
 
@@ -54,12 +61,16 @@ class LoginRepository(val dataSource: LoginDataSource) {
         call.enqueue(object : Callback, retrofit2.Callback<LoggedInUser> {
             override fun onResponse(call: Call<LoggedInUser>, response: Response<LoggedInUser>) {
 
-                var token = response.body()?.token
-                var user = response.body()?.user
-                savedToken(token, sharedPreferences)
-                setLoggedInUser(response.body()!!)
-                result = user?.let { token?.let { username?.let { it1 -> dataSource.login(user, token) } } }!!
-                Log.v("LoggedinUser", "${token}*********  " + "**${user?.username} ** ${user?.name}")
+                if (response.isSuccessful){
+                    var token = response.body()?.token
+                    var user = response.body()?.user
+                    savedToken(token, sharedPreferences)
+                    setLoggedInUser(response.body()!!)
+                    result = user?.let { token?.let { username?.let { it1 -> dataSource.login(user, token) } } }!!
+                    Log.v("LoggedinUser", "${token}*********  " + "**${user?.username} ** ${user?.name}")
+                }else{
+                    dataSource.loginEvent?.onLoginFailed(response.message())
+                }
             }
 
             override fun onFailure(call: Call<LoggedInUser>?, t: Throwable?) {
@@ -96,6 +107,38 @@ class LoginRepository(val dataSource: LoginDataSource) {
             return result
         }
         return null
+    }
+
+    fun register(username: String,name: String, password: String): Result<LoggedInUser>? {
+        // handle login
+        lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
+        var bodyHashMap: HashMap<String, String> = HashMap()
+        bodyHashMap["password"] = password
+        bodyHashMap["username"] = username
+        bodyHashMap["name"] = name
+
+        val call = lockedApiService.registerUser(bodyHashMap)
+        call.enqueue(object : Callback, retrofit2.Callback<RegisterUser> {
+            override fun onResponse(call: Call<RegisterUser>, response: Response<RegisterUser>) {
+
+                var user = response.body()
+                var error : String = response.message()
+                onregisterSuccess?.onSuccess()
+//                result = user?.let { name?.let { it1 -> dataSource.login(user, "") }  }!!
+                Log.v("LoggedinUser", "${"token"}*********  " + "**${error} ** ${user?.name}")
+            }
+
+            override fun onFailure(call: Call<RegisterUser>?, t: Throwable?) {
+                Log.v("retrofit", "call failed")
+                onregisterSuccess?.onFailed()
+            }
+        })
+
+        return result
+    }
+    interface OnRegisterSuccess{
+        fun onSuccess()
+        fun onFailed()
     }
 
 }

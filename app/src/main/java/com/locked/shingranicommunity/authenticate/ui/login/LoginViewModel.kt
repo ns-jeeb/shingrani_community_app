@@ -5,22 +5,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import android.util.Patterns
+import android.widget.Toast
 import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.authenticate.LoginEvent
-import com.locked.shingranicommunity.authenticate.data.LoginRepository
+import com.locked.shingranicommunity.authenticate.data.AuthenticationRepository
 import com.locked.shingranicommunity.authenticate.data.Result
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
 import com.locked.shingranicommunity.tutorials.UserDao
 import com.locked.shingranicommunity.tutorials.UserDatabase
 import javax.inject.Inject
+import kotlin.math.log
 
-class LoginViewModel @Inject constructor(private val loginRepository: LoginRepository) : ViewModel(),LoginEvent{
+class LoginViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) : ViewModel(),LoginEvent{
     override fun onLoginSuccess():Boolean {
         return true
     }
-    override fun onLoginFailed(error: kotlin.Result<Any>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onLoginFailed(error: String) {
+
+        if (error.isNotEmpty()){
+            Toast.makeText(CommunityApp.instance,"Failed login",Toast.LENGTH_LONG).show()
+        }
     }
 
     private val _loginForm = MutableLiveData<AuthenticFormState>()
@@ -40,9 +45,9 @@ class LoginViewModel @Inject constructor(private val loginRepository: LoginRepos
         var result: Result<LoggedInUser>? = null
         var sharedPreferences = CommunityApp.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
         if (sharedPreferences.getString("token","") !== null && sharedPreferences.getString("token","")!==""){
-            result = loginRepository.getToken(sharedPreferences)
+            result = authenticationRepository.getToken(sharedPreferences)
         }else{
-            result = loginRepository.login(username, password)
+            result = authenticationRepository.login(username, password)
         }
 
         if (result is Result.Success<*>) {

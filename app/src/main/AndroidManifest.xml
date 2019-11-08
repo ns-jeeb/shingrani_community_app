@@ -15,14 +15,16 @@
         <activity android:name=".dashboard.DashBoardViewPagerActivity" />
         <activity android:name=".events.CreateEventActivity" />
 
-        <activity android:name=".authenticate.register.RegistrationActivity"/>
-
-        <activity android:name=".authenticate.ui.login.LoginActivity">
+        <activity android:name=".authenticate.register.RegistrationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity android:name=".authenticate.ui.login.LoginActivity">
+
         </activity>
         <activity android:name=".MainActivity" />
 
