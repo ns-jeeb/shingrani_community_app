@@ -21,8 +21,8 @@ class RegisterationViewModel @Inject constructor(private val authenticationRepos
     private val _registerResult = MutableLiveData<LoginResult>()
     val registerResult: LiveData<LoginResult> = _registerResult
 
-    fun onRegisterSuccess(onSuccessRegister: AuthenticationRepository.OnRegisterSuccess){
-        authenticationRepository.setOnClickListener(onSuccessRegister)
+    fun onRegisterSuccess(onSuccessAuthenticated: AuthenticationRepository.OnAuthenticatedSuccess){
+        authenticationRepository.onRegisterEvent(onSuccessAuthenticated)
     }
 
     fun register(name:String,username: String,password:String, conPass: String){

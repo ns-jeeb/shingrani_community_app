@@ -17,16 +17,19 @@ import com.locked.shingranicommunity.tutorials.UserDatabase
 import javax.inject.Inject
 import kotlin.math.log
 
-class LoginViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) : ViewModel(),LoginEvent{
-    override fun onLoginSuccess():Boolean {
-        return true
-    }
-    override fun onLoginFailed(error: String) {
+class LoginViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) : ViewModel(){
+//    override fun onLoginSuccess():Boolean {
+//        return true
+//    }
+//    override fun onLoginFailed(error: String) {
+//
+//        if (error.isNotEmpty()){
+//            Toast.makeText(CommunityApp.instance,"Failed login",Toast.LENGTH_LONG).show()
+//        }
+//    }
 
-        if (error.isNotEmpty()){
-            Toast.makeText(CommunityApp.instance,"Failed login",Toast.LENGTH_LONG).show()
-        }
-    }
+    lateinit var  _loginEvent: LiveData<LoginEvent>
+
 
     private val _loginForm = MutableLiveData<AuthenticFormState>()
     val authenticFormState: LiveData<AuthenticFormState> = _loginForm
@@ -38,7 +41,9 @@ class LoginViewModel @Inject constructor(private val authenticationRepository: A
 
 //    val userId : String = savedStateHandle["uid"] ?:
 //    throw IllegalArgumentException("missing user id")
-
+    fun onLoginEvent(loginEvent: LoginEvent) {
+        authenticationRepository.setOnLoginEvent(loginEvent)
+    }
 
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job

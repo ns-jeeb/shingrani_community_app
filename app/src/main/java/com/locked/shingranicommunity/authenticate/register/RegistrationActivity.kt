@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.authenticate.register
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.lifecycle.ViewModelProviders
@@ -20,10 +19,9 @@ import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.authenticate.data.AuthenticationRepository
 import com.locked.shingranicommunity.authenticate.ui.login.*
-import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.RegisterationActivityBinding
 
-class RegistrationActivity : AppCompatActivity(),View.OnClickListener , AuthenticationRepository.OnRegisterSuccess {
+class RegistrationActivity : AppCompatActivity(),View.OnClickListener , AuthenticationRepository.OnAuthenticatedSuccess {
     override fun onSuccess() {
        getSharedPreferences("token", Context.MODE_PRIVATE).edit().clear().apply()
 
@@ -38,9 +36,18 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener , Authenti
     }
 
     override fun onClick(v: View?) {
-        mBinding.loading.visibility = View.VISIBLE
-        registerViewModel.register(mBinding.registerName.text.toString(),mBinding.registerUsername.text.toString(), mBinding.registerPassword.text.toString(),mBinding.registerPasswordConform.text.toString())
-        registerViewModel.onRegisterSuccess(this)
+        var intent: Intent
+        if (v?.id == R.id.btn_joining_permission){
+            intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+
+        }else{
+            mBinding.loading.visibility = View.VISIBLE
+            registerViewModel.register(mBinding.registerName.text.toString(),mBinding.registerUsername.text.toString(), mBinding.registerPassword.text.toString(),mBinding.registerPasswordConform.text.toString())
+//            registerViewModel.onRegisterSuccess(this)
+        }
+
+
     }
 
     companion object {
@@ -55,11 +62,10 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener , Authenti
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this, R.layout.registeration_activity)
 
-        registerViewModel = ViewModelProviders.of(this, RegisterViewModelFactory()).get(RegisterationViewModel::class.java)
+        registerViewModel = ViewModelProviders.of(this, RegisterViewModelFactory(this)).get(RegisterationViewModel::class.java)
 
         mBinding.btnRegister.isEnabled = false
         mBinding.btnJoiningPermission.setOnClickListener(this)
-
 
         registerViewModel.authenticFormState.observe(this@RegistrationActivity, Observer {
             val loginState = it ?: return@Observer
@@ -87,6 +93,7 @@ class RegistrationActivity : AppCompatActivity(),View.OnClickListener , Authenti
 
 
         })
+        registerViewModel.onRegisterSuccess(this)
         mBinding.btnRegister.setOnClickListener(this)
 
 
