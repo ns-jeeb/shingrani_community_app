@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.authenticate.register
 
+import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,7 +25,7 @@ class RegisterationViewModel @Inject constructor(private val authenticationRepos
         authenticationRepository.setOnClickListener(onSuccessRegister)
     }
 
-    fun register(name:String,username: String,password:String){
+    fun register(name:String,username: String,password:String, conPass: String){
         var result: Result<LoggedInUser>? = null
 
         result = authenticationRepository.register(username,password,name)
@@ -35,4 +36,37 @@ class RegisterationViewModel @Inject constructor(private val authenticationRepos
         }
     }
 
+    fun registerDataChanged(username: String, password: String,conPass: String) {
+
+        if (!isUserNameValid(username)) {
+            _registerForm.value = AuthenticFormState(usernameError = R.string.invalid_username)
+        }
+        else if (!isPasswordValid(password)) {
+            _registerForm.value = AuthenticFormState(passwordError = R.string.invalid_password)
+        }
+        else if (!isConformPasswordValid(password, conPass)){
+            _registerForm.value = AuthenticFormState(passwordConformError = R.string.not_match_password)
+
+        }else{
+            _registerForm.value = AuthenticFormState(isDataValid =  true)
+        }
+    }
+
+    private fun isUserNameValid(username: String): Boolean {
+        return if (!username.contains('@')|| !username.contains('.')&& username.isNotEmpty()) {
+            Patterns.EMAIL_ADDRESS.matcher(username).matches()
+        } else {
+            username.isNotBlank()
+        }
+    }
+
+    // A placeholder password validation check
+    private fun isPasswordValid(password: String): Boolean {
+        return password.length>5
+    }
+
+    private fun isConformPasswordValid(password: String,passwordConform: String): Boolean {
+        return password.contentEquals(passwordConform)
+
+    }
 }

@@ -4,18 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import androidx.lifecycle.LiveData
 import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import com.locked.shingranicommunity.authenticate.ui.login.LoggedInUserView
 import com.locked.shingranicommunity.authenticate.ui.login.LoginViewModel
 import com.locked.shingranicommunity.tutorials.RegisterUser
-import com.locked.shingranicommunity.tutorials.User
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.Error
 import javax.security.auth.callback.Callback
 import kotlin.collections.HashMap
 
@@ -109,7 +105,7 @@ class AuthenticationRepository(val dataSource: LoginDataSource) {
         return null
     }
 
-    fun register(username: String,name: String, password: String): Result<LoggedInUser>? {
+    fun register(username: String, password: String,name: String): Result<LoggedInUser>? {
         // handle login
         lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
         var bodyHashMap: HashMap<String, String> = HashMap()
