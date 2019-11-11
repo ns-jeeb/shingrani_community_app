@@ -28,7 +28,7 @@ import java.io.IOException
                     data?.forEach {
                         println(it)
                         fakeUser = LoggedInUser(data.get(0),token)
-                        loginEvent.onLoginSuccess()
+                        loginEvent.onLoginSuccess(true)
                     }
                 }
             }else{
@@ -51,7 +51,7 @@ import java.io.IOException
 
         try {
             if (token.isNotEmpty() && token !==""){
-                loginEvent.onLoginSuccess()
+                loginEvent.onLoginSuccess(true)
             }
             return Result.Success(user)
         } catch (e: Throwable) {

@@ -15,7 +15,9 @@
         <activity android:name=".dashboard.DashBoardViewPagerActivity" />
         <activity android:name=".events.CreateEventActivity" />
 
-        <activity android:name=".authenticate.register.RegistrationActivity"/>
+        <activity android:name=".authenticate.register.RegistrationActivity">
+
+        </activity>
 
         <activity android:name=".authenticate.ui.login.LoginActivity">
             <intent-filter>

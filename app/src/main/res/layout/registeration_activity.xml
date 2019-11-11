@@ -44,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="name"
-                    android:inputType="textEmailAddress"
+                    android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -58,16 +58,14 @@
                 android:background="@drawable/auth_fields_bg">
 
                 <AutoCompleteTextView
-                    android:id="@+id/register_email"
+                    android:id="@+id/register_username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="email"
-                    android:imeActionId="6"
-                    android:imeActionLabel="@string/registration_user"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
+                    android:inputType="textEmailAddress"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textSize="18sp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -82,10 +80,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="password"
-                    android:inputType="textEmailAddress"
+                    android:imeActionId="6"
+                    android:imeActionLabel="@string/registration_user"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
                     android:maxLines="1"
-                    android:singleLine="true"
-                    android:textSize="18sp" />
+                    android:singleLine="true" />
 
             </com.google.android.material.textfield.TextInputLayout>
 

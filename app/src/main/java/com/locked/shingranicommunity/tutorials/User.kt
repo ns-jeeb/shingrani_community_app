@@ -12,3 +12,7 @@ data class User(
     @ColumnInfo(name = "administrator")var administrator: Boolean) {
 
 }
+
+data class RegisterUser(val username: String,val password: String,val name:String ){
+
+}

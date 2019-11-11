@@ -14,23 +14,31 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.authenticate.LoginEvent
+import com.locked.shingranicommunity.authenticate.data.AuthenticationRepository
 import com.locked.shingranicommunity.authenticate.register.RegistrationActivity
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
 
 
 class LoginActivity : AppCompatActivity(), LoginEvent {
-    override fun onLoginFailed(error: kotlin.Result<Any>) {
+    override fun onLoginSuccess(isTokenValid: Boolean) {
+        mBinding.loading.visibility = View.GONE
+        if (isTokenValid){
+            updateUiWithUser(LoggedInUserView("","",""))
+        }
+
+    }
+
+    override fun onLoginFailed(error: String) {
+        Toast.makeText(CommunityApp.instance,"Fails login",Toast.LENGTH_LONG).show()
     }
 
     private lateinit var mBinding : ActivityLoginBinding
-    override fun onLoginSuccess(): Boolean {
-
-        return true
-    }
     private lateinit var loginViewModel: LoginViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +46,9 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory(this)).get(LoginViewModel::class.java)
+//        loginViewModel._loginEvent.observe(this, Observer {
+//            Toast.makeText(this,"nice work",Toast.LENGTH_LONG).show()
+//        })
 
         loginViewModel.authenticFormState.observe(this@LoginActivity, Observer {
             val loginState = it ?: return@Observer
@@ -52,10 +63,12 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
                 mBinding.loginPassword.error = getString(loginState.passwordError)
             }
         })
+        loginViewModel.onLoginEvent(this)
         loginViewModel.login(
             mBinding.loginEmail.text.toString(),
             mBinding.loginPassword.text.toString()
         )
+
 
         loginViewModel.loginResult.observe(this@LoginActivity, Observer {
             val loginResult = it ?: return@Observer
@@ -99,8 +112,8 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
 
             mBinding.btnLogin.setOnClickListener {
                 mBinding.loading.visibility = View.VISIBLE
+//                loginViewModel.onRegisterSuccess(null)
                 loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
-//                loginViewModel.auth()
             }
         }
         mBinding.btnJoiningPermission.setOnClickListener{
@@ -113,14 +126,12 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
 
     private fun updateUiWithUser(model: LoggedInUserView) {
         mBinding.loginEmail.visibility = View.GONE
-        if (onLoginSuccess()){
-            mBinding.txtUserName.text = model.displayName
 
-            var intent: Intent = Intent(this, DashBoardViewPagerActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
-            this.finish()
-        }
+        var intent: Intent = Intent(this, DashBoardViewPagerActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(intent)
+        this.finish()
+
     }
 
     private fun showLoginFailed(@StringRes errorString: Int) {

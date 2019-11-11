@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity
 
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
+import com.locked.shingranicommunity.tutorials.RegisterUser
 import com.locked.shingranicommunity.tutorials.User
 import retrofit2.Call
 import retrofit2.http.*
@@ -9,9 +10,9 @@ interface LockedApiServiceInterface {
     @POST("/api/v2/login")
     fun userLogin(@Body body: Map<String, String>): Call<LoggedInUser>
 
-    @Headers("Accept: application/json")
-    @POST("api/v2/register")
-    abstract fun registerUser(@Body body: Any): Call<User>
+    @Headers("Content-Type: application/json")
+    @POST("/api/v2/register")
+    abstract fun registerUser(@Body body: Map<String, String>): Call<RegisterUser>
 //
 //    @Headers("Accept: application/json")
 //    @GET("users/me")
