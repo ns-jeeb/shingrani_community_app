@@ -14,11 +14,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="-118dp"
             tools:layout_editor_absoluteY="16dp" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/announcement_recycler_view"
-            android:id="@+id/btn_test"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
