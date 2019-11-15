@@ -9,10 +9,11 @@ import com.locked.shingranicommunity.CommunityApp
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
-import com.locked.shingranicommunity.dashboard.event.EventFragment
+import com.locked.shingranicommunity.dashboard.event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 
-class DashBoardViewPagerActivity : AppCompatActivity(), EventFragment.OnEventFragmentTransaction {
+class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction {
+
     override fun onFragmentInteraction(uri: Uri) {
 
     }
@@ -35,11 +36,16 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventFragment.OnEventFra
         pager = mBinding.dashBorderPager
     }
 
+    override fun onStart() {
+        super.onStart()
+//        viewModel = ViewModelProviders.of(this, DashboardProviders()).get(DashboardViewModel::class.java)
+    }
+
     fun setpuViewPager(){
 
-        val adapter = DashboardAdapter(supportFragmentManager)
+        val adapter = DashboardPagerAdapter(supportFragmentManager)
 
-        var eventFragment = EventFragment.newInstance("","")
+        var eventFragment = EventListFragment.newInstance("","")
         var announcementFragment = AnnounceFragment.newInstance()
 
         val density = resources.displayMetrics.density

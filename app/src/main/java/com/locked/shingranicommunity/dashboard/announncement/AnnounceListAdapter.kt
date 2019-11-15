@@ -3,12 +3,13 @@ package com.locked.shingranicommunity.dashboard.announncement
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.dashboard.data.Field
+import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
 
-class AnnounceListAdapter ( val mAnnouncements: MutableLiveData<List<Announcement>>?) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
+class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
 
 
 
@@ -18,12 +19,12 @@ class AnnounceListAdapter ( val mAnnouncements: MutableLiveData<List<Announcemen
 
         override fun onBindViewHolder(announceViewHolder: AnnounceViewHolder, i: Int) {
 
-            mAnnouncements?.value?.get(i)?.let { announceViewHolder.bind(it) }
+            mAnnouncements?.get(i)?.let { announceViewHolder.bind(it,i) }
         }
 
 
         override fun getItemCount(): Int {
-            return mAnnouncements?.value?.size!!
+            return mAnnouncements?.size!!
         }
 
         inner class AnnounceViewHolder(parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.announcement_item, parent, false)) {
@@ -34,9 +35,21 @@ class AnnounceListAdapter ( val mAnnouncements: MutableLiveData<List<Announcemen
                 binding = DataBindingUtil.bind(itemView)
             }
 
-            fun bind(announcement: Announcement) {
-                binding!!.txtAnnouncementMessage.text = announcement.type
-                binding!!.txtAnnouncementTitleItem.text = announcement.name
+            fun bind(announcement: Item,i: Int) {
+                var  fields: List<Field>? = announcement.fields
+                var title: String? = ""
+                var text: String? = ""
+                var timeStamp: String? = ""
+
+                if (fields != null) {
+                    title = announcement.fields?.get(0)?.value
+                    text = announcement.fields?.get(1)?.value
+                    timeStamp = announcement.fields?.get(2)?.value
+                }
+                binding!!.txtAnnouncementTitleItem.text = title
+                binding!!.txtAnnouncementMessage.text = text
+                binding!!.txtDateItemCreated.text = timeStamp
+
             }
         }
 }
