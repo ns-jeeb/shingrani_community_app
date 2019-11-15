@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.dashboard.event
+package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 
 import android.content.Context
@@ -15,6 +15,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 
 /**

@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.dashboard.event
+package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardRepositor

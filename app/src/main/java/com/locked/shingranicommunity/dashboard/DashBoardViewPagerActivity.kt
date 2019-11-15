@@ -9,7 +9,7 @@ import com.locked.shingranicommunity.CommunityApp
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
-import com.locked.shingranicommunity.dashboard.event.EventListFragment
+import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 
 class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction {
