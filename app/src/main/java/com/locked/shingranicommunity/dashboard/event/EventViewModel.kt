@@ -1,51 +1,48 @@
 package com.locked.shingranicommunity.dashboard.event
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.locked.shingranicommunity.dashboard.announncement.Announcement
+import androidx.lifecycle.*
+import com.locked.shingranicommunity.dashboard.DashboardRepositor
+import com.locked.shingranicommunity.dashboard.DataSource
+import com.locked.shingranicommunity.dashboard.data.Item
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.ArrayList
 
-class EventViewModel : ViewModel() {
-    private var _event = MutableLiveData<List<Announcement>>()
-    val event: MutableLiveData<List<Announcement>> get() = _event
+class EventViewModel(val dataSource: DataSource) : ViewModel() {
 
+    lateinit var lifecycleOwner: LifecycleOwner
 
-    init {
-        _event = getAnnounceList()
+    val _fetchItems: MutableLiveData<List<Item>> by lazy {
+        MutableLiveData<List<Item>>()
     }
 
-    fun getAnnounceList(): MutableLiveData<List<Announcement>> {
-        val announce: ArrayList<Announcement> = ArrayList()
+    fun load(): List<Item> {
+        var items: List<Item> = ArrayList()
+        dataSource.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
+            _fetchItems.postValue(it)
 
-        val announcement = Announcement()
-        val announcement1 = Announcement()
-        val announcement2 = Announcement()
-        val announcement3 = Announcement()
-        val announcement4 = Announcement()
-        val announcement5 = Announcement()
+        })
+        return items
+    }
+    fun onRefresh() {
+        // Launch a coroutine that reads from a remote data source and updates cache
+        viewModelScope.launch {
+            dataSource.fetchEvent(TEMPLATE_EVENT)
+        }
+    }
 
-        announcement.name = "Wedding of Emily and James"
-        announcement.type = "you are invited to this new couple for the fabulous party"
+    companion object {
+        // Real apps would use a wrapper on the result type to handle this.
+        const val TEMPLATE_EVENT = "5d770cd8ea2f6b1300f03ca7"
+    }
 
-        announcement2.name = "1 Wedding of Emily and James"
-        announcement2.type = "1 you are invited to this new couple for the fabulous party"
+    object ItemLiveDataVMFactory : ViewModelProvider.Factory {
 
-        announcement1.name = "2 Wedding of Emily and James"
-        announcement1.type = "2 you are invited to this new couple for the fabulous party"
-        announcement3.name = "2 Wedding of Emily and James"
-        announcement3.type = "2 you are invited to this new couple for the fabulous party"
-        announcement4.name = "2 Wedding of Emily and James"
-        announcement4.type = "2 you are invited to this new couple for the fabulous party"
-        announcement5.name = "2 Wedding of Emily and James"
-        announcement5.type = "2 you are invited to this new couple for the fabulous party"
+        private val itemDataSource = DashboardRepositor(Dispatchers.IO)
 
-        announce.add(announcement)
-        announce.add(announcement1)
-        announce.add(announcement2)
-        announce.add(announcement3)
-        announce.add(announcement4)
-        announce.add(announcement5)
-        _event.value = announce
-        return _event
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            @Suppress("UNCHECKED_CAST")
+            return EventViewModel(itemDataSource) as T
+        }
     }
 }

@@ -13,7 +13,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".dashboard.DashBoardViewPagerActivity" />
-        <activity android:name=".events.CreateEventActivity" />
 
         <activity android:name=".authenticate.register.RegistrationActivity">
 

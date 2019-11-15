@@ -1,16 +1,16 @@
 package com.locked.shingranicommunity.dashboard.announncement
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.locked.shingranicommunity.R
+
 import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
 
 class AnnounceFragment : Fragment(),View.OnClickListener {
@@ -23,30 +23,31 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
     }
     private var mBinding: FragmentAnnouncementBinding? = null
 
-    private lateinit var viewModel: AnnounceViewModel
+    private val viewModel: AnnounceViewModel by viewModels {ItemLiveDataVMFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(this).get(AnnounceViewModel::class.java)
         mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_announcement, container, false)
+        viewModel.lifecycleOwner = this
+
+        viewModel.load( )
+        viewModel._fetchItems.let {
+            it.let {
+                viewModel.onRefresh()
+            }
+        }
+
+        viewModel._fetchItems.observe(this, Observer {
+            val adapter = AnnounceListAdapter(it)
+            val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            mBinding!!.announcementRecyclerView.layoutManager = layoutManager
+            mBinding!!.announcementRecyclerView.adapter = adapter
+            adapter.notifyDataSetChanged()
+
+        })
         return mBinding!!.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        setUpRecyclerAdapter()
-    }
-
-    fun setUpRecyclerAdapter(){
-
-        val adapter = AnnounceListAdapter(viewModel.announce)
-        val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mBinding!!.announcementRecyclerView.layoutManager = layoutManager
-        Toast.makeText(context,"Announcement", Toast.LENGTH_LONG) .show()
-        mBinding!!.announcementRecyclerView.adapter = adapter
-        mBinding!!.btnTest.setOnClickListener(this)
     }
 
 }

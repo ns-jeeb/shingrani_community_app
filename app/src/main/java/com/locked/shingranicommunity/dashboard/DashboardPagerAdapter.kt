@@ -13,7 +13,7 @@ import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.R
 
 
-class DashboardAdapter(manager: FragmentManager) : FragmentPagerAdapter (manager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class DashboardPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter (manager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
         return mFragmentList[position]
