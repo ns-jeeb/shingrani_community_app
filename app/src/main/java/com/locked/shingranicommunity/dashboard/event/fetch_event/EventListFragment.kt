@@ -34,7 +34,7 @@ class EventListFragment : Fragment() {
     private var mListener: OnEventFragmentTransaction? = null
     private lateinit var mBinding : FragmentEventListBinding
 
-    private val eventViewModel: EventViewModel by viewModels { EventViewModel.ItemLiveDataVMFactory }
+    private val eventViewModel: EventViewModel by viewModels { EventViewModel.EventItemVMFactory }
 
     companion object{
         fun newInstance(param1: String, param2: String): EventListFragment {

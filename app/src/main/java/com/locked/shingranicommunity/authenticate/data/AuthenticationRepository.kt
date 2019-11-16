@@ -41,7 +41,7 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
 
     fun logout() {
         user = null
-//        dataSource.logout()
+//        IFetchedEventAnnouncements.logout()
     }
 
     fun login(username: String, password: String): Result<LoggedInUser>? {
@@ -62,10 +62,10 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
                     var user = response.body()?.user
                     savedToken(token, sharedPreferences)
                     setLoggedInUser(response.body()!!)
-//                    result = user?.let { token?.let { username?.let { it1 -> dataSource.login(user, token) } } }!!
+//                    result = user?.let { token?.let { username?.let { it1 -> IFetchedEventAnnouncements.login(user, token) } } }!!
                     Log.v("LoggedinUser", "${token}*********  " + "**${user?.username} ** ${user?.name}")
                 }else{
-//                    dataSource.loginEvent?.onLoginFailed(response.message())
+//                    IFetchedEventAnnouncements.loginEvent?.onLoginFailed(response.message())
                 }
             }
 

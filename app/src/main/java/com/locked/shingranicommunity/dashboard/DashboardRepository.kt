@@ -15,7 +15,7 @@ import retrofit2.Response
 import javax.security.auth.callback.Callback
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST", "CAST_NEVER_SUCCEEDS")
-class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : DataSource {
+class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : I_FetchedEventAnnouncements {
     override fun fetchAnnouncement(template: String): LiveData<List<Item>>? {
         loadAnnouncement(template)
         if (!item?.value.isNullOrEmpty()){
@@ -46,19 +46,11 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : DataSo
 
     override suspend fun fetchNewItem() {
         withContext(Dispatchers.Main) {
-//            _cachedData.value = "Fetching new data..."
-//            _cachedData.value = simulateNetworkDataFetch()
         }
     }
 
     private lateinit var lockedApiService: LockedApiServiceInterface
-    private lateinit var itemLoadEvent: ItemLoadEvent
-    private lateinit var setItem: Item
 
-    suspend fun setItemLoadEvent(_itemLoadEvent: ItemLoadEvent){
-        itemLoadEvent = _itemLoadEvent
-        simulateNetworkDataFetch()
-    }
     var item: MutableLiveData<ArrayList<Item>>? =  MutableLiveData()
     fun loadEvent(template: String){
 
@@ -74,7 +66,6 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : DataSo
                        Log.d("Item_Response","response is working")
 
                         if (response.isSuccessful && item != null) {
-//                            itemLoadEvent.onItemLoadSuccess(item!!)
                             item!!.postValue(response.body())
                             cachedData.value = response.body()
                         }
@@ -116,10 +107,6 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : DataSo
             }
         }
 
-    }
-    interface ItemLoadEvent{
-        fun onItemLoadSuccess(item: MutableLiveData<ArrayList<Item>>)
-        fun onItemLoadFailed(error: String)
     }
 
     private var counter = 0

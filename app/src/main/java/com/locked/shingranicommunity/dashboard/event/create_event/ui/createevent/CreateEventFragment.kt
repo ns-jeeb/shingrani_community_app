@@ -6,26 +6,28 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 
 class CreateEventFragment : Fragment() {
+    lateinit var mBinding: CreateEventFragmentBinding
 
     companion object {
         fun newInstance() = CreateEventFragment()
     }
 
-    private lateinit var viewModel: CreateEventViewModel
+    private  val viewModel: CreateEventViewModel by viewModels { CreateEventItemVMFactory }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.create_event_fragment, container, false)
+    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+        viewModel.lifecycleOwner = this
+        mBinding = DataBindingUtil.inflate(inflater,R.layout.create_event_fragment,container,false)
+        return mBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(CreateEventViewModel::class.java)
 
     }
 
