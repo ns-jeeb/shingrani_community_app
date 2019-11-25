@@ -28,12 +28,16 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
         mBinding.loading.visibility = View.GONE
         if (isTokenValid){
             updateUiWithUser(LoggedInUserView("","",""))
+
         }
 
     }
 
     override fun onLoginFailed(error: String) {
         Toast.makeText(CommunityApp.instance,"Fails login",Toast.LENGTH_LONG).show()
+        if (error.isNotEmpty()){
+            mBinding.loading.visibility = View.GONE
+        }
     }
 
     private lateinit var mBinding : ActivityLoginBinding
@@ -127,7 +131,7 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
     private fun updateUiWithUser(model: LoggedInUserView) {
         mBinding.loginEmail.visibility = View.GONE
 
-        var intent: Intent = Intent(this, DashBoardViewPagerActivity::class.java)
+        var intent = Intent(this, DashBoardViewPagerActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
         this.finish()

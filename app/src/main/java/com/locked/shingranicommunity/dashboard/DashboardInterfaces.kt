@@ -6,7 +6,8 @@ import com.locked.shingranicommunity.dashboard.data.Item
 class DashboardInterfaces{
 
 }
-interface I_FetchedEventAnnouncements {
+interface IItemEventListener {
+    fun deleteFields(itemId:String,token: String): String?
     fun getFields(): LiveData<List<Item>>?
     fun fetchEvent(template: String): LiveData<List<Item>>?
     fun fetchAnnouncement(template: String): LiveData<List<Item>>?

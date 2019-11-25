@@ -23,6 +23,15 @@ class CreateEventFragment : Fragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
         viewModel.lifecycleOwner = this
         mBinding = DataBindingUtil.inflate(inflater,R.layout.create_event_fragment,container,false)
+        var type = mBinding.crEventType.getItemAtPosition(1).toString()
+        viewModel.createEvent(
+            mBinding.crEventName.text.toString(),
+            mBinding.crEventAddress.text.toString(),
+            mBinding.crEventDateTime.text.toString(),
+            type,
+            mBinding.crEventDetails.text.toString(),
+            "Title need to be dynamic"
+            )
         return mBinding.root
     }
 

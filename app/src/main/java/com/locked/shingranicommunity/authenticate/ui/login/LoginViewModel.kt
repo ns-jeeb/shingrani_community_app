@@ -18,15 +18,7 @@ import javax.inject.Inject
 import kotlin.math.log
 
 class LoginViewModel @Inject constructor(private val authenticationRepository: AuthenticationRepository) : ViewModel(){
-//    override fun onLoginSuccess():Boolean {
-//        return true
-//    }
-//    override fun onLoginFailed(error: String) {
-//
-//        if (error.isNotEmpty()){
-//            Toast.makeText(CommunityApp.instance,"Failed login",Toast.LENGTH_LONG).show()
-//        }
-//    }
+
 
     lateinit var  _loginEvent: LiveData<LoginEvent>
 
@@ -49,10 +41,11 @@ class LoginViewModel @Inject constructor(private val authenticationRepository: A
         // can be launched in a separate asynchronous job
         var result: Result<LoggedInUser>? = null
         var sharedPreferences = CommunityApp.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
-        if (sharedPreferences.getString("token","") !== null && sharedPreferences.getString("token","")!==""){
-            result = authenticationRepository.getToken(sharedPreferences)
-        }else{
+
+        if (sharedPreferences.getString("token","") === null || sharedPreferences.getString("token","") === "") {
             result = authenticationRepository.login(username, password)
+        } else {
+            result = authenticationRepository.getToken(sharedPreferences)
         }
 
         if (result is Result.Success<*>) {

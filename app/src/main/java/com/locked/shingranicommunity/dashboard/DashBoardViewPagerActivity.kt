@@ -1,18 +1,31 @@
 package com.locked.shingranicommunity.dashboard
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
 import com.locked.shingranicommunity.CommunityApp
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
+import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 
-class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction {
+@Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction, View.OnClickListener {
+    override fun onClick(v: View?) {
+        if (v?.id == R.id.img_create_item){
+            createItem(token)
+        }
+        if (v?.id == R.id.img_profile) {
+            getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token","").apply()
+        }
+    }
 
     override fun onFragmentInteraction(uri: Uri) {
 
@@ -21,12 +34,23 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     private lateinit var mBinding : ActivityDashBoradViewPagerBinding
     private lateinit var tabs: TitlePageIndicator
     private lateinit var pager: ViewPager
+    var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_dash_borad_view_pager)
+        var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
+        this.token = token
         initViews()
-        setpuViewPager()
+        setpuViewPager(this.token)
+        if (/*admin toke*/ !this.token.isBlank()){
+            mBinding.imgCreateItem.visibility = View.VISIBLE
+            mBinding.imgCreateItem.setOnClickListener(this)
+        }else{
+            mBinding.imgCreateItem.visibility = View.VISIBLE
+        }
+        mBinding.imgProfile.setOnClickListener(this)
+
         mBinding.txtAnnouncement.text = intent.getStringExtra("USER_NAME")
 
     }
@@ -41,15 +65,16 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
 //        viewModel = ViewModelProviders.of(this, DashboardProviders()).get(DashboardViewModel::class.java)
     }
 
-    fun setpuViewPager(){
+    fun setpuViewPager(token: String){
 
         val adapter = DashboardPagerAdapter(supportFragmentManager)
 
-        var eventFragment = EventListFragment.newInstance("","")
+        var eventFragment = EventListFragment.newInstance(token,false)
         var announcementFragment = AnnounceFragment.newInstance()
 
         val density = resources.displayMetrics.density
         tabs.setBackgroundColor(CommunityApp.instance.getColor(R.color.colorPrimary))
+
         tabs.isSelectedBold = true
         tabs.footerColor = CommunityApp.instance.getColor(R.color.colorAccent)
         tabs.setOnPageChangeListener(object : ViewPager.OnPageChangeListener{
@@ -72,5 +97,13 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         pager.adapter = adapter
         tabs.setViewPager(pager)
 
+    }
+    // run only with admin token
+    fun createItem(adminToken: String){
+        var inten = Intent(this, CreateItemActivity::class.java)
+        var bundle = Bundle()
+        bundle.putString("token",token)
+        inten.putExtras(bundle)
+        startActivity(intent)
     }
 }

@@ -2,13 +2,14 @@ package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
-import com.locked.shingranicommunity.dashboard.I_FetchedEventAnnouncements
+import com.locked.shingranicommunity.dashboard.IItemEventListener
 import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.data.SingleTone
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
-class EventViewModel(val IFetchedEventAnnouncements: I_FetchedEventAnnouncements) : ViewModel() {
+class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
 
     lateinit var lifecycleOwner: LifecycleOwner
 
@@ -17,8 +18,9 @@ class EventViewModel(val IFetchedEventAnnouncements: I_FetchedEventAnnouncements
     }
 
     fun load(): List<Item> {
+
         var items: List<Item> = ArrayList()
-        IFetchedEventAnnouncements.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
+        IItemEventListener.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
             _fetchItems.postValue(it)
 
         })
@@ -27,8 +29,11 @@ class EventViewModel(val IFetchedEventAnnouncements: I_FetchedEventAnnouncements
     fun onRefresh() {
         // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
-            IFetchedEventAnnouncements.fetchEvent(TEMPLATE_EVENT)
+            IItemEventListener.fetchEvent(TEMPLATE_EVENT)
         }
+    }
+    fun itemDelete(itemId: String,token:String){
+        IItemEventListener.deleteFields(itemId,token)
     }
 
     companion object {
