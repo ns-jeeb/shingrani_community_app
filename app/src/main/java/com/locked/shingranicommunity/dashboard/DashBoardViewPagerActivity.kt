@@ -102,8 +102,9 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     fun createItem(adminToken: String){
         var inten = Intent(this, CreateItemActivity::class.java)
         var bundle = Bundle()
-        bundle.putString("token",token)
+        bundle.putString("token",adminToken)
         inten.putExtras(bundle)
-        startActivity(intent)
+        inten.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        startActivity(inten)
     }
 }
