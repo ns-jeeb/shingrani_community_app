@@ -11,6 +11,7 @@ import com.locked.shingranicommunity.authenticate.LoginEvent
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
 import com.locked.shingranicommunity.authenticate.ui.login.LoginViewModel
 import com.locked.shingranicommunity.tutorials.RegisterUser
+import com.locked.shingranicommunity.tutorials.User
 import retrofit2.Call
 import retrofit2.Response
 import javax.security.auth.callback.Callback
@@ -24,10 +25,11 @@ import kotlin.collections.HashMap
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
 class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: OnAuthenticatedSuccess?) {
 
-    // in-memory cache of the loggedInUser object
-    private lateinit var lockedApiService: LockedApiServiceInterface
     var user: LoggedInUser? = null
     var result : Result<LoggedInUser>? = null
+    val sharedPreferences: SharedPreferences = CommunityApp.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
+
+    private var lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
 
     fun setOnLoginEvent(loginEvent: LoginEvent?){
         this.loginEvent = loginEvent
@@ -41,13 +43,12 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
 
     fun logout() {
         user = null
-//        dataSource.logout()
+        sharedPreferences.edit().putString("token", "").commit()
     }
 
     fun login(username: String, password: String): Result<LoggedInUser>? {
         // handle login
-        val sharedPreferences = CommunityApp.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
-        lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
+
         var bodyHashMap: HashMap<String, String> = HashMap()
         bodyHashMap.put("username",username)
         bodyHashMap.put("password",password)
@@ -59,13 +60,12 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
                 if (response.isSuccessful){
                     loginEvent?.onLoginSuccess(true)
                     var token = response.body()?.token
-                    var user = response.body()?.user
+                    var user :User? = response.body()?.user
+
                     savedToken(token, sharedPreferences)
                     setLoggedInUser(response.body()!!)
-//                    result = user?.let { token?.let { username?.let { it1 -> dataSource.login(user, token) } } }!!
-                    Log.v("LoggedinUser", "${token}*********  " + "**${user?.username} ** ${user?.name}")
                 }else{
-//                    dataSource.loginEvent?.onLoginFailed(response.message())
+                    loginEvent?.onLoginFailed(response.message())
                 }
             }
 
@@ -110,8 +110,7 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
     }
 
     fun register(username: String, password: String,name: String): Result<LoggedInUser>? {
-        // handle login
-        lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
+
         var bodyHashMap: HashMap<String, String> = HashMap()
         bodyHashMap["password"] = password
         bodyHashMap["username"] = username

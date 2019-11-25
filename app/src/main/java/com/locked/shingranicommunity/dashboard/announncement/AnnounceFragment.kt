@@ -23,7 +23,7 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
     }
     private var mBinding: FragmentAnnouncementBinding? = null
 
-    private val viewModel: AnnounceViewModel by viewModels {ItemLiveDataVMFactory }
+    private val viewModel: AnnounceViewModel by viewModels {AnnounceItemVMFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

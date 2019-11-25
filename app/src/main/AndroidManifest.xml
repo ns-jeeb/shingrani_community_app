@@ -12,12 +12,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".dashboard.DashBoardViewPagerActivity" />
+        <activity android:name=".dashboard.event.create_event.CreateItemActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-        <activity android:name=".authenticate.register.RegistrationActivity">
-
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
-
+        <activity android:name=".dashboard.DashBoardViewPagerActivity" />
+        <activity android:name=".authenticate.register.RegistrationActivity"></activity>
         <activity android:name=".authenticate.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,7 +29,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" />
-
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

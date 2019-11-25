@@ -1,14 +1,15 @@
-package com.locked.shingranicommunity.dashboard.event
+package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
-import com.locked.shingranicommunity.dashboard.DataSource
+import com.locked.shingranicommunity.dashboard.IItemEventListener
 import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.data.SingleTone
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
-class EventViewModel(val dataSource: DataSource) : ViewModel() {
+class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
 
     lateinit var lifecycleOwner: LifecycleOwner
 
@@ -17,8 +18,9 @@ class EventViewModel(val dataSource: DataSource) : ViewModel() {
     }
 
     fun load(): List<Item> {
+
         var items: List<Item> = ArrayList()
-        dataSource.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
+        IItemEventListener.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
             _fetchItems.postValue(it)
 
         })
@@ -27,8 +29,11 @@ class EventViewModel(val dataSource: DataSource) : ViewModel() {
     fun onRefresh() {
         // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
-            dataSource.fetchEvent(TEMPLATE_EVENT)
+            IItemEventListener.fetchEvent(TEMPLATE_EVENT)
         }
+    }
+    fun itemDelete(itemId: String,token:String){
+        IItemEventListener.deleteFields(itemId,token)
     }
 
     companion object {
@@ -36,7 +41,7 @@ class EventViewModel(val dataSource: DataSource) : ViewModel() {
         const val TEMPLATE_EVENT = "5d770cd8ea2f6b1300f03ca7"
     }
 
-    object ItemLiveDataVMFactory : ViewModelProvider.Factory {
+    object EventItemVMFactory : ViewModelProvider.Factory {
 
         private val itemDataSource = DashboardRepositor(Dispatchers.IO)
 

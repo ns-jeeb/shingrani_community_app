@@ -2,13 +2,13 @@ package com.locked.shingranicommunity.dashboard.announncement
 
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
-import com.locked.shingranicommunity.dashboard.DataSource
+import com.locked.shingranicommunity.dashboard.IItemEventListener
 import com.locked.shingranicommunity.dashboard.data.Item
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 
-class AnnounceViewModel(val dataSource: DataSource) : ViewModel() {
+class AnnounceViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
 
     lateinit var lifecycleOwner: LifecycleOwner
     val _fetchItems: MutableLiveData<List<Item>> by lazy {
@@ -17,7 +17,7 @@ class AnnounceViewModel(val dataSource: DataSource) : ViewModel() {
 
     fun load(): List<Item> {
         var items: List<Item> = ArrayList()
-        dataSource.cachedData?.observe(lifecycleOwner as AnnounceFragment, Observer {
+        IItemEventListener.cachedData?.observe(lifecycleOwner as AnnounceFragment, Observer {
             _fetchItems.postValue(it)
 
         })
@@ -27,7 +27,7 @@ class AnnounceViewModel(val dataSource: DataSource) : ViewModel() {
     fun onRefresh() {
         // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
-            dataSource.fetchAnnouncement(TEMPLATE_ANNOUNCE)
+            IItemEventListener.fetchAnnouncement(TEMPLATE_ANNOUNCE)
         }
     }
 
@@ -38,7 +38,7 @@ class AnnounceViewModel(val dataSource: DataSource) : ViewModel() {
     }
 }
 
-object ItemLiveDataVMFactory : ViewModelProvider.Factory {
+object AnnounceItemVMFactory : ViewModelProvider.Factory {
 
     private val itemDataSource = DashboardRepositor(Dispatchers.IO)
 

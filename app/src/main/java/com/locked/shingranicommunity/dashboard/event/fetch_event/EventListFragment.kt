@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.dashboard.event
+package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 
 import android.content.Context
@@ -15,6 +15,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 
 /**
@@ -26,21 +28,24 @@ class EventListFragment : Fragment() {
         fun onFragmentInteraction(uri: Uri)
     }
 
-    val ARG_PARAM1 = "param1"
+    val ARG_TOKEN = "token"
     val ARG_PARAM2 = "param2"
-    private var mParam1: String? = null
+    private var mToken: String? = null
     private var mParam2: String? = null
     private var mListener: OnEventFragmentTransaction? = null
     private lateinit var mBinding : FragmentEventListBinding
 
-    private val eventViewModel: EventViewModel by viewModels { EventViewModel.ItemLiveDataVMFactory }
+    private val eventViewModel: EventViewModel by viewModels { EventViewModel.EventItemVMFactory }
 
     companion object{
-        fun newInstance(param1: String, param2: String): EventListFragment {
+        fun newInstance(token: String, isCreate: Boolean): EventListFragment {
             val fragment = EventListFragment()
             val args = Bundle()
-            args.putString(EXTRA_MESSAGE, param1)
-            args.putString(EXTRA_MESSAGE, param2)
+            val ARG_TOKEN = "token"
+            val ISTOKEN :Boolean = false
+            args.putString(ARG_TOKEN, token)
+            args.putBoolean(EXTRA_MESSAGE, isCreate)
+            fragment.arguments = args
             return fragment
         }
 
@@ -58,8 +63,9 @@ class EventListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         if (arguments != null) {
-            mParam1 = arguments!!.getString(ARG_PARAM1)
+            mToken = arguments!!.getString(ARG_TOKEN)
             mParam2 = arguments!!.getString(ARG_PARAM2)
         }
     }

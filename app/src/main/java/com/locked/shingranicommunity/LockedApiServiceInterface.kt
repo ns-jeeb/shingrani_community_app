@@ -17,4 +17,10 @@ interface LockedApiServiceInterface {
     @GET("/api/v2/app/5d4a348f88fb44130084f903/item")
     fun getItems(@Query("template") template: String ,@Header("x-access-token") token: String): Call<ArrayList<Item>>
 
+    @GET("/api/v2/app/5d4a348f88fb44130084f903/item")
+    fun deleteItems(@Header("x-access-token") token: String,itemID:String):Call<String>
+
+    @POST("/api/v2/item")
+    fun createEventItem(@Header("x-access-token") token: String,@Body body:HashMap<String , Any>): Call<Item>
+
 }
