@@ -32,6 +32,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Name"
+                    android:text="Solgira"
                     android:inputType="text"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -50,7 +51,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Address"
-                    android:inputType="textEmailAddress"
+                    android:text="20 esterbrooke Ave"
+                    android:inputType="textPostalAddress"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textSize="18sp" />
@@ -68,10 +70,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Date Time"
+                    android:text="20/12/2019 At 6:00PM"
                     android:imeActionId="6"
                     android:imeActionLabel="@string/registration_user"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
+                    android:inputType="datetime"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -101,9 +104,10 @@
                     android:id="@+id/cr_event_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Note"
-                    android:lines="5"
                     android:gravity="top"
+                    android:hint="Note"
+                    android:text="come to join us to congratulate alyjahn 4 years birth day"
+                    android:lines="5"
                     android:maxLines="10" />
 
             </com.google.android.material.textfield.TextInputLayout>

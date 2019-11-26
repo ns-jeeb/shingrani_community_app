@@ -14,20 +14,20 @@ class CreateEventViewModel(var createDataSource: DashboardRepositor) : ViewModel
     private val createEvent : MutableLiveData<Item> by lazy {
         MutableLiveData<Item>()
     }
-    fun createEvent(name:String,address: String,event:String,type:String,note:String,title:String){
-        var nameField = Field(name = name ,value =  name )
-        var addressField = Field(name = address ,value =  address )
-        var eventField = Field(name = event ,value =  event )
-        var typeField = Field(name = type ,value =  title )
-        var noteField = Field(name = note ,value =  note )
+    fun createEvent(name:String,type:String,address: String,dateTime:String,note:String){
+        var nameField = Field(name = "name" ,value =  name )
+        var typeField = Field(name = "type" ,value =  type )
+        var addressField = Field(name = "address" ,value =  address )
+        var dateTimeField = Field(name = "datetime" ,value =  dateTime )
+        var noteField = Field(name = "note" ,value =  note )
 
-        var eventFields: ArrayList<Field> = ArrayList();
+     var eventFields: ArrayList<Field> = ArrayList();
         eventFields.add(nameField)
         eventFields.add(addressField)
-        eventFields.add(eventField)
+        eventFields.add(dateTimeField)
         eventFields.add(typeField)
         eventFields.add(noteField)
-        createDataSource.createEvent(eventFields,title)
+        createDataSource.createEvent(eventFields,"")
     }
 }
 

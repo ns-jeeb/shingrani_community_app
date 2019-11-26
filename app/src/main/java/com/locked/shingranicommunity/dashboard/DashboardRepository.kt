@@ -77,7 +77,7 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
 
                         if (response.isSuccessful && item != null) {
                             item!!.postValue(response.body())
-//                            SingleTone.getInstance().setItem(item!!.value?.get(0)!!)
+                            item!!.value?.get(0)?.let { SingleTone.getInstance().setItem(itm = it) }
                             cachedData.value = response.body()
                         }
                     }
@@ -102,6 +102,7 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
 
                         if (response.isSuccessful && item != null) {
                             item!!.postValue(response.body())
+                            item!!.value?.get(0)?.let { SingleTone.getInstance().setItem(itm = it) }
                             cachedData.value = response.body()
 
                         }

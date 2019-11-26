@@ -65,13 +65,6 @@
 
     <string-array name="events_arrays">
         <item>Event</item>
-        <item>Wedding</item>
-        <item>Party</item>
-        <item>Fundraising</item>
-        <item>Funeral</item>
-        <item>Gathering</item>
-        <item>Meeting</item>
-        <item>Outing</item>
-        <item>Dinner Night</item>
+        <item>Announcement</item>
     </string-array>
 </resources>
