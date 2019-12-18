@@ -9,6 +9,7 @@ import com.locked.shingranicommunity.*
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.data.SingleTone
+import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -61,7 +62,7 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
     }
 
     private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
-    private val sharedPreferences = CommunityApp.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
+    private val sharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
     private var token: String? = sharedPreferences.getString("token","")
 
     var item: MutableLiveData<ArrayList<Item>>? =  MutableLiveData()
@@ -83,7 +84,7 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
                     }
 
                     override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
-                        Toast.makeText(CommunityApp.instance,"response Failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
                     }
                 })
             }
@@ -109,7 +110,7 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
                     }
 
                     override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
-                        Toast.makeText(CommunityApp.instance,"response Failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
                     }
                 })
             }

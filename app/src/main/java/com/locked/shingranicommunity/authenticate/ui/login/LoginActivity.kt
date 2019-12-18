@@ -21,6 +21,7 @@ import com.locked.shingranicommunity.authenticate.data.AuthenticationRepository
 import com.locked.shingranicommunity.authenticate.register.RegistrationActivity
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
+import com.locked.shingranicommunity.registration_login.registration.MyApplication
 
 
 class LoginActivity : AppCompatActivity(), LoginEvent {
@@ -34,7 +35,7 @@ class LoginActivity : AppCompatActivity(), LoginEvent {
     }
 
     override fun onLoginFailed(error: String) {
-        Toast.makeText(CommunityApp.instance,"Fails login",Toast.LENGTH_LONG).show()
+        Toast.makeText(MyApplication.instance,"Fails login",Toast.LENGTH_LONG).show()
         if (error.isNotEmpty()){
             mBinding.loading.visibility = View.GONE
         }

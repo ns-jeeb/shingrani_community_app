@@ -4,6 +4,7 @@ import android.content.Context
 import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.authenticate.LoginEvent
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
+import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.tutorials.UserDatabase
 import com.locked.shingranicommunity.tutorials.User
 import kotlinx.coroutines.GlobalScope
@@ -20,7 +21,7 @@ import java.io.IOException
         try {
             var fakeUser = LoggedInUser(user, token )
             if (!token.isEmpty() ){
-                val db = UserDatabase(CommunityApp.instance)
+                val db = UserDatabase(MyApplication.instance)
                 GlobalScope.launch {
                     db.loginDao().insertAll(User(user._id,user.username,user.name,user.administrator,user.publicCreation))
                     var data = db.loginDao().getAll()
@@ -44,7 +45,7 @@ import java.io.IOException
     }
 
     fun logout() {
-        var sheredPrfes = CommunityApp.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
+        var sheredPrfes = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
          sheredPrfes.edit().putString("","").apply()
     }
     fun logingWithToken(user: LoggedInUser?, token: String): Result<LoggedInUser> {

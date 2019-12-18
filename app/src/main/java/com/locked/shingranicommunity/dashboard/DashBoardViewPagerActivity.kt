@@ -15,6 +15,7 @@ import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
+import com.locked.shingranicommunity.registration_login.registration.MyApplication
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction, View.OnClickListener {
@@ -73,10 +74,10 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         var announcementFragment = AnnounceFragment.newInstance()
 
         val density = resources.displayMetrics.density
-        tabs.setBackgroundColor(CommunityApp.instance.getColor(R.color.colorPrimary))
+        tabs.setBackgroundColor(MyApplication.instance.getColor(R.color.colorPrimary))
 
         tabs.isSelectedBold = true
-        tabs.footerColor = CommunityApp.instance.getColor(R.color.colorAccent)
+        tabs.footerColor = MyApplication.instance.getColor(R.color.colorAccent)
         tabs.setOnPageChangeListener(object : ViewPager.OnPageChangeListener{
             override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
 //                Toast.makeText(CommunityApp.instance,"Tab Scrolled",Toast.LENGTH_LONG).show()

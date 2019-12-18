@@ -12,6 +12,7 @@ import com.locked.shingranicommunity.authenticate.LoginEvent
 import com.locked.shingranicommunity.authenticate.data.AuthenticationRepository
 import com.locked.shingranicommunity.authenticate.data.Result
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
+import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.tutorials.UserDao
 import com.locked.shingranicommunity.tutorials.UserDatabase
 import javax.inject.Inject
@@ -40,7 +41,7 @@ class LoginViewModel @Inject constructor(private val authenticationRepository: A
     fun login(username: String, password: String) {
         // can be launched in a separate asynchronous job
         var result: Result<LoggedInUser>? = null
-        var sharedPreferences = CommunityApp.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
+        var sharedPreferences = MyApplication.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
 
         if (sharedPreferences.getString("token","") === null || sharedPreferences.getString("token","") === "") {
             result = authenticationRepository.login(username, password)

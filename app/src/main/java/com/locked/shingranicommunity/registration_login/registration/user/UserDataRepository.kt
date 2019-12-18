@@ -1,4 +1,5 @@
-package com.locked.shingranicommunity.authenticate.data
+
+package com.locked.shingranicommunity.registration_login.registration.user
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,27 +9,47 @@ import com.locked.shingranicommunity.CommunityApp
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.authenticate.LoginEvent
+import com.locked.shingranicommunity.authenticate.data.Result
 import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import com.locked.shingranicommunity.authenticate.ui.login.LoginViewModel
+import com.locked.shingranicommunity.di.LoggedUserScope
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.tutorials.RegisterUser
 import com.locked.shingranicommunity.tutorials.User
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 import javax.security.auth.callback.Callback
-import kotlin.collections.HashMap
+import kotlin.random.Random
 
 /**
- * Class that requests authentication and user information from the remote data source and
- * maintains an in-memory cache of login status and user credentials information.
+ * UserDataRepository contains user-specific data such as username and unread notifications.
  */
+@LoggedUserScope
+class UserDataRepository @Inject constructor (private val userManager: UserManager) {
+
+    private var lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
+    val username: String
+        get() = userManager.username
+
+    var unreadNotifications: Int
+
+    init {
+        unreadNotifications = randomInt(lockedApiService)
+    }
+
+    fun refreshUnreadNotifications() {
+        unreadNotifications = randomInt(lockedApiService)
+    }
+
+
+}
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "CAST_NEVER_SUCCEEDS")
 class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: OnAuthenticatedSuccess?) {
 
     var user: LoggedInUser? = null
     var result : Result<LoggedInUser>? = null
-    val sharedPreferences: SharedPreferences = MyApplication.instance.getSharedPreferences("token",Context.MODE_PRIVATE)
+    val sharedPreferences: SharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
 
     private var lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
 
@@ -61,7 +82,7 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
                 if (response.isSuccessful){
                     loginEvent?.onLoginSuccess(true)
                     var token = response.body()?.token
-                    var user :User? = response.body()?.user
+                    var user : User? = response.body()?.user
 
                     savedToken(token, sharedPreferences)
                     setLoggedInUser(response.body()!!)
@@ -146,3 +167,65 @@ class AuthenticationRepository(var loginEvent: LoginEvent?, var registerEvent: O
 
 }
 
+
+fun login(username: String, password: String, lockedApiService: LockedApiServiceInterface) {
+    // handle login
+
+    var bodyHashMap: HashMap<String, String> = HashMap()
+    bodyHashMap.put("username",username)
+    bodyHashMap.put("password",password)
+
+    val call = lockedApiService.userLogin(bodyHashMap)
+    call.enqueue(object : Callback, retrofit2.Callback<LoggedInUser> {
+        override fun onResponse(call: Call<LoggedInUser>, response: Response<LoggedInUser>) {
+
+            if (response.isSuccessful){
+//                loginEvent?.onLoginSuccess(true)
+                var token = response.body()?.token
+                var user : User? = response.body()?.user
+
+//                savedToken(token, sharedPreferences)
+//                setLoggedInUser(response.body()!!)
+            }else{
+//                loginEvent?.onLoginFailed(response.message())
+            }
+        }
+
+        override fun onFailure(call: Call<LoggedInUser>?, t: Throwable?) {
+            Log.v("retrofit", "call failed")
+        }
+    })
+
+
+
+
+}
+
+fun randomInt(lockedApiService: LockedApiServiceInterface): Int {
+
+    var bodyHashMap: HashMap<String, String> = HashMap()
+    bodyHashMap.put("username","najeeb1@gmail.com")
+    bodyHashMap.put("password","abc123")
+
+    val call = lockedApiService.userLogin(bodyHashMap)
+    call.enqueue(object : Callback, retrofit2.Callback<LoggedInUser> {
+        override fun onResponse(call: Call<LoggedInUser>, response: Response<LoggedInUser>) {
+
+            if (response.isSuccessful){
+//                loginEvent?.onLoginSuccess(true)
+                var token = response.body()?.token
+                var user : User? = response.body()?.user
+
+//                savedToken(token, sharedPreferences)
+//                setLoggedInUser(response.body()!!)
+            }else{
+//                loginEvent?.onLoginFailed(response.message())
+            }
+        }
+
+        override fun onFailure(call: Call<LoggedInUser>?, t: Throwable?) {
+            Log.v("retrofit", "call failed")
+        }
+    })
+    return Random.nextInt(until = 100)
+}
