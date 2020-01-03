@@ -2,6 +2,7 @@ package com.locked.shingranicommunity.di
 
 import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
+import com.locked.shingranicommunity.di.scops.LoggedUserScope
 import dagger.Subcomponent
 
 @LoggedUserScope

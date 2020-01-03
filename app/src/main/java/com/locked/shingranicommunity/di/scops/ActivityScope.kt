@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.di
+package com.locked.shingranicommunity.di.scops
 
 import javax.inject.Scope
 

@@ -2,7 +2,7 @@
 
 package com.locked.shingranicommunity.registration_login.registration
 
-import com.locked.shingranicommunity.di.ActivityScope
+import com.locked.shingranicommunity.di.scops.ActivityScope
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
