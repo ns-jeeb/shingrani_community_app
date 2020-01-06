@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity.di
 
 import android.content.Context
+import com.locked.shingranicommunity.dashboard.DashBoardManager
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import com.locked.shingranicommunity.storage.StorageModule
@@ -18,6 +19,7 @@ interface AppComponent {
     }
     fun registerComponent(): RegisterComponent.Factory
     fun loginComponent(): LoginComponent.Factory
+    fun dashBoardComponent():DashboardComponent.Factory
     fun userManager(): UserManager
 
     fun inject(activity: LoginActivity)

@@ -43,7 +43,7 @@ class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
 
     object EventItemVMFactory : ViewModelProvider.Factory {
 
-        private val itemDataSource = DashboardRepositor(Dispatchers.IO)
+        private val itemDataSource = DashboardRepositor()
 
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")

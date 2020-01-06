@@ -7,12 +7,17 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
+import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
+import com.locked.shingranicommunity.storage.SharedPreferencesStorage
+import com.locked.shingranicommunity.storage.StorageModule
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
@@ -20,20 +25,26 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mBinding: ActivityLoginBinding
     @Inject
     lateinit var loginViewModel: LoginViewModel
-    lateinit var errorTextView: TextView
+//    private val _errorTextView = MutableLiveData<TextView>()
+//    private val errorTextView : LiveData<TextView>
+//        get() = _errorTextView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         (application as MyApplication).appComponent.loginComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
-
         loginViewModel.loginState.observe(this, Observer<LoginViewState> { state ->
             when (state) {
                 is LoginSuccess -> {
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
-//                is LoginError -> errorTextView.visibility = View.VISIBLE
+                is LoginError ->{
+                    mBinding.txtError?.visibility = View.VISIBLE
+                }
             }
         })
 
@@ -44,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
         mBinding.loginEmail.isEnabled = false
         mBinding.txtUserName.text = loginViewModel.getUsername()
 
-//        mBinding.loginPassword.doOnTextChanged { _, _, _, _ -> errorTextView.visibility = View.INVISIBLE }
+        mBinding.loginPassword.doOnTextChanged { _, _, _, _ -> mBinding.txtError?.visibility = View.INVISIBLE }
         mBinding.btnLogin.setOnClickListener {
             loginViewModel.login(loginViewModel.getUsername(), mBinding.loginPassword.text.toString())
         }

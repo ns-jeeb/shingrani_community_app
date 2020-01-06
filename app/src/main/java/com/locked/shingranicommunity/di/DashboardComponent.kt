@@ -1,17 +1,15 @@
 package com.locked.shingranicommunity.di
 
-import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.di.scops.LoggedUserScope
 import dagger.Subcomponent
 
 @LoggedUserScope
 @Subcomponent
-interface UserComponent {
+interface DashboardComponent {
     @Subcomponent.Factory
     interface Factory{
-        fun create(): UserComponent
+        fun create(): DashboardComponent
     }
-    fun inject(activity: MainActivity)
-//    fun inject(activity: DashBoardViewPagerActivity)
+    fun inject(activity: DashBoardViewPagerActivity)
 }

@@ -15,10 +15,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 import javax.security.auth.callback.Callback
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST", "CAST_NEVER_SUCCEEDS")
-class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemEventListener {
+class DashboardRepositor @Inject constructor() : IItemEventListener {
     override fun deleteFields(itme_id: String,token: String): String? {
         var responseMessage =""
         if (!token.isBlank()){

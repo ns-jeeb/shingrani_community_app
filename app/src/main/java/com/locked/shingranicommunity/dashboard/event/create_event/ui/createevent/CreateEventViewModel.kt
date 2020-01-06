@@ -8,6 +8,7 @@ import com.locked.shingranicommunity.dashboard.DashboardRepositor
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
 import kotlinx.coroutines.Dispatchers
+import javax.inject.Inject
 
 class CreateEventViewModel(var createDataSource: DashboardRepositor) : ViewModel() {
     lateinit var lifecycleOwner: LifecycleOwner
@@ -35,7 +36,7 @@ class CreateEventViewModel(var createDataSource: DashboardRepositor) : ViewModel
 
 object CreateEventItemVMFactory : ViewModelProvider.Factory {
 
-    private val itemDataSource = DashboardRepositor(Dispatchers.IO)
+    private val itemDataSource = DashboardRepositor()
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         @Suppress("UNCHECKED_CAST")

@@ -15,7 +15,10 @@ import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
+import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
+import javax.inject.Inject
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction, View.OnClickListener {
@@ -32,12 +35,16 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
 
     }
 
+    @Inject
+    lateinit var dashBoardViewModel: DashboardComponent
     private lateinit var mBinding : ActivityDashBoradViewPagerBinding
     private lateinit var tabs: TitlePageIndicator
     private lateinit var pager: ViewPager
     var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        dashBoardViewModel = (application as MyApplication).appComponent.dashBoardComponent().create()
+        dashBoardViewModel.inject(this)
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_dash_borad_view_pager)
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
