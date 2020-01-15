@@ -1,17 +1,11 @@
 package com.locked.shingranicommunity
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 class LockedApiService  {
 

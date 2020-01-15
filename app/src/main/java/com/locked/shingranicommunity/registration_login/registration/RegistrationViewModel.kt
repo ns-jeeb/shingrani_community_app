@@ -2,6 +2,9 @@
 
 package com.locked.shingranicommunity.registration_login.registration
 
+import android.content.Context
+import android.widget.Toast
+import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.scops.ActivityScope
 import com.locked.shingranicommunity.registration_login.registration.user.RegisterRepository
 import com.locked.shingranicommunity.registration_login.registration.user.UserDataRepository
@@ -13,7 +16,8 @@ import javax.inject.Inject
  * and fragments) uses to keep user's input data.
  */
 @ActivityScope
-class RegistrationViewModel @Inject constructor(val userManager: UserManager) {
+class RegistrationViewModel @Inject constructor(val userManager: UserManager,val context: Context) {
+
 
     private var username: String? = null
     private var password: String? = null
@@ -40,9 +44,6 @@ class RegistrationViewModel @Inject constructor(val userManager: UserManager) {
         assert(name != null)
         assert(message != null)
         assert(acceptedTCs == true)
-//        repos.unreadNotifications
-
         message = repos.register(username!!,password!!,name!!)
-        userManager.registerUser(username!!, password!!)
     }
 }

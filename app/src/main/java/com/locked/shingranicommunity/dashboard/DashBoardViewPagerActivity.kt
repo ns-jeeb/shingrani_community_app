@@ -8,7 +8,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
-import com.locked.shingranicommunity.CommunityApp
+//import com.locked.shingranicommunity.CommunityApp
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment

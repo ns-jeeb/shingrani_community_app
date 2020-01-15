@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 
-import com.locked.shingranicommunity.CommunityApp
+//import com.locked.shingranicommunity.CommunityApp
 
 import com.locked.shingranicommunity.R
 

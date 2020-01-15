@@ -1,6 +1,7 @@
 
 package com.locked.shingranicommunity.registration_login.registration.user
 
+import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
 import javax.inject.Inject
@@ -14,7 +15,7 @@ private const val PASSWORD_SUFFIX = "token"
  * Knows when the user is logged in.
  */
 @Singleton
-class UserManager @Inject constructor(private val storage: Storage,private val userFactory: UserComponent.Factory) {
+class UserManager @Inject constructor(private val storage: Storage,private val userFactory: UserComponent.Factory, private val responseEvent: ResponseEvent) {
 
     /**
      *  UserDataRepository is specific to a logged in user. This determines if the user
@@ -32,13 +33,17 @@ class UserManager @Inject constructor(private val storage: Storage,private val u
     fun isUserRegistered() = storage.getToken(REGISTERED_USER).isNotEmpty()
 
     fun registerUser(username: String, token: String) {
-        storage.setToken(REGISTERED_USER, username)
-        storage.setToken("$username$PASSWORD_SUFFIX", token)
+//        storage.setToken(REGISTERED_USER, username)
+//        storage.setToken("$username$PASSWORD_SUFFIX", token)
         userJustLoggedIn()
     }
     fun saveUser(username: String, token:String){
         storage.setToken(REGISTERED_USER, username)
         storage.setToken(PASSWORD_SUFFIX, token)
+
+    }
+    fun userCreated(message:String){
+        responseEvent.registerMessageDisplay(message)
     }
 
     fun loginUser(): Boolean {

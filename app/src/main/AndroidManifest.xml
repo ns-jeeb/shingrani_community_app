@@ -29,29 +29,15 @@
         <activity android:name=".MainActivity">
         </activity>
 
-<!--        <activity android:name=".dashboard.event.create_event.CreateItemActivity">-->
-<!--&lt;!&ndash;            <intent-filter>&ndash;&gt;-->
-<!--&lt;!&ndash;                <action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;                <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
-<!--&lt;!&ndash;            </intent-filter>&ndash;&gt;-->
-<!--        </activity>-->
-        <activity android:name=".dashboard.DashBoardViewPagerActivity" />
-<!--        <activity android:name=".authenticate.register.RegistrationActivity"></activity>-->
-<!--        <activity android:name=".authenticate.ui.login.LoginActivity">-->
+        <activity android:name=".dashboard.event.create_event.CreateItemActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
 <!--            </intent-filter>-->
-<!--        </activity>-->
-<!--        <activity android:name=".MainActivity" >-->
-<!--&lt;!&ndash;                        <intent-filter>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <action android:name="android.intent.action.MAIN" />&ndash;&gt;-->
+        </activity>
+        <activity android:name=".dashboard.DashBoardViewPagerActivity" />
 
-<!--&lt;!&ndash;                            <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt;-->
-<!--&lt;!&ndash;                        </intent-filter>&ndash;&gt;-->
-<!--        </activity>-->
     </application>
 
 </manifest>

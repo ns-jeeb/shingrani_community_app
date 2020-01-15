@@ -1,24 +1,16 @@
 
 package com.locked.shingranicommunity.registration_login.registration.login
 
-import android.content.Context
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.authenticate.LoginEvent
-import com.locked.shingranicommunity.authenticate.data.Result
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import com.locked.shingranicommunity.authenticate.ui.login.AuthenticFormState
-import com.locked.shingranicommunity.authenticate.ui.login.LoggedInUserView
-import com.locked.shingranicommunity.authenticate.ui.login.LoginResult
-import com.locked.shingranicommunity.di.scops.ActivityScope
-import com.locked.shingranicommunity.di.scops.LoggedUserScope
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+//import com.locked.shingranicommunity.authenticate.LoginEvent
+//import com.locked.shingranicommunity.authenticate.data.Result
+//import com.locked.shingranicommunity.authenticate.ui.login.AuthenticFormState
+//import com.locked.shingranicommunity.authenticate.ui.login.LoggedInUserView
+//import com.locked.shingranicommunity.authenticate.ui.login.LoginResult
 import com.locked.shingranicommunity.registration_login.registration.user.UserDataRepository
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
-import com.locked.shingranicommunity.tutorials.UserDao
-import com.locked.shingranicommunity.tutorials.UserDatabase
 import javax.inject.Inject
 
 /**
@@ -52,16 +44,16 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager) {
 
 
 
-    lateinit var  _loginEvent: LiveData<LoginEvent>
+//    lateinit var  _loginEvent: LiveData<LoginEvent>
 
 
-    private val _loginForm = MutableLiveData<AuthenticFormState>()
-    val authenticFormState: LiveData<AuthenticFormState> = _loginForm
-    private val _loginResult = MutableLiveData<LoginResult>()
-    val loginResult: LiveData<LoginResult> = _loginResult
-
-    private var userDao: UserDao? = null
-    private lateinit var db: UserDatabase
+//    private val _loginForm = MutableLiveData<AuthenticFormState>()
+//    val authenticFormState: LiveData<AuthenticFormState> = _loginForm
+//    private val _loginResult = MutableLiveData<LoginResult>()
+//    val loginResult: LiveData<LoginResult> = _loginResult
+//
+//    private var userDao: UserDao? = null
+//    private lateinit var db: UserDatabase
 
     //    val userId : String = savedStateHandle["uid"] ?:
 //    throw IllegalArgumentException("missing user id")
@@ -89,15 +81,6 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager) {
 //        }
 //    }
 
-    fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
-            _loginForm.value = AuthenticFormState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
-            _loginForm.value = AuthenticFormState(passwordError = R.string.invalid_password)
-        } else {
-            _loginForm.value = AuthenticFormState(isDataValid = true)
-        }
-    }
 
     // A placeholder username validation check
     private fun isUserNameValid(username: String): Boolean {

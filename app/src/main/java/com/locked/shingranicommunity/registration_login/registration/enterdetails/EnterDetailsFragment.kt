@@ -50,6 +50,7 @@ class EnterDetailsFragment : Fragment() {
                 when (state) {
                     is EnterDetailsSuccess -> {
                         registrationViewModel.updateUserData( mBinding.registerUsername.text.toString(), mBinding.registerPassword.text.toString(),mBinding.registerName.text.toString())
+                        registrationViewModel.registerUser()
 
                         (activity as RegistrationActivity).onTermsAndConditionsAccepted()
                     }

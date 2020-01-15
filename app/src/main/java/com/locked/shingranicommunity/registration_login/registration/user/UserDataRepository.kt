@@ -1,25 +1,17 @@
 
 package com.locked.shingranicommunity.registration_login.registration.user
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.content.SharedPreferences
 import android.util.Log
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
-import com.locked.shingranicommunity.authenticate.LoginEvent
-import com.locked.shingranicommunity.authenticate.data.Result
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import com.locked.shingranicommunity.di.scops.ActivityScope
-import com.locked.shingranicommunity.di.scops.LoggedUserScope
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
-import com.locked.shingranicommunity.tutorials.RegisterUser
-import com.locked.shingranicommunity.tutorials.User
+//import com.locked.shingranicommunity.authenticate.LoginEvent
+//import com.locked.shingranicommunity.authenticate.data.Result
+import com.locked.shingranicommunity.storage.model.LoggedInUser
+//import com.locked.shingranicommunity.tutorials.User
 import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
 import javax.security.auth.callback.Callback
-import kotlin.random.Random
 
 /**
  * UserDataRepository contains user-specific data such as username and unread notifications.
@@ -55,7 +47,7 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
                 if (response.isSuccessful){
 //                loginEvent?.onLoginSuccess(true)
                     var token = response.body()?.token
-                    var user : User? = response.body()?.user
+//                    var user : User? = response.body()?.user
                     userManager.saveUser(username, token!!)
 
 //                savedToken(token, sharedPreferences)

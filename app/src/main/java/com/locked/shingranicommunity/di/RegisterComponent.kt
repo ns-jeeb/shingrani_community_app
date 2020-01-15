@@ -13,7 +13,6 @@ interface RegisterComponent {
     interface Factory{
         fun create(): RegisterComponent
     }
-
     fun inject(activity: RegistrationActivity)
     fun inject(fragment: EnterDetailsFragment)
 

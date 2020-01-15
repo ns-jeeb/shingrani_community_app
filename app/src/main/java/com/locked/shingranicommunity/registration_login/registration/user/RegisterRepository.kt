@@ -3,9 +3,6 @@ package com.locked.shingranicommunity.registration_login.registration.user
 import android.util.Log
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
-import com.locked.shingranicommunity.authenticate.data.Result
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import com.locked.shingranicommunity.di.scops.ActivityScope
 import com.locked.shingranicommunity.tutorials.RegisterUser
 import retrofit2.Call
 import retrofit2.Response
@@ -18,15 +15,10 @@ class RegisterRepository @Inject constructor (private val userManager: UserManag
     private var lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
     val username: String
         get() = userManager.username
-
-//    var unreadNotifications: String
-
     init {
-//        unreadNotifications = register("n11.jeeb@gmail.com","abc123","najeeb11")
     }
 
     fun refreshUnreadNotifications() {
-//        unreadNotifications = randomInt(lockedApiService)
     }
 
     fun register(username: String, password: String,name: String): String {
@@ -41,7 +33,7 @@ class RegisterRepository @Inject constructor (private val userManager: UserManag
             override fun onResponse(call: Call<RegisterUser>, response: Response<RegisterUser>) {
                 if (response.isSuccessful){
                     message = response.message()
-
+                    userManager.userCreated(message)
                     Log.v("LoggedinUser", " ********* **${message} ")
                 }else{
 
