@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val REGISTERED_USER = "registered_user"
-private const val PASSWORD_SUFFIX = "password"
+private const val PASSWORD_SUFFIX = "token"
 
 /**
  * Handles User lifecycle. Manages registrations, logs in and logs out.
@@ -31,20 +31,25 @@ class UserManager @Inject constructor(private val storage: Storage,private val u
 
     fun isUserRegistered() = storage.getToken(REGISTERED_USER).isNotEmpty()
 
-    fun registerUser(username: String, password: String) {
+    fun registerUser(username: String, token: String) {
         storage.setToken(REGISTERED_USER, username)
-        storage.setToken("$username$PASSWORD_SUFFIX", password)
+        storage.setToken("$username$PASSWORD_SUFFIX", token)
         userJustLoggedIn()
     }
+    fun saveUser(username: String, token:String){
+        storage.setToken(REGISTERED_USER, username)
+        storage.setToken(PASSWORD_SUFFIX, token)
+    }
 
-    fun loginUser(username: String, password: String): Boolean {
-        val registeredUser = this.username
+    fun loginUser(): Boolean {
+
+        val registeredUser = storage.getToken(REGISTERED_USER)
         if (registeredUser.isBlank()){
             return false
         }
 
-        val registeredPassword = storage.getToken("$username$PASSWORD_SUFFIX")
-        if (registeredPassword != password) return false
+        val registeredPassword = storage.getToken(PASSWORD_SUFFIX)
+        if (registeredPassword.isBlank()) return false
 
         userJustLoggedIn()
         return true
@@ -57,11 +62,12 @@ class UserManager @Inject constructor(private val storage: Storage,private val u
     fun unregister() {
         val username = storage.getToken(REGISTERED_USER)
         storage.setToken(REGISTERED_USER, "")
-        storage.setToken("$username$PASSWORD_SUFFIX", "")
+        storage.setToken(PASSWORD_SUFFIX, "")
         logout()
     }
 
     private fun userJustLoggedIn() {
         userComponent = userFactory.create()
+
     }
 }

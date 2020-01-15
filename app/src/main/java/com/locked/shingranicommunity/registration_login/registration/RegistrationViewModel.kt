@@ -3,6 +3,8 @@
 package com.locked.shingranicommunity.registration_login.registration
 
 import com.locked.shingranicommunity.di.scops.ActivityScope
+import com.locked.shingranicommunity.registration_login.registration.user.RegisterRepository
+import com.locked.shingranicommunity.registration_login.registration.user.UserDataRepository
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
@@ -15,11 +17,17 @@ class RegistrationViewModel @Inject constructor(val userManager: UserManager) {
 
     private var username: String? = null
     private var password: String? = null
+    private var name: String? = null
+    var message: String? = null
     private var acceptedTCs: Boolean? = null
 
-    fun updateUserData(username: String, password: String) {
+    @Inject
+    lateinit var repos: RegisterRepository
+
+    fun updateUserData(username: String, password: String,name: String) {
         this.username = username
         this.password = password
+        this.name = name
     }
 
     fun acceptTCs() {
@@ -29,8 +37,12 @@ class RegistrationViewModel @Inject constructor(val userManager: UserManager) {
     fun registerUser() {
         assert(username != null)
         assert(password != null)
+        assert(name != null)
+        assert(message != null)
         assert(acceptedTCs == true)
+//        repos.unreadNotifications
 
+        message = repos.register(username!!,password!!,name!!)
         userManager.registerUser(username!!, password!!)
     }
 }

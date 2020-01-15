@@ -18,12 +18,13 @@ class EnterDetailsViewModel @Inject constructor() {
     val enterDetailsState: LiveData<EnterDetailsViewState>
         get() = _enterDetailsState
 
-    fun validateInput(username: String, password: String) {
+    fun validateInput(username: String, password: String,conformPassword: String) {
         when {
             username.length < MAX_LENGTH -> _enterDetailsState.value =
                 EnterDetailsError("Username has to be longer than 4 characters")
             password.length < MAX_LENGTH -> _enterDetailsState.value =
                 EnterDetailsError("Password has to be longer than 4 characters")
+            !password.contentEquals(conformPassword) ->_enterDetailsState.value = EnterDetailsError("password is not match")
             else -> _enterDetailsState.value = EnterDetailsSuccess
         }
     }

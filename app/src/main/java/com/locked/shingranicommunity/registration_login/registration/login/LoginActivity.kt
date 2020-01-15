@@ -12,12 +12,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
-import com.locked.shingranicommunity.storage.SharedPreferencesStorage
-import com.locked.shingranicommunity.storage.StorageModule
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
@@ -25,11 +24,6 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mBinding: ActivityLoginBinding
     @Inject
     lateinit var loginViewModel: LoginViewModel
-//    private val _errorTextView = MutableLiveData<TextView>()
-//    private val errorTextView : LiveData<TextView>
-//        get() = _errorTextView
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -39,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         loginViewModel.loginState.observe(this, Observer<LoginViewState> { state ->
             when (state) {
                 is LoginSuccess -> {
-                    startActivity(Intent(this, MainActivity::class.java))
+                    startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
                     finish()
                 }
                 is LoginError ->{
@@ -52,12 +46,13 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        mBinding.loginEmail.isEnabled = false
+        mBinding.loginEmail.isEnabled = loginViewModel.getUsername().isBlank()
+
         mBinding.txtUserName.text = loginViewModel.getUsername()
 
         mBinding.loginPassword.doOnTextChanged { _, _, _, _ -> mBinding.txtError?.visibility = View.INVISIBLE }
         mBinding.btnLogin.setOnClickListener {
-            loginViewModel.login(loginViewModel.getUsername(), mBinding.loginPassword.text.toString())
+            loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
         }
         mBinding.btnJoiningPermission.setOnClickListener {
             loginViewModel.unregister()

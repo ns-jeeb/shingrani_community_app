@@ -28,5 +28,5 @@ class MainViewModel @Inject constructor (private val userDataRepository: UserDat
         get() = "Hello ${userDataRepository.username}!"
 
     val notificationsText: String
-        get() = "You have ${userDataRepository.unreadNotifications} unread notifications"
+        get() = "You have ${userDataRepository} unread notifications"
 }

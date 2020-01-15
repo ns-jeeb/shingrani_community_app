@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
+import com.locked.shingranicommunity.databinding.ActivityLoginBinding
 import com.locked.shingranicommunity.databinding.ActivityMainBinding
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
@@ -20,11 +21,11 @@ class MainActivity : AppCompatActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityLoginBinding
     @SuppressLint("ObsoleteSdkInt")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 //        binding.setLifecycleOwner(this)
 
 
@@ -32,14 +33,14 @@ class MainActivity : AppCompatActivity() {
         if (!userManager.isUserLoggedIn()) {
             if (!userManager.isUserRegistered()) {
                 startActivity(Intent(this, RegistrationActivity::class.java))
-                finish()
+
             } else {
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }
         } else {
-            setContentView(R.layout.activity_main)
-            userManager.userComponent!!.inject(this)
+            setContentView(R.layout.activity_login)
+//            userManager.userComponent!!.inject(this)
             setupViews()
         }
 
@@ -49,12 +50,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        findViewById<TextView>(R.id.notifications).text = mainViewModel.notificationsText
     }
 
     private fun setupViews() {
-        findViewById<TextView>(R.id.hello).text = mainViewModel.welcomeText
-        findViewById<Button>(R.id.logout).setOnClickListener {
+        binding.btnJoiningPermission.setOnClickListener {
             startActivity(Intent(this,DashBoardViewPagerActivity::class.java))
 
         }
