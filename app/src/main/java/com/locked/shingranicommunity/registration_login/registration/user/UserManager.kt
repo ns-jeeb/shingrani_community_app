@@ -1,9 +1,14 @@
 
 package com.locked.shingranicommunity.registration_login.registration.user
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
+import com.locked.shingranicommunity.registration_login.registration.login.LoginError
+import com.locked.shingranicommunity.registration_login.registration.login.LoginSuccess
+import com.locked.shingranicommunity.registration_login.registration.login.LoginViewState
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,10 +45,13 @@ class UserManager @Inject constructor(private val storage: Storage,private val u
     fun saveUser(username: String, token:String){
         storage.setToken(REGISTERED_USER, username)
         storage.setToken(PASSWORD_SUFFIX, token)
-
+        responseEvent.loggedInSuccess(username)
     }
     fun userCreated(message:String){
-        responseEvent.registerMessageDisplay(message)
+        responseEvent.userCreated(username,message)
+    }
+    fun faildCreateUser(message:String){
+            responseEvent.userCreated(username,message)
     }
 
     fun loginUser(): Boolean {

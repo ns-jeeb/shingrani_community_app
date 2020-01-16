@@ -15,11 +15,6 @@ class RegisterRepository @Inject constructor (private val userManager: UserManag
     private var lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
     val username: String
         get() = userManager.username
-    init {
-    }
-
-    fun refreshUnreadNotifications() {
-    }
 
     fun register(username: String, password: String,name: String): String {
         var bodyHashMap: HashMap<String, String> = HashMap()
@@ -33,15 +28,16 @@ class RegisterRepository @Inject constructor (private val userManager: UserManag
             override fun onResponse(call: Call<RegisterUser>, response: Response<RegisterUser>) {
                 if (response.isSuccessful){
                     message = response.message()
-                    userManager.userCreated(message)
+                    userManager.userCreated("$username is $message you can login now")
                     Log.v("LoggedinUser", " ********* **${message} ")
                 }else{
-
+                    userManager.faildCreateUser("There is something wrong please try again")
                 }
             }
 
             override fun onFailure(call: Call<RegisterUser>?, t: Throwable?) {
                 Log.v("retrofit", "call failed")
+                userManager.faildCreateUser(t?.message!!)
             }
         })
 

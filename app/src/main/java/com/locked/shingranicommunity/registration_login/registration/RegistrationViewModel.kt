@@ -37,6 +37,9 @@ class RegistrationViewModel @Inject constructor(val userManager: UserManager,val
     fun acceptTCs() {
         acceptedTCs = true
     }
+    fun registrationFailed(): String{
+        return message!!
+    }
 
     fun registerUser() {
         assert(username != null)

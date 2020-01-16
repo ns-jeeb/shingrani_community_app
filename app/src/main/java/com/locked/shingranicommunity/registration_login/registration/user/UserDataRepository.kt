@@ -45,20 +45,15 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
             override fun onResponse(call: Call<LoggedInUser>, response: Response<LoggedInUser>) {
 
                 if (response.isSuccessful){
-//                loginEvent?.onLoginSuccess(true)
                     var token = response.body()?.token
-//                    var user : User? = response.body()?.user
                     userManager.saveUser(username, token!!)
 
-//                savedToken(token, sharedPreferences)
-//                setLoggedInUser(response.body()!!)
                 }else{
-//                loginEvent?.onLoginFailed(response.message())
                 }
             }
 
             override fun onFailure(call: Call<LoggedInUser>?, t: Throwable?) {
-                Log.v("retrofit", "call failed")
+                Log.v("retrofit", "call failed ${t?.message}")
             }
         })
 

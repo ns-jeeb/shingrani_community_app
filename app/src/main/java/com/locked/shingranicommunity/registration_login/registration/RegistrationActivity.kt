@@ -1,21 +1,13 @@
 
 package com.locked.shingranicommunity.registration_login.registration
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityRegistrationBinding
 import com.locked.shingranicommunity.di.RegisterComponent
-import com.locked.shingranicommunity.di.ResponseEvent
-import com.locked.shingranicommunity.mesages.DisplayResponseEvent
 import com.locked.shingranicommunity.registration_login.registration.enterdetails.EnterDetailsFragment
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
-import com.locked.shingranicommunity.storage.StorageModule
 import javax.inject.Inject
 
 class RegistrationActivity : AppCompatActivity() {

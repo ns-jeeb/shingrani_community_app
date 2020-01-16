@@ -29,7 +29,14 @@ class LoginActivity : AppCompatActivity() {
 
         (application as MyApplication).appComponent.loginComponent().create().inject(this)
         super.onCreate(savedInstanceState)
+
+        var mesage = ""
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        if (!intent.getStringExtra("message").isNullOrEmpty()) {
+            mesage = intent.getStringExtra("message")
+            mBinding.txtError.text = mesage
+            mBinding.txtError.visibility = View.VISIBLE
+        }
         loginViewModel.loginState.observe(this, Observer<LoginViewState> { state ->
             when (state) {
                 is LoginSuccess -> {
@@ -46,13 +53,23 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        mBinding.loginEmail.isEnabled = loginViewModel.getUsername().isBlank()
-
-        mBinding.txtUserName.text = loginViewModel.getUsername()
+        var username: String
+        if (loginViewModel.getUsername().isBlank()) {
+            mBinding.loginEmail.isEnabled = true
+            username = mBinding.loginEmail.text.toString()
+        }else{
+            mBinding.loginEmail.isEnabled = false
+            mBinding.txtUserName.text = loginViewModel.getUsername()
+            username = loginViewModel.getUsername()
+        }
 
         mBinding.loginPassword.doOnTextChanged { _, _, _, _ -> mBinding.txtError?.visibility = View.INVISIBLE }
+
         mBinding.btnLogin.setOnClickListener {
-            loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
+            if (username.isBlank() || mBinding.loginPassword.text.toString().isBlank()){
+                username = mBinding.loginEmail.text.toString()
+            }
+            loginViewModel.login(username, mBinding.loginPassword.text.toString())
         }
         mBinding.btnJoiningPermission.setOnClickListener {
             loginViewModel.unregister()
