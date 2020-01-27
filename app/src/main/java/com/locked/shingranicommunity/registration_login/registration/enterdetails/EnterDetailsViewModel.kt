@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import javax.inject.Inject
 
-private const val MAX_LENGTH = 5
+const val MAX_LENGTH = 5
 
 /**
  * EnterDetailsViewModel is the ViewModel that [EnterDetailsFragment] uses to
