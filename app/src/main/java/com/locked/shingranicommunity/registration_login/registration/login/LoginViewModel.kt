@@ -4,6 +4,7 @@ package com.locked.shingranicommunity.registration_login.registration.login
 import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.registration_login.registration.enterdetails.EnterDetailsError
 import com.locked.shingranicommunity.registration_login.registration.enterdetails.EnterDetailsSuccess
 import com.locked.shingranicommunity.registration_login.registration.enterdetails.MAX_LENGTH
@@ -21,7 +22,7 @@ import javax.inject.Inject
  * obtain information of what to show on the screen and handle complex logic.
  */
 
-class LoginViewModel @Inject constructor(private val userManager: UserManager) {
+class LoginViewModel @Inject constructor(private val userManager: UserManager):ViewModel() {
 
     @Inject
     lateinit var repository: UserDataRepository

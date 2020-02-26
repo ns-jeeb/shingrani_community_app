@@ -4,6 +4,7 @@ package com.locked.shingranicommunity.registration_login.registration
 
 import android.content.Context
 import android.widget.Toast
+import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.scops.ActivityScope
 import com.locked.shingranicommunity.registration_login.registration.user.RegisterRepository
@@ -16,7 +17,7 @@ import javax.inject.Inject
  * and fragments) uses to keep user's input data.
  */
 @ActivityScope
-class RegistrationViewModel @Inject constructor(val userManager: UserManager,val context: Context) {
+class RegistrationViewModel @Inject constructor(val userManager: UserManager,val context: Context): ViewModel() {
 
 
     private var username: String? = null
