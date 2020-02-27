@@ -2,22 +2,12 @@ package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import android.content.Context
 import androidx.lifecycle.*
-import com.locked.shingranicommunity.ViewModelProviderFactory
-import com.locked.shingranicommunity.dashboard.IItemEventListener
+import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
-import java.util.ArrayList
 import javax.inject.Inject
 
-class EventViewModel @Inject constructor(val itemEventHandler: IItemEventListener, val context: Context): ViewModel() {
-
-//    lateinit var lifecycleOwner: LifecycleOwner
-
-
-    val _fetchItems: MutableLiveData<List<Item>> by lazy {
-        MutableLiveData<List<Item>>()
-    }
+class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequestListener, val context: Context): ViewModel() {
 
     fun load(): List<Item> {
 
@@ -26,7 +16,6 @@ class EventViewModel @Inject constructor(val itemEventHandler: IItemEventListene
         return items
     }
     fun onRefresh() {
-        // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
             itemEventHandler.fetchEvent(TEMPLATE_EVENT)
         }
@@ -36,17 +25,11 @@ class EventViewModel @Inject constructor(val itemEventHandler: IItemEventListene
     }
 
     companion object {
-        // Real apps would use a wrapper on the result type to handle this.
         const val TEMPLATE_EVENT = "5d770cd8ea2f6b1300f03ca7"
     }
 
-//    object EventItemVMFactory : ViewModelProvider.Factory {
-//
-//        private val itemDataSource = DashboardRepositor()
-//
-//        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-//            @Suppress("UNCHECKED_CAST")
-//            return EventViewModel(itemDataSource) as T
-//        }
-//    }
+    fun itemsLoaded():LiveData<ArrayList<Item>>{
+        return itemEventHandler.fetchEvent(TEMPLATE_EVENT)!!
+    }
+
 }

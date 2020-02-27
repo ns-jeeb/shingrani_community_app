@@ -7,18 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.FragmentEnterDetailsBinding
-import com.locked.shingranicommunity.di.RegisterComponent
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
 import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
@@ -26,15 +20,6 @@ import javax.inject.Inject
 
 class EnterDetailsFragment : Fragment() {
 
-    /**
-     * RegistrationViewModel is used to set the username and password information (attached to
-     * Activity's lifecycle and shared between different fragments)
-     * EnterDetailsViewModel is used to validate the user input (attached to this
-     * Fragment's lifecycle)
-     *
-     * They could get combined but for the sake of the codelab, we're separating them so we have
-     * different ViewModels with different lifecycles.
-     */
     @Inject
     lateinit var registrationViewModel: RegistrationViewModel
     @Inject

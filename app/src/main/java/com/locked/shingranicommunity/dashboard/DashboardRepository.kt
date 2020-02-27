@@ -1,21 +1,16 @@
 package com.locked.shingranicommunity.dashboard
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.LiveDataReactiveStreams
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.SingleTone
+import com.locked.shingranicommunity.dashboard.response.DashboardResponseLister
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
-import com.locked.shingranicommunity.utail.AuthResource
-import io.reactivex.functions.Function
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -24,7 +19,8 @@ import javax.inject.Inject
 import javax.security.auth.callback.Callback
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST", "CAST_NEVER_SUCCEEDS")
-class DashboardRepositor @Inject constructor() : IItemEventListener {
+class DashboardRepositor @Inject constructor(private var responseLister: DashboardResponseLister
+) : DashboardItemRequestListener {
     override fun deleteFields(itme_id: String,token: String): String? {
         var responseMessage =""
         if (!token.isBlank()){
@@ -34,30 +30,55 @@ class DashboardRepositor @Inject constructor() : IItemEventListener {
     }
 
 
-    override fun fetchAnnouncement(template: String): LiveData<List<Item>>? {
-        loadAnnouncement(template)
-        if (!item?.value.isNullOrEmpty()){
-            return item?.value as? LiveData<List<Item>>
-        }else{
-            item?.value?.add(Item())
-            return null
+    override fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>? {
+
+        if (token != null) {
+            if (!token.isNullOrBlank()){
+                var call = lockedApiService.getItems(template, token!! )
+                call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
+                    override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
+                        Log.d("Item_Response","response is working")
+
+                        if (response.isSuccessful && item != null) {
+                            item!!.postValue(response.body())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
+                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
         }
+        return item
     }
 
-    override fun fetchEvent(template: String): LiveData<List<Item>>? {
-        loadEvent(template)
-        if (!item?.value.isNullOrEmpty()){
-            return item?.value as? LiveData<List<Item>>
-        }else{
-            item?.value?.add(Item())
-            return null
+    override fun fetchEvent(template: String): MutableLiveData<ArrayList<Item>>? {
+        if (token != null) {
+            if (!token.isNullOrBlank()){
+                var call = lockedApiService.getItems(template, token!!)
+                call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
+                    override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
+                        Log.d("Item_Response","response is working")
+
+                        if (response.isSuccessful && item != null) {
+                            item!!.postValue(response.body())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
+                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
         }
+        return item
     }
 
-    override var cachedData= MutableLiveData<List<Item>>()
+    override var cachedData= MutableLiveData<ArrayList<Item>>()
 
 
-    override fun getFields(): LiveData<List<Item>>?{
+    override fun getFields(): LiveData<ArrayList<Item>>?{
         Log.d("Items_Event","test")
         return cachedData
     }
@@ -70,58 +91,8 @@ class DashboardRepositor @Inject constructor() : IItemEventListener {
     private val sharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
     private var token: String? = sharedPreferences.getString("token","")
 
-    var item: MutableLiveData<ArrayList<Item>>? =  MutableLiveData()
-    fun loadEvent(template: String){
+    var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
 
-        var myItem : Item
-        if (token != null) {
-            if (!token.isNullOrBlank()){
-                var call = lockedApiService.getItems(template, token!!)
-                call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
-                    override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
-                       Log.d("Item_Response","response is working")
-
-                        if (response.isSuccessful && item != null) {
-                            item!!.postValue(response.body())
-                            item!!.value?.get(0)?.let { SingleTone.getInstance().setItem(itm = it) }
-                            cachedData.value = response.body()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
-                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
-        }
-
-    }
-
-    fun loadAnnouncement(template: String){
-
-        if (token != null) {
-            if (!token.isNullOrBlank()){
-                var call = lockedApiService.getItems(template, token!! )
-                call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
-                    override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
-                        Log.d("Item_Response","response is working")
-
-                        if (response.isSuccessful && item != null) {
-                            item!!.postValue(response.body())
-                            item!!.value?.get(0)?.let { SingleTone.getInstance().setItem(itm = it) }
-                            cachedData.value = response.body()
-
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
-                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
-        }
-
-    }
 
     fun createEvent(fields:ArrayList<Field>, title: String){
 

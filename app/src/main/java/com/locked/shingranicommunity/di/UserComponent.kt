@@ -14,6 +14,4 @@ interface UserComponent {
     interface Factory{
         fun create(): UserComponent
     }
-//    fun inject(activity: MainActivity)
-//    fun inject(activity: DashBoardViewPagerActivity)
 }

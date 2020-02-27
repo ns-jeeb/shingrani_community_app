@@ -1,21 +1,15 @@
 package com.locked.shingranicommunity.registration_login.registration.login
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
-import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
-import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
-import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
 import javax.inject.Inject
@@ -58,12 +52,11 @@ class LoginActivity : AppCompatActivity() {
         })
 
         if (!token!!.isBlank()) {
-//            mBinding.loading.visibility = View.GONE
-//            startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
-//            finish()
+            hideOrShowProgress(false)
+            startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
+            finish()
         }else{
-            mBinding.loading.visibility = View.GONE
-            mBinding.txtUserName.text = loginViewModel.getUsername()
+            hideOrShowProgress(false)
         }
         setupViews()
     }
@@ -80,9 +73,6 @@ class LoginActivity : AppCompatActivity() {
         mBinding.btnLogin.setOnClickListener {
             if (loginViewModel.validateInput(mBinding.txtUserName.text.toString(),mBinding.loginPassword.text.toString())){
                 loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
-            }else{
-                startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
-                finish()
             }
         }
         mBinding.btnJoiningPermission.setOnClickListener {
@@ -93,6 +83,16 @@ class LoginActivity : AppCompatActivity() {
                     Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
+    }
+    fun hideOrShowProgress(showProgress: Boolean) {
+        if (showProgress) {
+            mBinding.loading.visibility = View.VISIBLE
+            mBinding.loading.visibility = View.VISIBLE
+        }else{
+            mBinding.loading.visibility = View.GONE
+            mBinding.loading.visibility = View.GONE
+        }
+
     }
 }
 

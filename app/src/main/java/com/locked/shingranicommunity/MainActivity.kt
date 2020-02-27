@@ -4,16 +4,12 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
-import com.locked.shingranicommunity.databinding.ActivityMainBinding
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
-import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

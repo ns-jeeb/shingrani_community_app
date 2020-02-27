@@ -1,15 +1,17 @@
 package com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent
 
-import androidx.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
+import javax.inject.Inject
 
 class CreateEventFragment : Fragment() ,View.OnClickListener{
     override fun onClick(v: View?) {
@@ -31,10 +33,12 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
         fun newInstance() = CreateEventFragment()
     }
 
-    private  val viewModel: CreateEventViewModel by viewModels { CreateEventItemVMFactory }
+    @Inject
+    lateinit var viewModelProviders: ViewModelProviderFactory
+    lateinit var viewModel: CreateEventViewModel
 
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-        viewModel.lifecycleOwner = this
+//        viewModel.lifecycleOwner = this
         mBinding = DataBindingUtil.inflate(inflater,R.layout.create_event_fragment,container,false)
 
         mBinding.btnCrEvent.setOnClickListener(this)
@@ -44,6 +48,11 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (activity as CreateItemActivity).dashboardCompunent.inject(this)
     }
 
 }

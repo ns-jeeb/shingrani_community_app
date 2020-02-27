@@ -5,22 +5,11 @@ import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.locked.shingranicommunity.registration_login.registration.enterdetails.EnterDetailsError
-import com.locked.shingranicommunity.registration_login.registration.enterdetails.EnterDetailsSuccess
 import com.locked.shingranicommunity.registration_login.registration.enterdetails.MAX_LENGTH
-//import com.locked.shingranicommunity.authenticate.LoginEvent
-//import com.locked.shingranicommunity.authenticate.data.Result
-//import com.locked.shingranicommunity.authenticate.ui.login.AuthenticFormState
-//import com.locked.shingranicommunity.authenticate.ui.login.LoggedInUserView
-//import com.locked.shingranicommunity.authenticate.ui.login.LoginResult
 import com.locked.shingranicommunity.registration_login.registration.user.UserDataRepository
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
-/**
- * LoginViewModel is the ViewModel that [LoginActivity] uses to
- * obtain information of what to show on the screen and handle complex logic.
- */
 
 class LoginViewModel @Inject constructor(private val userManager: UserManager):ViewModel() {
 

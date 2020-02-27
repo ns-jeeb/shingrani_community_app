@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
+import com.locked.shingranicommunity.dashboard.announncement.AnnounceViewModel
+import com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent.CreateEventViewModel
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventViewModel
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
@@ -37,16 +39,16 @@ abstract class ViewModelProviderModul {
     @MyApplication.ViewModelKey(EventViewModel::class)
     abstract fun eventViewModel(eventViewModel: EventViewModel):ViewModel
 
-//    @Binds
-//    @IntoMap
-//    @MyApplication.ViewModelKey()
-//    abstract fun loginViewModel():ViewModel
-//
-//    @Binds
-//    @IntoMap
-//    @MyApplication.ViewModelKey()
-//    abstract fun loginViewModel():ViewModel
-//
+    @Binds
+    @IntoMap
+    @MyApplication.ViewModelKey(CreateEventViewModel::class)
+    abstract fun createEventViewModel(createEventViewModel: CreateEventViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @MyApplication.ViewModelKey(AnnounceViewModel::class)
+    abstract fun announcementViewModel(announceViewModel: AnnounceViewModel):ViewModel
+
 //    @Binds
 //    @IntoMap
 //    @MyApplication.ViewModelKey()

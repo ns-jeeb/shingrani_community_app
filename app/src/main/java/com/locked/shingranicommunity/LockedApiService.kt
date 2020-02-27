@@ -20,18 +20,10 @@ class LockedApiService  {
         interceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
         if (BuildConfig.DEBUG) {
-            // development build
             interceptor.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder().addInterceptor(
                 interceptor
-                //                    new Interceptor() {
-                //                @Override
-                //                public Response intercept(Chain chain) throws IOException {
-                //                    Request request = chain.request().newBuilder().addH
-                //                    return null;
-                //                }
-                //            }
             )
                 .addNetworkInterceptor(StethoInterceptor())
                 .connectTimeout(30, TimeUnit.MINUTES).readTimeout(30, TimeUnit.MINUTES)

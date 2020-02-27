@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
-//import com.locked.shingranicommunity.CommunityApp
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
@@ -17,7 +16,6 @@ import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragme
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
-import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
 import javax.inject.Inject
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -73,7 +71,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
 
     override fun onStart() {
         super.onStart()
-//        viewModel = ViewModelProviders.of(this, DashboardProviders()).get(DashboardViewModel::class.java)
     }
 
     fun setpuViewPager(token: String){
@@ -117,5 +114,16 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         inten.putExtras(bundle)
         inten.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(inten)
+    }
+
+    fun hideOrShowProgress(showProgress: Boolean) {
+        if (showProgress) {
+            mBinding.loadingItemProgress.visibility = View.VISIBLE
+            mBinding.txtLoadingItem.visibility = View.VISIBLE
+        }else{
+            mBinding.loadingItemProgress.visibility = View.GONE
+            mBinding.txtLoadingItem.visibility = View.GONE
+        }
+
     }
 }
