@@ -58,9 +58,9 @@ class LoginActivity : AppCompatActivity() {
         })
 
         if (!token!!.isBlank()) {
-            mBinding.loading.visibility = View.GONE
-            startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
-            finish()
+//            mBinding.loading.visibility = View.GONE
+//            startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
+//            finish()
         }else{
             mBinding.loading.visibility = View.GONE
             mBinding.txtUserName.text = loginViewModel.getUsername()

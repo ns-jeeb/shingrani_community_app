@@ -67,7 +67,8 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
                 return true
             }
             else -> {
-                _loginState.value = LoginSuccess
+                login(username, password)
+//                _loginState.value = LoginSuccess
                 return false
             }
         }

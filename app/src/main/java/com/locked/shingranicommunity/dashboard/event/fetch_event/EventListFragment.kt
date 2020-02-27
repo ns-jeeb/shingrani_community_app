@@ -62,12 +62,12 @@ class EventListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity!! as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
         if (context is OnEventFragmentTransaction) {
             mListener = context
         } else {
             throw RuntimeException("$context must implement OnEventFragmentTransaction")
         }
+        (activity!! as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
 
 
     }

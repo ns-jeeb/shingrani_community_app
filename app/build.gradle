@@ -73,6 +73,11 @@ dependencies {
 
     def fragment_version = "1.1.0"
 
+    def rxandroid_version = "3.0.0"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+
+    def rxjava_version = "2.2.0"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     // Java
     implementation "androidx.fragment:fragment:$fragment_version"
     // Kotlin
@@ -149,4 +154,7 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.quanqi:android-view-pager-indicator:0.9.0'
+
+    def rxcalladapter_version = '2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version" // Retrofit call adapter
 }

@@ -2,15 +2,18 @@ package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import android.content.Context
 import androidx.lifecycle.*
+import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.dashboard.IItemEventListener
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
 import java.util.ArrayList
 import javax.inject.Inject
 
-class EventViewModel @Inject constructor(val userManager: UserManager, val context: Context): ViewModel() {
+class EventViewModel @Inject constructor(val itemEventHandler: IItemEventListener, val context: Context): ViewModel() {
 
-    lateinit var lifecycleOwner: LifecycleOwner
+//    lateinit var lifecycleOwner: LifecycleOwner
+
 
     val _fetchItems: MutableLiveData<List<Item>> by lazy {
         MutableLiveData<List<Item>>()
@@ -19,20 +22,17 @@ class EventViewModel @Inject constructor(val userManager: UserManager, val conte
     fun load(): List<Item> {
 
         var items: List<Item> = ArrayList()
-//        IItemEventListener.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
-//            _fetchItems.postValue(it)
-//
-//        })
+        itemEventHandler.fetchEvent(TEMPLATE_EVENT)
         return items
     }
     fun onRefresh() {
         // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
-//            IItemEventListener.fetchEvent(TEMPLATE_EVENT)
+            itemEventHandler.fetchEvent(TEMPLATE_EVENT)
         }
     }
     fun itemDelete(itemId: String,token:String){
-//        IItemEventListener.deleteFields(itemId,token)
+        itemEventHandler.deleteFields(itemId,token)
     }
 
     companion object {
