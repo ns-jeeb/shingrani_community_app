@@ -16,7 +16,7 @@ import javax.inject.Inject
  * RegistrationViewModel is the ViewModel that the Registration flow ([RegistrationActivity]
  * and fragments) uses to keep user's input data.
  */
-@ActivityScope
+
 class RegistrationViewModel @Inject constructor(val userManager: UserManager,val context: Context): ViewModel() {
 
 

@@ -1,15 +1,14 @@
 package com.locked.shingranicommunity.dashboard.event.fetch_event
 
+import android.content.Context
 import androidx.lifecycle.*
-import com.locked.shingranicommunity.dashboard.DashboardRepositor
-import com.locked.shingranicommunity.dashboard.IItemEventListener
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.SingleTone
-import kotlinx.coroutines.Dispatchers
+import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
 import java.util.ArrayList
+import javax.inject.Inject
 
-class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
+class EventViewModel @Inject constructor(val userManager: UserManager, val context: Context): ViewModel() {
 
     lateinit var lifecycleOwner: LifecycleOwner
 
@@ -20,20 +19,20 @@ class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
     fun load(): List<Item> {
 
         var items: List<Item> = ArrayList()
-        IItemEventListener.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
-            _fetchItems.postValue(it)
-
-        })
+//        IItemEventListener.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
+//            _fetchItems.postValue(it)
+//
+//        })
         return items
     }
     fun onRefresh() {
         // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
-            IItemEventListener.fetchEvent(TEMPLATE_EVENT)
+//            IItemEventListener.fetchEvent(TEMPLATE_EVENT)
         }
     }
     fun itemDelete(itemId: String,token:String){
-        IItemEventListener.deleteFields(itemId,token)
+//        IItemEventListener.deleteFields(itemId,token)
     }
 
     companion object {
@@ -41,13 +40,13 @@ class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
         const val TEMPLATE_EVENT = "5d770cd8ea2f6b1300f03ca7"
     }
 
-    object EventItemVMFactory : ViewModelProvider.Factory {
-
-        private val itemDataSource = DashboardRepositor()
-
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return EventViewModel(itemDataSource) as T
-        }
-    }
+//    object EventItemVMFactory : ViewModelProvider.Factory {
+//
+//        private val itemDataSource = DashboardRepositor()
+//
+//        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+//            @Suppress("UNCHECKED_CAST")
+//            return EventViewModel(itemDataSource) as T
+//        }
+//    }
 }

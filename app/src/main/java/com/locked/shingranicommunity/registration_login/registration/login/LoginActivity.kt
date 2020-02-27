@@ -10,9 +10,7 @@ import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 import com.locked.shingranicommunity.MainActivity
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
@@ -27,6 +25,8 @@ class LoginActivity : AppCompatActivity() {
     lateinit var mBinding: ActivityLoginBinding
     @Inject
     lateinit var loginViewModel: LoginViewModel
+    @Inject
+    lateinit var viewModelProvider : ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
             mBinding.txtError.text = mesage
             mBinding.txtError.visibility = View.VISIBLE
         }
+        loginViewModel = ViewModelProviders.of(this, viewModelProvider).get(LoginViewModel::class.java)
         mBinding.loading.visibility = View.VISIBLE
 
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")

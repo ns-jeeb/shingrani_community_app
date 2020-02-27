@@ -14,10 +14,17 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
+import com.locked.shingranicommunity.di.DashboardComponent
+import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
+import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
@@ -35,7 +42,9 @@ class EventListFragment : Fragment() {
     private var mListener: OnEventFragmentTransaction? = null
     private lateinit var mBinding : FragmentEventListBinding
 
-    private val eventViewModel: EventViewModel by viewModels { EventViewModel.EventItemVMFactory }
+    lateinit var eventViewModel: EventViewModel
+    @Inject
+    lateinit var viewModelProviders: ViewModelProvider.Factory
 
     companion object{
         fun newInstance(token: String, isCreate: Boolean): EventListFragment {
@@ -53,12 +62,14 @@ class EventListFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        (activity!! as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
         if (context is OnEventFragmentTransaction) {
             mListener = context
         } else {
             throw RuntimeException("$context must implement OnEventFragmentTransaction")
         }
-        eventViewModel.lifecycleOwner = this
+
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +84,7 @@ class EventListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event_list, container, false)
-
+        eventViewModel = ViewModelProviders.of(this,viewModelProviders).get(EventViewModel::class.java)
         eventViewModel.load()
 
         eventViewModel._fetchItems.let {
@@ -84,6 +95,7 @@ class EventListFragment : Fragment() {
 
             }
         }
+
         eventViewModel._fetchItems.observe(this, Observer {
             val adapter = EventsListAdapter(it)
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

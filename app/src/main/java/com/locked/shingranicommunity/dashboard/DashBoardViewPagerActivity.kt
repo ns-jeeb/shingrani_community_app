@@ -35,17 +35,19 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
 
     }
 
-//    @Inject
-//    lateinit var dashBoardViewModel: DashboardComponent
+    @Inject
+    lateinit var  dashBoardViewModel: DashBoardViewModel
+    @Inject
+    lateinit var dashboardCompunent : DashboardComponent
+
     private lateinit var mBinding : ActivityDashBoradViewPagerBinding
     private lateinit var tabs: TitlePageIndicator
     private lateinit var pager: ViewPager
     var token = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        dashBoardViewModel = (application as MyApplication).appComponent.dashBoardComponent().create()
-//        dashBoardVie
-//        wModel.inject(this)
+        dashboardCompunent = (application as MyApplication).appComponent.dashBoardComponent().create()
+        dashboardCompunent.inject(this)
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_dash_borad_view_pager)
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
