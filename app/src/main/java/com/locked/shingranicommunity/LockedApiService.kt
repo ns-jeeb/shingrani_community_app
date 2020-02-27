@@ -1,17 +1,11 @@
 package com.locked.shingranicommunity
 
 import com.facebook.stetho.okhttp3.StethoInterceptor
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 class LockedApiService  {
 
@@ -26,18 +20,10 @@ class LockedApiService  {
         interceptor.level = HttpLoggingInterceptor.Level.HEADERS
 
         if (BuildConfig.DEBUG) {
-            // development build
             interceptor.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder().addInterceptor(
                 interceptor
-                //                    new Interceptor() {
-                //                @Override
-                //                public Response intercept(Chain chain) throws IOException {
-                //                    Request request = chain.request().newBuilder().addH
-                //                    return null;
-                //                }
-                //            }
             )
                 .addNetworkInterceptor(StethoInterceptor())
                 .connectTimeout(30, TimeUnit.MINUTES).readTimeout(30, TimeUnit.MINUTES)

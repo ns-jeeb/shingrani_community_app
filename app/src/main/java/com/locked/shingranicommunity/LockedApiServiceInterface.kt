@@ -1,6 +1,6 @@
 package com.locked.shingranicommunity
 
-import com.locked.shingranicommunity.authenticate.data.model.LoggedInUser
+import com.locked.shingranicommunity.storage.model.LoggedInUser
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.tutorials.RegisterUser
 import retrofit2.Call

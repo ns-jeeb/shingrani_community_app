@@ -3,10 +3,8 @@ package com.locked.shingranicommunity.dashboard.event
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.EventItemBinding
 

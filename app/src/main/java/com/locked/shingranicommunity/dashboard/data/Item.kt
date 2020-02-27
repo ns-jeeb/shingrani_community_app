@@ -35,6 +35,7 @@ class SingleTone private constructor() {
 
     companion object {
         private var instance: SingleTone? = null
+        var item: Item = Item()
 
         fun getInstance(): SingleTone {
             if (instance == null) {
@@ -46,6 +47,9 @@ class SingleTone private constructor() {
     }
     fun setItem(itm:Item){
         this.item = itm
+    }
+    fun getItem() : Item?{
+        return this.item
     }
 
 }

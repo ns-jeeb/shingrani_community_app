@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.locked.shingranicommunity">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".CommunityApp"
+        android:name=".registration_login.registration.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,6 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <activity android:name=".registration_login.registration.login.LoginActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".registration_login.registration.RegistrationActivity">
+
+        </activity>
+
+        <activity android:name=".MainActivity">
+        </activity>
+
         <activity android:name=".dashboard.event.create_event.CreateItemActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -20,17 +37,7 @@
 <!--            </intent-filter>-->
         </activity>
         <activity android:name=".dashboard.DashBoardViewPagerActivity" />
-        <activity android:name=".authenticate.register.RegistrationActivity"></activity>
-        <activity android:name=".authenticate.ui.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

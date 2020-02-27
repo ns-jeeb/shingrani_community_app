@@ -1,53 +1,35 @@
 package com.locked.shingranicommunity.dashboard.event.fetch_event
 
+import android.content.Context
 import androidx.lifecycle.*
-import com.locked.shingranicommunity.dashboard.DashboardRepositor
-import com.locked.shingranicommunity.dashboard.IItemEventListener
+import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.SingleTone
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.util.ArrayList
+import javax.inject.Inject
 
-class EventViewModel(val IItemEventListener: IItemEventListener) : ViewModel() {
-
-    lateinit var lifecycleOwner: LifecycleOwner
-
-    val _fetchItems: MutableLiveData<List<Item>> by lazy {
-        MutableLiveData<List<Item>>()
-    }
+class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequestListener, val context: Context): ViewModel() {
 
     fun load(): List<Item> {
 
         var items: List<Item> = ArrayList()
-        IItemEventListener.cachedData?.observe(lifecycleOwner as EventListFragment, Observer {
-            _fetchItems.postValue(it)
-
-        })
+        itemEventHandler.fetchEvent(TEMPLATE_EVENT)
         return items
     }
     fun onRefresh() {
-        // Launch a coroutine that reads from a remote data source and updates cache
         viewModelScope.launch {
-            IItemEventListener.fetchEvent(TEMPLATE_EVENT)
+            itemEventHandler.fetchEvent(TEMPLATE_EVENT)
         }
     }
     fun itemDelete(itemId: String,token:String){
-        IItemEventListener.deleteFields(itemId,token)
+        itemEventHandler.deleteFields(itemId,token)
     }
 
     companion object {
-        // Real apps would use a wrapper on the result type to handle this.
         const val TEMPLATE_EVENT = "5d770cd8ea2f6b1300f03ca7"
     }
 
-    object EventItemVMFactory : ViewModelProvider.Factory {
-
-        private val itemDataSource = DashboardRepositor(Dispatchers.IO)
-
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            @Suppress("UNCHECKED_CAST")
-            return EventViewModel(itemDataSource) as T
-        }
+    fun itemsLoaded():LiveData<ArrayList<Item>>{
+        return itemEventHandler.fetchEvent(TEMPLATE_EVENT)!!
     }
+
 }

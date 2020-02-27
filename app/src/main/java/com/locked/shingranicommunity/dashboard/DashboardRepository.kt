@@ -5,19 +5,22 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.locked.shingranicommunity.*
+import com.locked.shingranicommunity.LockedApiService
+import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.SingleTone
-import kotlinx.coroutines.CoroutineDispatcher
+import com.locked.shingranicommunity.dashboard.response.DashboardResponseLister
+import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Response
+import javax.inject.Inject
 import javax.security.auth.callback.Callback
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST", "CAST_NEVER_SUCCEEDS")
-class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemEventListener {
+class DashboardRepositor @Inject constructor(private var responseLister: DashboardResponseLister
+) : DashboardItemRequestListener {
     override fun deleteFields(itme_id: String,token: String): String? {
         var responseMessage =""
         if (!token.isBlank()){
@@ -27,71 +30,7 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
     }
 
 
-    override fun fetchAnnouncement(template: String): LiveData<List<Item>>? {
-        loadAnnouncement(template)
-        if (!item?.value.isNullOrEmpty()){
-            return item?.value as? LiveData<List<Item>>
-        }else{
-            item?.value?.add(Item())
-            return null
-        }
-    }
-
-    override fun fetchEvent(template: String): LiveData<List<Item>>? {
-        loadEvent(template)
-        if (!item?.value.isNullOrEmpty()){
-            return item?.value as? LiveData<List<Item>>
-        }else{
-            item?.value?.add(Item())
-            return null
-        }
-    }
-
-    override var cachedData= MutableLiveData<List<Item>>()
-
-
-    override fun getFields(): LiveData<List<Item>>?{
-        Log.d("Items_Event","test")
-        return cachedData
-    }
-
-    override suspend fun fetchNewItem() {
-        withContext(Dispatchers.Main) {
-        }
-    }
-
-    private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
-    private val sharedPreferences = CommunityApp.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
-    private var token: String? = sharedPreferences.getString("token","")
-
-    var item: MutableLiveData<ArrayList<Item>>? =  MutableLiveData()
-    fun loadEvent(template: String){
-
-        var myItem : Item
-        if (token != null) {
-            if (!token.isNullOrBlank()){
-                var call = lockedApiService.getItems(template, token!!)
-                call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
-                    override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
-                       Log.d("Item_Response","response is working")
-
-                        if (response.isSuccessful && item != null) {
-                            item!!.postValue(response.body())
-//                            SingleTone.getInstance().setItem(item!!.value?.get(0)!!)
-                            cachedData.value = response.body()
-                        }
-                    }
-
-                    override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
-                        Toast.makeText(CommunityApp.instance,"response Failed", Toast.LENGTH_LONG).show()
-                    }
-                })
-            }
-        }
-
-    }
-
-    fun loadAnnouncement(template: String){
+    override fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>? {
 
         if (token != null) {
             if (!token.isNullOrBlank()){
@@ -102,19 +41,58 @@ class DashboardRepositor(private val ioDispatcher: CoroutineDispatcher) : IItemE
 
                         if (response.isSuccessful && item != null) {
                             item!!.postValue(response.body())
-                            cachedData.value = response.body()
-
                         }
                     }
 
                     override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
-                        Toast.makeText(CommunityApp.instance,"response Failed", Toast.LENGTH_LONG).show()
+                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
                     }
                 })
             }
         }
-
+        return item
     }
+
+    override fun fetchEvent(template: String): MutableLiveData<ArrayList<Item>>? {
+        if (token != null) {
+            if (!token.isNullOrBlank()){
+                var call = lockedApiService.getItems(template, token!!)
+                call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
+                    override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
+                        Log.d("Item_Response","response is working")
+
+                        if (response.isSuccessful && item != null) {
+                            item!!.postValue(response.body())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
+                        Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
+                    }
+                })
+            }
+        }
+        return item
+    }
+
+    override var cachedData= MutableLiveData<ArrayList<Item>>()
+
+
+    override fun getFields(): LiveData<ArrayList<Item>>?{
+        Log.d("Items_Event","test")
+        return cachedData
+    }
+
+    override suspend fun fetchNewItem() {
+        withContext(Dispatchers.Main) {
+        }
+    }
+    private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
+    private val sharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
+    private var token: String? = sharedPreferences.getString("token","")
+
+    var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
+
 
     fun createEvent(fields:ArrayList<Field>, title: String){
 
