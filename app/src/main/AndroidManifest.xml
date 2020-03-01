@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.locked.shingranicommunity">
+
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,31 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".dashboard.event.create_event.UserListActivity"></activity>
         <activity android:name=".registration_login.registration.login.LoginActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration_login.registration.RegistrationActivity">
-
-        </activity>
-
-        <activity android:name=".MainActivity">
-        </activity>
-
+        <activity android:name=".registration_login.registration.RegistrationActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".dashboard.event.create_event.CreateItemActivity">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
         </activity>
         <activity android:name=".dashboard.DashBoardViewPagerActivity" />
-
     </application>
 
 </manifest>

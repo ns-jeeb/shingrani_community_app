@@ -1,11 +1,13 @@
 package com.locked.shingranicommunity.dashboard
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
 import com.viewpagerindicator.TitlePageIndicator
@@ -114,6 +116,13 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         inten.putExtras(bundle)
         inten.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(inten)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 100) {
+            Toast.makeText(this,"Item is created ${data?.getStringExtra("response_message")}",Toast.LENGTH_LONG).show()
+        }
     }
 
     fun hideOrShowProgress(showProgress: Boolean) {
