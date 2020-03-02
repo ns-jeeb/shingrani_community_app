@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity.dashboard.announncement
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,7 +19,10 @@ import javax.inject.Inject
 
 class AnnounceFragment : Fragment(),View.OnClickListener {
     override fun onClick(v: View?) {
-
+        if (v?.id == R.id.fab_create_announcement){
+            var intent = Intent(activity, CreateAnnouncementActivity::class.java)
+            startActivityForResult(intent, 102)
+        }
     }
 
     companion object {
@@ -43,6 +47,7 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
                 viewModel.onRefresh()
             }
         }
+        mBinding?.fabCreateAnnouncement?.setOnClickListener(this)
 
         viewModel.loadedAnnouncements().observe(this, Observer {
             val adapter = AnnounceListAdapter(it)

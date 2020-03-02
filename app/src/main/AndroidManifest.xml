@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".dashboard.event.create_event.UserListActivity"></activity>
+        <activity android:name=".dashboard.announncement.CreateAnnouncementActivity"></activity>
+        <activity android:name=".dashboard.event.create_event.UserListActivity" />
         <activity android:name=".registration_login.registration.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,8 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".registration_login.registration.RegistrationActivity"></activity>
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".registration_login.registration.RegistrationActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".dashboard.event.create_event.CreateItemActivity">
 
             <!-- <intent-filter> -->
