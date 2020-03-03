@@ -6,6 +6,8 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -17,18 +19,19 @@ import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActi
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 import com.locked.shingranicommunity.di.DashboardComponent
+import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import javax.inject.Inject
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction, View.OnClickListener {
     override fun onClick(v: View?) {
-        if (v?.id == R.id.img_create_item){
-            createItem(token)
-        }
-        if (v?.id == R.id.img_profile) {
-            getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token","").apply()
-        }
+//        if (v?.id == R.id.img_create_item){
+//            createItem(token)
+//        }
+//        if (v?.id == R.id.img_profile) {
+//            getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token","").apply()
+//        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -50,19 +53,21 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         dashboardCompunent.inject(this)
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_dash_borad_view_pager)
+        setSupportActionBar(mBinding.toolbar)
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
         this.token = token
         initViews()
         setpuViewPager(this.token)
-        if (/*admin toke*/ !this.token.isBlank()){
-            mBinding.imgCreateItem.visibility = View.VISIBLE
-            mBinding.imgCreateItem.setOnClickListener(this)
-        }else{
-            mBinding.imgCreateItem.visibility = View.VISIBLE
-        }
-        mBinding.imgProfile.setOnClickListener(this)
+//        if (/*admin toke*/ !this.token.isBlank()){
+//            mBinding.imgCreateItem.visibility = View.VISIBLE
+//            mBinding.imgCreateItem.setOnClickListener(this)
+//        }else{
+//            mBinding.imgCreateItem.visibility = View.VISIBLE
+//        }
+//        mBinding.imgProfile.setOnClickListener(this)
+//
+//        mBinding.txtAnnouncement.text = intent.getStringExtra("USER_NAME")
 
-        mBinding.txtAnnouncement.text = intent.getStringExtra("USER_NAME")
 
     }
 
@@ -133,6 +138,29 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
             mBinding.loadingItemProgress.visibility = View.GONE
             mBinding.txtLoadingItem.visibility = View.GONE
         }
+
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        super.onCreateOptionsMenu(menu)
+
+        menuInflater.inflate(R.menu.menu_user_list,menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+
+        var id = item?.itemId
+        if (id == R.id.action_members) {
+
+            //just for the testing
+            getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token", "").apply()
+
+            var intent = Intent(this, MemberActivity::class.java)
+            startActivity(intent)
+            return true
+        }
+        return super.onOptionsItemSelected(item)
 
     }
 }
