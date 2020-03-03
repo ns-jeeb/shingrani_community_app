@@ -40,10 +40,11 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
         bodyHashMap.put("username",username)
         bodyHashMap.put("password",password)
 
-        val call = lockedApiService.userLogin(bodyHashMap)
+        val call = lockedApiService.userLogin(bodyHashMap,"5d4a348f88fb44130084f903")
         call.enqueue(object : Callback, retrofit2.Callback<LoggedInUser> {
             override fun onResponse(call: Call<LoggedInUser>, response: Response<LoggedInUser>) {
 
+                var message = response.message()
                 if (response.isSuccessful){
                     var token = response.body()?.token
                     userManager.saveUser(username, token!!)

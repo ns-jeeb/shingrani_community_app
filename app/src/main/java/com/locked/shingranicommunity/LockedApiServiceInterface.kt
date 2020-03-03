@@ -8,7 +8,8 @@ import retrofit2.http.*
 
 interface LockedApiServiceInterface {
     @POST("/api/v2/login")
-    fun userLogin(@Body body: Map<String, String>): Call<LoggedInUser>
+    @Headers("Content-Type: application/json")
+    fun userLogin(@Body body: Map<String, String>, @Header("appid")apiId: String): Call<LoggedInUser>
 
     @Headers("Content-Type: application/json")
     @POST("/api/v2/register")
