@@ -21,6 +21,7 @@ interface AppComponent {
     fun loginComponent(): LoginComponent.Factory
     fun dashBoardComponent():DashboardComponent.Factory
     fun userManager(): UserManager
+    fun memberComponent(): MemberComponent.Factory
 
     fun inject(activity: LoginActivity)
 }

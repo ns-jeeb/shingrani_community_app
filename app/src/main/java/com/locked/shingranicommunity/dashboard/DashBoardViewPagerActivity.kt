@@ -151,10 +151,11 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         var id = item?.itemId
-        if (id == R.id.action_members) {
-
-            //just for the testing
+        if (id == R.id.action_settings){
+            //just for the testing when testing is done remove this line
             getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token", "").apply()
+        }
+        if (id == R.id.action_members) {
 
             var intent = Intent(this, MemberActivity::class.java)
             startActivity(intent)

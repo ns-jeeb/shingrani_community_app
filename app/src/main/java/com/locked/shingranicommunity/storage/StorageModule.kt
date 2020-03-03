@@ -6,6 +6,8 @@ import com.locked.shingranicommunity.dashboard.response.DashboardResponse
 import com.locked.shingranicommunity.dashboard.response.DashboardResponseLister
 import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.Storage
+import com.locked.shingranicommunity.members.MemberApiRequestListener
+import com.locked.shingranicommunity.members.MemberApiRequestt
 import com.locked.shingranicommunity.mesages.DisplayResponseEvent
 import dagger.Binds
 import dagger.Module
@@ -22,4 +24,6 @@ abstract class StorageModule {
 
     @Binds
     abstract fun proideCallBackEvent(displayResponse: DisplayResponseEvent): ResponseEvent
+    @Binds
+    abstract fun memberModuleProvider(memberApiRequest: MemberApiRequestt): MemberApiRequestListener
 }

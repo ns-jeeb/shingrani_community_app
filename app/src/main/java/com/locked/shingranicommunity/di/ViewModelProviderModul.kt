@@ -7,6 +7,7 @@ import com.locked.shingranicommunity.dashboard.DashBoardViewModel
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceViewModel
 import com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent.CreateEventViewModel
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventViewModel
+import com.locked.shingranicommunity.members.MemberViewModel
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginViewModel
@@ -49,9 +50,9 @@ abstract class ViewModelProviderModul {
     @MyApplication.ViewModelKey(AnnounceViewModel::class)
     abstract fun announcementViewModel(announceViewModel: AnnounceViewModel):ViewModel
 
-//    @Binds
-//    @IntoMap
-//    @MyApplication.ViewModelKey()
-//    abstract fun loginViewModel():ViewModel
+    @Binds
+    @IntoMap
+    @MyApplication.ViewModelKey(MemberViewModel::class)
+    abstract fun memberViewModel(memberViewModel: MemberViewModel):ViewModel
 
 }
