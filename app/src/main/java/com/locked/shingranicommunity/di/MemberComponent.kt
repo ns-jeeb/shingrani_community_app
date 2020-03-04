@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity.di
 
 import com.locked.shingranicommunity.members.MemberActivity
+import com.locked.shingranicommunity.members.MemberFragment
 import dagger.Subcomponent
 
 @Subcomponent
@@ -11,4 +12,5 @@ interface MemberComponent {
     }
 
     fun inject(activity: MemberActivity)
+    fun inject(figment: MemberFragment)
 }

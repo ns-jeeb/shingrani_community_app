@@ -29,7 +29,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:fabSize="normal"
-            app:backgroundTint="@color/app_bg_color_start"
+            app:backgroundTint="@color/colorPrimary"
             tools:ignore="RtlHardcoded" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,5 +6,5 @@ import dagger.Module
 @Module
 abstract class MemberModule {
     @Binds
-    abstract fun memberModuleProvider(memberApiRequest: MemberApiRequestt): MemberApiRequestListener
+    abstract fun memberModuleProvider(memberApiRequest: MemberApiRequest): MemberApiRequestListener
 }

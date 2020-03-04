@@ -19,6 +19,7 @@ import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.ActivityMemberBinding
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.databinding.MemberItemBinding
+import com.locked.shingranicommunity.di.MemberComponent
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
@@ -27,16 +28,21 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
 
     lateinit var mBinding : ActivityMemberBinding
     lateinit var viewModel: MemberViewModel
+    private var mToken : String? = ""
+    @Inject
+    lateinit var memberComponent: MemberComponent
     @Inject
     lateinit var viewModelProvider: ViewModelProviderFactory
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.memberComponent().create().inject(this)
+        memberComponent = (application as MyApplication).appComponent.memberComponent().create()
+        memberComponent.inject(this)
+
         super.onCreate(savedInstanceState)
         mBinding = DataBindingUtil.setContentView(this,R.layout.activity_member)
 
-        var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
+        mToken = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
         viewModel = ViewModelProviders.of(this,viewModelProvider).get(MemberViewModel::class.java)
-        viewModel.getMember(token).observe(this, Observer {
+        viewModel.getMember(mToken!!).observe(this, Observer {
 
             if (it != null) {
                 var memberAdapter = MemberAdapter(it)
@@ -48,6 +54,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
             }
         })
         mBinding.imageViewplaces.setOnClickListener(this)
+        mBinding.fabInviteMember.setOnClickListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,15 +88,29 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
 
         override fun onBindViewHolder(holder: MemberHolder, position: Int) {
 
-            binding?.txtMemberName?.text = "Najeeb"
-            binding?.txtMemberName?.text = members.size.toString()
+            binding?.txtMemberName?.text = members[position].email
+            binding?.txtMemberName?.text = members[position].state
         }
 
     }
 
     override fun onClick(v: View?) {
-        if (v == mBinding.imageViewplaces){
-            onBackPressed()
+        when (v) {
+            mBinding.imageViewplaces -> {
+                onBackPressed()
+            }
+            mBinding.fabInviteMember -> {
+    //            viewModel.inviteMember(mToken!!)
+                mBinding.memberRecycler.visibility = View.GONE
+                var fragment = supportFragmentManager.findFragmentById(R.id.member_container)
+                if (fragment == null) {
+                    fragment = MemberFragment()
+                }
+                supportFragmentManager.beginTransaction().replace(R.id.member_container,fragment).commit()
+            }
+            else -> {
+                mBinding.memberRecycler.visibility = View.VISIBLE
+            }
         }
     }
 }
