@@ -72,7 +72,10 @@ class LoginActivity : AppCompatActivity() {
         }
         mBinding.btnLogin.setOnClickListener {
             if (loginViewModel.validateInput(mBinding.txtUserName.text.toString(),mBinding.loginPassword.text.toString())){
-                loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString())
+                loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString()).observe(this, Observer {
+                    startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
+                    finish()
+                })
             }
         }
         mBinding.btnJoiningPermission.setOnClickListener {

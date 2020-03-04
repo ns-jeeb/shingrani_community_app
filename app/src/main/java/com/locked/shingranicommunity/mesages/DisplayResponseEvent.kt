@@ -10,12 +10,12 @@ import javax.inject.Inject
 
 class DisplayResponseEvent @Inject constructor(val context: Context) : ResponseEvent {
 
-    override fun loggedInSuccess(username: String) {
-        Toast.makeText(context,"$username Logged In",Toast.LENGTH_LONG).show()
-        var intent = Intent(context, DashBoardViewPagerActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-
-        context.startActivity(intent)
+    override fun loggedInSuccess(username: String, activity: LoginActivity) {
+//        Toast.makeText(context,"$username Logged In",Toast.LENGTH_LONG).show()
+//        var intent = Intent(context, DashBoardViewPagerActivity::class.java)
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        context.startActivity(intent)
+//        activity.finish()
     }
 
     override fun failedLoggedIn(error: String) {

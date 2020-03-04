@@ -2,8 +2,12 @@
 package com.locked.shingranicommunity.registration_login.registration.user
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
+import com.locked.shingranicommunity.registration_login.registration.login.LoginSuccess
+import com.locked.shingranicommunity.registration_login.registration.login.LoginViewState
 //import com.locked.shingranicommunity.authenticate.LoginEvent
 //import com.locked.shingranicommunity.authenticate.data.Result
 import com.locked.shingranicommunity.storage.model.LoggedInUser
@@ -33,8 +37,10 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
 //        unreadNotifications = randomInt(lockedApiService)
 //    }
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String) : LiveData<LoginViewState> {
         // handle login
+
+        var loginSuccess = MutableLiveData<LoginViewState>()
 
         var bodyHashMap: HashMap<String, String> = HashMap()
         bodyHashMap.put("username",username)
@@ -48,6 +54,7 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
                 if (response.isSuccessful){
                     var token = response.body()?.token
                     userManager.saveUser(username, token!!)
+                    loginSuccess.value = LoginSuccess
 
                 }else{
                 }
@@ -57,10 +64,7 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
                 Log.v("retrofit", "call failed ${t?.message}")
             }
         })
-
-
-
-
+        return loginSuccess
     }
 
 

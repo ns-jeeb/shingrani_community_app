@@ -19,13 +19,15 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
     val loginState: LiveData<LoginViewState>
         get() = _loginState
 
-    fun login(username: String, password: String) {
+    fun login(username: String, password: String) :LiveData<LoginViewState>{
+        var loginSuccess : LiveData<LoginViewState>? = null
         if (userManager.loginUser()) {
             _loginState.value = LoginSuccess
         } else {
             validateInput(username,password)
-            repository.login(username,password)
+            loginSuccess = repository.login(username,password)
         }
+        return loginSuccess!!
     }
 
     fun unregister() {
