@@ -21,6 +21,7 @@ import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBindi
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -151,9 +152,13 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         var id = item?.itemId
-        if (id == R.id.action_settings){
-            //just for the testing when testing is done remove this line
+        if (id == R.id.action_logout){
             getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token", "").apply()
+
+            var intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish()
+            return true
         }
         if (id == R.id.action_members) {
 

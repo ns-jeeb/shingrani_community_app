@@ -1,12 +1,14 @@
 package com.locked.shingranicommunity.members
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -18,6 +20,7 @@ import com.locked.shingranicommunity.databinding.ActivityMemberBinding
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.databinding.MemberItemBinding
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 
 class MemberActivity : AppCompatActivity() , View.OnClickListener{
@@ -34,10 +37,15 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
         viewModel = ViewModelProviders.of(this,viewModelProvider).get(MemberViewModel::class.java)
         viewModel.getMember(token).observe(this, Observer {
-            var memberAdapter = MemberAdapter(it)
-            var layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
-            mBinding.memberRecycler.layoutManager = layoutManager
-            mBinding.memberRecycler.adapter = memberAdapter
+
+            if (it != null) {
+                var memberAdapter = MemberAdapter(it)
+                var layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
+                mBinding.memberRecycler.layoutManager = layoutManager
+                mBinding.memberRecycler.adapter = memberAdapter
+            }else{
+                Toast.makeText(this,"No Member is available",Toast.LENGTH_LONG).show()
+            }
         })
         mBinding.imageViewplaces.setOnClickListener(this)
     }
