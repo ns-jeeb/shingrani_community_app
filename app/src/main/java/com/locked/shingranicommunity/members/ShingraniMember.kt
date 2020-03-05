@@ -6,7 +6,9 @@ data class ShingraniMember(
     val app: String,
     val email: String,
     val state: String,
-    val user: User
+    val user: User,
+    val message: String,
+    val name: String
 )
 
 data class User(

@@ -154,6 +154,7 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.quanqi:android-view-pager-indicator:0.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
 
     def rxcalladapter_version = '2.5.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version" // Retrofit call adapter

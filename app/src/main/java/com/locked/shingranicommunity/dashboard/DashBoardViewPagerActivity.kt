@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.dashboard
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -27,12 +26,6 @@ import javax.inject.Inject
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction, View.OnClickListener {
     override fun onClick(v: View?) {
-//        if (v?.id == R.id.img_create_item){
-//            createItem(token)
-//        }
-//        if (v?.id == R.id.img_profile) {
-//            getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token","").apply()
-//        }
     }
 
     override fun onFragmentInteraction(uri: Uri) {
@@ -53,7 +46,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         dashboardCompunent = (application as MyApplication).appComponent.dashBoardComponent().create()
         dashboardCompunent.inject(this)
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_dash_borad_view_pager)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_dash_borad_view_pager)
         setSupportActionBar(mBinding.toolbar)
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
         this.token = token
@@ -167,6 +160,5 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
             return true
         }
         return super.onOptionsItemSelected(item)
-
     }
 }

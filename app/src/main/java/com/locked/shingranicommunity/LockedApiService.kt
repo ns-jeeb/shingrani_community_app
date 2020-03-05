@@ -5,6 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 class LockedApiService  {
@@ -42,7 +43,8 @@ class LockedApiService  {
                 .build()
 
             mRetrofit = Retrofit.Builder().baseUrl(NEW_BASE_URL).client(client)
-                .addConverterFactory(GsonConverterFactory.create()).build()
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .build()
         }
 
         return mRetrofit!!

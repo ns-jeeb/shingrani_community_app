@@ -1,14 +1,13 @@
 package com.locked.shingranicommunity.members
 
 import android.content.Context
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,12 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.ActivityMemberBinding
-import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.databinding.MemberItemBinding
 import com.locked.shingranicommunity.di.MemberComponent
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
+
 
 class MemberActivity : AppCompatActivity() , View.OnClickListener{
 
@@ -66,13 +64,20 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
 
     inner class MemberAdapter(var members: ArrayList<ShingraniMember>): RecyclerView.Adapter<MemberAdapter.MemberHolder>() {
         internal var binding: MemberItemBinding? = null
-        var mMembers = ArrayList<ShingraniMember>()
-        inner class MemberHolder (parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.member_item,parent,false)){
+        inner class MemberHolder (parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
+            R.layout.member_item,parent,false)){
 
             init {
                 binding = DataBindingUtil.bind(itemView)
-                mMembers = members
             }
+        }
+
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
+        }
+
+        override fun getItemViewType(position: Int): Int {
+            return position
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MemberHolder {
@@ -87,20 +92,17 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
         }
 
         override fun onBindViewHolder(holder: MemberHolder, position: Int) {
-
             binding?.txtMemberName?.text = members[position].email
-            binding?.txtMemberName?.text = members[position].state
+            binding?.txtMemberStatus?.text = members[position].state
         }
 
     }
-
     override fun onClick(v: View?) {
         when (v) {
             mBinding.imageViewplaces -> {
                 onBackPressed()
             }
             mBinding.fabInviteMember -> {
-    //            viewModel.inviteMember(mToken!!)
                 mBinding.memberRecycler.visibility = View.GONE
                 var fragment = supportFragmentManager.findFragmentById(R.id.member_container)
                 if (fragment == null) {

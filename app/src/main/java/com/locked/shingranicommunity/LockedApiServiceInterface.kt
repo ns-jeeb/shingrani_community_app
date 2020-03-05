@@ -3,6 +3,7 @@ package com.locked.shingranicommunity
 import com.locked.shingranicommunity.storage.model.LoggedInUser
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.members.ShingraniMember
+import com.locked.shingranicommunity.members.User
 import com.locked.shingranicommunity.tutorials.RegisterUser
 import retrofit2.Call
 import retrofit2.http.*
@@ -29,6 +30,6 @@ interface LockedApiServiceInterface {
     fun getMembers(@Header("x-access-token") token: String): Call<ArrayList<ShingraniMember>>
 
     @POST("/api/v2/app/5d4a348f88fb44130084f903/invite")
-    fun inviteMember(@Body body: Map<String, String>,@Header("x-access-token") token: String): Call<String>
+    fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access-token") token: String): Call<ShingraniMember>
 
 }

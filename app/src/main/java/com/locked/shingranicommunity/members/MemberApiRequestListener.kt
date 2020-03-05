@@ -6,5 +6,5 @@ import java.lang.reflect.Member
 
 interface MemberApiRequestListener {
     fun members(token: String): MutableLiveData<ArrayList<ShingraniMember>>
-    fun inviteMember(email: String, @Nullable name: String, token: String): MutableLiveData<String>
+    fun inviteMember(email: String, name: String, token: String): MutableLiveData<String>
 }

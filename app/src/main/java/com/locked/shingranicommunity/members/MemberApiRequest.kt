@@ -31,27 +31,31 @@ class MemberApiRequest @Inject constructor() : MemberApiRequestListener {
         return mtableLiveData
     }
 
-    override fun inviteMember(email: String, @Nullable name: String, token: String): MutableLiveData<String> {
+    override fun inviteMember(email: String, name: String, token: String): MutableLiveData<String> {
         var message = MutableLiveData<String>()
         var inviteInfo = HashMap<String, String>()
-        inviteInfo.put("email",email)
-        inviteInfo.put("name",name)
+        var domain = ""
+        inviteInfo["email"] = email
+        if (name.isEmpty()) {
+            var indexOfAt = email.split('@')
+            domain = indexOfAt[0]
+        }else{
+            domain = name
+        }
+        inviteInfo["name"] = domain
         var call = lockedApiServiceInterface.inviteMember(inviteInfo,token)
-
-        call.enqueue(object : Callback, retrofit2.Callback<String>{
-            override fun onFailure(call: Call<String>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        call.enqueue(object : Callback, retrofit2.Callback<ShingraniMember>{
+            override fun onFailure(call: Call<ShingraniMember>, t: Throwable) {
+                Log.d("InviteMember","onFailure $t")
             }
-
-            override fun onResponse(call: Call<String>, response: Response<String>) {
-
+            override fun onResponse(call: Call<ShingraniMember>, response: Response<ShingraniMember>) {
                 if (response.isSuccessful) {
-                     message.value = response.body()
+                     message.value = response.body()?.message
+                    Log.d("InviteMember","onResponse ${response.body()}")
                 }else{
-                    message.value = "there is something wrong"
+                    message.value = response.body()?.user?.name
                 }
             }
-
         })
         return message
     }
