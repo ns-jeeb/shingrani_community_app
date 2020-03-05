@@ -1,9 +1,14 @@
 package com.locked.shingranicommunity.registration_login.registration.login
+
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
@@ -12,6 +17,7 @@ import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
+import java.lang.Exception
 import javax.inject.Inject
 
 class LoginActivity : AppCompatActivity() {
@@ -20,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
     @Inject
     lateinit var loginViewModel: LoginViewModel
     @Inject
-    lateinit var viewModelProvider : ViewModelProvider.Factory
+    lateinit var viewModelProvider: ViewModelProvider.Factory
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -28,55 +34,105 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         var mesage = ""
 
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_login)
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         if (!intent.getStringExtra("message").isNullOrEmpty()) {
             mesage = intent.getStringExtra("message")
             mBinding.txtError.text = mesage
             mBinding.txtError.visibility = View.VISIBLE
         }
-        loginViewModel = ViewModelProviders.of(this, viewModelProvider).get(LoginViewModel::class.java)
+        loginViewModel =
+            ViewModelProviders.of(this, viewModelProvider).get(LoginViewModel::class.java)
         mBinding.loading.visibility = View.VISIBLE
 
-        var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
-
-        loginViewModel.loginState.observe(this, Observer<LoginViewState> { state ->
-            when (state) {
-                is LoginSuccess -> {
-                    startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
-                    finish()
-                }
-                is LoginError ->{
-                    mBinding.txtError?.visibility = View.VISIBLE
-                }
-            }
-        })
-
-        if (!token!!.isBlank()) {
+        if (!loginViewModel.getToken().isBlank()) {
             hideOrShowProgress(false)
             startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
             finish()
-        }else{
+        } else {
             hideOrShowProgress(false)
         }
+
+        loginViewModel.loginState.observe(this, Observer {
+            var loginState = it ?: return@Observer
+            if (loginState.usernameError != null) {
+                mBinding.loginEmail.error = getString(R.string.invalid_username)
+            }
+            if (loginState.passwordError != null) {
+                mBinding.loginPassword.error = getString(R.string.error_incorrect_password)
+            }
+        })
+        loginViewModel.loginResult.observe(this, Observer {
+            var loginResult = it ?: return@Observer
+            mBinding.loading.visibility = View.GONE
+            if (loginResult.error != null) {
+                Toast.makeText(this, "login is Field", Toast.LENGTH_LONG).show()
+            }
+            when {
+                loginResult.error != null -> {
+                    mBinding.loading.visibility = View.GONE
+                    Toast.makeText(this, "login is Failed", Toast.LENGTH_LONG).show()
+                }
+                loginResult.success -> {
+                    startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
+                    finish()
+                }
+                else -> {
+                    Toast.makeText(this, "login is Field", Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+        mBinding.loginEmail.doAfterTextChanged {
+            loginViewModel.loginDataChanged(
+                mBinding.loginEmail.text.toString(),
+                mBinding.loginPassword.text.toString()
+            )
+        }
+        mBinding.loginPassword.apply {
+            doAfterTextChanged {
+                loginViewModel.loginDataChanged(
+                    mBinding.loginEmail.text.toString(),
+                    mBinding.loginPassword.text.toString()
+                )
+            }
+            setOnEditorActionListener { _, actionId, _ ->
+                when (actionId) {
+                    EditorInfo.IME_ACTION_DONE ->
+                        loginViewModel.loginDataChanged(
+                            mBinding.loginEmail.text.toString(),
+                            mBinding.loginPassword.text.toString()
+                        )
+                }
+                false
+            }
+        }
+
         setupViews()
     }
 
     private fun setupViews() {
 
-        mBinding.loginPassword.doOnTextChanged { _, _, _, _ -> mBinding.txtError?.visibility = View.INVISIBLE }
-        if (!loginViewModel.getUsername().isBlank()){
+        mBinding.loginPassword.doOnTextChanged { _, _, _, _ ->
+            mBinding.txtError?.visibility = View.INVISIBLE
+        }
+        if (!loginViewModel.getUsername().isBlank()) {
             mBinding.loginEmail.setText(loginViewModel.getUsername())
             mBinding.loginEmail.isEnabled = false
-        }else{
+        } else {
             mBinding.loginEmail.isEnabled = true
         }
         mBinding.btnLogin.setOnClickListener {
-            if (loginViewModel.validateInput(mBinding.txtUserName.text.toString(),mBinding.loginPassword.text.toString())){
-                loginViewModel.login(mBinding.loginEmail.text.toString(), mBinding.loginPassword.text.toString()).observe(this, Observer {
+            loginViewModel.login(
+                mBinding.loginEmail.text.toString(),
+                mBinding.loginPassword.text.toString()
+            ).observe(this, Observer {
+                if (it.isDataValid) {
                     startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
                     finish()
-                })
-            }
+                } else {
+                    mBinding.txtError.visibility = View.VISIBLE
+                    mBinding.txtError.text = it.message
+                }
+            })
         }
         mBinding.btnJoiningPermission.setOnClickListener {
             loginViewModel.unregister()
@@ -87,11 +143,12 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     fun hideOrShowProgress(showProgress: Boolean) {
         if (showProgress) {
             mBinding.loading.visibility = View.VISIBLE
             mBinding.loading.visibility = View.VISIBLE
-        }else{
+        } else {
             mBinding.loading.visibility = View.GONE
             mBinding.loading.visibility = View.GONE
         }
@@ -99,6 +156,18 @@ class LoginActivity : AppCompatActivity() {
     }
 }
 
-sealed class LoginViewState
-object LoginSuccess : LoginViewState()
-data class LoginError(val error: String) : LoginViewState()
+data class LoginFormState(
+    val usernameError: Int? = null,
+    val passwordError: Int? = null,
+    val isDataValid: Boolean = false,
+    val message: String ? = null
+)
+
+class LoginResult(
+    val success: Boolean = false,
+    val error: Int? = null
+)
+//sealed class Result<out T: Any>{
+//    data class Success<out T: Any>(val data:T):Result<T>()
+//    data class Error(val exception: Exception):Result<Nothing>()
+//}

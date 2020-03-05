@@ -36,11 +36,11 @@ class MemberApiRequest @Inject constructor() : MemberApiRequestListener {
         var inviteInfo = HashMap<String, String>()
         var domain = ""
         inviteInfo["email"] = email
-        if (name.isEmpty()) {
+        domain = if (name.isEmpty()) {
             var indexOfAt = email.split('@')
-            domain = indexOfAt[0]
+            indexOfAt[0]
         }else{
-            domain = name
+            name
         }
         inviteInfo["name"] = domain
         var call = lockedApiServiceInterface.inviteMember(inviteInfo,token)

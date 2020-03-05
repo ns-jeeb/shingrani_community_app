@@ -8,7 +8,7 @@ data class ShingraniMember(
     val state: String,
     val user: User,
     val message: String,
-    val name: String
+    val token: String
 )
 
 data class User(
