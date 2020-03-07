@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
-import com.locked.shingranicommunity.dashboard.data.SingleTone
 import com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent.CreateEventFragment
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
@@ -22,7 +21,6 @@ class CreateItemActivity : AppCompatActivity() {
         dashboardCompunent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.create_item_activity)
-        var item = SingleTone.getInstance().getItem()
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, CreateEventFragment.newInstance())

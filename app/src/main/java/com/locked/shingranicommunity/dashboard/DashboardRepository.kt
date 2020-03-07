@@ -123,33 +123,6 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
     private var token: String? = sharedPreferences.getString("token","")
 
     var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
-
-
-//    fun createEvent(fields:ArrayList<Field>, title: String){
-//
-//
-//        var eventBodyMap: HashMap<String, Any> = HashMap()
-//
-//        eventBodyMap["owner"] ="5d428428ab0ef913000dc456"
-//        eventBodyMap["app"] = "5d4a348f88fb44130084f903"
-//        eventBodyMap["title"] = title
-//        eventBodyMap["fields"] = fields
-//
-//        if (!token.isNullOrBlank()){
-//            var call = lockedApiService.createEventItem(token!!,eventBodyMap)
-//            call.enqueue(object : Callback, retrofit2.Callback<Item>{
-//                override fun onFailure(call: Call<Item>, t: Throwable) {
-//                    Log.d("Item_Response",t.message)
-//                }
-//
-//                override fun onResponse(call: Call<Item>, response: Response<Item>) {
-//
-//                    Log.d("Item_Response",response.message())
-//                }
-//            })
-//        }
-//
-//    }
     fun deleteItem(itme_id: String,adminToken: String): String{
 
         var responseMess = ""

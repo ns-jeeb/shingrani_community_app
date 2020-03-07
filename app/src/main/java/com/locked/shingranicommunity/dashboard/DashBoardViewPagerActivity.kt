@@ -29,7 +29,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     }
 
     override fun onFragmentInteraction(uri: Uri) {
-
     }
 
     @Inject
@@ -53,7 +52,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         initViews()
         setpuViewPager(this.token)
 //        if (/*admin toke*/ !this.token.isBlank()){
-//            mBinding.imgCreateItem.visibility = View.VISIBLE
+//            mBinding.visibility = View.VISIBLE
 //            mBinding.imgCreateItem.setOnClickListener(this)
 //        }else{
 //            mBinding.imgCreateItem.visibility = View.VISIBLE
@@ -61,7 +60,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
 //        mBinding.imgProfile.setOnClickListener(this)
 //
 //        mBinding.txtAnnouncement.text = intent.getStringExtra("USER_NAME")
-
 
     }
 
@@ -137,7 +135,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
-
         menuInflater.inflate(R.menu.menu_user_list,menu)
         return true
     }
@@ -147,17 +144,18 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         var id = item?.itemId
         if (id == R.id.action_logout){
             getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token", "").apply()
-
             var intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
             return true
         }
         if (id == R.id.action_members) {
-
             var intent = Intent(this, MemberActivity::class.java)
             startActivity(intent)
             return true
+        }
+        if (id == R.id.action_add) {
+            createItem(dashBoardViewModel.getToken())
         }
         return super.onOptionsItemSelected(item)
     }

@@ -24,32 +24,4 @@ data class Field(
 }
 
 data class Icon( var url: String? = null) {
-
-
-
-}
-
-
-class SingleTone private constructor() {
-    private var item: Item? = null
-
-    companion object {
-        private var instance: SingleTone? = null
-        var item: Item = Item()
-
-        fun getInstance(): SingleTone {
-            if (instance == null) {
-                instance = SingleTone()
-            }
-            return instance as SingleTone
-        }
-
-    }
-    fun setItem(itm:Item){
-        this.item = itm
-    }
-    fun getItem() : Item?{
-        return this.item
-    }
-
 }

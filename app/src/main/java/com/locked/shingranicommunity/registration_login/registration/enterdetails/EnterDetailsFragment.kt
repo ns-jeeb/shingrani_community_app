@@ -28,14 +28,22 @@ class EnterDetailsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_enter_details, container, false)
-
-        enterDetailsViewModel = EnterDetailsViewModel()
         enterDetailsViewModel.enterDetailsState.observe(this,
             Observer<EnterDetailsViewState> { state ->
                 when (state) {
                     is EnterDetailsSuccess -> {
                         registrationViewModel.updateUserData( mBinding.registerUsername.text.toString(), mBinding.registerPassword.text.toString(),mBinding.registerName.text.toString())
                         registrationViewModel.registerUser()
+                        enterDetailsViewModel.registerUser(mBinding.registerUsername.text.toString(),mBinding.registerPassword.text.toString(),mBinding.registerName.text.toString()).observe(this,
+                            Observer {
+                                if (it.isDataValid){
+                                    var intent = Intent(activity, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    activity?.finish()
+                                }
+                                mBinding.txtError.text = it.message
+                                mBinding.txtRegisterName.text = it.message
+                            })
 
                         (activity as RegistrationActivity).onTermsAndConditionsAccepted()
                     }
@@ -63,13 +71,18 @@ class EnterDetailsFragment : Fragment() {
         mBinding.registerPasswordConform.doOnTextChanged { _, _, _, _ -> mBinding.txtError.visibility = View.INVISIBLE }
 
        mBinding.btnRegister.setOnClickListener {
-            enterDetailsViewModel.validateInput(mBinding.registerUsername.text.toString(), mBinding.registerPassword.text.toString(), mBinding.registerPasswordConform.text.toString())
+            enterDetailsViewModel.validateInput(mBinding.registerUsername.text.toString(),
+                mBinding.registerPassword.text.toString(),
+                mBinding.registerPasswordConform.text.toString(),
+                mBinding.registerName.text.toString()
+            )
 
         }
         mBinding.btnJoiningPermission.setOnClickListener {
             var intent = Intent(activity, LoginActivity::class.java)
-            intent.putExtra("message",registrationViewModel.message)
+            intent.putExtra("message","registrationViewModel.message")
             startActivity(intent)
+            activity?.finish()
         }
     }
 }

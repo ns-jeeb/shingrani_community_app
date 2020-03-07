@@ -17,7 +17,7 @@ private const val PASSWORD_SUFFIX = "token"
  * Knows when the user is logged in.
  */
 @Singleton
-class UserManager @Inject constructor(private val storage: Storage,private val userFactory: UserComponent.Factory, private val responseEvent: ResponseEvent) {
+class UserManager @Inject constructor(private val storage: Storage, private val userFactory: UserComponent.Factory) {
 
     /**
      *  UserDataRepository is specific to a logged in user. This determines if the user
@@ -47,10 +47,10 @@ class UserManager @Inject constructor(private val storage: Storage,private val u
         storage.setToken(PASSWORD_SUFFIX, token)
     }
     fun userCreated(message:String){
-        responseEvent.userCreated(username,message)
+//        responseEvent.userCreated(username,message)
     }
     fun faildCreateUser(message:String){
-            responseEvent.userCreated(username,message)
+//            responseEvent.userCreated(username,message)
     }
 
     fun loginUser(): Boolean {
