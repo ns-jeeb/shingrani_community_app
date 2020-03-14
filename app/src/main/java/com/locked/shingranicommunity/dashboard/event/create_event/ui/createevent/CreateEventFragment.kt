@@ -16,8 +16,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
-import com.locked.shingranicommunity.dashboard.event.create_event.UserListActivity
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
+import com.locked.shingranicommunity.members.MemberActivity
 import javax.inject.Inject
 
 
@@ -45,7 +45,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
 
         }else if (v?.id == R.id.txt_user_selection) {
 //            launch list of user
-            var intent = Intent(activity, UserListActivity::class.java)
+            var intent = Intent(activity, MemberActivity::class.java)
             startActivityForResult(intent, 101)
         }
     }

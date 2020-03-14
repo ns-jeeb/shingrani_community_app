@@ -5,6 +5,7 @@ import android.util.Patterns
 import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
+import com.locked.shingranicommunity.members.User
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -46,8 +47,9 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         storage.setToken(REGISTERED_USER, username)
         storage.setToken(PASSWORD_SUFFIX, token)
     }
-    fun userCreated(message:String){
-//        responseEvent.userCreated(username,message)
+    fun getUsers(): User{
+        var user = storage.getUser().value
+        return user!!
     }
     fun faildCreateUser(message:String){
 //            responseEvent.userCreated(username,message)
@@ -75,6 +77,9 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         storage.setToken(REGISTERED_USER, "")
         storage.setToken(PASSWORD_SUFFIX, "")
         logout()
+    }
+    fun setUser(users: User){
+        var user: User = users
     }
 
     private fun userJustLoggedIn() {

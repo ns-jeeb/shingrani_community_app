@@ -16,7 +16,6 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".members.MemberActivity"></activity>
         <activity android:name=".dashboard.announncement.CreateAnnouncementActivity" />
-        <activity android:name=".dashboard.event.create_event.UserListActivity" />
         <activity android:name=".registration_login.registration.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

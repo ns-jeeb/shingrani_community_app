@@ -49,7 +49,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener{
                 mBinding.memberRecycler.adapter = memberAdapter
             }else{
                 Toast.makeText(this,"No Member is available",Toast.LENGTH_LONG).show()
-            }
+          }
         })
         mBinding.imageViewplaces.setOnClickListener(this)
         mBinding.fabInviteMember.setOnClickListener(this)
