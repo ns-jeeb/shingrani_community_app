@@ -2,9 +2,11 @@
 package com.locked.shingranicommunity.registration_login.registration.user
 
 import android.util.Patterns
+import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
+import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
@@ -13,18 +15,14 @@ import javax.inject.Singleton
 private const val REGISTERED_USER = "registered_user"
 private const val PASSWORD_SUFFIX = "token"
 
-/**
- * Handles User lifecycle. Manages registrations, logs in and logs out.
- * Knows when the user is logged in.
- */
 @Singleton
 class UserManager @Inject constructor(private val storage: Storage, private val userFactory: UserComponent.Factory) {
 
-    /**
-     *  UserDataRepository is specific to a logged in user. This determines if the user
-     *  is logged in or not, when the user logs in, a new instance will be created.
-     *  When the user logs out, this will be null.
-     */
+    companion object{
+
+    }
+
+
     var userComponent: UserComponent? = null
         private set
 
@@ -47,9 +45,8 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         storage.setToken(REGISTERED_USER, username)
         storage.setToken(PASSWORD_SUFFIX, token)
     }
-    fun getUsers(): User{
-        var user = storage.getUser().value
-        return user!!
+    fun getUsers(): MutableLiveData<ArrayList<ShingraniMember>> {
+        return  storage.getUser()
     }
     fun faildCreateUser(message:String){
 //            responseEvent.userCreated(username,message)
@@ -78,8 +75,11 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         storage.setToken(PASSWORD_SUFFIX, "")
         logout()
     }
-    fun setUser(users: User){
+    fun setCurrentUser(users: User){
         var user: User = users
+    }
+    fun getCurrentUser(): String{
+        return storage.getCurrentUser()
     }
 
     private fun userJustLoggedIn() {

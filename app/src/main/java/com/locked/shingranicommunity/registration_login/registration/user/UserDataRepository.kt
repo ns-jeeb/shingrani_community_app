@@ -39,7 +39,7 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
                 if (response.isSuccessful){
                     var token = response.body()?.token
                     userManager.saveUser(username, token!!)
-                    userManager.setUser(response.body()?.user!!)
+                    userManager.setCurrentUser(response.body()?.user!!)
                     loginSuccess.value = LoginFormState(isDataValid = true,message = response.body()?.message)
 
                 }else{

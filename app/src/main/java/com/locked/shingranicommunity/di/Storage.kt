@@ -17,13 +17,17 @@
 package com.locked.shingranicommunity.di
 
 import androidx.lifecycle.MutableLiveData
+import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
 
 interface Storage {
     fun setToken(key: String, value: String)
     fun getToken(key: String): String
 
-    fun getUser(): MutableLiveData<User>
-    fun setUser(users: ArrayList<User>)
+    fun setCurrentUser(user: User)
+    fun getCurrentUser(): String
+
+    fun getUser(): MutableLiveData<ArrayList<ShingraniMember>>
+    fun setUser(users: ArrayList<ShingraniMember>)
 
 }

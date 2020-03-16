@@ -4,11 +4,15 @@ package com.locked.shingranicommunity.storage
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.locked.shingranicommunity.di.Storage
+import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
 import javax.inject.Inject
 
-class SharedPreferencesStorage @Inject constructor(context: Context) : Storage {
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class SharedPreferencesStorage @Inject constructor(val context: Context) : Storage {
 
     private val sharedPreferences = context.getSharedPreferences("token", Context.MODE_PRIVATE)
 
@@ -23,11 +27,36 @@ class SharedPreferencesStorage @Inject constructor(context: Context) : Storage {
         return sharedPreferences.getString(key, "")!!
     }
 
-    override fun getUser(): MutableLiveData<User> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun setCurrentUser(user: User) {
+        var sharePr = context.getSharedPreferences("user",Context.MODE_PRIVATE).edit()
+        var json: Gson = Gson()
+        sharePr.putString("users",json.toJson(user)).apply()
     }
 
-    override fun setUser(users: ArrayList<User>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getCurrentUser(): String {
+        var user : User
+        var sharePr = context.getSharedPreferences("user_list",Context.MODE_PRIVATE)
+        var json: Gson = Gson()
+        var type = Gson().fromJson<User>(sharePr.getString("user",""))
+        user = type
+        return user.username
+    }
+
+    inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
+    override fun getUser(): MutableLiveData<ArrayList<ShingraniMember>> {
+
+        var users = MutableLiveData<ArrayList<ShingraniMember>>()
+        var sharePr = context.getSharedPreferences("user_list",Context.MODE_PRIVATE)
+        var json: Gson = Gson()
+        var type = Gson().fromJson<ArrayList<ShingraniMember>>(sharePr.getString("users",""))
+        users.value = type
+        return users
+    }
+    override fun setUser(users: ArrayList<ShingraniMember>) {
+        var sharePr = context.getSharedPreferences("user_list",Context.MODE_PRIVATE).edit()
+        var json: Gson = Gson()
+        sharePr.putString("users",json.toJson(users)).apply()
+
     }
 }
+
