@@ -30,16 +30,14 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
     override fun setCurrentUser(user: User) {
         var sharePr = context.getSharedPreferences("user",Context.MODE_PRIVATE).edit()
         var json: Gson = Gson()
-        sharePr.putString("users",json.toJson(user)).apply()
+        sharePr.putString("member",json.toJson(user)).apply()
     }
 
-    override fun getCurrentUser(): String {
-        var user : User
-        var sharePr = context.getSharedPreferences("user_list",Context.MODE_PRIVATE)
+    override fun getCurrentUser(): User? {
+        var sharePr = context.getSharedPreferences("user",Context.MODE_PRIVATE)
         var json: Gson = Gson()
-        var type = Gson().fromJson<User>(sharePr.getString("user",""))
-        user = type
-        return user.username
+        var type = json.fromJson<User>(sharePr.getString("member",""))
+        return type
     }
 
     inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)

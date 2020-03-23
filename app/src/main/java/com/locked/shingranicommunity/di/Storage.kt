@@ -25,7 +25,7 @@ interface Storage {
     fun getToken(key: String): String
 
     fun setCurrentUser(user: User)
-    fun getCurrentUser(): String
+    fun getCurrentUser(): User?
 
     fun getUser(): MutableLiveData<ArrayList<ShingraniMember>>
     fun setUser(users: ArrayList<ShingraniMember>)

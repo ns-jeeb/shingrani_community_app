@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.dashboard
 
-import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
@@ -11,6 +10,8 @@ import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.response.DashboardResponseLister
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.registration_login.registration.user.UserManager
+import com.locked.shingranicommunity.utail.AuthResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Call
@@ -19,7 +20,7 @@ import javax.inject.Inject
 import javax.security.auth.callback.Callback
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST", "CAST_NEVER_SUCCEEDS")
-class DashboardRepositor @Inject constructor(private var responseLister: DashboardResponseLister
+class DashboardRepositor @Inject constructor(private var responseLister: DashboardResponseLister,var userManager: UserManager
 ) : DashboardItemRequestListener {
     override fun deleteFields(itme_id: String,token: String): String? {
         var responseMessage =""
@@ -106,6 +107,32 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
         return item
     }
 
+    override fun updateItem(fields: ArrayList<Field>?, itemId: String?) : String{
+        var message : MutableLiveData<String> = MutableLiveData()
+        var eventBodyMap: HashMap<String, Any> = HashMap()
+        eventBodyMap["fields"] = fields!!
+        var call = lockedApiService.updateItem(eventBodyMap, itemId!!,userManager.token)
+        call.enqueue(object : Callback, retrofit2.Callback<Item>{
+            override fun onFailure(call: Call<Item>, t: Throwable) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onResponse(call: Call<Item>, response: Response<Item>) {
+                if (response.isSuccessful) {
+                    Log.d("update_response","value of my Response ${response.body()}")
+                }else{
+
+                    var autherror = AuthResource.error("message",response.errorBody())
+                    Log.d("update_response","value of my Error Response ${autherror.status}")
+                    Log.d("update_response","value of my Error Response ${autherror.data}")
+                    Log.d("update_response","value of my Error Response ${autherror.message}")
+                }
+            }
+
+        })
+        return ""
+    }
+
     override var cachedData= MutableLiveData<ArrayList<Item>>()
 
 
@@ -119,8 +146,8 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
         }
     }
     private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
-    private val sharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
-    private var token: String? = sharedPreferences.getString("token","")
+//    private val sharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
+    private var token: String? = userManager.token
 
     var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
     fun deleteItem(itme_id: String,adminToken: String): String{
@@ -144,4 +171,9 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
         }
         return responseMess
     }
+//    fun parsingGson(errorBody: ResponseBody){
+//        val gson = Gson()
+//        var mydata = errorBody
+//        mydata = gson.fromJson(mydata.toString(),ErrorBodyResponse1::class)
+//    }
 }

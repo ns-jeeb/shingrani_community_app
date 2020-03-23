@@ -1,14 +1,11 @@
 
 package com.locked.shingranicommunity.registration_login.registration.user
 
-import android.util.Patterns
 import androidx.lifecycle.MutableLiveData
-import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,10 +13,9 @@ private const val REGISTERED_USER = "registered_user"
 private const val PASSWORD_SUFFIX = "token"
 
 @Singleton
-class UserManager @Inject constructor(private val storage: Storage, private val userFactory: UserComponent.Factory) {
-
-    companion object{
-
+class UserManager @Inject constructor(val storage: Storage, private val userFactory: UserComponent.Factory) {
+    companion object userStorage{
+        var memeberUser = MutableLiveData<ArrayList<ShingraniMember>>()
     }
 
 
@@ -46,14 +42,17 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         storage.setToken(PASSWORD_SUFFIX, token)
     }
     fun getUsers(): MutableLiveData<ArrayList<ShingraniMember>> {
-        return  storage.getUser()
+        memeberUser = storage.getUser()
+        return storage.getUser()
     }
     fun faildCreateUser(message:String){
 //            responseEvent.userCreated(username,message)
     }
 
     fun loginUser(): Boolean {
-
+        if (getCurrentUser() == null){
+            storage.setToken("token","")
+        }
         val registeredUser = storage.getToken(REGISTERED_USER)
         if (registeredUser.isBlank()){
             return false
@@ -76,9 +75,9 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         logout()
     }
     fun setCurrentUser(users: User){
-        var user: User = users
+        storage.setCurrentUser(users)
     }
-    fun getCurrentUser(): String{
+    fun getCurrentUser(): User?{
         return storage.getCurrentUser()
     }
 
