@@ -29,8 +29,7 @@ interface LockedApiServiceInterface {
     @POST("/api/v2/app/5d4a348f88fb44130084f903/invite")
     fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access-token") token: String): Call<ShingraniMember>
 
-    @Headers("Content-Type: application/json")
     @PUT("api/v2/item/{itemid}")
-    fun updateItem(@Body body: HashMap<String,Any>, @Path(value = "itemid",encoded = true) itemID: String, @Header("x-access-token") token: String): Call<Item>
+    fun updateItem( @Header("x-access-token") token: String,@Body body: HashMap<String,Any>, @Path("itemid") itemID: String): Call<Item>
 
 }

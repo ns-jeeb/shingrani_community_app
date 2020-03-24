@@ -18,24 +18,17 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
         var message: String = ""
         var field : ArrayList<Field>? = item.fields
 
-        for (name in item?.fields!!) {
+        for (name in 0 until item?.fields!!.size) {
             var newField = item.fields?.associateBy {
-                if (it.name !== "Accepted")
-                    3
-
-                if (!name.name?.contains("Accepted")!!) {
-                    name.name = "Accepted"
-                    name.value = getCurrentUser()?._id
-                } else {
-                    if(!name.value?.contains(getCurrentUser()?._id!!)!!){
-                        name.value = getCurrentUser()?._id
+                if (field?.get(name)?.name == "Accepted"){
+                    if(!field[name]?.value?.contains(getCurrentUser()?._id!!)!!){
+                        field[name].value = "${getCurrentUser()?._id},"
                     }else{
                         Log.d("invited", "you are already invited")
                         return "You are invited"
                     }
+                    itemEventHandler.updateItem(field, item._id)
                 }
-                field?.add(name)
-                itemEventHandler.updateItem(field, item._id)
             }
         }
         return message

@@ -111,7 +111,7 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
         var message : MutableLiveData<String> = MutableLiveData()
         var eventBodyMap: HashMap<String, Any> = HashMap()
         eventBodyMap["fields"] = fields!!
-        var call = lockedApiService.updateItem(eventBodyMap, itemId!!,userManager.token)
+        var call = lockedApiService.updateItem(userManager.token,eventBodyMap, itemId!!)
         call.enqueue(object : Callback, retrofit2.Callback<Item>{
             override fun onFailure(call: Call<Item>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
