@@ -7,5 +7,7 @@ object Constant_Utils {
     val ARG_TOKEN = "token"
     val ARG_DELETED = "delete item"
     val ARG_CREATED = "create item"
+    const val INVITED_GUESTS = "INVITED_GUESTS"
+    const val CREATED_EVENT = "CREATED_EVENT"
 
 }

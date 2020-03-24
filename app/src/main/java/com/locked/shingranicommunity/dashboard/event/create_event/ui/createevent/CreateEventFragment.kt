@@ -13,16 +13,21 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
+import com.locked.shingranicommunity.Constant_Utils.INVITED_GUESTS
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import com.locked.shingranicommunity.members.MemberActivity
+import com.locked.shingranicommunity.members.OnUserClickListener
+import com.locked.shingranicommunity.members.ShingraniMember
 import javax.inject.Inject
 
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class CreateEventFragment : Fragment() ,View.OnClickListener{
-    var numberOfGuests = 0
+    var numberOfGuests = Bundle()
     override fun onClick(v: View?) {
         var type = mBinding.crEventType.getItemAtPosition(1).toString()
         if (v?.id == R.id.btn_cr_event){
@@ -46,6 +51,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
         }else if (v?.id == R.id.txt_user_selection) {
 //            launch list of user
             var intent = Intent(activity, MemberActivity::class.java)
+            intent.putExtra(CREATED_EVENT,true)
             startActivityForResult(intent, 101)
         }
     }
@@ -53,8 +59,9 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (data != null) {
             if (requestCode == 101) {
-                numberOfGuests = data.getIntExtra("number_of_guests",0)
-                mBinding.txtUserSelection.text = "$numberOfGuests Guests are invited"
+                numberOfGuests = data.extras
+                var arrayMember = numberOfGuests.getStringArrayList(INVITED_GUESTS)
+                mBinding.txtUserSelection.text = "${arrayMember.size} Guests are invited"
             }
         }
 
@@ -89,5 +96,4 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
         super.onAttach(context)
         (activity as CreateItemActivity).dashboardCompunent.inject(this)
     }
-
 }

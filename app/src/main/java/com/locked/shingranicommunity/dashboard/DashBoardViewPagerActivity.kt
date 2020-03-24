@@ -151,6 +151,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         }
         if (id == R.id.action_members) {
             var intent = Intent(this, MemberActivity::class.java)
+            intent.putExtra("create_event",false)
             startActivity(intent)
             return true
         }

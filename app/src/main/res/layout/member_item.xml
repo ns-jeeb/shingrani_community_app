@@ -1,124 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/add_announcement_btn_border"
-        android:layout_margin="10dp"
-        android:padding="10dp">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:id="@+id/member_avatar_layout"
-            android:orientation="vertical"
-            app:layout_constraintWidth_percent="0.10"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_perm_identity"
-                android:background="@drawable/border_onboarding"
-                android:id="@+id/img_member_avatar"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
-
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:id="@+id/card_layout"
-            app:layout_constraintWidth_percent="0.90"
-            app:layout_constraintStart_toEndOf="@+id/member_avatar_layout"
-            app:layout_constraintTop_toTopOf="parent">
+            android:paddingTop="10dp"
+            android:background="@drawable/add_announcement_btn_border"
+            android:layout_margin="15dp">
 
-
-            <TextView
-                android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/member_avatar_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/txt_member_name"
-
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Bob And Emily"/>
+                app:layout_constraintWidth_percent="0.10">
 
+            <ImageView
+                    android:id="@+id/img_member_avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_perm_identity"
+                    android:background="@drawable/border_onboarding"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="wrap_content"
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/card_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:id="@+id/txt_member_status"
-                app:layout_constraintStart_toEndOf="@id/txt_member_name"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@+id/member_avatar_layout"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="Active"/>
+                app:layout_constraintWidth_percent="0.90">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:id="@+id/txt_member_phone"
-                android:text="544-554-4554"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_member_name"/>
+                    android:id="@+id/txt_member_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="Bob And Emily"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginStart="15dp"
-                android:id="@+id/txt_member_address"
-                android:text="ns.jeeb@gmail.com"
-                app:layout_constraintStart_toEndOf="@+id/txt_member_phone"
-                app:layout_constraintTop_toBottomOf="@+id/txt_member_name"/>
+                    android:id="@+id/txt_member_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="15dp"
+                    android:text="Active"
+                    app:layout_constraintStart_toEndOf="@id/txt_member_name"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/txt_member_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:paddingBottom="15dp"
+                    android:text="544-554-4554"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_member_name" />
+
+            <TextView
+                    android:id="@+id/txt_member_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:paddingBottom="15dp"
+                    android:text="ns.jeeb@gmail.com"
+                    app:layout_constraintStart_toEndOf="@+id/txt_member_phone"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_member_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:id="@+id/contact_layout"
-            app:layout_constraintWidth_percent="0.21"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/contact_layout"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:id="@+id/img_member_email"
+                android:layout_marginStart="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/ic_email"/>
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:id="@+id/img_member_phone"
-                android:src="@drawable/ic_phone"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/img_member_email"/>
-
+                app:layout_constraintWidth_percent="0.21">
 
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:id="@+id/img_member_chat"
-                android:src="@drawable/ic_chat"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/img_member_phone"/>
+                    android:id="@+id/img_member_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_email"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                    android:id="@+id/img_member_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_phone"
+                    app:layout_constraintStart_toEndOf="@+id/img_member_email"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                    android:id="@+id/img_member_chat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:src="@drawable/ic_chat"
+                    app:layout_constraintStart_toEndOf="@+id/img_member_phone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            <CheckBox
+                    android:id="@+id/ch_invite_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_onboarding"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/img_member_chat" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
