@@ -43,6 +43,7 @@ class LoginActivity : AppCompatActivity() {
 
         if (!loginViewModel.getToken().isBlank()) {
             hideOrShowProgress(false)
+            loginViewModel.fetchedSingleApi()
             startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
             finish()
         } else {
@@ -123,6 +124,7 @@ class LoginActivity : AppCompatActivity() {
                 mBinding.loginPassword.text.toString()
             ).observe(this, Observer {
                 if (it.isDataValid) {
+                    loginViewModel.fetchedSingleApi()
                     startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
                     finish()
                 } else {

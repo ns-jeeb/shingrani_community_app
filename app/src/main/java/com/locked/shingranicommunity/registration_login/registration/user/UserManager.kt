@@ -8,6 +8,7 @@ import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.TemplateModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -76,14 +77,22 @@ class UserManager @Inject constructor(private val storage: Storage, private val 
         logout()
     }
     fun setCurrentUser(users: User){
-        var user: User = users
+        storage.setCurrentUser(users)
     }
-    fun getCurrentUser(): String{
+    fun getCurrentUser(): User{
         return storage.getCurrentUser()
     }
 
     private fun userJustLoggedIn() {
         userComponent = userFactory.create()
 
+    }
+    fun setAdminUser(admin: TemplateModel) {
+
+        storage.setAdminUser(admin)
+    }
+    fun getAdminUser(): MutableLiveData<TemplateModel> {
+
+        return storage.getAdminUser()
     }
 }

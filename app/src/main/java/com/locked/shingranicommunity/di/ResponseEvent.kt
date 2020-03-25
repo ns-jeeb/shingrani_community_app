@@ -12,4 +12,5 @@ interface ResponseEvent {
     fun userCreated(username:String,password:String, name:String): LiveData<LoginFormState>
     fun failedCreateUser(username:String,error:String)
     fun itemCreatedMessageDisplay()
+    fun fetchedSingleApi()
 }

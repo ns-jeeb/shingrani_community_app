@@ -86,4 +86,9 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
     private fun isPasswordValid(password: String): Boolean {
         return password.length > 5
     }
+
+    fun fetchedSingleApi() {
+        repository.fetchedSingleApi()
+    }
+//    fun getAdminUser() = userManager.getAdminUser()
 }

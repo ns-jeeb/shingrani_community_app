@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.locked.shingranicommunity.R
 import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -81,6 +82,7 @@ class EventListFragment : Fragment() {
         eventViewModel = ViewModelProviders.of(this,viewModelProviders).get(EventViewModel::class.java)
         eventViewModel.itemsLoaded().observe(this, Observer {
             if (it != null) {
+
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
             }else{
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
@@ -91,6 +93,14 @@ class EventListFragment : Fragment() {
             mBinding!!.eventRecyclerView.adapter = adapter
             mBinding.progressEvent.visibility = View.GONE
             adapter.notifyDataSetChanged()
+        })
+        eventViewModel.getAdminUser().observe(this, Observer {
+            if (it != null && it.admins[0]._id.contentEquals(eventViewModel.getCurrentUser()._id)){
+                Log.d("Admin_user","user = ${it.admins[0].name}")
+                mBinding.userState.text = "${it.admins[0].name}: Admin"
+            }else{
+                mBinding.userState.text = "Regular User"
+            }
         })
 
         return mBinding.root

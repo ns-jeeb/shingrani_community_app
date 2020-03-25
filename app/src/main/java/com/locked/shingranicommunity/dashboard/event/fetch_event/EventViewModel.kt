@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
 import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.TemplateModel
+import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequestListener, val context: Context): ViewModel() {
+class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequestListener,val userManager: UserManager, val context: Context): ViewModel() {
 
     fun load(): List<Item> {
 
@@ -30,6 +33,12 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
 
     fun itemsLoaded():LiveData<ArrayList<Item>>{
         return itemEventHandler.fetchEvent(TEMPLATE_EVENT)!!
+    }
+    fun getAdminUser(): LiveData<TemplateModel>{
+        return userManager.getAdminUser()
+    }
+    fun getCurrentUser(): User{
+        return userManager.getCurrentUser()
     }
 
 }

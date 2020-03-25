@@ -9,5 +9,11 @@ object Constant_Utils {
     val ARG_CREATED = "create item"
     const val INVITED_GUESTS = "INVITED_GUESTS"
     const val CREATED_EVENT = "CREATED_EVENT"
+    const val SHARED_PREF_CURRENT_USER = "SHARED_PREF_CURRENT_USER"
+    const val CURRENT_USER = "CURRENT_USER"
+    const val SHARED_PREF_LIST_USER = "SHARED_PREF_LIST_USER"
+    const val LIST_USER = "LIST_USER"
+    const val SHARED_PREF_ADMIN_USER = "SHARED_PREF_ADMIN_USER"
+    const val ADMIN_USER = "ADMIN_USER"
 
 }
