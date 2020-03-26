@@ -19,6 +19,7 @@ package com.locked.shingranicommunity.di
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.TemplateModel
 
 interface Storage {
     fun setToken(key: String, value: String)
@@ -30,4 +31,6 @@ interface Storage {
     fun getUser(): MutableLiveData<ArrayList<ShingraniMember>>
     fun setUser(users: ArrayList<ShingraniMember>)
 
+    fun getAdminUser(): MutableLiveData<TemplateModel>
+    fun setAdminUser(adminUser: TemplateModel)
 }

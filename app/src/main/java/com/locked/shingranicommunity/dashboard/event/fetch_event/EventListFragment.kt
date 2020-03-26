@@ -88,7 +88,7 @@ class EventListFragment : Fragment(),OnInvitedListener {
             }else{
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
             }
-            val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1,this) }
+            val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1) }
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter.setOnInvitedEvent(this)
             mBinding!!.eventRecyclerView.layoutManager = layoutManager
