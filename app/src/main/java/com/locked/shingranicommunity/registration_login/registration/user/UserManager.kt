@@ -34,7 +34,7 @@ class UserManager @Inject constructor(val storage: Storage, private val userFact
 
     fun registerUser(username: String, token: String) {
 //        storage.setToken(REGISTERED_USER, username)
-//        storage.setername$PASSWORD_SUFFIX", token)
+//        storage.setToken("$username$PASSWORD_SUFFIX", token)
         userJustLoggedIn()
     }
     fun saveUser(username: String, token:String ){

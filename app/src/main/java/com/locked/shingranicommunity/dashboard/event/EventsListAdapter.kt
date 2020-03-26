@@ -2,23 +2,20 @@ package com.locked.shingranicommunity.dashboard.event
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.CompoundButton
-import android.widget.RadioGroup
-import android.widget.Toast
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.event.fetch_event.OnAttendListener
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
 
-class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,var onAttendListener : OnAttendListener) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
+class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): EventViewHolder {
         return EventViewHolder(viewGroup)
@@ -28,7 +25,9 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,var onAtte
 
         mEvents?.let { announceViewHolder.bind(it.get(i),i) }
     }
-
+    fun setOnInvitedEvent(onInvitedListener: OnInvitedListener){
+        this.onInvitedListener = onInvitedListener
+    }
 
     override fun getItemCount(): Int {
         if (!mEvents.isNullOrEmpty()){
@@ -36,10 +35,11 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,var onAtte
         }
         return 0
     }
+    lateinit var onInvitedListener: OnInvitedListener
 
-    inner class EventViewHolder(parent: ViewGroup) :
+    inner class EventViewHolder(val parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.event_item,parent,false)),
-        CompoundButton.OnCheckedChangeListener {
+        CompoundButton.OnCheckedChangeListener,View.OnLongClickListener {
 
         internal var binding: EventItemBinding? = null
         lateinit var context: Context
@@ -70,16 +70,31 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,var onAtte
             binding!!.txtEventAddress.text = address
             binding!!.txtEventTime.text = time
 //            binding!!.isAttend.text = isattend
+            binding!!.txtEventAddress.setOnLongClickListener(this)
         }
 
 
         override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
             if (p1){
-                mEvents?.get(adapterPosition)?.let { onAttendListener.onAttendingEvent(it) }
+                mEvents?.get(adapterPosition)?.let { onInvitedListener.onAccepted(it) }
             }
         }
         fun updateEvent(currentUserId: String): String{
             return currentUser._id
         }
+
+        override fun onLongClick(v: View?): Boolean {
+            var popupMenu = PopupMenu(parent.context,binding?.txtEventAddress)
+            if (v?.id == R.id.txt_event_address){
+
+                popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
+            }
+            popupMenu.show()
+            return true
+        }
     }
+}
+interface OnInvitedListener{
+    fun onAccepted(eventitem : Item)
+    fun onRejected(eventitem : Item)
 }

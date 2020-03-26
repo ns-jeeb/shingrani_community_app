@@ -13,6 +13,8 @@
     <string name="activity_create_invitation">Create My Invitation</string>
     <string name="action_member">Members</string>
     <string name="action_add">Add</string>
+    <string name="popup_accept">Accept</string>
+    <string name="popup_reject">Reject</string>
     <string name="action_logout">Logout</string>
     <string name="action_settings">Setting</string>
     <string name="section_format">Hello World from section: %1$d</string>

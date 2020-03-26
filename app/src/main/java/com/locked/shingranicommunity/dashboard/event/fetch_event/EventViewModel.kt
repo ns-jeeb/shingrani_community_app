@@ -1,37 +1,22 @@
 package com.locked.shingranicommunity.dashboard.event.fetch_event
 
-import android.util.Log
-import android.widget.Toast
+import android.content.Context
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
-import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.TemplateModel
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequestListener, private val userManager: UserManager): ViewModel() {
+class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequestListener,val userManager: UserManager, val context: Context): ViewModel() {
 
-    fun updateItem(item: Item): String {
-        var message: String = ""
-        var field : ArrayList<Field>? = item.fields
+    fun load(): List<Item> {
 
-        for (name in 0 until item?.fields!!.size) {
-            var newField = item.fields?.associateBy {
-                if (field?.get(name)?.name == "Accepted"){
-                    if(!field[name]?.value?.contains(getCurrentUser()?._id!!)!!){
-                        field[name].value = "${getCurrentUser()?._id},"
-                    }else{
-                        Log.d("invited", "you are already invited")
-                        return "You are invited"
-                    }
-                    itemEventHandler.updateItem(field, item._id)
-                }
-            }
-        }
-        return message
+        var items: List<Item> = ArrayList()
+        itemEventHandler.fetchEvent(TEMPLATE_EVENT)
+        return items
     }
     fun onRefresh() {
         viewModelScope.launch {
@@ -49,12 +34,11 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
     fun itemsLoaded():LiveData<ArrayList<Item>>{
         return itemEventHandler.fetchEvent(TEMPLATE_EVENT)!!
     }
-    fun getCurrentUser() : User?{
-        return userManager.getCurrentUser()
+    fun getAdminUser(): LiveData<TemplateModel>{
+        return userManager.getAdminUser()
     }
-
-    fun getUsers(): MutableLiveData<ArrayList<ShingraniMember>> {
-        return userManager.getUsers()
+    fun getCurrentUser(): User{
+        return userManager.getCurrentUser()
     }
 
 }
