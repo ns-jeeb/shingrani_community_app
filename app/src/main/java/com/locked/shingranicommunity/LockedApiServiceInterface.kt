@@ -32,4 +32,7 @@ interface LockedApiServiceInterface {
     @GET("/api/v2/app/{appid}")
     fun fetchedSingleApi(@Header("x-access-token") token: String,@Path("appid")apiId: String ):Call<TemplateModel>
 
+    @PUT("api/v2/item/{itemid}")
+    fun updateItem( @Header("x-access-token") token: String,@Body body: HashMap<String,Any>, @Path("itemid") itemID: String): Call<Item>
+
 }

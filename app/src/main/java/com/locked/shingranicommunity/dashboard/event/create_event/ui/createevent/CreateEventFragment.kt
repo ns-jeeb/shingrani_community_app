@@ -37,8 +37,9 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
                 mBinding.crEventAddress.text.toString(),
                 mBinding.crEventDateTime.text.toString(),
                 mBinding.crEventDetails.text.toString(),
-                "5d1134ab5609832210f63ef7, 5d1134ab5609832210f63ef7,5d1134ab5609832210f63ef7",
-                "5d1134ab5609832210f63ef7"
+                "",
+                "",
+                mBinding.crEventDetails.text.toString()
             ).observe(this, Observer {
 
                 var intent = Intent()

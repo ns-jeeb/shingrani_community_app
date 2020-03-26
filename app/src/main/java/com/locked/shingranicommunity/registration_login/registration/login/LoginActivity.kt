@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
             ViewModelProviders.of(this, viewModelProvider).get(LoginViewModel::class.java)
         mBinding.loading.visibility = View.VISIBLE
 
-        if (!loginViewModel.getToken().isBlank()) {
+        if (!loginViewModel.getToken().isBlank() && loginViewModel.getCurrentUser() != null) {
             hideOrShowProgress(false)
             loginViewModel.fetchedSingleApi()
             startActivity(Intent(this, DashBoardViewPagerActivity::class.java))

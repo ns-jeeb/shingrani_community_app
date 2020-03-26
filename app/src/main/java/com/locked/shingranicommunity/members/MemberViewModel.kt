@@ -11,8 +11,8 @@ class MemberViewModel@Inject constructor(var userManager: UserManager,var reques
     fun getMember(token: String): LiveData<ArrayList<ShingraniMember>>{
         var arrayMembers = MutableLiveData <ArrayList<ShingraniMember>>()
         arrayMembers = requestMembers.members(token)
-        if (userManager.getUsers().value?.size != null && userManager.getUsers().value?.size != 0) {
-            arrayMembers = userManager.getUsers()
+        if (UserManager.memeberUser.value!= null && UserManager.memeberUser.value?.size != 0) {
+            arrayMembers = UserManager.memeberUser
         }
         return  arrayMembers
     }

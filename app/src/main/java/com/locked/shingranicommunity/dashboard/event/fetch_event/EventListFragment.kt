@@ -10,13 +10,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.locked.shingranicommunity.R
 import android.provider.AlarmClock.EXTRA_MESSAGE
-import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
+import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import javax.inject.Inject
@@ -24,7 +25,7 @@ import javax.inject.Inject
 /**
  * A simple [Fragment] subclass.
  */
-class EventListFragment : Fragment() {
+class EventListFragment : Fragment(), OnAttendListener {
 
     interface OnEventFragmentTransaction {
         fun onFragmentInteraction(uri: Uri)
@@ -69,7 +70,6 @@ class EventListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         if (arguments != null) {
             mToken = arguments!!.getString(ARG_TOKEN)
             mParam2 = arguments!!.getString(ARG_PARAM2)
@@ -82,25 +82,16 @@ class EventListFragment : Fragment() {
         eventViewModel = ViewModelProviders.of(this,viewModelProviders).get(EventViewModel::class.java)
         eventViewModel.itemsLoaded().observe(this, Observer {
             if (it != null) {
-
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
             }else{
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
             }
-            val adapter = EventsListAdapter(it)
+            val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1,this) }
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             mBinding!!.eventRecyclerView.layoutManager = layoutManager
             mBinding!!.eventRecyclerView.adapter = adapter
             mBinding.progressEvent.visibility = View.GONE
-            adapter.notifyDataSetChanged()
-        })
-        eventViewModel.getAdminUser().observe(this, Observer {
-            if (it != null && it.admins[0]._id.contentEquals(eventViewModel.getCurrentUser()._id)){
-                Log.d("Admin_user","user = ${it.admins[0].name}")
-                mBinding.userState.text = "${it.admins[0].name}: Admin"
-            }else{
-                mBinding.userState.text = "Regular User"
-            }
+            adapter?.notifyDataSetChanged()
         })
 
         return mBinding.root
@@ -110,5 +101,14 @@ class EventListFragment : Fragment() {
         super.onDetach()
         mListener = null
     }
+
+    override fun onAttendingEvent(eventitem : Item) {
+        eventViewModel.updateItem(eventitem)
+
+    }
+
+}
+interface OnAttendListener{
+    fun onAttendingEvent(eventItem: Item)
 
 }

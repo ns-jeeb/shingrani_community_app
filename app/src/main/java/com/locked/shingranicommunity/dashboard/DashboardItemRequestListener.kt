@@ -10,6 +10,7 @@ interface DashboardItemRequestListener {
     fun deleteFields(itemId:String,token: String): String?
     fun getFields(): LiveData<ArrayList<Item>>?
     fun fetchEvent(template: String): MutableLiveData<ArrayList<Item>>?
+    fun updateItem(fields: ArrayList<Field>?,itemId: String?): String
     fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>?
     fun createEvent(fields: ArrayList<Field>,template: String): MutableLiveData<String>?
     val cachedData: LiveData<ArrayList<Item>>?

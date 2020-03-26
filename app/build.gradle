@@ -158,4 +158,9 @@ dependencies {
 
     def rxcalladapter_version = '2.5.0'
     implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version" // Retrofit call adapter
+//    implementation "org.apache.httpcomponents:httpclient:4.3.6"
+//    implementation "org.apache.httpcomponents:httpasyncclient:4.0.2"
+//    implementation "org.apache.httpcomponents:httpmime:4.3.6"
+//    implementation "org.json:json:20140107"
+
 }

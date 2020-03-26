@@ -27,6 +27,7 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
 
     fun login(username: String, password: String) :LiveData<LoginFormState>{
         var loginSuccess : LiveData<LoginFormState>? = null
+
         if (userManager.loginUser()) {
             _loginState.value = LoginFormState(isDataValid = true)
         } else {
@@ -38,6 +39,7 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
     fun unregister() {
         userManager.unregister()
     }
+    fun getCurrentUser() = userManager.getCurrentUser()
     fun getUsername(): String = userManager.username
     fun getToken(): String = userManager.token
     fun validateInput(username: String, password: String) : Boolean{
@@ -59,8 +61,8 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
                 return true
             }
             else -> {
-//                login(username, password)
                 LoginResult().success
+                userManager.getUsers()
                 return false
             }
         }
