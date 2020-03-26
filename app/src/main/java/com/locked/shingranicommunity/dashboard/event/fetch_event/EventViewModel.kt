@@ -47,26 +47,21 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
         return userManager.getAdminUser()
     }
 
-    fun updateItem(item: Item): String {
+    fun updateItem(item: Item,inviteFiled: String): String {
         var message: String = ""
-        var field: ArrayList<Field>? = item.fields
+        for (i in 0 until item.fields!!.size) {
+            item.fields?.associateBy {
 
-        for (name in 0 until item?.fields!!.size) {
-            for (name in 0 until item?.fields!!.size) {
-                var newField = item.fields?.associateBy {
-
-                    if (field?.get(name)?.name == "Accepted") {
-                        if (!field[name]?.value?.contains(getCurrentUser()?._id!!)!!) {
-                            field[name].value = "${getCurrentUser()?._id},"
-                        } else {
-                            Log.d("invited", "you are already invited")
-                            return "You are invited"
-                        }
-                        itemEventHandler.updateItem(field, item._id)
+                if (item.fields?.get(i)?.name == inviteFiled) {
+                    if (!item.fields!![i].value?.contains(getCurrentUser()._id)!!) {
+                        item.fields!![i].value = "${getCurrentUser()._id},"
+                    } else {
+                        Log.d("invited", "you are already invited")
+                        return "You are invited"
                     }
+                    itemEventHandler.updateItem(item.fields, item._id)
                 }
             }
-
         }
         return message
     }

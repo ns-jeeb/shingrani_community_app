@@ -1,15 +1,16 @@
 package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import com.locked.shingranicommunity.R
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
+import android.view.*
+import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,6 +21,7 @@ import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
+import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 
 /**
@@ -113,12 +115,12 @@ class EventListFragment : Fragment(),OnInvitedListener {
         mListener = null
     }
 
-    override fun onAccepted(eventitem : Item) {
-        eventViewModel.updateItem(eventitem)
+    override fun onAccepted(eventitem: Item,accepted: String) {
+        eventViewModel.updateItem(eventitem,accepted)
     }
 
-    override fun onRejected(eventitem : Item) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onRejected(eventitem : Item,rejected: String) {
+        eventViewModel.updateItem(eventitem,rejected)
     }
 
 }
