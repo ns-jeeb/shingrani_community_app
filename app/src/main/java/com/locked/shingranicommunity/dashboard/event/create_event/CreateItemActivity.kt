@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
-import com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent.CreateEventFragment
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import javax.inject.Inject

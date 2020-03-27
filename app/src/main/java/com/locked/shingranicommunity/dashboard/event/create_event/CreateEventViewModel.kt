@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent
+package com.locked.shingranicommunity.dashboard.event.create_event
 
 import android.content.Context
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.dashboard.event.create_event.ui.createevent
+package com.locked.shingranicommunity.dashboard.event.create_event
 
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -24,10 +24,8 @@ import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
 import com.locked.shingranicommunity.Constant_Utils.INVITED_GUESTS
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
-import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import com.locked.shingranicommunity.members.MemberActivity
-import kotlinx.android.synthetic.main.fragment_terms_and_conditions.*
 import javax.inject.Inject
 
 
