@@ -67,8 +67,9 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
             binding!!.txtEventType.text = type
             binding!!.txtEventAddress.text = address
 //            this substring is just display for now we have make it dynamic
-            binding!!.txtEventDate.text = time?.substring(0,10)
-            binding!!.txtEventTime.text = time?.substring(13,20)
+            var date = time?.split(" ")
+            binding!!.txtEventDate.text = date?.get(0)
+            binding!!.txtEventTime.text = date?.get(2)
 //            binding!!.isAttend.text = isattend
             binding!!.imgHDot.setOnLongClickListener(this)
         }

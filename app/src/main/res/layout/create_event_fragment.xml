@@ -65,16 +65,26 @@
                 android:layout_marginBottom="@dimen/header_1"
                 android:background="@drawable/auth_fields_bg">
 
-                <AutoCompleteTextView
-                    android:id="@+id/cr_event_date_time"
+                <TextView
+                    android:id="@+id/cr_event_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Date Time"
-                    android:text="20/12/2019 At 6:00PM"
-                    android:imeActionId="6"
-                    android:imeActionLabel="@string/registration_user"
-                    android:imeOptions="actionUnspecified"
-                    android:inputType="datetime"
+                    android:text="@string/time"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/header_1"
+                android:background="@drawable/auth_fields_bg">
+
+                <TextView
+                    android:id="@+id/cr_event_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/date"
                     android:maxLines="1"
                     android:singleLine="true" />
 
