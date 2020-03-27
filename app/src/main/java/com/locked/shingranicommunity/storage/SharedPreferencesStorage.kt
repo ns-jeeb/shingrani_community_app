@@ -37,12 +37,9 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
         sharePr.putString(CURRENT_USER, Gson().toJson(user)).apply()
     }
 
-    override fun getCurrentUser(): User {
-        var user : User
+    override fun getCurrentUser(): User? {
         var sharePr = context.getSharedPreferences(SHARED_PREF_CURRENT_USER,Context.MODE_PRIVATE)
-        var type = Gson().fromJson<User>(sharePr.getString(CURRENT_USER,""))
-        user = type
-        return user
+        return Gson().fromJson<User>(sharePr.getString(CURRENT_USER,""))
     }
 
     inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
@@ -50,8 +47,7 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
     override fun getUser(): MutableLiveData<ArrayList<ShingraniMember>> {
         var users = MutableLiveData<ArrayList<ShingraniMember>>()
         var sharePr = context.getSharedPreferences(SHARED_PREF_LIST_USER,Context.MODE_PRIVATE)
-        var json: Gson = Gson()
-        var type = json.fromJson<ArrayList<ShingraniMember>>(sharePr.getString(LIST_USER,""))
+        var type = Gson().fromJson<ArrayList<ShingraniMember>>(sharePr.getString(LIST_USER,""))
         users.value = type
         return users
     }
