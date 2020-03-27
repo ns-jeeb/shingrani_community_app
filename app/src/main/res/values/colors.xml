@@ -10,4 +10,6 @@
     <color name="pre_view_text_top_color">#df1c2522</color>
     <color name="pre_view_text_bottom_color">#c9c7faed</color>
     <color name="btn_auth_selected_color">#C93A3C3C</color>
+    <color name="login_transparency">#A90FF326</color>
+    <color name="login_text_color">#FFFFFF</color>
 </resources>
