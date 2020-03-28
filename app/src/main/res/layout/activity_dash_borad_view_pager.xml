@@ -7,43 +7,17 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
         tools:context=".dashboard.DashBoardViewPagerActivity">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/header_layout"
+        <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="1"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintTop_toTopOf="parent">
+            android:minHeight="?attr/actionBarSize"
+            app:titleTextColor="@android:color/white"
+            android:background="?attr/colorPrimary"
+            android:id="@+id/toolbar"
+            tools:ignore="MissingConstraints"/>
 
-            <ImageButton
-                android:id="@+id/img_profile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_perm_identity_24dp"
-                app:layout_constraintEnd_toStartOf="@+id/img_setting"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/img_setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_settings_24dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_announcement"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/announcement_txt"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
         <com.viewpagerindicator.TitlePageIndicator
             android:id="@+id/tabs"
             android:layout_width="match_parent"
@@ -56,6 +30,31 @@
             android:layout_height="0dp"
             app:layout_constraintHeight_percent="0.85"
             app:layout_constraintBottom_toTopOf="@+id/tabs"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/loading_item_progress"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/loading_item"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/txt_loading_item"
+                android:layout_gravity="center_horizontal"
+                android:text="loading item ..."/>
+
+        </LinearLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

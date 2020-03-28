@@ -1,21 +1,20 @@
 package com.locked.shingranicommunity.dashboard.data
 
-import android.graphics.drawable.Icon
-
 data class Item(
-    var id: String? = null,
+    var _id: String? = null,
     var updatedAt: String? = null,
     var createdAt: String? = null,
     var owner: String? = null,
     var creator: String? = null,
     var app: String? = null,
     var template: String? = null,
-    var v: Int? = null,
-    var fields: List<Field>? = null,
+    var v: String? = null,
+    var fields: ArrayList<Field>? = null,
     var icon: Icon? = null,
     var colorDarker: String? = null,
     var colorOriginal: String? = null
-)
+){
+}
 
 data class Field(
 
@@ -25,7 +24,14 @@ data class Field(
 }
 
 data class Icon( var url: String? = null) {
+}
+data class ErrorBodyResponse(
+    val errors: ArrayList<Error>
+){
 
-
+}
+data class Error(
+    val message : String
+){
 
 }

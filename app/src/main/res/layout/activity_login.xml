@@ -8,8 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/login_background"
-
-
         tools:context=".authenticate.ui.login.LoginActivity">
 
         <TextView
@@ -21,6 +19,7 @@
 
 
         <TextView
+            android:id="@+id/textView3"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="#55FFFFFF"
@@ -51,23 +50,23 @@
             app:layout_constraintHeight_percent="0.1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.528" />
+            app:layout_constraintVertical_bias="0.495" />
 
         <LinearLayout
             android:id="@+id/login_form"
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/transparent"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
 
+            android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:layout_editor_absoluteX="0dp"
 
-            android:backgroundTint="@android:color/transparent"
-            >
+            app:layout_constraintVertical_bias="0.552"
+            tools:layout_editor_absoluteX="0dp">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -102,9 +101,15 @@
                 android:textColorHint="@color/login_text_color"
                 app:hintEnabled="false">
 
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="2dp"
+                    android:layout_weight="0.2" />
+
+
                 <AutoCompleteTextView
                     android:id="@+id/login_password"
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:backgroundTint="@android:color/transparent"
@@ -141,6 +146,18 @@
             app:layout_constraintTop_toBottomOf="@+id/btn_login"
             app:layout_constraintVertical_bias="0.493" />
 
+        <TextView
+            android:id="@+id/txt_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Username or Password Is Incorrect!"
+            android:textColor="@color/login_text_color"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/btn_login"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/login_form" />
+
         <ProgressBar
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
@@ -150,7 +167,7 @@
                 android:layout_marginTop="64dp"
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="64dp"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -175,7 +192,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/login_form"
-            app:layout_constraintVertical_bias="0.313" />
+            app:layout_constraintVertical_bias="0.485" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

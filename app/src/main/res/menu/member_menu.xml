@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.locked.shingranicommunity.dashboard.UserListActivity">
+    <item
+        android:id="@+id/action_back"
+        android:layout_gravity="start"
+        android:title="@string/action_back"/>
+
+</menu>

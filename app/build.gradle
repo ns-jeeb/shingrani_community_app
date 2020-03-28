@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.android.support:preference-v14:28.0.0'
     implementation 'com.android.support:support-core-utils:28.0.0'
     implementation 'com.android.support:support-fragment:28.0.0'
-
+    implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support:design:28.0.0'
     implementation 'com.android.support:support-v4:28.0.0'
 
@@ -73,6 +73,11 @@ dependencies {
 
     def fragment_version = "1.1.0"
 
+    def rxandroid_version = "3.0.0"
+    implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+
+    def rxjava_version = "2.2.0"
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     // Java
     implementation "androidx.fragment:fragment:$fragment_version"
     // Kotlin
@@ -131,6 +136,9 @@ dependencies {
     /* Dagger2 - We are going to use dagger.android which includes
     * support for Activity and fragment injection so we need to include
     * the following dependencies */
+    def dagger_version = "2.25.2"
+    implementation "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
     implementation 'com.google.dagger:dagger-android:2.17'
     implementation 'com.google.dagger:dagger-android-support:2.17'
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
@@ -146,4 +154,13 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
     implementation 'org.quanqi:android-view-pager-indicator:0.9.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
+
+    def rxcalladapter_version = '2.5.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$rxcalladapter_version" // Retrofit call adapter
+//    implementation "org.apache.httpcomponents:httpclient:4.3.6"
+//    implementation "org.apache.httpcomponents:httpasyncclient:4.0.2"
+//    implementation "org.apache.httpcomponents:httpmime:4.3.6"
+//    implementation "org.json:json:20140107"
+
 }
