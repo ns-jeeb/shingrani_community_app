@@ -19,6 +19,7 @@ workspace.xml
 /js/js.translator/testData/out-min/
 .gradle/
 build/
+gradle.properties
 !**/src/**/build
 !**/test/**/build
 *.iml
