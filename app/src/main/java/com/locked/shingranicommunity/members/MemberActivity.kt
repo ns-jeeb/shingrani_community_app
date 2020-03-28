@@ -30,7 +30,6 @@ import javax.inject.Inject
 class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickListener{
 
     lateinit var mBinding : ActivityMemberBinding
-    lateinit var onUserClickListener: OnUserClickListener
     lateinit var viewModel: MemberViewModel
     private var mToken : String? = ""
     var selectedUser = ArrayList<String>()
@@ -60,7 +59,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                 Toast.makeText(this,"No Member is available",Toast.LENGTH_LONG).show()
           }
         })
-        mBinding.imageViewplaces.setOnClickListener(this)
+        mBinding.backPress.setOnClickListener(this)
         mBinding.fabInviteMember.setOnClickListener(this)
     }
 
@@ -117,11 +116,6 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
             }
 
             override fun onClick(p0: View?) {
-//                if (mBinding?.userMoreInfoLayout?.visibility == View.VISIBLE) {
-//                    mBinding?.userMoreInfoLayout?.visibility = View.GONE
-//                } else {
-//                    mBinding?.userMoreInfoLayout?.visibility = View.VISIBLE
-//                }
             }
 
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
@@ -186,7 +180,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
     }
     override fun onClick(v: View?) {
         when (v) {
-            mBinding.imageViewplaces -> {
+            mBinding.backPress -> {
                 onBackPressed()
             }
             mBinding.fabInviteMember -> {

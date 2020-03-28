@@ -12,6 +12,7 @@ interface DashboardItemRequestListener {
     fun fetchEvent(template: String): MutableLiveData<ArrayList<Item>>?
     fun updateItem(fields: ArrayList<Field>?,itemId: String?): String
     fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>?
+    fun createAnnouncement(template: String): String?
     fun createEvent(fields: ArrayList<Field>,template: String): MutableLiveData<String>?
     val cachedData: LiveData<ArrayList<Item>>?
     suspend fun fetchNewItem()

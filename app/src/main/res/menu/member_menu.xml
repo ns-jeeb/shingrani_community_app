@@ -4,9 +4,7 @@
     tools:context="com.locked.shingranicommunity.dashboard.UserListActivity">
     <item
         android:id="@+id/action_back"
-        android:orderInCategory="100"
-        android:icon="@drawable/ic_navigate_before_black_24dp"
-        android:title="@string/action_member"
-        app:showAsAction="always" />
+        android:layout_gravity="start"
+        android:title="@string/action_back"/>
 
 </menu>

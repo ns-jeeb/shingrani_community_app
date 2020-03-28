@@ -12,6 +12,7 @@
 
     <string name="activity_create_invitation">Create My Invitation</string>
     <string name="action_member">Members</string>
+    <string name="action_back">Back</string>
     <string name="action_add">Add</string>
     <string name="popup_accept">Accept</string>
     <string name="popup_reject">Reject</string>

@@ -9,13 +9,12 @@
         android:name=".registration_login.registration.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".members.MemberActivity"></activity>
-        <activity android:name=".dashboard.announncement.CreateAnnouncementActivity" />
+        <activity android:name=".dashboard.announncement.create_announce.CreateAnnouncementActivity" />
         <activity android:name=".registration_login.registration.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +24,8 @@
         </activity>
         <activity android:name=".registration_login.registration.RegistrationActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".dashboard.event.create_event.CreateItemActivity">
+        <activity android:name=".dashboard.event.create_event.CreateItemActivity"
+            android:label="Create Event">
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
@@ -34,7 +34,8 @@
             <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".dashboard.DashBoardViewPagerActivity" />
+        <activity android:name=".dashboard.DashBoardViewPagerActivity"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

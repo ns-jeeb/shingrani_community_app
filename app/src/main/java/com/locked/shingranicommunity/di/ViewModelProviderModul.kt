@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceViewModel
+import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnounceViewModel
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateEventViewModel
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventViewModel
 import com.locked.shingranicommunity.members.FragmentMemberViewModel
@@ -60,5 +61,10 @@ abstract class ViewModelProviderModul {
     @IntoMap
     @MyApplication.ViewModelKey(FragmentMemberViewModel::class)
     abstract fun fragmentMemberViewModel(fragmenMemberViewModel: FragmentMemberViewModel):ViewModel
+
+    @Binds
+    @IntoMap
+    @MyApplication.ViewModelKey(CreateAnnounceViewModel::class)
+    abstract fun createAnnounceViewModel(createAnnounceViewModel: CreateAnnounceViewModel):ViewModel
 
 }

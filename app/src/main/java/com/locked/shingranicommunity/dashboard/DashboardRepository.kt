@@ -54,6 +54,10 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
         return item
     }
 
+    override fun createAnnouncement(template: String): String? {
+        return ""
+    }
+
     override fun createEvent(fields: ArrayList<Field>,template: String):  MutableLiveData<String> {
 
         var message : MutableLiveData<String> = MutableLiveData()

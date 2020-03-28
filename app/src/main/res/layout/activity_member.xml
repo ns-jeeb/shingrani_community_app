@@ -20,10 +20,10 @@
                 app:titleTextColor="@android:color/white">
 
             <ImageView
-                    android:id="@+id/imageViewplaces"
+                    android:id="@+id/back_press"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_navigate_before_black_24dp" />
+                    android:src="@drawable/ic_arrow_back" />
         </androidx.appcompat.widget.Toolbar>
 
         <androidx.recyclerview.widget.RecyclerView
