@@ -44,18 +44,18 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
 
     inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
 
-    override fun getUser(): MutableLiveData<ArrayList<ShingraniMember>> {
-        var users = MutableLiveData<ArrayList<ShingraniMember>>()
-        var sharePr = context.getSharedPreferences(SHARED_PREF_LIST_USER,Context.MODE_PRIVATE)
-        var type = Gson().fromJson<ArrayList<ShingraniMember>>(sharePr.getString(LIST_USER,""))
-        users.value = type
-        return users
-    }
-    override fun setUser(users: ArrayList<ShingraniMember>) {
-        var sharePr = context.getSharedPreferences(SHARED_PREF_LIST_USER,Context.MODE_PRIVATE).edit()
-        sharePr.putString(LIST_USER,Gson().toJson(users)).apply()
-
-    }
+//    override fun getUser(): MutableLiveData<ArrayList<ShingraniMember>> {
+//        var users = MutableLiveData<ArrayList<ShingraniMember>>()
+//        var sharePr = context.getSharedPreferences(SHARED_PREF_LIST_USER,Context.MODE_PRIVATE)
+//        var type = Gson().fromJson<ArrayList<ShingraniMember>>(sharePr.getString(LIST_USER,""))
+//        users.value = type
+//        return users
+//    }
+//    override fun setUser(users: ArrayList<ShingraniMember>) {
+//        var sharePr = context.getSharedPreferences(SHARED_PREF_LIST_USER,Context.MODE_PRIVATE).edit()
+//        sharePr.putString(LIST_USER,Gson().toJson(users)).apply()
+//
+//    }
 
     override fun getAdminUser(): MutableLiveData<TemplateModel> {
         var admin = MutableLiveData<TemplateModel>()

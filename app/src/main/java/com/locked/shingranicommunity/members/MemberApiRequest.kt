@@ -26,7 +26,7 @@ class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequ
 
             override fun onResponse(call: Call<ArrayList<ShingraniMember>>, response: Response<ArrayList<ShingraniMember>>) {
                 mtableLiveData.value = response.body()
-                storage.setUser(mtableLiveData.value!!)
+//                storage.setUser(mtableLiveData.value!!)
             }
 
         })

@@ -5,9 +5,7 @@ package com.locked.shingranicommunity.registration_login.registration
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.locked.shingranicommunity.registration_login.registration.user.RegisterRepository
 import com.locked.shingranicommunity.registration_login.registration.user.UserDataRepository
-import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
 /**

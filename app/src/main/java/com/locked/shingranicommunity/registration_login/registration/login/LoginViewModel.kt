@@ -62,7 +62,6 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
             }
             else -> {
                 LoginResult().success
-                userManager.getUsers()
                 return false
             }
         }

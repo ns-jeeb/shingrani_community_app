@@ -42,13 +42,10 @@ class UserManager @Inject constructor(val storage: Storage, private val userFact
         storage.setToken(REGISTERED_USER, username)
         storage.setToken(PASSWORD_SUFFIX, token)
     }
-    fun getUsers(): MutableLiveData<ArrayList<ShingraniMember>> {
-        memeberUser = storage.getUser()
-        return storage.getUser()
-    }
-    fun faildCreateUser(message:String){
-//            responseEvent.userCreated(username,message)
-    }
+//    fun getUsers(): MutableLiveData<ArrayList<ShingraniMember>> {
+//        memeberUser = storage.getUser()
+//        return storage.getUser()
+//    }
 
     fun loginUser(): Boolean {
         if (getCurrentUser() == null){
