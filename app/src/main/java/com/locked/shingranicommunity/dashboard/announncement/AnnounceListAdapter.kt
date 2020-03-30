@@ -44,7 +44,7 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
                 if (fields != null) {
                     title = announcement.fields?.get(0)?.value
                     text = announcement.fields?.get(1)?.value
-                    timeStamp = announcement.fields?.get(2)?.value
+                    timeStamp = announcement.createdAt
                 }
                 binding!!.txtAnnouncementTitleItem.text = title
                 binding!!.txtAnnouncementMessage.text = text

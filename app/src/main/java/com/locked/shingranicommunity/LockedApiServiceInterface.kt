@@ -24,6 +24,9 @@ interface LockedApiServiceInterface {
     @POST("/api/v2/item")
     fun createEventItem(@Header("x-access-token") token: String,@Body body:HashMap<String , Any>): Call<Item>
 
+    @POST("/api/v2/item")
+    fun createAnnounce(@Header("x-access-token") token: String,@Body body:HashMap<String , Any>): Call<Item>
+
     @GET("/api/v2/app/5d4a348f88fb44130084f903/member")
     fun getMembers(@Header("x-access-token") token: String): Call<ArrayList<ShingraniMember>>
 

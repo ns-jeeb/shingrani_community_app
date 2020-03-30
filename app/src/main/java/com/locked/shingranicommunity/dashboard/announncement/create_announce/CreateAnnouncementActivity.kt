@@ -2,9 +2,12 @@ package com.locked.shingranicommunity.dashboard.announncement.create_announce
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.locked.shingranicommunity.R
@@ -29,5 +32,13 @@ class CreateAnnouncementActivity : AppCompatActivity() {
         mBinding.backPress.setOnClickListener{
             onBackPressed()
         }
+        mBinding.btnCrAnnounce.setOnClickListener {
+            announceViewModel.createAnnouncement(mBinding.edCreateAnnouncementTitle.text.toString(),mBinding.edCreateAnnouncementDetail.text.toString()).observe(this, Observer {
+                if (it != null){
+                    Log.d(CreateAnnouncementActivity::class.java.name,"this is working")
+                }
+            })
+        }
+
     }
 }

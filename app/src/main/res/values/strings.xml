@@ -10,7 +10,7 @@
     <string name="not_match_password">Password is not matched</string>
     <string name="login_failed">"Login failed"</string>
 
-    <string name="activity_create_invitation">Create My Invitation</string>
+    <string name="create">Create</string>
     <string name="action_member">Members</string>
     <string name="action_back">Back</string>
     <string name="action_add">Add</string>
@@ -70,7 +70,9 @@
     <string name="event_prompt">Choose a Events</string>
 
     <string-array name="events_arrays">
-        <item>Event</item>
-        <item>Announcement</item>
+        <item>Wedding</item>
+        <item>Birth Day</item>
+        <item>Hosting Dinner</item>
+        <item>Community Event</item>
     </string-array>
 </resources>

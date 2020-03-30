@@ -33,6 +33,6 @@ class CreateEventViewModel@Inject constructor(val itemEventHandler: DashboardIte
         eventFields.add(acceptedField)
         eventFields.add(rejectedField)
         eventFields.add(noteField)
-        return itemEventHandler.createEvent(eventFields,Constant_Utils.EVENT_TIMPLATE_ID)!!
+        return itemEventHandler.createEvent(eventFields)!!
     }
 }

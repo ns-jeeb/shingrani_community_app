@@ -4,6 +4,10 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_TIMPLATE_ID
+import com.locked.shingranicommunity.Constant_Utils.APP_ID
+import com.locked.shingranicommunity.Constant_Utils.EVENT_TIMPLATE_ID
+import com.locked.shingranicommunity.Constant_Utils.OWNER_ID
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.dashboard.data.Field
@@ -33,9 +37,8 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
 
     override fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>? {
 
-        if (token != null) {
-            if (!token.isNullOrBlank()){
-                var call = lockedApiService.getItems(template, token!! )
+            if (!userManager.token.isBlank()){
+                var call = lockedApiService.getItems(template, userManager.token)
                 call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
                     override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
                         Log.d("Item_Response","response is working")
@@ -50,28 +53,47 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
                     }
                 })
             }
-        }
+
         return item
     }
 
-    override fun createAnnouncement(template: String): String? {
-        return ""
+    override fun createAnnouncement(fields: ArrayList<Field>): MutableLiveData<String> {
+        var body: HashMap<String, Any> = HashMap()
+        var string = MutableLiveData<String>()
+        body["owner"] = OWNER_ID
+        body["app"] = APP_ID
+        body["template"] = ANNOUNCEMENT_TIMPLATE_ID
+        body["title"] = "Solgira Mockup"
+        body["fields"] = fields
+
+        var call = lockedApiService.createAnnounce(userManager.token,body)
+        call.enqueue(object : Callback, retrofit2.Callback<Item>{
+            override fun onFailure(call: Call<Item>, t: Throwable) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onResponse(call: Call<Item>, response: Response<Item>) {
+                Log.d("Response_createAnnouncement","${response.body()}")
+            }
+
+        })
+        return string
     }
 
-    override fun createEvent(fields: ArrayList<Field>,template: String):  MutableLiveData<String> {
+    override fun createEvent(fields: ArrayList<Field>):  MutableLiveData<String> {
 
         var message : MutableLiveData<String> = MutableLiveData()
         var eventBodyMap: HashMap<String, Any> = HashMap()
 
 //        eventBodyMap["_id"] ="5d770cd8ea2f6b1300f03ca7"
-        eventBodyMap["owner"] ="5d428428ab0ef913000dc456"
-        eventBodyMap["app"] = "5d4a348f88fb44130084f903"
-        eventBodyMap["template"] = template
+        eventBodyMap["owner"] = OWNER_ID
+        eventBodyMap["app"] = APP_ID
+        eventBodyMap["template"] = EVENT_TIMPLATE_ID
         eventBodyMap["title"] = "Solgira Mockup"
         eventBodyMap["fields"] = fields
 
-        if (!token.isNullOrBlank()){
-            var call = lockedApiService.createEventItem(token!!,eventBodyMap)
+        if (!userManager.token.isBlank()){
+            var call = lockedApiService.createEventItem(userManager.token,eventBodyMap)
             call.enqueue(object : Callback, retrofit2.Callback<Item>{
                 override fun onFailure(call: Call<Item>, t: Throwable) {
                     Log.d("Item_Response",t.message)
@@ -90,9 +112,9 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
 
 
     override fun fetchEvent(template: String): MutableLiveData<ArrayList<Item>>? {
-        if (token != null) {
-            if (!token.isNullOrBlank()){
-                var call = lockedApiService.getItems(template, token!!)
+
+            if (!userManager.token.isBlank()){
+                var call = lockedApiService.getItems(template, userManager.token!!)
                 call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
                     override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
                         Log.d("Item_Response","response is working")
@@ -107,7 +129,7 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
                     }
                 })
             }
-        }
+
         return item
     }
 
@@ -151,7 +173,6 @@ class DashboardRepositor @Inject constructor(private var responseLister: Dashboa
     }
     private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)!!
 //    private val sharedPreferences = MyApplication.instance.getSharedPreferences("token", Context.MODE_PRIVATE)
-    private var token: String? = userManager.token
 
     var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
     fun deleteItem(itme_id: String,adminToken: String): String{

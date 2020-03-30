@@ -40,6 +40,13 @@
             android:layout_height="wrap_content"
             android:lines="10"
             android:id="@+id/ed_create_announcement_detail"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_cr_announce"
+            android:text="@string/create"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_create_announcement_detail"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
