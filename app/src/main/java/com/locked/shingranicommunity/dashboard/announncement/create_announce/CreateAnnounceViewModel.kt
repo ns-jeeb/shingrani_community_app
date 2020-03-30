@@ -5,15 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
 import com.locked.shingranicommunity.dashboard.data.Field
+import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
 class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val requestResponse: DashboardRepositor): ViewModel(){
-    fun createAnnouncement(title: String, details: String): LiveData<String>{
+    fun createAnnouncement(title: String, details: String): LiveData<Item>{
         var fields: ArrayList<Field>? = ArrayList()
         var fieldTitle: Field? = Field(name = "name", value = title)
         var fieldDetails: Field? = Field(name = "name", value = details)
-        var strin = MutableLiveData<String>()
+        var strin = MutableLiveData<Item>()
             fieldTitle?.let {
                 fields?.add(it)
             }

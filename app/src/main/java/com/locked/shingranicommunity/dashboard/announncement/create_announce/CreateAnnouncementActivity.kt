@@ -35,7 +35,10 @@ class CreateAnnouncementActivity : AppCompatActivity() {
         mBinding.btnCrAnnounce.setOnClickListener {
             announceViewModel.createAnnouncement(mBinding.edCreateAnnouncementTitle.text.toString(),mBinding.edCreateAnnouncementDetail.text.toString()).observe(this, Observer {
                 if (it != null){
-                    Log.d(CreateAnnouncementActivity::class.java.name,"this is working")
+                    Toast.makeText(this,"${it.fields?.get(0)?.name}", Toast.LENGTH_LONG).show()
+                    finish()
+                    Log.d(CreateAnnouncementActivity::class.java.name,"${it.fields?.get(0)?.name}")
+
                 }
             })
         }
