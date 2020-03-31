@@ -20,6 +20,7 @@ import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBindi
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.registration_login.registration.SettingsActivity
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 
@@ -142,21 +143,20 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
 
         var id = item?.itemId
-        if (id == R.id.action_logout){
-            getSharedPreferences("token", Context.MODE_PRIVATE).edit().putString("token", "").apply()
-            var intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
-            return true
-        }
-        if (id == R.id.action_members) {
-            var intent = Intent(this, MemberActivity::class.java)
-            intent.putExtra("create_event",false)
-            startActivity(intent)
-            return true
-        }
-        if (id == R.id.action_add) {
-            createItem(dashBoardViewModel.getToken())
+        when (id) {
+            R.id.action_members -> {
+                var intent = Intent(this, MemberActivity::class.java)
+                intent.putExtra("create_event",false)
+                startActivity(intent)
+                return true
+            }
+            R.id.action_add -> {
+                createItem(dashBoardViewModel.getToken())
+            }
+            R.id.action_settings -> {
+                var intent = Intent(this, SettingsActivity::class.java)
+                startActivity(intent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

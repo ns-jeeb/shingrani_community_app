@@ -75,4 +75,19 @@
         <item>Hosting Dinner</item>
         <item>Community Event</item>
     </string-array>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="hide_email_header">Hide email</string>
+    <string name="show_email_header">Show email</string>
+    <string name="hide_phone_header">Hide phone number</string>
+    <string name="show_phone_header">Show phone number</string>
+    <string name="logout_header">Logout</string>
+
+    <!-- Preference key -->
+    <string name="key_hide_email">KEY_HIDE_EMAIL</string>
+    <string name="key_show_email">KEY_SHOW_EMAIL</string>
+    <string name="key_hide_phone">KEY_HIDE_PHONE</string>
+    <string name="key_show_phone">KEY_SHOW_PHONE</string>
+    <string name="key_logout_">KEY_LOGOUT</string>
 </resources>
