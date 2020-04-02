@@ -9,12 +9,11 @@ import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.DatePicker
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -34,30 +33,32 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
     var timeFragment : TimePickerFragment? = null
     var dateFragment : DatePickerFragment? = null
     var numberOfGuests = Bundle()
-    override fun onClick(v: View?) {
-        var type = mBinding.crEventType.getItemAtPosition(1).toString()
+    var type:String?  =null
 
+    override fun onClick(v: View?) {
         timeFragment?.let{mBinding.crEventTime.text = timeFragment!!.getTheTime()}
         dateFragment?.let{mBinding.crEventDate.text = dateFragment!!.getTheDate()}
         if (timeFragment != null && dateFragment!= null){
             if (v?.id == R.id.btn_cr_event){
-                viewModel.createEvent(
-                    mBinding.crEventName.text.toString(),
-                    type,
-                    mBinding.crEventAddress.text.toString(),
+                type?.let {
+                    viewModel.createEvent(
+                        mBinding.crEventName.text.toString(),
+                        it,
+                        mBinding.crEventAddress.text.toString(),
 
-                    "${mBinding.crEventDate.text} : ${mBinding.crEventTime.text}" ,
-                    mBinding.crEventDetails.text.toString(),
-                    "",
-                    "",
-                    mBinding.crEventDetails.text.toString()
-                ).observe(this, Observer         {
+                        "${mBinding.crEventDate.text} : ${mBinding.crEventTime.text}" ,
+                        mBinding.crEventDetails.text.toString(),
+                        "",
+                        "",
+                        mBinding.crEventDetails.text.toString()
+                    ).observe(this, Observer         {
 
-                    var intent = Intent()
-                    intent.putExtra("response_message",it)
-                    activity?.setResult(Activity.RESULT_OK, intent)
-                    activity?.finish()
-                })
+                        var intent = Intent()
+                        intent.putExtra("response_message",it)
+                        activity?.setResult(Activity.RESULT_OK, intent)
+                        activity?.finish()
+                    })
+                }
 
 
             }else if (v?.id == R.id.txt_user_selection) {
@@ -68,6 +69,22 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
             }
         }
 
+    }
+    private fun getTypeItem():String{
+        val adapter = ArrayAdapter(context,android.R.layout.simple_spinner_item, resources.getStringArray(R.array.events_arrays))
+        mBinding.crEventType.adapter = adapter
+        mBinding.crEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                Log.d("ItemType","$position ${adapter.getItem(position)}")
+            }
+
+        }
+
+        return ""
     }
     fun showTimePicker(v: View){
         activity?.supportFragmentManager?.let {
@@ -112,6 +129,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
         mBinding.crEventDate.setOnClickListener{
             showDatePicker(it)
         }
+        type =getTypeItem()
         mBinding.crEventTime.setOnClickListener{
             showTimePicker(it)
         }

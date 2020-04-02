@@ -11,8 +11,9 @@ import java.util.concurrent.TimeUnit
 class LockedApiService  {
 
     var LOCAL_BASE_URL = "http://localhost:9000"
-    var BASE_URL = "https://community-eve.herokuapp.com/"
-    var NEW_BASE_URL = "https://pure-river-66033-dev.herokuapp.com"
+    var BASE_URL = "https://pure-river-66033-staging.herokuapp.com"
+//    var NEW_BASE_URL = "https://pure-river-66033-dev.herokuapp.com"
+    var NEW_BASE_URL = "https://pure-river-66033-staging.herokuapp.com"
     var mRetrofit: Retrofit? = null
 
 

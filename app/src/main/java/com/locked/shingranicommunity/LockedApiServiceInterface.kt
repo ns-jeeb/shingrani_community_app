@@ -31,7 +31,7 @@ interface LockedApiServiceInterface {
     fun getMembers(@Header("x-access-token") token: String): Call<ArrayList<ShingraniMember>>
 
     @POST("/api/v2/app/5d4a348f88fb44130084f903/invite")
-    fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access/-token") token: String): Call<ShingraniMember>
+    fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access-token") token: String): Call<ShingraniMember>
     @GET("/api/v2/app/{appid}")
     fun fetchedSingleApi(@Header("x-access-token") token: String,@Path("appid")apiId: String ):Call<TemplateModel>
 

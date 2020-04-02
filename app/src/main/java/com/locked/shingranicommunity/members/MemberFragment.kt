@@ -1,31 +1,21 @@
 package com.locked.shingranicommunity.members
 
-import android.app.Activity
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.Toast
-import androidx.annotation.StringRes
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.MemberFragmentBinding
 import javax.inject.Inject
 
-class MemberFragment : Fragment(), View.OnClickListener {
+class MemberFragment : DialogFragment(), View.OnClickListener {
 
     companion object {
         fun newInstance() = MemberFragment()
@@ -74,9 +64,12 @@ class MemberFragment : Fragment(), View.OnClickListener {
                 viewModel.inviteMember(
                     mBinding.edMemberEmail.text.toString(),
                     mBinding.edMemberName.text.toString()
+
                 ).observe(this@MemberFragment, Observer {
-                    mBinding.btnSubmit.text = it
-                    Log.d("MemberFragment", "the message $it")
+                    if (it != null) {
+                        mBinding.txtPageTitle.text = it
+                    }
+
                 })
             }
         }
@@ -96,4 +89,5 @@ class MemberFragment : Fragment(), View.OnClickListener {
         }
     }
 }
+
 

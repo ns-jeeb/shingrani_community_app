@@ -67,13 +67,16 @@
     <string name="txt_message_value">this is the item for announcement this is the item for announcement this is the item for announcement this is the item for announcement this is the item for announcement</string>
 
 
-    <string name="event_prompt">Choose a Events</string>
+    <string name="event_prompt">Types</string>
 
     <string-array name="events_arrays">
         <item>Wedding</item>
-        <item>Birth Day</item>
-        <item>Hosting Dinner</item>
-        <item>Community Event</item>
+        <item>Event</item>
+        <item>Party</item>
+        <item>Fundraising</item>
+        <item>Funeral</item>
+        <item>Gathering</item>
+        <item>Meeting</item>
     </string-array>
     <string name="title_activity_settings">Settings</string>
 

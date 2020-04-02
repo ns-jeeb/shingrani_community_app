@@ -1,6 +1,8 @@
 package com.locked.shingranicommunity.members
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -10,8 +12,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,6 +53,9 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
         viewModel.getMember(mToken!!).observe(this, Observer {
 
             if (it != null) {
+                if (it.size==0){
+                   mBinding.txtMessage.text = "No Members are Invited"
+                }
                 var memberAdapter = MemberAdapter(it)
                 memberAdapter.hidView(mBinding.fabInviteMember,displayCheckBox())
                 memberAdapter.setListener(this)
@@ -59,8 +66,9 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                 Toast.makeText(this,"No Member is available",Toast.LENGTH_LONG).show()
           }
         })
-        mBinding.backPress.setOnClickListener(this)
+        mBinding.txtInvite.setOnClickListener(this)
         mBinding.fabInviteMember.setOnClickListener(this)
+        mBinding.backPress.setOnClickListener(this)
     }
 
     override fun onBackPressed() {
@@ -107,17 +115,13 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
         }
 
         inner class MemberHolder (parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
-            R.layout.member_item,parent,false)), View.OnClickListener,CompoundButton.OnCheckedChangeListener{
+            R.layout.member_item,parent,false)),CompoundButton.OnCheckedChangeListener{
 
             init {
                 binding = DataBindingUtil.bind(itemView)
                 binding?.chInviteGuest?.setOnCheckedChangeListener(this)
                hidView((binding?.chInviteGuest as View),displayCheckBox())
             }
-
-            override fun onClick(p0: View?) {
-            }
-
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
                 if (p1) {
                     members?.get(adapterPosition)?._id?.let { mSelectedMembers.add(members!![adapterPosition]) }
@@ -181,10 +185,16 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
     override fun onClick(v: View?) {
         when (v) {
             mBinding.backPress -> {
+                mBinding.scrollableInvite.visibility = View.GONE
                 onBackPressed()
             }
-            mBinding.fabInviteMember -> {
-                mBinding.memberRecycler.visibility = View.GONE
+            mBinding.txtInvite -> {
+                var dialogFragment = MemberFragment()
+//                dialogFragment.show(supportFragmentManager,"MemberDialog")
+
+//                mBinding.memberRecycler.visibility = View.GONE
+                mBinding.txtMessage.visibility = View.GONE
+                mBinding.scrollableInvite.visibility = View.VISIBLE
                 var fragment = supportFragmentManager.findFragmentById(R.id.member_container)
                 if (fragment == null) {
                     fragment = MemberFragment()
@@ -192,6 +202,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                 supportFragmentManager.beginTransaction().replace(R.id.member_container,fragment).commit()
             }
             else -> {
+                mBinding.scrollableInvite.visibility = View.GONE
                 mBinding.memberRecycler.visibility = View.VISIBLE
             }
         }

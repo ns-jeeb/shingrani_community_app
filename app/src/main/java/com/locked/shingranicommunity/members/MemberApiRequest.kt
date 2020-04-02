@@ -7,6 +7,10 @@ import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
+import okhttp3.ResponseBody
+import org.json.JSONArray
+import org.json.JSONException
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import javax.inject.Inject
@@ -25,8 +29,12 @@ class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequ
             }
 
             override fun onResponse(call: Call<ArrayList<ShingraniMember>>, response: Response<ArrayList<ShingraniMember>>) {
-                mtableLiveData.value = response.body()
-//                storage.setUser(mtableLiveData.value!!)
+                if (response.isSuccessful){
+                    mtableLiveData.value = response.body()
+                }else{
+                    mtableLiveData.value?.get(0)?.message = parsingJson(response.errorBody())
+                }
+
             }
 
         })
@@ -55,10 +63,35 @@ class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequ
                      message.value = response.body()?.message
                     Log.d("InviteMember","onResponse ${response.body()}")
                 }else{
-                    message.value = response.body()?.user?.name
+                    message.value = parsingJson(response.errorBody())
                 }
             }
         })
+        return message
+    }
+
+    fun parsingJsonArray(array: JSONArray, key: String): String {
+
+        var errorMessage = ""
+        if (array.length() != 0 && key.isNotEmpty()) {
+            for (i in 0 until array.length()) {
+                var arraylist = array.getJSONObject(i)
+                errorMessage = arraylist.getString("message")
+            }
+        }
+        return errorMessage
+    }
+    fun parsingJson(responsebody: ResponseBody?): String {
+        var message =""
+        try {
+            val errorBody = responsebody!!.string()
+            var jsonObject = JSONObject(errorBody.trim { it <= ' ' })
+//            var message = jsonObject.getString("message")
+            var errorJson = jsonObject.getJSONArray("errors")
+            message = parsingJsonArray(errorJson, "message")
+        } catch (e: JSONException) {
+            e.printStackTrace().toString()
+        }
         return message
     }
 }

@@ -2,7 +2,6 @@ package com.locked.shingranicommunity.members
 
 import android.text.TextUtils
 import android.util.Patterns
-import androidx.annotation.Nullable
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,11 +10,11 @@ import com.locked.shingranicommunity.di.Storage
 import javax.inject.Inject
 
 class FragmentMemberViewModel @Inject constructor(var requestMemberApi: MemberApiRequestListener,private val storage: Storage) : ViewModel() {
-    private val _emailForm = MutableLiveData<EmailFormState>()
-    val emailFormState: LiveData<EmailFormState> = _emailForm
+    private val _emailForm = MutableLiveData<MemberFormState>()
+    val emailFormState: LiveData<MemberFormState> = _emailForm
 
-    private val _nameResult = MutableLiveData<LoginResult>()
-    val nameResult: LiveData<LoginResult> = _nameResult
+    private val _nameResult = MutableLiveData<InviteResult>()
+    val nameResult: LiveData<InviteResult> = _nameResult
 
     fun inviteMember(email: String,name: String): LiveData<String>{
         var message = MutableLiveData<String>()
@@ -23,13 +22,13 @@ class FragmentMemberViewModel @Inject constructor(var requestMemberApi: MemberAp
         return message
     }
 
-    fun emailDataChanged(email: String, name: String): LiveData<EmailFormState> {
+    fun emailDataChanged(email: String, name: String): LiveData<MemberFormState> {
         if (!isEmailValid(email)) {
-            _emailForm.value = EmailFormState(emailError = R.string.invalid_username)
+            _emailForm.value = MemberFormState(emailError = R.string.invalid_username)
         } else if (!isNameValid(name)) {
-            _emailForm.value = EmailFormState(nameError = R.string.invalid_password)
+            _emailForm.value = MemberFormState(nameError = R.string.invalid_password)
         } else {
-            _emailForm.value = EmailFormState(isDataValid = true)
+            _emailForm.value = MemberFormState(isDataValid = true)
         }
         return _emailForm
     }
@@ -53,14 +52,14 @@ class FragmentMemberViewModel @Inject constructor(var requestMemberApi: MemberAp
             }
         }
     }
-    data class EmailFormState(val emailError: Int? = null,
-                              val nameError: Int? = null,
-                              val isDataValid: Boolean = false)
-    data class LoginResult(
-        val success: LoggedInUserView? = null,
+    data class MemberFormState(val emailError: Int? = null,
+                               val nameError: Int? = null,
+                               val isDataValid: Boolean = false)
+    data class InviteResult(
+        val success: InvitedUserView? = null,
         val error: Int? = null
     )
-    data class LoggedInUserView(
+    data class InvitedUserView(
         val displayName: String
         //... other data fields that may be accessible to the UI
     )

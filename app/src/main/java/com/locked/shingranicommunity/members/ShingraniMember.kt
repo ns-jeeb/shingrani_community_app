@@ -10,9 +10,16 @@ data class ShingraniMember(
     val email: String,
     val state: String,
     val user: User,
-    val message: String,
-    val token: String
-)
+    var message: String,
+    val token: String,
+    val errorType: String,
+    val errors: List<Error>
+){
+    fun hasError() : Boolean {
+        return errorType != null || !errors.isEmpty()
+    }
+}
+
 data class User(
     val __v: Int,
     val _id: String,
