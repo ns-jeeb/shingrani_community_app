@@ -1,22 +1,22 @@
 package com.locked.shingranicommunity.members
 
-import com.google.gson.annotations.Expose
-import com.google.gson.annotations.SerializedName
-
 data class ShingraniMember(
     val __v: Int,
     val _id: String,
     val app: String,
     val email: String,
     val state: String,
-    val user: User,
+    var user: User?,
     var message: String,
     val token: String,
-    val errorType: String,
-    val errors: List<Error>
+    var errorType: String ="",
+    var errors: List<Error>?
 ){
+    fun setError(error: String){
+        message = error
+    }
     fun hasError() : Boolean {
-        return errorType != null || !errors.isEmpty()
+        return errorType != null || !errors?.isEmpty()!!
     }
 }
 

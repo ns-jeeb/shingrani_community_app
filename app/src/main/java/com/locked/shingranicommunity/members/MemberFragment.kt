@@ -9,13 +9,14 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.MemberFragmentBinding
 import javax.inject.Inject
 
-class MemberFragment : DialogFragment(), View.OnClickListener {
+class MemberFragment : Fragment(),View.OnClickListener {
 
     companion object {
         fun newInstance() = MemberFragment()
@@ -32,15 +33,16 @@ class MemberFragment : DialogFragment(), View.OnClickListener {
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.member_fragment, container, false)
         mBinding.btnSubmit.setOnClickListener(this)
-        viewModel.nameResult.observe(this@MemberFragment, Observer {
-            val loginResult = it ?: return@Observer
-            if (loginResult.error != null) {
-                mBinding.edMemberName.error = getString(R.string.error_invalid_email)
-            }
-            if (loginResult.success != null) {
-                mBinding.edMemberName.error = getString(R.string.error_invalid_email)
-            }
-        })
+//        viewModel.nameResult.observe(this@MemberFragment, Observer {
+//            val loginResult = it ?: return@Observer
+//            if (loginResult.hasError()) {
+//                mBinding.edMemberName.error = getString(R.string.error_invalid_email)
+//            }
+////            if (loginResult.success != null) {
+////                mBinding.edMemberName.error = getString(R.string.error_invalid_email)
+////            }
+//        })
+        viewModel = ViewModelProviders.of(this, viewModelProvider).get(FragmentMemberViewModel::class.java)
         viewModel.emailFormState.observe(this@MemberFragment, Observer {
             val emailResult = it ?: return@Observer
             if (emailResult.emailError != null) {
@@ -58,20 +60,6 @@ class MemberFragment : DialogFragment(), View.OnClickListener {
                     mBinding.edMemberName.text.toString()
                 )
             }
-
-            mBinding.btnSubmit.setOnClickListener {
-                mBinding.btnSubmit.visibility = View.VISIBLE
-                viewModel.inviteMember(
-                    mBinding.edMemberEmail.text.toString(),
-                    mBinding.edMemberName.text.toString()
-
-                ).observe(this@MemberFragment, Observer {
-                    if (it != null) {
-                        mBinding.txtPageTitle.text = it
-                    }
-
-                })
-            }
         }
         return mBinding.root
     }
@@ -79,13 +67,22 @@ class MemberFragment : DialogFragment(), View.OnClickListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as MemberActivity).memberComponent.inject(this)
-        viewModel =
-            ViewModelProviders.of(this, viewModelProvider).get(FragmentMemberViewModel::class.java)
     }
 
     override fun onClick(v: View?) {
         if (v == mBinding.btnSubmit) {
-
+            mBinding.btnSubmit.visibility = View.VISIBLE
+            viewModel.inviteMember(mBinding.edMemberEmail.text.toString(),mBinding.edMemberName.text.toString()).observe(this@MemberFragment, Observer {
+                if (!it.message.isBlank()){
+                    mBinding.txtPageTitle.text = it.email
+                    mBinding.edMemberEmail.setText("")
+                    mBinding.edMemberName.setText("")
+                    (activity as MemberActivity).closeMemberFragment(true)
+                }
+                else{
+                    mBinding.txtPageTitle.text = it?.errorType
+                }
+            })
         }
     }
 }

@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class MemberViewModel@Inject constructor(var userManager: UserManager,var requestMembers: MemberApiRequest) : ViewModel() {
 
-    fun getMember(token: String): LiveData<ArrayList<ShingraniMember>>{
+    fun getMember(): LiveData<ArrayList<ShingraniMember>>{
         var arrayMembers = MutableLiveData <ArrayList<ShingraniMember>>()
-        arrayMembers = requestMembers.members(token)
+        arrayMembers = requestMembers.members(userManager.token)
         if (UserManager.memeberUser.value!= null && UserManager.memeberUser.value?.size != 0) {
             arrayMembers = UserManager.memeberUser
         }

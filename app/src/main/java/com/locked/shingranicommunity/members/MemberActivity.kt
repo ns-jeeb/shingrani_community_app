@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.members
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
@@ -50,7 +51,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
 
         mToken = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
         viewModel = ViewModelProviders.of(this,viewModelProvider).get(MemberViewModel::class.java)
-        viewModel.getMember(mToken!!).observe(this, Observer {
+        viewModel.getMember().observe(this, Observer {
 
             if (it != null) {
                 if (it.size==0){
@@ -93,6 +94,15 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
             tempArray.add(members[i]._id)
         }
         selectedUser = tempArray
+    }
+
+    @SuppressLint("ResourceType")
+    override fun closeMemberFragment(tr : Boolean) {
+        if (tr){
+           mBinding.scrollableInvite.visibility = View.GONE
+            viewModel.getMember()
+
+        }
     }
 
 
@@ -189,10 +199,6 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                 onBackPressed()
             }
             mBinding.txtInvite -> {
-                var dialogFragment = MemberFragment()
-//                dialogFragment.show(supportFragmentManager,"MemberDialog")
-
-//                mBinding.memberRecycler.visibility = View.GONE
                 mBinding.txtMessage.visibility = View.GONE
                 mBinding.scrollableInvite.visibility = View.VISIBLE
                 var fragment = supportFragmentManager.findFragmentById(R.id.member_container)
@@ -210,4 +216,5 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
 }
 interface OnUserClickListener {
     fun onUserCheckedListener(members: ArrayList<ShingraniMember>, position: Int)
+    fun closeMemberFragment(tr : Boolean)
 }

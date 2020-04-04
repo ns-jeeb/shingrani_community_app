@@ -1,10 +1,9 @@
 package com.locked.shingranicommunity.members
 
+import android.content.Context
 import android.text.TextUtils
 import android.util.Patterns
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.di.Storage
 import javax.inject.Inject
@@ -13,13 +12,11 @@ class FragmentMemberViewModel @Inject constructor(var requestMemberApi: MemberAp
     private val _emailForm = MutableLiveData<MemberFormState>()
     val emailFormState: LiveData<MemberFormState> = _emailForm
 
-    private val _nameResult = MutableLiveData<InviteResult>()
-    val nameResult: LiveData<InviteResult> = _nameResult
+    private var _nameResult = MutableLiveData<ShingraniMember>()
+    val nameResult: LiveData<ShingraniMember> = _nameResult
 
-    fun inviteMember(email: String,name: String): LiveData<String>{
-        var message = MutableLiveData<String>()
-        message = requestMemberApi.inviteMember(email, name ,storage.getToken("token"))
-        return message
+    fun inviteMember(email: String, name: String): LiveData<ShingraniMember> {
+        return requestMemberApi.inviteMember(email, name, storage.getToken("token"))
     }
 
     fun emailDataChanged(email: String, name: String): LiveData<MemberFormState> {
@@ -40,23 +37,23 @@ class FragmentMemberViewModel @Inject constructor(var requestMemberApi: MemberAp
         return name.length>5
     }
 
-    sealed class Result<out T : Any> {
-
-        data class Success<out T : Any>(val data: T) : Result<T>()
-        data class Error(val exception: Exception) : Result<Nothing>()
-
-        override fun toString(): String {
-            return when (this) {
-                is Success<*> -> "Success[data=$data]"
-                is Error -> "Error[exception=$exception]"
-            }
-        }
-    }
+//    sealed class Result<out T : Any> {
+//
+//        data class Success<out T : Any>(val data: T) : Result<T>()
+//        data class Error(val error: String) : Result<Nothing>()
+//
+//        override fun toString(): String {
+//            return when (this) {
+//                is Success<*> -> "Success[data=$data]"
+//                is Error -> error
+//            }
+//        }
+//    }
     data class MemberFormState(val emailError: Int? = null,
                                val nameError: Int? = null,
                                val isDataValid: Boolean = false)
     data class InviteResult(
-        val success: InvitedUserView? = null,
+        val success: String? = null,
         val error: Int? = null
     )
     data class InvitedUserView(

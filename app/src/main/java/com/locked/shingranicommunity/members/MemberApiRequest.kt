@@ -1,12 +1,10 @@
 package com.locked.shingranicommunity.members
 
 import android.util.Log
-import androidx.annotation.Nullable
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.di.Storage
-import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONException
@@ -20,29 +18,25 @@ class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequ
     var lockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
     var mtableLiveData = MutableLiveData<ArrayList<ShingraniMember>>()
     override fun members(token: String): MutableLiveData<ArrayList<ShingraniMember>>{
-
         var call = lockedApiServiceInterface.getMembers(token)
-
         call.enqueue(object : Callback, retrofit2.Callback<ArrayList<ShingraniMember>>{
             override fun onFailure(call: Call<ArrayList<ShingraniMember>>, t: Throwable) {
                 Log.d("OnFailureApiCall","didn't call successfully")
             }
-
             override fun onResponse(call: Call<ArrayList<ShingraniMember>>, response: Response<ArrayList<ShingraniMember>>) {
                 if (response.isSuccessful){
                     mtableLiveData.value = response.body()
                 }else{
                     mtableLiveData.value?.get(0)?.message = parsingJson(response.errorBody())
                 }
-
             }
-
         })
         return mtableLiveData
     }
+    fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
+    override fun inviteMember(email: String, name: String, token: String): MutableLiveData<ShingraniMember> {
 
-    override fun inviteMember(email: String, name: String, token: String): MutableLiveData<String> {
-        var message = MutableLiveData<String>()
+        var result = MutableLiveData<ShingraniMember>()
         var inviteInfo = HashMap<String, String>()
         var domain = ""
         inviteInfo["email"] = email
@@ -59,15 +53,17 @@ class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequ
                 Log.d("InviteMember","onFailure $t")
             }
             override fun onResponse(call: Call<ShingraniMember>, response: Response<ShingraniMember>) {
+                result.default(ShingraniMember(0,"","","","",null,"","","",null))
                 if (response.isSuccessful) {
-                     message.value = response.body()?.message
-                    Log.d("InviteMember","onResponse ${response.body()}")
-                }else{
-                    message.value = parsingJson(response.errorBody())
-                }
+                    result.postValue(response.body())
+                } else {
+//
+                    result.value?.errorType = parsingJson(response.errorBody())
+                    result.postValue(result.value)
+                 }
             }
         })
-        return message
+        return result
     }
 
     fun parsingJsonArray(array: JSONArray, key: String): String {
@@ -89,6 +85,17 @@ class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequ
 //            var message = jsonObject.getString("message")
             var errorJson = jsonObject.getJSONArray("errors")
             message = parsingJsonArray(errorJson, "message")
+            if (!message.isBlank()){
+                var listOfString: List<String> = message.split(":").map {
+                    it-> it.trim()
+                }
+                message = "${listOfString[0]} : ${listOfString[5]}"
+                listOfString.forEach{
+                    Log.d("value", "$it")
+
+                }
+
+            }
         } catch (e: JSONException) {
             e.printStackTrace().toString()
         }
