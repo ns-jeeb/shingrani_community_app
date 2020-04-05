@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.dashboard.announncement.create_announce
 
+import android.widget.EditText
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,11 +23,29 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
                 fields?.add(it)
             }
 
-        var adminId = userManger.getAdminUser().value?.admins?.get(0)?._id
-            if (userManger.getCurrentUser()?._id?.contentEquals(adminId!!)!!) {
-
+        var adminUsers = userManger.getAdminUser().value?.admins
+            for (i in 0 until adminUsers?.size!!){
+                if (userManger.getCurrentUser()?._id?.contentEquals(adminUsers[i]._id)!!) {
+                    strin = requestResponse.createAnnouncement(fields!!)
+                }
             }
-        strin = requestResponse.createAnnouncement(fields!!)
         return strin
     }
+    fun titleValidation(title: EditText): Boolean{
+        return return if (title != null && title.text.toString().length >= 3) {
+            true
+        }else{
+            title.error = "Title at lest should 3 or more characters"
+            false
+        }
+    }
+    fun detailsValidation(title: EditText):Boolean{
+        return if (title != null && title.text.toString().length >= 10) {
+            true
+        }else{
+            title.error = "Title at lest should 10 or more characters"
+            false
+        }
+    }
+
 }

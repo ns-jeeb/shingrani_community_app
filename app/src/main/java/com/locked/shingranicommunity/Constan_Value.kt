@@ -16,5 +16,6 @@ object Constant_Utils {
     const val LIST_USER = "LIST_USER"
     const val SHARED_PREF_ADMIN_USER = "SHARED_PREF_ADMIN_USER"
     const val ADMIN_USER = "ADMIN_USER"
+    const val ANNOUNCEMENT_CREATED = "ANNOUNCEMENT_CREATED"
 
 }

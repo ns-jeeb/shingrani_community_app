@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_CREATED
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
@@ -61,6 +62,15 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
         return mBinding!!.root
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null){
+            if (requestCode == 102 && data.getBooleanExtra(ANNOUNCEMENT_CREATED,false)){
+                viewModel.loadedAnnouncements()
+            }
+        }
+
+    }
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as DashBoardViewPagerActivity).dashboardCompunent.inject(this)

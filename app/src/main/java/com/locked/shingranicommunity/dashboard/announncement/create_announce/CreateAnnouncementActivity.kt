@@ -1,5 +1,7 @@
 package com.locked.shingranicommunity.dashboard.announncement.create_announce
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_CREATED
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.ActivityCreateAnnouncementBinding
@@ -33,14 +36,18 @@ class CreateAnnouncementActivity : AppCompatActivity() {
             onBackPressed()
         }
         mBinding.btnCrAnnounce.setOnClickListener {
-            announceViewModel.createAnnouncement(mBinding.edCreateAnnouncementTitle.text.toString(),mBinding.edCreateAnnouncementDetail.text.toString()).observe(this, Observer {
-                if (it != null){
-                    Toast.makeText(this,"${it.fields?.get(0)?.name}", Toast.LENGTH_LONG).show()
-                    finish()
-                    Log.d(CreateAnnouncementActivity::class.java.name,"${it.fields?.get(0)?.name}")
+            if (announceViewModel.titleValidation(mBinding.edCreateAnnouncementTitle) && announceViewModel.detailsValidation(mBinding.edCreateAnnouncementDetail)) {
+                announceViewModel.createAnnouncement(mBinding.edCreateAnnouncementTitle.text.toString(),mBinding.edCreateAnnouncementDetail.text.toString()).observe(this, Observer {
+                    if (it != null){
+                        Log.d(CreateAnnouncementActivity::class.java.name,"${it.fields?.get(0)?.name}")
+                        var intent = Intent()
+                        intent.putExtra(ANNOUNCEMENT_CREATED,true)
+                        setResult(Activity.RESULT_OK,intent)
+                        finish()
+                    }
+                })
+            }
 
-                }
-            })
         }
 
     }
