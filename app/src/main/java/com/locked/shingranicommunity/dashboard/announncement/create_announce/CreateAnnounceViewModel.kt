@@ -15,7 +15,7 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
         var fields: ArrayList<Field>? = ArrayList()
         var fieldTitle: Field? = Field(name = "name", value = title)
         var fieldDetails: Field? = Field(name = "name", value = details)
-        var strin = MutableLiveData<Item>()
+        var createdItem = MutableLiveData<Item>()
             fieldTitle?.let {
                 fields?.add(it)
             }
@@ -26,13 +26,13 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
         var adminUsers = userManger.getAdminUser().value?.admins
             for (i in 0 until adminUsers?.size!!){
                 if (userManger.getCurrentUser()?._id?.contentEquals(adminUsers[i]._id)!!) {
-                    strin = requestResponse.createAnnouncement(fields!!)
+                    createdItem = requestResponse.createAnnouncement(fields!!)
                 }
             }
-        return strin
+        return createdItem
     }
     fun titleValidation(title: EditText): Boolean{
-        return return if (title != null && title.text.toString().length >= 3) {
+        return return if (title.text.toString().length >= 3) {
             true
         }else{
             title.error = "Title at lest should 3 or more characters"
@@ -40,7 +40,7 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
         }
     }
     fun detailsValidation(title: EditText):Boolean{
-        return if (title != null && title.text.toString().length >= 10) {
+        return if (title.text.toString().length >= 10) {
             true
         }else{
             title.error = "Title at lest should 10 or more characters"

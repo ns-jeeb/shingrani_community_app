@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class DashBoardViewModel @Inject constructor(private val dashboardRepositor: DashboardRepositor,val userManager: UserManager):ViewModel() {
     fun loadItem(context: Context){
-        Toast.makeText(context,"this is working",Toast.LENGTH_LONG).show()
+        dashboardRepositor.fetchEvent()
     }
     fun getToken(): String{
         return if (userManager.token.isNotBlank()){

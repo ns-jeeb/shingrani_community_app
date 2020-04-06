@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
+import com.locked.shingranicommunity.Constant_Utils.ONE_00
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
@@ -51,7 +52,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
         this.token = token
         initViews()
-        setpuViewPager(this.token)
+        setpuViewPager()
 //        if (/*admin toke*/ !this.token.isBlank()){
 //            mBinding.visibility = View.VISIBLE
 //            mBinding.imgCreateItem.setOnClickListener(this)
@@ -73,11 +74,11 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         super.onStart()
     }
 
-    fun setpuViewPager(token: String){
+    fun setpuViewPager(){
 
         val adapter = DashboardPagerAdapter(supportFragmentManager)
 
-        var eventFragment = EventListFragment.newInstance(token,false)
+        var eventFragment = EventListFragment.newInstance(false)
         var announcementFragment = AnnounceFragment.newInstance()
 
         val density = resources.displayMetrics.density
@@ -112,14 +113,18 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         var bundle = Bundle()
         bundle.putString("token",adminToken)
         inten.putExtras(bundle)
-        inten.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        startActivity(inten)
+        startActivityForResult(inten, ONE_00)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100) {
-            Toast.makeText(this,"Item is created ${data?.getStringExtra("response_message")}",Toast.LENGTH_LONG).show()
+        if (data != null){
+            if (requestCode == ONE_00) {
+                Toast.makeText(this,"Item is created ${data?.getStringExtra("response_message")}",Toast.LENGTH_LONG).show()
+                dashBoardViewModel.loadItem(this)
+                setpuViewPager()
+            }
+
         }
     }
 

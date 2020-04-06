@@ -108,10 +108,10 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
         })
         return string
     }
+    fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
+    override fun createEvent(fields: ArrayList<Field>): MutableLiveData<String> {
 
-    override fun createEvent(fields: ArrayList<Field>):  MutableLiveData<String> {
-
-        var message : MutableLiveData<String> = MutableLiveData()
+        var message: MutableLiveData<String> = MutableLiveData()
         var eventBodyMap: HashMap<String, Any> = HashMap()
 
         eventBodyMap["owner"] = OWNER_ID
@@ -120,32 +120,29 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
         eventBodyMap["title"] = "Solgira Mockup"
         eventBodyMap["fields"] = fields
 
-        if (!userManager.token.isBlank()){
-            var call = lockedApiService.createEventItem(userManager.token,eventBodyMap)
-            call.enqueue(object : Callback, retrofit2.Callback<Item>{
-                override fun onFailure(call: Call<Item>, t: Throwable) {
-                    Log.d("Item_Response",t.message)
-                }
+        var call = lockedApiService.createEventItem(userManager.token, eventBodyMap)
+        call.enqueue(object : Callback, retrofit2.Callback<Item> {
+            override fun onFailure(call: Call<Item>, t: Throwable) {
+                Log.d("Item_Response", t.message)
+            }
+            override fun onResponse(call: Call<Item>, response: Response<Item>) {
+                if (response.isSuccessful) {
+                    message.value = ""
 
-                override fun onResponse(call: Call<Item>, response: Response<Item>) {
-                    if (response.isSuccessful) {
-                        message.value = response.message()
-                    }
-                    else{
-                        parsingJson(response.errorBody())
-                    }
-                    Log.d("Item_Response",response.message())
+                } else {
+                    message.value = parsingJson(response.errorBody())
                 }
-            })
-        }
+                Log.d("Item_Response", response.message())
+            }
+        })
         return message
     }
 
 
-    override fun fetchEvent(template: String): MutableLiveData<ArrayList<Item>>? {
+    override fun fetchEvent(): MutableLiveData<ArrayList<Item>>? {
 
             if (!userManager.token.isBlank()){
-                var call = lockedApiService.getItems(template, userManager.token!!)
+                var call = lockedApiService.getItems(EVENT_TIMPLATE_ID, userManager.token!!)
                 call.enqueue(object :Callback, retrofit2.Callback<ArrayList<Item>>{
                     override fun onResponse(call: Call<ArrayList<Item>>, response: Response<ArrayList<Item>>) {
                         Log.d("Item_Response","response is working")
@@ -156,7 +153,6 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
                             parsingJson(response.errorBody())
                         }
                     }
-
                     override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
                         Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
                     }

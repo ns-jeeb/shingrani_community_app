@@ -29,7 +29,7 @@ class CreateItemActivity : AppCompatActivity() {
         mBinding = DataBindingUtil.setContentView(this,R.layout.create_item_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, CreateEventFragment.newInstance())
+                .replace(R.id.container, CreateEventFragment())
                 .commitNow()
         }
         mBinding.backPress.setOnClickListener() {

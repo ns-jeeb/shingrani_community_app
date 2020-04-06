@@ -17,74 +17,44 @@ import android.widget.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
-import com.locked.shingranicommunity.Constant_Utils.INVITED_GUESTS
+import com.locked.shingranicommunity.Constant_Utils.ONE_01
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import com.locked.shingranicommunity.members.MemberActivity
 import javax.inject.Inject
-
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class CreateEventFragment : Fragment() ,View.OnClickListener{
     var timeFragment : TimePickerFragment? = null
     var dateFragment : DatePickerFragment? = null
-    var numberOfGuests = Bundle()
+    lateinit var mBinding: CreateEventFragmentBinding
+    @Inject
+    lateinit var viewModelProviders: ViewModelProviderFactory
+    lateinit var viewModel: CreateEventViewModel
     var type:String?  =null
 
-    override fun onClick(v: View?) {
-        timeFragment?.let{mBinding.crEventTime.text = timeFragment!!.getTheTime()}
-        dateFragment?.let{mBinding.crEventDate.text = dateFragment!!.getTheDate()}
-        if (timeFragment != null && dateFragment!= null){
-            if (v?.id == R.id.btn_cr_event){
-                type?.let {
-                    viewModel.createEvent(
-                        mBinding.crEventName.text.toString(),
-                        it,
-                        mBinding.crEventAddress.text.toString(),
-
-                        "${mBinding.crEventDate.text} : ${mBinding.crEventTime.text}" ,
-                        mBinding.crEventDetails.text.toString(),
-                        "",
-                        "",
-                        mBinding.crEventDetails.text.toString()
-                    ).observe(this, Observer         {
-
-                        var intent = Intent()
-                        intent.putExtra("response_message",it)
-                        activity?.setResult(Activity.RESULT_OK, intent)
-                        activity?.finish()
-                    })
-                }
-
-
-            }else if (v?.id == R.id.txt_user_selection) {
-//            launch list of user
-                var intent = Intent(activity, MemberActivity::class.java)
-                intent.putExtra(CREATED_EVENT,true)
-                startActivityForResult(intent, 101)
-            }
-        }
-
-    }
     private fun getTypeItem():String{
         val adapter = ArrayAdapter(context,android.R.layout.simple_spinner_item, resources.getStringArray(R.array.events_arrays))
         mBinding.crEventType.adapter = adapter
+        var itemEvent = ""
         mBinding.crEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
-
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 Log.d("ItemType","$position ${adapter.getItem(position)}")
+                type = adapter.getItem(position)
             }
-
         }
 
-        return ""
+        return itemEvent
     }
     fun showTimePicker(v: View){
         activity?.supportFragmentManager?.let {
@@ -99,53 +69,71 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
 
         }
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (data != null) {
-            if (requestCode == 101) {
-                numberOfGuests = data.extras
-                var arrayMember = numberOfGuests.getStringArrayList(INVITED_GUESTS)
-                mBinding.txtUserSelection.text = "${arrayMember.size} Guests are invited"
-            }
-        }
-
-    }
-
-    lateinit var mBinding: CreateEventFragmentBinding
-
-    companion object {
-        fun newInstance() = CreateEventFragment()
-    }
-
-    @Inject
-    lateinit var viewModelProviders: ViewModelProviderFactory
-    lateinit var viewModel: CreateEventViewModel
-
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
 //        viewModel.lifecycleOwner = this
         mBinding = DataBindingUtil.inflate(inflater, R.layout.create_event_fragment,container,false)
         viewModel = ViewModelProviders.of(this, viewModelProviders).get(CreateEventViewModel::class.java)
         mBinding.btnCrEvent.setOnClickListener(this)
-        mBinding.crEventDate.setOnClickListener{
-            showDatePicker(it)
-        }
-        type =getTypeItem()
-        mBinding.crEventTime.setOnClickListener{
-            showTimePicker(it)
-        }
-
+        mBinding.crEventDate.setOnClickListener(this)
+        type = getTypeItem()
+        mBinding.crEventTime.setOnClickListener(this)
         mBinding.txtUserSelection.setOnClickListener(this)
         return mBinding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btn_cr_event -> {
+                createEvent()
+            }
+            R.id.cr_event_time -> {
+                showTimePicker(v)
+            }
+            R.id.cr_event_date -> {
+                showDatePicker(v)
+            }
+            R.id.txt_user_selection -> {
+                //            launch list of user
+                val intent = Intent(activity, MemberActivity::class.java)
+                intent.putExtra(CREATED_EVENT,true)
+                startActivityForResult(intent, ONE_01)
+            }
+        }
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as CreateItemActivity).dashboardCompunent.inject(this)
+    }
+    private fun createEvent(){
+        timeFragment?.let{mBinding.crEventTime.text = timeFragment!!.getTheTime()}
+        dateFragment?.let{mBinding.crEventDate.text = dateFragment!!.getTheDate()}
+        if (timeFragment != null && dateFragment!= null) {
+            var eventType: String = ""
+            type?.let {
+                eventType = it
+            }
+            viewModel.createEvent(
+                mBinding.crEventName.text.toString(),
+                eventType,
+                mBinding.crEventAddress.text.toString(),
+
+                "${mBinding.crEventDate.text} : ${mBinding.crEventTime.text}",
+                mBinding.crEventDetails.text.toString(),
+                "",
+                "",
+                mBinding.crEventDetails.text.toString()
+            ).observe(this@CreateEventFragment, Observer {
+                if (it.isNullOrBlank()) {
+                    var intent = Intent()
+                    activity?.setResult(Activity.RESULT_OK, intent)
+                    activity?.finish()
+                } else {
+                    mBinding.txtRegisterName.text = it
+                }
+            })
+        }
+
     }
 }
 

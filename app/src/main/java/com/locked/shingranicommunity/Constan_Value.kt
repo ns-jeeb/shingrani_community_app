@@ -17,5 +17,17 @@ object Constant_Utils {
     const val SHARED_PREF_ADMIN_USER = "SHARED_PREF_ADMIN_USER"
     const val ADMIN_USER = "ADMIN_USER"
     const val ANNOUNCEMENT_CREATED = "ANNOUNCEMENT_CREATED"
+    const val ONE_00 = 100
+    const val ONE_01 = 101
+    const val ONE_02 = 102
+    const val ONE_03 = 103
+    const val ONE_04 = 104
+    const val ONE_05 = 105
+    const val ONE_06 = 106
+    const val ONE_07 =107
+    const val ONE_08 = 108
+    const val ONE_09 = 109
+    const val ONE_10 = 110
+    const val ONE_11 = 111
 
 }

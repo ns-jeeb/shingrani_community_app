@@ -12,7 +12,9 @@ data class Item(
     var fields: ArrayList<Field>? = null,
     var icon: Icon? = null,
     var colorDarker: String? = null,
-    var colorOriginal: String? = null
+    var colorOriginal: String? = null,
+    var errorMessage: String? ="",
+    var successMes: String =""
 ){
 }
 
@@ -31,7 +33,7 @@ data class ErrorBodyResponse(
 
 }
 data class Error(
-    val message : String
+    var errorMessage : String
 ){
 
 }

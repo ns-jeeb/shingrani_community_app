@@ -17,13 +17,13 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
     fun load(): List<Item> {
 
         var items: List<Item> = ArrayList()
-        itemEventHandler.fetchEvent(TEMPLATE_EVENT)
+        itemEventHandler.fetchEvent()
         return items
     }
 
     fun onRefresh() {
         viewModelScope.launch {
-            itemEventHandler.fetchEvent(TEMPLATE_EVENT)
+            itemEventHandler.fetchEvent()
         }
     }
 
@@ -36,7 +36,7 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
     }
 
     fun itemsLoaded(): LiveData<ArrayList<Item>> {
-        return itemEventHandler.fetchEvent(TEMPLATE_EVENT)!!
+        return itemEventHandler.fetchEvent()!!
     }
 
     fun getCurrentUser(): User {

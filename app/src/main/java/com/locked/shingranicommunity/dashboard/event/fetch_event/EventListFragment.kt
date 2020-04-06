@@ -45,12 +45,9 @@ class EventListFragment : Fragment(),OnInvitedListener {
     lateinit var viewModelProviders: ViewModelProvider.Factory
 
     companion object{
-        fun newInstance(token: String, isCreate: Boolean): EventListFragment {
+        fun newInstance(isCreate: Boolean): EventListFragment {
             val fragment = EventListFragment()
             val args = Bundle()
-            val ARG_TOKEN = "token"
-            val ISTOKEN :Boolean = false
-            args.putString(ARG_TOKEN, token)
             args.putBoolean(EXTRA_MESSAGE, isCreate)
             fragment.arguments = args
             return fragment
@@ -66,8 +63,6 @@ class EventListFragment : Fragment(),OnInvitedListener {
             throw RuntimeException("$context must implement OnEventFragmentTransaction")
         }
         (activity!! as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
-
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +74,20 @@ class EventListFragment : Fragment(),OnInvitedListener {
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null){
+            if (requestCode == 100) {
+                eventViewModel.load()
+            }
+
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("OnResume","call update here")
+    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event_list, container, false)
@@ -93,8 +102,8 @@ class EventListFragment : Fragment(),OnInvitedListener {
             val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1) }
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter.setOnInvitedEvent(this)
-            mBinding!!.eventRecyclerView.layoutManager = layoutManager
-            mBinding!!.eventRecyclerView.adapter = adapter
+            mBinding.eventRecyclerView.layoutManager = layoutManager
+            mBinding.eventRecyclerView.adapter = adapter
             mBinding.progressEvent.visibility = View.GONE
             adapter.notifyDataSetChanged()
         })
