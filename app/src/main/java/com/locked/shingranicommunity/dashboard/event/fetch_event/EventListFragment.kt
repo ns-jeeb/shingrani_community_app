@@ -10,8 +10,6 @@ import com.locked.shingranicommunity.R
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.*
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,8 +22,6 @@ import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
-import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
 /**
@@ -102,12 +98,12 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
         }else{
             mBinding.fabCreateEvent.visibility = View.GONE
         }
-       setupListViewAdpter()
+       setupListViewAdapter()
 
         return mBinding.root
     }
     @SuppressLint("SetTextI18n")
-    fun setupListViewAdpter() {
+    fun setupListViewAdapter() {
         eventViewModel.itemsLoaded().observe(this, Observer {
             if (it != null) {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
@@ -148,7 +144,7 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
         eventViewModel.itemDelete(eventitem._id!!)?.observe(this@EventListFragment, Observer {
             if (it.isNullOrBlank()){
                 eventViewModel.load()
-                setupListViewAdpter()
+                setupListViewAdapter()
             }else{
                 mBinding.txtPageTitle.text = it
             }

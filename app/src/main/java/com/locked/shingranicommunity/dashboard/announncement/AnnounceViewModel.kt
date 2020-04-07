@@ -33,6 +33,9 @@ class AnnounceViewModel @Inject constructor(val eventListener: DashboardItemRequ
     fun getAdminUser(): Admin?{
         return userManager.getAdminUser(userManager.getCurrentUser()?._id!!)
     }
+    fun deleteAnnounce(itemId: String):MutableLiveData<String> {
+        return eventListener.deleteFields(itemId)!!
+    }
 
 }
 

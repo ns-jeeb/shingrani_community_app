@@ -54,16 +54,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         this.token = token
         initViews()
         setpuViewPager()
-//        if (/*admin toke*/ !this.token.isBlank()){
-//            mBinding.visibility = View.VISIBLE
-//            mBinding.imgCreateItem.setOnClickListener(this)
-//        }else{
-//            mBinding.imgCreateItem.visibility = View.VISIBLE
-//        }
-//        mBinding.imgProfile.setOnClickListener(this)
-//
-//        mBinding.txtAnnouncement.text = intent.getStringExtra("USER_NAME")
-
     }
 
     private fun initViews() {

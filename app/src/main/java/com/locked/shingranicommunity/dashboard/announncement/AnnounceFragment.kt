@@ -17,10 +17,12 @@ import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_CREATED
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
+import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
 import javax.inject.Inject
 
-class AnnounceFragment : Fragment(),View.OnClickListener {
+class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
     companion object {
         fun newInstance() = AnnounceFragment()
     }
@@ -50,16 +52,20 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
             mBinding?.fabCreateAnnouncement?.visibility = View.GONE
         }
         mBinding?.fabCreateAnnouncement?.setOnClickListener(this)
+        setupListViewAdapter()
+        return mBinding!!.root
+    }
+    private fun setupListViewAdapter(){
 
         viewModel.loadedAnnouncements().observe(this, Observer {
             val adapter = AnnounceListAdapter(it)
+            adapter.setOnInvitedEvent(this)
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             mBinding!!.announcementRecyclerView.layoutManager = layoutManager
             mBinding!!.announcementRecyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
 
         })
-        return mBinding!!.root
     }
     override fun onClick(v: View?) {
         if (v?.id == R.id.fab_create_announcement){
@@ -80,5 +86,22 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
         super.onAttach(context)
         (activity as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
     }
+    override fun onAccepted(eventitem: Item, accepted: String) {
+//        viewModel.updateItem(eventitem, accepted)
+    }
 
+    override fun onRejected(eventitem : Item, rejected: String) {
+//        viewModel.updateItem(eventitem,rejected)
+    }
+
+    override fun onDeleted(eventitem: Item, deleted: String) {
+        viewModel.deleteAnnounce(eventitem._id!!)?.observe(this@AnnounceFragment, Observer {
+            if (it.isNullOrBlank()){
+                viewModel.load()
+                setupListViewAdapter()
+            }else{
+                mBinding?.txtErrorAnnounceMessage?.text = it
+            }
+        })
+    }
 }

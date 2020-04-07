@@ -7,10 +7,11 @@ import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
-class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val requestResponse: DashboardRepositor): ViewModel(){
+class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val requestResponse: DashboardRepositor): ViewModel() {
     fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
     fun createAnnouncement(title: String, details: String): LiveData<String>{
         var fields: ArrayList<Field>? = ArrayList()
@@ -51,5 +52,4 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
             false
         }
     }
-
 }
