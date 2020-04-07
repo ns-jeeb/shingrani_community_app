@@ -8,6 +8,7 @@
     <application
         android:name=".registration_login.registration.MyApplication"
         android:allowBackup="true"
+        android:label="My Community"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
