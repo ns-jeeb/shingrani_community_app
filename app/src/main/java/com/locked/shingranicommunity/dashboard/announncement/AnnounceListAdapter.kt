@@ -31,7 +31,7 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
     }
 
     inner class AnnounceViewHolder(var parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.announcement_item, parent, false)) ,
-        View.OnLongClickListener, MenuItem.OnMenuItemClickListener {
+        View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
         internal var binding: AnnouncementItemBinding? = null
 
@@ -53,10 +53,10 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
             binding?.txtAnnouncementTitleItem?.text = title
             binding?.txtAnnouncementMessage?.text = text
             binding?.txtDateItemCreated?.text = timeStamp
-            binding?.imgHDot?.setOnLongClickListener(this)
+            binding?.imgHDot?.setOnClickListener(this)
 
         }
-        override fun onLongClick(v: View?): Boolean {
+        override fun onClick(v: View?) {
             var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
             if (v?.id == R.id.img_h_dot){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
@@ -66,7 +66,6 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
 
             }
             popupMenu.show()
-            return true
         }
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -85,5 +84,6 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
 
             return true
         }
+
     }
 }

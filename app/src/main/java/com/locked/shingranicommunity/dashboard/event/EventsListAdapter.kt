@@ -34,7 +34,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
 
     inner class EventViewHolder(val parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.event_item,parent,false)),
-        View.OnLongClickListener, MenuItem.OnMenuItemClickListener {
+        View.OnClickListener, MenuItem.OnMenuItemClickListener {
 
         internal var binding: EventItemBinding? = null
         lateinit var context: Context
@@ -71,10 +71,10 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
             binding!!.txtEventDate.text = date?.get(0)
             binding!!.txtEventTime.text = date?.get(2)
 //            binding!!.isAttend.text = isattend
-            binding!!.imgHDot.setOnLongClickListener(this)
+            binding!!.imgHDot.setOnClickListener(this)
         }
 
-        override fun onLongClick(v: View?): Boolean {
+        override fun onClick(v: View?) {
             var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
             if (v?.id == R.id.img_h_dot){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
@@ -84,7 +84,6 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
 
             }
             popupMenu.show()
-            return true
         }
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
@@ -103,6 +102,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
 
             return true
         }
+
     }
 }
 interface OnInvitedListener{
