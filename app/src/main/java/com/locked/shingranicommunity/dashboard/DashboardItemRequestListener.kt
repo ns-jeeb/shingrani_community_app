@@ -7,7 +7,7 @@ import com.locked.shingranicommunity.dashboard.data.Item
 
 interface DashboardItemRequestListener {
 
-    fun deleteFields(itemId:String,token: String): String?
+    fun deleteFields(itemId:String): MutableLiveData<String>?
     fun fetchEvent(): MutableLiveData<ArrayList<Item>>?
     fun updateItem(fields: ArrayList<Field>?,itemId: String?): String
     fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>?

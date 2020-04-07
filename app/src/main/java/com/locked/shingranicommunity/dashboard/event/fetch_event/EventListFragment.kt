@@ -92,9 +92,13 @@ class EventListFragment : Fragment(),OnInvitedListener {
 
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event_list, container, false)
         eventViewModel = ViewModelProviders.of(this,viewModelProviders).get(EventViewModel::class.java)
+       setupListViewAdpter()
+
+        return mBinding.root
+    }
+    fun setupListViewAdpter(){
         eventViewModel.itemsLoaded().observe(this, Observer {
             if (it != null) {
-
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
             }else{
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
@@ -115,8 +119,6 @@ class EventListFragment : Fragment(),OnInvitedListener {
                 mBinding.userState.text = "Regular User"
             }
         })
-
-        return mBinding.root
     }
 
     override fun onDetach() {
@@ -130,6 +132,17 @@ class EventListFragment : Fragment(),OnInvitedListener {
 
     override fun onRejected(eventitem : Item,rejected: String) {
         eventViewModel.updateItem(eventitem,rejected)
+    }
+
+    override fun onDeleted(eventitem: Item, deleted: String) {
+        eventViewModel.itemDelete(eventitem._id!!)?.observe(this@EventListFragment, Observer {
+            if (it.isNullOrBlank()){
+                eventViewModel.load()
+                setupListViewAdpter()
+            }else{
+                mBinding.txtPageTitle.text = it
+            }
+        })
     }
 
 }

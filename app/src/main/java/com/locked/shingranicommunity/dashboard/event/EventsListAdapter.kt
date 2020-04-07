@@ -80,6 +80,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
                 popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
+                popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)
 
             }
             popupMenu.show()
@@ -88,10 +89,16 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             var id = item?.itemId
-            if (id == R.id.popup_accept) {
-                mEvents?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,"Accepted") }
-            }else if (id == R.id.popup_reject) {
-                mEvents?.get(adapterPosition)?.let {onInvitedListener.onRejected(it,"Rejected") }
+            when (id) {
+                R.id.popup_accept -> {
+                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,"Accepted") }
+                }
+                R.id.popup_reject -> {
+                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onRejected(it,"Rejected") }
+                }
+                R.id.popup_delete -> {
+                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onDeleted(it,"Deleted") }
+                }
             }
 
             return true
@@ -101,4 +108,5 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
 interface OnInvitedListener{
     fun onAccepted(eventitem: Item,accepted: String)
     fun onRejected(eventitem : Item,rejected: String)
+    fun onDeleted(eventitem : Item,deleted: String)
 }

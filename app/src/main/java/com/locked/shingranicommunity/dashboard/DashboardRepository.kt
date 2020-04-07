@@ -31,33 +31,29 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
     private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
     var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
 
-    override fun deleteFields(itme_id: String,token: String): String? {
+    override fun deleteFields(itemId: String): MutableLiveData<String>? {// 5e879c8992fc4115007c7cdb
+        var responseMess = MutableLiveData<String>()
+        var call = lockedApiService.deleteItems(userManager.token, itemId)
+        if (!itemId.isBlank()) {
+            call.enqueue(object : Callback, retrofit2.Callback<Item> {
+                override fun onFailure(call: Call<Item>, t: Throwable) {
+                    responseMess.value = t.message.toString()
+                }
+                override fun onResponse(call: Call<Item>, response: Response<Item>) {
+                    if (!response.isSuccessful) {
+                        responseMess.value = parsingJson(response.errorBody())
+                    }else{
 
-        var responseMess = ""
-        if (!userManager.token.isBlank()){
-            var call = lockedApiService.deleteItems(userManager.token,itme_id)
-            if (!itme_id.isBlank()){
-                call.enqueue(object : Callback, retrofit2.Callback<String>{
-                    override fun onFailure(call: Call<String>, t: Throwable) {
-                        responseMess = t.message.toString()
+                        Log.d("Item_deleted", response.message())
+                        responseMess.value = ""
                     }
-
-                    override fun onResponse(call: Call<String>, response: Response<String>) {
-                        if (!response.isSuccessful) {
-                            parsingJson(response.errorBody())
-                        }
-                        Log.d("Item_deleted",response.message())
-                        responseMess = response.message()
-                    }
-
-                })
-            }
+                }
+            })
         }
         return responseMess
     }
-
-
     override fun fetchAnnouncement(template: String): MutableLiveData<ArrayList<Item>>? {
+
 
             if (!userManager.token.isBlank()){
                 var call = lockedApiService.getItems(template, userManager.token)
@@ -71,7 +67,6 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
                             parsingJson(response.errorBody())
                         }
                     }
-
                     override fun onFailure(call: Call<ArrayList<Item>>, t: Throwable) {
                         Toast.makeText(MyApplication.instance,"response Failed", Toast.LENGTH_LONG).show()
                     }

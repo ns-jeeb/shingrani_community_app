@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
 import com.locked.shingranicommunity.Constant_Utils.ONE_00
+import com.locked.shingranicommunity.Constant_Utils.ONE_01
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
@@ -124,7 +125,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
                 dashBoardViewModel.loadItem(this)
                 setpuViewPager()
             }
-
         }
     }
 

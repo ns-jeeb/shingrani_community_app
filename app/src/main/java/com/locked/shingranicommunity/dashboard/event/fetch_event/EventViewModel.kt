@@ -27,8 +27,8 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
         }
     }
 
-    fun itemDelete(itemId: String, token: String) {
-        itemEventHandler.deleteFields(itemId, token)
+    fun itemDelete(itemId: String):MutableLiveData<String>? {
+        return itemEventHandler.deleteFields(itemId)
     }
 
     companion object {
