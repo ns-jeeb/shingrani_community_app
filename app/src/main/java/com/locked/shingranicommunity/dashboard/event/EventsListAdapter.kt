@@ -9,8 +9,9 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.members.User
+import kotlin.properties.Delegates
 
-class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
+class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: Boolean) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): EventViewHolder {
         return EventViewHolder(viewGroup)
@@ -31,6 +32,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
         return 0
     }
     lateinit var onInvitedListener: OnInvitedListener
+    private var mHideItem by Delegates.notNull<Boolean>()
 
     inner class EventViewHolder(val parent: ViewGroup) :
         RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.event_item,parent,false)),
@@ -41,6 +43,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
         init {
             binding = DataBindingUtil.bind(itemView)
             context = parent.context
+            mHideItem = hide
         }
 
         fun bind(event:Item,position: Int) {
@@ -78,6 +81,8 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
             var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
             if (v?.id == R.id.img_h_dot){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
+                var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
+                menuItem.isVisible = !mHideItem
                 popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)
@@ -102,7 +107,6 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User) : Recycle
 
             return true
         }
-
     }
 }
 interface OnInvitedListener{

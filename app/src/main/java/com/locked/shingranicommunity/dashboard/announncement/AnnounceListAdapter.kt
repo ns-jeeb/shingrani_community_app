@@ -13,8 +13,9 @@ import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
 
-class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
+class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: Boolean) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
 
+    private var mHideItem: Boolean = false
     lateinit var onInvitedListener: OnInvitedListener
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): AnnounceViewHolder {
         return AnnounceViewHolder(viewGroup)
@@ -37,6 +38,7 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
 
         init {
             binding = DataBindingUtil.bind(itemView)
+            mHideItem = hideDeleteMenu
         }
 
         fun bind(announcement: Item, i: Int) {
@@ -60,6 +62,8 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?) : RecyclerView.Adap
             var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
             if (v?.id == R.id.img_h_dot){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
+                var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
+                menuItem.isVisible = !mHideItem
                 popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)

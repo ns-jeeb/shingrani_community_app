@@ -104,13 +104,17 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
     }
     @SuppressLint("SetTextI18n")
     fun setupListViewAdapter() {
+        var hideDeleteMenu = true
         eventViewModel.itemsLoaded().observe(this, Observer {
             if (it != null) {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
             } else {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
             }
-            val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1) }
+            if (eventViewModel.getAdminUser()?._id == eventViewModel.getCurrentUser()._id){
+                hideDeleteMenu = false
+            }
+            val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1,hideDeleteMenu)}
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter.setOnInvitedEvent(this)
             mBinding.eventRecyclerView.layoutManager = layoutManager
