@@ -108,15 +108,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
         tabs.setViewPager(pager)
 
     }
-    // run only with admin token
-    fun createItem(adminToken: String){
-        var inten = Intent(this, CreateItemActivity::class.java)
-        var bundle = Bundle()
-        bundle.putString("token",adminToken)
-        inten.putExtras(bundle)
-        startActivityForResult(inten, ONE_00)
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null){
@@ -137,6 +128,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
             mBinding.txtLoadingItem.visibility = View.GONE
         }
 
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -156,7 +148,12 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
                 return true
             }
             R.id.action_add -> {
-                createItem(dashBoardViewModel.getToken())
+//                if (dashBoardViewModel.userManager.getAdminUser(dashBoardViewModel.userManager.getCurrentUser()?._id!!) != null){
+//                    createItem(dashBoardViewModel.getToken())
+//                }else{
+//                    Toast.makeText(this,"you don't have permission to create item",Toast.LENGTH_LONG).show()
+//                }
+
             }
             R.id.action_settings -> {
                 var intent = Intent(this, SettingsActivity::class.java)

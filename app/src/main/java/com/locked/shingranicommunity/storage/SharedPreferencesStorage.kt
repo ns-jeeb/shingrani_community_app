@@ -1,17 +1,13 @@
 package com.locked.shingranicommunity.storage
 
 import android.content.Context
-import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.locked.shingranicommunity.Constant_Utils.ADMIN_USER
+import com.locked.shingranicommunity.Constant_Utils.TEMPLATE_MODEL
 import com.locked.shingranicommunity.Constant_Utils.CURRENT_USER
-import com.locked.shingranicommunity.Constant_Utils.LIST_USER
-import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_ADMIN_USER
+import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_TEMPLATE_MODEL
 import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_CURRENT_USER
-import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_LIST_USER
 import com.locked.shingranicommunity.di.Storage
-import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
 import com.locked.shingranicommunity.models.TemplateModel
 import javax.inject.Inject
@@ -57,16 +53,13 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
 //
 //    }
 
-    override fun getAdminUser(): MutableLiveData<TemplateModel> {
-        var admin = MutableLiveData<TemplateModel>()
-        var sharedPr = context.getSharedPreferences(SHARED_PREF_ADMIN_USER,Context.MODE_PRIVATE)
-        var type = Gson().fromJson<TemplateModel>(sharedPr.getString(ADMIN_USER,""))
-        admin.value = type
-        return admin
+    override fun getTemplateModel(): TemplateModel? {
+        val sharedPr = context.getSharedPreferences(SHARED_PREF_TEMPLATE_MODEL,Context.MODE_PRIVATE)
+        return Gson().fromJson<TemplateModel>(sharedPr.getString(TEMPLATE_MODEL,""))
     }
 
-    override fun setAdminUser(adminUser: TemplateModel) {
-        var sharedPr = context.getSharedPreferences(SHARED_PREF_ADMIN_USER,Context.MODE_PRIVATE).edit()
-        sharedPr.putString(ADMIN_USER,Gson().toJson(adminUser)).apply()
+    override fun setTemplateModel(templateModel: TemplateModel) {
+        val sharedPr = context.getSharedPreferences(SHARED_PREF_TEMPLATE_MODEL,Context.MODE_PRIVATE).edit()
+        sharedPr.putString(TEMPLATE_MODEL,Gson().toJson(templateModel)).apply()
     }
 }

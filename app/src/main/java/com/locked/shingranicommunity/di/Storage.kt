@@ -16,6 +16,6 @@ interface Storage {
 //    fun getUser(): MutableLiveData<ArrayList<ShingraniMember>>
 //    fun setUser(users: ArrayList<ShingraniMember>)
 
-    fun getAdminUser(): MutableLiveData<TemplateModel>
-    fun setAdminUser(adminUser: TemplateModel)
+    fun getTemplateModel(): TemplateModel?
+    fun setTemplateModel(templateModel: TemplateModel)
 }

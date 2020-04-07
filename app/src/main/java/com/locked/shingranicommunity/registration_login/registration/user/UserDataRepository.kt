@@ -142,7 +142,7 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
             override fun onResponse(call: Call<TemplateModel>, response: Response<TemplateModel>) {
                 if (response.isSuccessful) {
                     Log.d("SingleApiCall","is success ${response.body()}")
-                    userManager.setAdminUser(response.body()!!)
+                    userManager.setTemplateModel(response.body()!!)
                 }else{
                     Log.d("SingleApiCall","is Failed ${response.body()}")
                 }

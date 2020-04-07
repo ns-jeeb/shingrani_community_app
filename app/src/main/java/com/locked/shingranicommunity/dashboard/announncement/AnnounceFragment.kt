@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.dashboard.announncement
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,13 +21,6 @@ import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
 import javax.inject.Inject
 
 class AnnounceFragment : Fragment(),View.OnClickListener {
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.fab_create_announcement){
-            var intent = Intent(activity, CreateAnnouncementActivity::class.java)
-            startActivityForResult(intent, 102)
-        }
-    }
-
     companion object {
         fun newInstance() = AnnounceFragment()
     }
@@ -36,6 +30,7 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
     @Inject
     lateinit var viewModelProvider: ViewModelProvider.Factory
 
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +44,11 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
                 viewModel.onRefresh()
             }
         }
+        if (viewModel.getAdminUser()?._id!= null){
+            mBinding?.fabCreateAnnouncement?.visibility =View.VISIBLE
+        }else{
+            mBinding?.fabCreateAnnouncement?.visibility = View.GONE
+        }
         mBinding?.fabCreateAnnouncement?.setOnClickListener(this)
 
         viewModel.loadedAnnouncements().observe(this, Observer {
@@ -61,7 +61,12 @@ class AnnounceFragment : Fragment(),View.OnClickListener {
         })
         return mBinding!!.root
     }
-
+    override fun onClick(v: View?) {
+        if (v?.id == R.id.fab_create_announcement){
+            var intent = Intent(activity, CreateAnnouncementActivity::class.java)
+            startActivityForResult(intent, 102)
+        }
+    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null){

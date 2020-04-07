@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
-import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.members.User
-import com.locked.shingranicommunity.models.TemplateModel
+import com.locked.shingranicommunity.models.Admin
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -28,11 +27,13 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
     }
 
     fun itemDelete(itemId: String):MutableLiveData<String>? {
-        return itemEventHandler.deleteFields(itemId)
-    }
-
-    companion object {
-        const val TEMPLATE_EVENT = "5d770cd8ea2f6b1300f03ca7"
+        var response = MutableLiveData<String>()
+        response.value ="You don't have permission to delete event"
+        return if (getAdminUser()!= null){
+            itemEventHandler.deleteFields(itemId)
+        }else{
+            response
+        }
     }
 
     fun itemsLoaded(): LiveData<ArrayList<Item>> {
@@ -41,10 +42,6 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
 
     fun getCurrentUser(): User {
         return userManager.getCurrentUser()!!
-    }
-
-    fun getAdminUser(): LiveData<TemplateModel> {
-        return userManager.getAdminUser()
     }
 
     fun updateItem(item: Item,inviteFiled: String): String {
@@ -64,5 +61,9 @@ class EventViewModel @Inject constructor(val itemEventHandler: DashboardItemRequ
             }
         }
         return message
+    }
+
+    fun getAdminUser(): Admin?{
+        return userManager.getAdminUser(userManager.getCurrentUser()?._id!!)
     }
 }

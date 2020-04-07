@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.dashboard.event.fetch_event
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -16,18 +17,21 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
+import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
+import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
 /**
  * A simple [Fragment] subclass.
  */
-class EventListFragment : Fragment(),OnInvitedListener {
+class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
 
     interface OnEventFragmentTransaction {
         fun onFragmentInteraction(uri: Uri)
@@ -80,7 +84,6 @@ class EventListFragment : Fragment(),OnInvitedListener {
             if (requestCode == 100) {
                 eventViewModel.load()
             }
-
         }
     }
 
@@ -88,19 +91,27 @@ class EventListFragment : Fragment(),OnInvitedListener {
         super.onResume()
         Log.d("OnResume","call update here")
     }
+    @SuppressLint("RestrictedApi")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event_list, container, false)
         eventViewModel = ViewModelProviders.of(this,viewModelProviders).get(EventViewModel::class.java)
+        mBinding.fabCreateEvent.setOnClickListener(this)
+        if (eventViewModel.getAdminUser()?._id!= null){
+            mBinding.fabCreateEvent.visibility =View.VISIBLE
+        }else{
+            mBinding.fabCreateEvent.visibility = View.GONE
+        }
        setupListViewAdpter()
 
         return mBinding.root
     }
-    fun setupListViewAdpter(){
+    @SuppressLint("SetTextI18n")
+    fun setupListViewAdpter() {
         eventViewModel.itemsLoaded().observe(this, Observer {
             if (it != null) {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
-            }else{
+            } else {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
             }
             val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1) }
@@ -111,14 +122,13 @@ class EventListFragment : Fragment(),OnInvitedListener {
             mBinding.progressEvent.visibility = View.GONE
             adapter.notifyDataSetChanged()
         })
-        eventViewModel.getAdminUser().observe(this, Observer {
-            if (it != null && it.admins[0]._id.contentEquals(eventViewModel.getCurrentUser()._id)){
-                Log.d("Admin_user","user = ${it.admins[0].name}")
-                mBinding.userState.text = "${it.admins[0].name}: Admin"
-            }else{
-                mBinding.userState.text = "Regular User"
-            }
-        })
+
+        if (eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id) != null) {
+//                Log.d("Admin_user","user = ${it.admins[0].name}")
+            mBinding.userState.text = "${eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id)?.name}: Admin"
+        } else {
+            mBinding.userState.text = "Regular User"
+        }
     }
 
     override fun onDetach() {
@@ -126,8 +136,8 @@ class EventListFragment : Fragment(),OnInvitedListener {
         mListener = null
     }
 
-    override fun onAccepted(eventitem: Item,accepted: String) {
-        eventViewModel.updateItem(eventitem,accepted)
+    override fun onAccepted(eventitem: Item, accepted: String) {
+        eventViewModel.updateItem(eventitem, accepted)
     }
 
     override fun onRejected(eventitem : Item,rejected: String) {
@@ -145,4 +155,13 @@ class EventListFragment : Fragment(),OnInvitedListener {
         })
     }
 
+    override fun onClick(v: View?) {
+        if (v?.id == R.id.fab_create_event){
+            createItem()
+        }
+    }
+    private fun createItem(){
+        var inten = Intent(activity, CreateItemActivity::class.java)
+        startActivityForResult(inten, Constant_Utils.ONE_00)
+    }
 }

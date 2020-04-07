@@ -6,6 +6,7 @@ import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.Admin
 import com.locked.shingranicommunity.models.TemplateModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -84,10 +85,22 @@ class UserManager @Inject constructor(val storage: Storage, private val userFact
 
     }
 
-    fun getAdminUser(): MutableLiveData<TemplateModel>{
-        return storage.getAdminUser()
+    fun getAdminUser(id: String): Admin? {
+        if (getTemplateModel() != null){
+            for (i in 0 until getTemplateModel()?.admins?.size!!){
+                if (id == getTemplateModel()?.admins?.get(i)?._id){
+                    return getTemplateModel()?.admins?.get(i)
+                }
+            }
+        }
+        return null
     }
-    fun setAdminUser(adminUser: TemplateModel){
-        storage.setAdminUser(adminUser)
+
+
+    fun getTemplateModel(): TemplateModel?{
+        return storage.getTemplateModel()
+    }
+    fun setTemplateModel(templateModel: TemplateModel){
+        storage.setTemplateModel(templateModel)
     }
 }

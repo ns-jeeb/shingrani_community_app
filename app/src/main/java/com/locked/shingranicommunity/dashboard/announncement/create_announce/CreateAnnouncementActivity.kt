@@ -38,12 +38,13 @@ class CreateAnnouncementActivity : AppCompatActivity() {
         mBinding.btnCrAnnounce.setOnClickListener {
             if (announceViewModel.titleValidation(mBinding.edCreateAnnouncementTitle) && announceViewModel.detailsValidation(mBinding.edCreateAnnouncementDetail)) {
                 announceViewModel.createAnnouncement(mBinding.edCreateAnnouncementTitle.text.toString(),mBinding.edCreateAnnouncementDetail.text.toString()).observe(this, Observer {
-                    if (it != null){
-                        Log.d(CreateAnnouncementActivity::class.java.name,"${it.fields?.get(0)?.name}")
+                    if (it.isNullOrBlank()){
                         var intent = Intent()
                         intent.putExtra(ANNOUNCEMENT_CREATED,true)
                         setResult(Activity.RESULT_OK,intent)
                         finish()
+                    }else{
+                        mBinding.edCreateAnnouncementTitle.error = it
                     }
                 })
             }

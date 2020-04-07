@@ -112,12 +112,12 @@ class LoginActivity : AppCompatActivity() {
         mBinding.loginPassword.doOnTextChanged { _, _, _, _ ->
             mBinding.txtError?.visibility = View.INVISIBLE
         }
-        if (!loginViewModel.getUsername().isBlank()) {
-            mBinding.loginEmail.setText(loginViewModel.getUsername())
-            mBinding.loginEmail.isEnabled = false
-        } else {
-            mBinding.loginEmail.isEnabled = true
-        }
+//        if (!loginViewModel.getUsername().isBlank()) {
+//            mBinding.loginEmail.setText(loginViewModel.getUsername())
+//            mBinding.loginEmail.isEnabled = false
+//        } else {
+//            mBinding.loginEmail.isEnabled = true
+//        }
         mBinding.btnLogin.setOnClickListener {
             loginViewModel.login(
                 mBinding.loginEmail.text.toString(),

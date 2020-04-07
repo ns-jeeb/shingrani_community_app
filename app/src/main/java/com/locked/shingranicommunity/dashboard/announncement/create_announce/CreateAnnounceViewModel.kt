@@ -11,11 +11,13 @@ import com.locked.shingranicommunity.registration_login.registration.user.UserMa
 import javax.inject.Inject
 
 class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val requestResponse: DashboardRepositor): ViewModel(){
-    fun createAnnouncement(title: String, details: String): LiveData<Item>{
+    fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
+    fun createAnnouncement(title: String, details: String): LiveData<String>{
         var fields: ArrayList<Field>? = ArrayList()
         var fieldTitle: Field? = Field(name = "name", value = title)
         var fieldDetails: Field? = Field(name = "name", value = details)
-        var createdItem = MutableLiveData<Item>()
+        var createdItem = MutableLiveData<String>()
+        createdItem.value = "You don't have permission to create announcement"
             fieldTitle?.let {
                 fields?.add(it)
             }
@@ -23,10 +25,12 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
                 fields?.add(it)
             }
 
-        var adminUsers = userManger.getAdminUser().value?.admins
+        var adminUsers = userManger.getTemplateModel()?.admins
             for (i in 0 until adminUsers?.size!!){
-                if (userManger.getCurrentUser()?._id?.contentEquals(adminUsers[i]._id)!!) {
-                    createdItem = requestResponse.createAnnouncement(fields!!)
+                return if (userManger.getCurrentUser()?._id?.contentEquals(adminUsers[i]._id)!!) {
+                    requestResponse.createAnnouncement(fields!!)
+                }else{
+                    createdItem
                 }
             }
         return createdItem
