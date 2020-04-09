@@ -3,6 +3,7 @@ package com.locked.shingranicommunity.members
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,7 @@ import com.locked.shingranicommunity.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.MemberFragmentBinding
 import javax.inject.Inject
 
-class MemberFragment : Fragment(),View.OnClickListener {
+class MemberFragment : DialogFragment(),View.OnClickListener {
 
     companion object {
         fun newInstance() = MemberFragment()
@@ -33,17 +34,8 @@ class MemberFragment : Fragment(),View.OnClickListener {
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.member_fragment, container, false)
         mBinding.btnSubmit.setOnClickListener(this)
-//        viewModel.nameResult.observe(this@MemberFragment, Observer {
-//            val loginResult = it ?: return@Observer
-//            if (loginResult.hasError()) {
-//                mBinding.edMemberName.error = getString(R.string.error_invalid_email)
-//            }
-////            if (loginResult.success != null) {
-////                mBinding.edMemberName.error = getString(R.string.error_invalid_email)
-////            }
-//        })
         viewModel = ViewModelProviders.of(this, viewModelProvider).get(FragmentMemberViewModel::class.java)
-        viewModel.emailFormState.observe(this@MemberFragment, Observer {
+        viewModel.emailFormState.observe(viewLifecycleOwner, Observer {
             val emailResult = it ?: return@Observer
             if (emailResult.emailError != null) {
                 mBinding.btnSubmit.isEnabled =false
@@ -77,7 +69,7 @@ class MemberFragment : Fragment(),View.OnClickListener {
                     mBinding.txtPageTitle.text = it.email
                     mBinding.edMemberEmail.setText("")
                     mBinding.edMemberName.setText("")
-                    (activity as MemberActivity).closeMemberFragment(true)
+                    ( activity as MemberActivity).closeMemberFragment(true)
                 }
                 else{
                     mBinding.txtPageTitle.text = it?.errorType

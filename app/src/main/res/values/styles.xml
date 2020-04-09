@@ -32,4 +32,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">#00B7FF</item>
     </style>
+
+    <style name="ThemeDialog" parent="android:Theme.Holo.Dialog">
+        <item name="android:windowMinWidthMajor">30%</item>
+        <item name="android:panelColorBackground">#00B7FF</item>
+        <item name="android:windowMinWidthMinor">100%</item>
+    </style>
 </resources>

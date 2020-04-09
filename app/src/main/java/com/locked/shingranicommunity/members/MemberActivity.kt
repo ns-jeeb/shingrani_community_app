@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.LoginFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -15,6 +14,9 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -40,6 +42,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
     lateinit var memberComponent: MemberComponent
     @Inject
     lateinit var viewModelProvider: ViewModelProviderFactory
+    lateinit var dialogFragment: DialogFragment
     override fun onCreate(savedInstanceState: Bundle?) {
         memberComponent = (application as MyApplication).appComponent.memberComponent().create()
         memberComponent.inject(this)
@@ -53,7 +56,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
 
             if (it != null) {
                 if (it.size==0){
-                   mBinding.txtMessage.text = "No Members are Invited"
+//                   mBinding.txtMessage.text = "No Members are Invited"
                 }
                 var memberAdapter = viewModel.userManager.getCurrentUser()?._id?.let { it1 -> MemberAdapter(it1,it) }
                 memberAdapter?.hidView(mBinding.fabInviteMember,displayCheckBox())
@@ -104,9 +107,8 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
     @SuppressLint("ResourceType")
     override fun closeMemberFragment(tr : Boolean) {
         if (tr){
-           mBinding.scrollableInvite.visibility = View.GONE
             viewModel.getMember()
-
+            dialogFragment.dismiss()
         }
     }
 
@@ -225,21 +227,31 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
     override fun onClick(v: View?) {
         when (v) {
             mBinding.backPress -> {
-                mBinding.scrollableInvite.visibility = View.GONE
+//                mBinding.scrollableInvite.visibility = View.GONE
                 onBackPressed()
             }
 
             mBinding.txtInvite -> {
-                mBinding.txtMessage.visibility = View.GONE
-                mBinding.scrollableInvite.visibility = View.VISIBLE
-                var fragment = supportFragmentManager.findFragmentById(R.id.member_container)
-                if (fragment == null) {
-                    fragment = MemberFragment()
+
+                val ft: FragmentTransaction = supportFragmentManager.beginTransaction()
+                val prev: Fragment? = supportFragmentManager.findFragmentByTag("dialog")
+                if (prev != null) {
+                    ft.remove(prev)
                 }
-                supportFragmentManager.beginTransaction().replace(R.id.member_container,fragment).commit()
+                ft.addToBackStack(null)
+                dialogFragment = MemberFragment()
+                dialogFragment.setStyle(DialogFragment.STYLE_NO_TITLE,R.style.ThemeDialog)
+                dialogFragment.show(ft, "dialog")
+//                mBinding.txtMessage.visibility = View.GONE
+//                mBinding.scrollableInvite.visibility = View.VISIBLE
+//                var fragment = supportFragmentManager.findFragmentById(R.id.member_container)
+//                if (fragment == null) {
+//                    fragment = MemberFragment()
+//                }
+//                supportFragmentManager.beginTransaction().replace(R.id.member_container,fragment).commit()
             }
             else -> {
-                mBinding.scrollableInvite.visibility = View.GONE
+//                mBinding.scrollableInvite.visibility = View.GONE
                 mBinding.memberRecycler.visibility = View.VISIBLE
             }
         }
