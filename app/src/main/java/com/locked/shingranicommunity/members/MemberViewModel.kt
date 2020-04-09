@@ -16,9 +16,4 @@ class MemberViewModel@Inject constructor(var userManager: UserManager,var reques
         }
         return  arrayMembers
     }
-//    fun inviteMember(token: String) : LiveData<String>{
-//        return requestMembers.inviteMember(token)
-//    }
-
-
 }

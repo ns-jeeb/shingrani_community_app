@@ -1,11 +1,11 @@
 package com.locked.shingranicommunity.members
 
 import android.annotation.SuppressLint
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.text.LoginFilter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -13,10 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,9 +55,9 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                 if (it.size==0){
                    mBinding.txtMessage.text = "No Members are Invited"
                 }
-                var memberAdapter = MemberAdapter(it)
-                memberAdapter.hidView(mBinding.fabInviteMember,displayCheckBox())
-                memberAdapter.setListener(this)
+                var memberAdapter = viewModel.userManager.getCurrentUser()?._id?.let { it1 -> MemberAdapter(it1,it) }
+                memberAdapter?.hidView(mBinding.fabInviteMember,displayCheckBox())
+                memberAdapter?.setListener(this)
                 var layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
                 mBinding.memberRecycler.layoutManager = layoutManager
                 mBinding.memberRecycler.adapter = memberAdapter
@@ -72,6 +70,13 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
         mBinding.backPress.setOnClickListener(this)
     }
 
+//    fun getJoinedOrPendingMember(members:ArrayList<ShingraniMember>): Boolean{
+//        for (i in 0 until members.size){
+//            when(members[i].state){
+//                "Pending" -> mBinding.txtMessage.text = "this"
+//            }
+//        }
+//    }
     override fun onBackPressed() {
         var intent = Intent()
         intent.putStringArrayListExtra(INVITED_GUESTS,selectedUser)
@@ -105,8 +110,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
         }
     }
 
-
-    inner class MemberAdapter(var members: ArrayList<ShingraniMember>): RecyclerView.Adapter<MemberAdapter.MemberHolder>() {
+    inner class MemberAdapter(val currentUserId: String, var members: ArrayList<ShingraniMember>): RecyclerView.Adapter<MemberAdapter.MemberHolder>() {
         internal var binding: MemberItemBinding? = null
         var mListener: OnUserClickListener? = null
 
@@ -125,11 +129,12 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
         }
 
         inner class MemberHolder (parent: ViewGroup) : RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(
-            R.layout.member_item,parent,false)),CompoundButton.OnCheckedChangeListener{
+            R.layout.member_item,parent,false)),CompoundButton.OnCheckedChangeListener,View.OnClickListener {
 
             init {
                 binding = DataBindingUtil.bind(itemView)
                 binding?.chInviteGuest?.setOnCheckedChangeListener(this)
+                binding?.imgMemberEmail?.setOnClickListener(this)
                hidView((binding?.chInviteGuest as View),displayCheckBox())
             }
             override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
@@ -146,6 +151,12 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                     }
                 }
                 mListener?.onUserCheckedListener(mSelectedMembers, adapterPosition)
+            }
+
+            override fun onClick(v: View?) {
+                if (v?.id == binding?.imgMemberEmail?.id){
+                    sendEmail(members[adapterPosition].email,"Test","this is a test email")
+                }
             }
         }
 
@@ -169,10 +180,13 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
         }
 
         override fun onBindViewHolder(holder: MemberHolder, position: Int) {
-            binding?.txtMemberName?.text = members[position].email
-            binding?.txtMemberStatus?.text = members[position].state
+            if (currentUserId != members[position]._id){
+                binding?.txtMemberName?.text = members[position].email
+                when(members[position].state){
+                    "Invited" -> binding?.txtMemberStatus?.text = members[position].state
+                }
+            }
         }
-
 
         private fun checkSizeWithIndex(id: String) {
 
@@ -187,6 +201,22 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
             }
 
         }
+        private fun sendEmail(recipient: String, subject: String, message: String) {
+            val mIntent = Intent(Intent.ACTION_SEND)
+            mIntent.data = Uri.parse("mailto:")
+            mIntent.type = "text/plain"
+            mIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(recipient))
+            //put the Subject in the intent
+            mIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
+            //put the message in the intent
+            mIntent.putExtra(Intent.EXTRA_TEXT, message)
+            try {
+                startActivity(Intent.createChooser(mIntent, "Choose Email Client..."))
+            }
+            catch (e: Exception){
+                Toast.makeText(applicationContext, e.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 
     fun displayCheckBox(): Boolean{
@@ -198,6 +228,7 @@ class MemberActivity : AppCompatActivity() , View.OnClickListener, OnUserClickLi
                 mBinding.scrollableInvite.visibility = View.GONE
                 onBackPressed()
             }
+
             mBinding.txtInvite -> {
                 mBinding.txtMessage.visibility = View.GONE
                 mBinding.scrollableInvite.visibility = View.VISIBLE
