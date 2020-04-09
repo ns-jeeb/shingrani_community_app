@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:paddingEnd="15dp"
                 android:paddingBottom="15dp"
-                android:text="Bob And Emily"
+                tools:text="Bob And Emily"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:paddingBottom="15dp"
-                android:text="544-554-4554"
+                tools:text="544-554-4554"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_member_name" />
 
@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:paddingBottom="15dp"
-                android:text="ns.jeeb@gmail.com"
+                tools:text="ns.jeeb@gmail.com"
                 app:layout_constraintStart_toEndOf="@+id/txt_member_phone"
                 app:layout_constraintTop_toBottomOf="@+id/txt_member_name" />
 

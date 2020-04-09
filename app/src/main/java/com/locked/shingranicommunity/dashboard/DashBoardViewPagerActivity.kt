@@ -137,14 +137,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
                 startActivity(intent)
                 return true
             }
-            R.id.action_add -> {
-//                if (dashBoardViewModel.userManager.getAdminUser(dashBoardViewModel.userManager.getCurrentUser()?._id!!) != null){
-//                    createItem(dashBoardViewModel.getToken())
-//                }else{
-//                    Toast.makeText(this,"you don't have permission to create item",Toast.LENGTH_LONG).show()
-//                }
-
-            }
             R.id.action_settings -> {
                 var intent = Intent(this, SettingsActivity::class.java)
                 startActivity(intent)
