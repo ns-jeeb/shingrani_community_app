@@ -1,14 +1,19 @@
 package com.locked.shingranicommunity.dashboard.event
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.view.*
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.utail.Utils
 import kotlin.properties.Delegates
 
 class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: Boolean) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
@@ -45,8 +50,9 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             context = parent.context
             mHideItem = hide
         }
-
-        fun bind(event:Item,position: Int) {
+        @SuppressLint("SetTextI18n")
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bind(event:Item, position: Int) {
             var name: String? =""
             var type: String? =""
             var address: String? =""
@@ -54,13 +60,13 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             var isattend: String? =""
 
             for (i in event.fields?.indices!!){
-                if (event.fields?.size!! > 3){
+                if (event.template == Constant_Utils.EVENT_TIMPLATE_ID){
                     name = event.fields?.get(0)?.value
                     address = event.fields?.get(1)?.value
                     time = event.fields?.get(2)?.value
                     type = event.fields?.get(3)?.value
                     isattend = event.fields?.get(4)?.value
-                    if(event.fields?.get(i)!!.name == "Accepted" && event.fields?.get(i)!!.value == currentUser._id){
+                    if(event.fields?.get(i)!!.name == "Accepted" && event.fields?.get(5)!!.value == currentUser._id){
                         binding?.isAttend?.isChecked = true
                     }
                 }
@@ -70,10 +76,10 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             binding!!.txtEventType.text = type
             binding!!.txtEventAddress.text = address
 //            this substring is just display for now we have make it dynamic
-            var date = time?.split(" ")
+            var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
             binding!!.txtEventDate.text = date?.get(0)
-            binding!!.txtEventTime.text = date?.get(2)
-//            binding!!.isAttend.text = isattend
+            binding!!.txtEventTime.text = "${date?.get(1)}: "
+
             binding!!.imgHDot.setOnClickListener(this)
         }
 

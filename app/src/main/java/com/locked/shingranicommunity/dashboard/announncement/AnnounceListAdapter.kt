@@ -1,17 +1,22 @@
 package com.locked.shingranicommunity.dashboard.announncement
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
+import com.locked.shingranicommunity.utail.Utils
+import okhttp3.internal.Util
 
 class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: Boolean) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
 
@@ -23,6 +28,7 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
     fun setOnInvitedEvent(onInvitedListener: OnInvitedListener){
         this.onInvitedListener = onInvitedListener
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(announceViewHolder: AnnounceViewHolder, i: Int) {
 
         mAnnouncements?.get(i)?.let { announceViewHolder.bind(it, i) }
@@ -41,20 +47,21 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
             mHideItem = hideDeleteMenu
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         fun bind(announcement: Item, i: Int) {
             var fields: List<Field>? = announcement.fields
             var title: String? = ""
             var text: String? = ""
             var timeStamp: String? = ""
 
-            if (fields != null) {
+            if (fields != null && announcement.template == Constant_Utils.ANNOUNCEMENT_TIMPLATE_ID) {
                 title = announcement.fields?.get(0)?.value
                 text = announcement.fields?.get(1)?.value
                 timeStamp = announcement.createdAt
             }
             binding?.txtAnnouncementTitleItem?.text = title
             binding?.txtAnnouncementMessage?.text = text
-            binding?.txtDateItemCreated?.text = timeStamp
+            binding?.txtDateItemCreated?.text = "${Utils.formatStringDateTime(timeStamp!!)}"
             binding?.imgHDot?.setOnClickListener(this)
 
         }
