@@ -78,7 +78,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
 //            this substring is just display for now we have make it dynamic
             var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
             binding!!.txtEventDate.text = date?.get(0)
-            binding!!.txtEventTime.text = "${date?.get(1)}: "
+            binding!!.txtEventTime.text = "${date?.get(1)}"
 
             binding!!.imgHDot.setOnClickListener(this)
         }
