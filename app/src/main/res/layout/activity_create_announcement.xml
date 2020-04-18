@@ -17,7 +17,8 @@
             android:minHeight="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@android:color/white">
+            app:titleTextColor="@android:color/white"
+            app:title="Title">
 
             <ImageView
                 android:id="@+id/back_press"

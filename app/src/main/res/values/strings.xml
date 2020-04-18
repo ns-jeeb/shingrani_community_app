@@ -26,8 +26,8 @@
     <string name="txt_host_name">From %1$s</string>
     <string name="txt_guest_name">Guests</string>
     <string name="txt_location">location</string>
-    <string name="time">time</string>
-    <string name="date">date</string>
+    <string name="time">Time</string>
+    <string name="date">Date</string>
 
     <string name="txt_title_of_invitation">Title of the Invitation</string>
 

@@ -13,4 +13,6 @@
     <color name="login_transparency">#A90FF326</color>
     <color name="login_text_color">#FFFFFF</color>
     <color name="login_welcome_color">#55FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="gray_background_tint">#BAF3F1F1</color>
 </resources>

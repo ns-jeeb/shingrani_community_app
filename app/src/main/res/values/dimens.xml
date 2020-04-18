@@ -12,4 +12,7 @@
     <dimen name="header_6">12sp</dimen>
     <dimen name="header_7">10sp</dimen>
     <dimen name="header_8">8sp</dimen>
+    <dimen name="login_text_size">15sp</dimen>
+    <dimen name="mainScreen_text_size">15sp</dimen>
+    <dimen name="mainScreen_hint_size">18sp</dimen>
 </resources>

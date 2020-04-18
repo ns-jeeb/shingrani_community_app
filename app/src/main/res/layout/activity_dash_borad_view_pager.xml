@@ -7,16 +7,29 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".dashboard.DashBoardViewPagerActivity">
+        tools:context=".dashboard.DashBoardViewPagerActivity"
+        android:background="@color/gray_background_tint">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="175dp"
+            android:background="@drawable/toolbar_view_design"
+            app:layout_constraintBottom_toBottomOf="@+id/dash_border_pager"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
+            android:paddingTop="15dp"
+            android:paddingLeft="10dp"
             android:minHeight="?attr/actionBarSize"
             app:titleTextColor="@android:color/white"
-            android:background="?attr/colorPrimary"
+            android:background="@android:color/transparent"
             android:id="@+id/toolbar"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints"
+            android:layout_marginBottom="10dp"/>
 
         <com.viewpagerindicator.TitlePageIndicator
             android:id="@+id/tabs"
@@ -28,7 +41,7 @@
             android:id="@+id/dash_border_pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.85"
+            app:layout_constraintHeight_percent="0.8"
             app:layout_constraintBottom_toTopOf="@+id/tabs"/>
 
         <LinearLayout
