@@ -22,14 +22,14 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
         return EventViewHolder(viewGroup)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(announceViewHolder: EventViewHolder, i: Int) {
 
-        mEvents?.let { announceViewHolder.bind(it.get(i),i) }
+        mEvents?.let { announceViewHolder.bind(it[i],i) }
     }
     fun setOnInvitedEvent(onInvitedListener: OnInvitedListener){
         this.onInvitedListener = onInvitedListener
     }
-
     override fun getItemCount(): Int {
         if (!mEvents.isNullOrEmpty()){
             return mEvents.size
@@ -57,7 +57,6 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             var type: String? =""
             var address: String? =""
             var time: String? =""
-            var isattend: String? =""
 
             for (i in event.fields?.indices!!){
                 if (event.template == Constant_Utils.EVENT_TIMPLATE_ID){
@@ -65,22 +64,41 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
                     address = event.fields?.get(1)?.value
                     time = event.fields?.get(2)?.value
                     type = event.fields?.get(3)?.value
-                    isattend = event.fields?.get(4)?.value
-                    if(event.fields?.get(i)!!.name == "Accepted" && event.fields?.get(5)!!.value == currentUser._id){
-                        binding?.isAttend?.isChecked = true
-                    }
                 }
             }
+            if(event.creator != currentUser._id){
+                event.fields?.get(5)!!.value?.split(",")?.let { getAccepted(it) }
+                event.fields?.get(6)!!.value?.split(",")?.let { getRejected(it) }
+            }
 
-            binding!!.txtEventName.text = name
-            binding!!.txtEventType.text = type
-            binding!!.txtEventAddress.text = address
+            binding?.txtEventName?.text = name
+            binding?.txtEventType?.text = type
+            binding?.txtEventAddress?.text = address
 //            this substring is just display for now we have make it dynamic
             var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
-            binding!!.txtEventDate.text = date?.get(0)
-            binding!!.txtEventTime.text = "${date?.get(1)}"
+            binding?.txtEventDate?.text = date?.get(0)
+            binding?.txtEventTime?.text = "${date?.get(1)}"
+            binding?.imgHDot?.setOnClickListener(this)
+        }
+        private fun getAccepted(accepted: List<String>){
+            for (element in accepted) {
+                if ( element == currentUser._id){
+                    binding?.isAttend?.visibility = View.VISIBLE
+                }else {
+                    binding?.isAttend?.visibility = View.GONE
+                }
 
-            binding!!.imgHDot.setOnClickListener(this)
+            }
+        }
+
+        private fun getRejected(rejects: List<String>) {
+            for (element in rejects) {
+                if (element == currentUser._id) {
+                    binding?.isNotAttend?.visibility = View.VISIBLE
+                }else {
+                    binding?.isNotAttend?.visibility = View.GONE
+                }
+            }
         }
 
         override fun onClick(v: View?) {
@@ -101,10 +119,10 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             var id = item?.itemId
             when (id) {
                 R.id.popup_accept -> {
-                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,"Accepted") }
+                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,adapterPosition) }
                 }
                 R.id.popup_reject -> {
-                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onRejected(it,"Rejected") }
+                    mEvents?.get(adapterPosition)?.let {onInvitedListener.onRejected(it) }
                 }
                 R.id.popup_delete -> {
                     mEvents?.get(adapterPosition)?.let {onInvitedListener.onDeleted(it,"Deleted") }
@@ -116,7 +134,8 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
     }
 }
 interface OnInvitedListener{
-    fun onAccepted(eventitem: Item,accepted: String)
-    fun onRejected(eventitem : Item,rejected: String)
+    fun onAccepted(eventitem: Item,position: Int)
+    fun onRejected(eventitem : Item)
+    fun onUpdate(eventitem : Item,update: String)
     fun onDeleted(eventitem : Item,deleted: String)
 }

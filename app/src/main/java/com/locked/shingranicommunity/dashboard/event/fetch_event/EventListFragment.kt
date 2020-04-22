@@ -10,6 +10,7 @@ import com.locked.shingranicommunity.R
 import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,9 +25,6 @@ import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActi
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import javax.inject.Inject
 
-/**
- * A simple [Fragment] subclass.
- */
 class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
 
     interface OnEventFragmentTransaction {
@@ -39,6 +37,7 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
     private var mParam2: String? = null
     private var mListener: OnEventFragmentTransaction? = null
     private lateinit var mBinding : FragmentEventListBinding
+    private var isChecked= false
 
     lateinit var eventViewModel: EventViewModel
     @Inject
@@ -78,7 +77,7 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null){
             if (requestCode == 100) {
-                eventViewModel.load()
+                setupListViewAdapter()
             }
         }
     }
@@ -102,10 +101,12 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
 
         return mBinding.root
     }
+    private lateinit var adapter: EventsListAdapter
     @SuppressLint("SetTextI18n")
     fun setupListViewAdapter() {
         var hideDeleteMenu = true
         eventViewModel.itemsLoaded().observe(this, Observer {
+            mBinding.txtMembersAttend.text = "${eventViewModel.memberAttend(it).size} : Attend/s"
             if (it != null) {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
             } else {
@@ -114,7 +115,7 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
             if (eventViewModel.getAdminUser()?._id == eventViewModel.getCurrentUser()._id){
                 hideDeleteMenu = false
             }
-            val adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1,hideDeleteMenu)}
+            adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1,hideDeleteMenu)}
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter.setOnInvitedEvent(this)
             mBinding.eventRecyclerView.layoutManager = layoutManager
@@ -125,9 +126,9 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
 
         if (eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id) != null) {
 //                Log.d("Admin_user","user = ${it.admins[0].name}")
-            mBinding.userState.text = "${eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id)?.name}: Admin"
+            mBinding.txtUserState.text = "${eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id)?.name}: Admin"
         } else {
-            mBinding.userState.text = "Regular User"
+            mBinding.txtUserState.text = "Regular User"
         }
     }
 
@@ -136,21 +137,44 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
         mListener = null
     }
 
-    override fun onAccepted(eventitem: Item, accepted: String) {
-        eventViewModel.updateItem(eventitem, accepted)
+    override fun onAccepted(eventitem: Item, position: Int) {
+        if (eventitem.creator != eventViewModel.getCurrentUser()._id){
+            eventViewModel.accepted(eventitem)?.observe(this@EventListFragment, Observer {
+                Toast.makeText(activity, it,Toast.LENGTH_LONG).show()
+                if (it.isNullOrBlank()){
+                    setupListViewAdapter()
+                }
+            })
+        }else{
+            Toast.makeText(context,"You can not accept your event",Toast.LENGTH_LONG).show()
+        }
     }
 
-    override fun onRejected(eventitem : Item,rejected: String) {
-        eventViewModel.updateItem(eventitem,rejected)
+    override fun onRejected(eventitem : Item) {
+        if (eventitem.creator != eventViewModel.getCurrentUser()._id){
+            eventViewModel.rejected(eventitem)?.observe(this@EventListFragment, Observer {
+                Toast.makeText(activity,it,Toast.LENGTH_LONG).show()
+                if (it.isNullOrBlank()){
+                    setupListViewAdapter()
+                }
+            })
+        }else{
+            Toast.makeText(context,"You can not reject your event",Toast.LENGTH_LONG).show()
+        }
+    }
+
+    override fun onUpdate(eventitem: Item, update: String) {
+        TODO("Not yet implemented")
     }
 
     override fun onDeleted(eventitem: Item, deleted: String) {
         eventViewModel.itemDelete(eventitem._id!!)?.observe(this@EventListFragment, Observer {
             if (it.isNullOrBlank()){
-                eventViewModel.load()
                 setupListViewAdapter()
+                mBinding.txtMessageEvent.visibility = View.GONE
             }else{
-                mBinding.txtPageTitle.text = it
+                mBinding.txtMessageEvent.visibility = View.VISIBLE
+                mBinding.txtMessageEvent.text = it
             }
         })
     }

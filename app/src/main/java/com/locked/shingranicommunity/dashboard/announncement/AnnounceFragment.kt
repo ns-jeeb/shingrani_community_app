@@ -89,12 +89,17 @@ class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
         super.onAttach(context)
         (activity as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
     }
-    override fun onAccepted(eventitem: Item, accepted: String) {
-//        viewModel.updateItem(eventitem, accepted)
+
+    override fun onAccepted(eventitem: Item, position: Int) {
+        TODO("Not yet implemented")
     }
 
-    override fun onRejected(eventitem : Item, rejected: String) {
-//        viewModel.updateItem(eventitem,rejected)
+    override fun onRejected(eventitem: Item) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUpdate(eventitem: Item, update: String) {
+        TODO("Not yet implemented")
     }
 
     override fun onDeleted(eventitem: Item, deleted: String) {

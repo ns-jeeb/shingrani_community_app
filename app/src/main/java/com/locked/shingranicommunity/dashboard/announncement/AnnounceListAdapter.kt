@@ -83,10 +83,10 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
             var id = item?.itemId
             when (id) {
                 R.id.popup_accept -> {
-                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,"Accepted") }
+                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,adapterPosition) }
                 }
                 R.id.popup_reject -> {
-                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onRejected(it,"Rejected") }
+                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onRejected(it) }
                 }
                 R.id.popup_delete -> {
                     mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onDeleted(it,"Deleted") }

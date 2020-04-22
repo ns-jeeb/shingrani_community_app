@@ -104,8 +104,6 @@ class SettingsActivity : AppCompatActivity(),PreferenceFragmentCompat.OnPreferen
                     super.onPreferenceTreeClick(preference)
                 }
             }
-
-
         }
     }
 }
