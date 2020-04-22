@@ -106,7 +106,6 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
     fun setupListViewAdapter() {
         var hideDeleteMenu = true
         eventViewModel.itemsLoaded().observe(this, Observer {
-            mBinding.txtMembersAttend.text = "${eventViewModel.memberAttend(it).size} : Attend/s"
             if (it != null) {
                 (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
             } else {

@@ -69,6 +69,8 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             if(event.creator != currentUser._id){
                 event.fields?.get(5)!!.value?.split(",")?.let { getAccepted(it) }
                 event.fields?.get(6)!!.value?.split(",")?.let { getRejected(it) }
+            }else{
+                binding?.txtMembersAttended?.text = "${event.fields?.get(5)!!.value?.split(",")?.size} Guests"
             }
 
             binding?.txtEventName?.text = name
@@ -80,23 +82,36 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             binding?.txtEventTime?.text = "${date?.get(1)}"
             binding?.imgHDot?.setOnClickListener(this)
         }
+        @SuppressLint("SetTextI18n")
         private fun getAccepted(accepted: List<String>){
             for (element in accepted) {
-                if ( element == currentUser._id){
-                    binding?.isAttend?.visibility = View.VISIBLE
-                }else {
-                    binding?.isAttend?.visibility = View.GONE
+                if (!element.isBlank()){
+                    if (element == currentUser._id){
+                        binding?.txtMembersAttended?.text = "${accepted.size} incl you"
+                        binding?.isNotAttending?.visibility = View.GONE
+                        binding?.isAttending?.visibility = View.VISIBLE
+                        return
+                    }else {
+                        binding?.txtMembersAttended?.text = "${accepted.size} Member"
+                        binding?.isAttending?.visibility = View.GONE
+                        binding?.isNotAttending?.visibility = View.VISIBLE
+                    }
                 }
-
             }
         }
 
+        @SuppressLint("SetTextI18n")
         private fun getRejected(rejects: List<String>) {
             for (element in rejects) {
-                if (element == currentUser._id) {
-                    binding?.isNotAttend?.visibility = View.VISIBLE
-                }else {
-                    binding?.isNotAttend?.visibility = View.GONE
+                if(!element.isBlank()){
+                    if (element == currentUser._id) {
+                        binding?.isAttending?.visibility = View.GONE
+                        binding?.isNotAttending?.visibility = View.VISIBLE
+                        return
+                    }else{
+                        binding?.isNotAttending?.visibility = View.GONE
+                        binding?.isAttending?.visibility = View.VISIBLE
+                    }
                 }
             }
         }

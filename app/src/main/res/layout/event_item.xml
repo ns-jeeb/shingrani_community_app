@@ -9,7 +9,7 @@
         android:layout_margin="10dp"
         android:padding="10dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/time_layout"
@@ -35,8 +35,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/txt_event_date"
                 android:text="2PM"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="member attends"
+                android:id="@+id/txt_members_attended"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -56,7 +61,7 @@
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/txt_event_name"
                 app:layout_constraintStart_toStartOf="parent"
@@ -65,8 +70,9 @@
                 tools:text="this is the item for announcement"/>
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
                 android:id="@+id/txt_event_address"
                 android:text="Address"
                 app:layout_constraintTop_toBottomOf="@+id/txt_event_name"/>
@@ -79,7 +85,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txt_event_address" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -88,7 +93,7 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/is_attend"/>
+                android:id="@+id/is_attending"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -97,11 +102,9 @@
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/is_not_attend"/>
+                android:id="@+id/is_not_attending"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
