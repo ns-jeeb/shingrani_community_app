@@ -16,7 +16,7 @@ import com.locked.shingranicommunity.members.User
 import com.locked.shingranicommunity.utail.Utils
 import kotlin.properties.Delegates
 
-class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: Boolean) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
+class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: Boolean,val onItemClick: OnItemClickListener) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): EventViewHolder {
         return EventViewHolder(viewGroup)
@@ -81,6 +81,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             binding?.txtEventDate?.text = date?.get(0)
             binding?.txtEventTime?.text = "${date?.get(1)}"
             binding?.imgHDot?.setOnClickListener(this)
+            itemView.setOnClickListener(this)
         }
         @SuppressLint("SetTextI18n")
         private fun getAccepted(accepted: List<String>){
@@ -133,6 +134,8 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
                 }
                 popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)
 
+            }else if (v?.id == itemView.id){
+                mEvents?.get(adapterPosition)?.let { onItemClick.onItemClick(adapterPosition, it) }
             }
             popupMenu.show()
         }
@@ -160,4 +163,7 @@ interface OnInvitedListener{
     fun onRejected(eventitem : Item)
     fun onUpdate(eventitem : Item,update: String)
     fun onDeleted(eventitem : Item,deleted: String)
+}
+interface OnItemClickListener{
+    fun onItemClick(position: Int,item: Item)
 }

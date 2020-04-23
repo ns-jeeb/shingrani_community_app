@@ -1,5 +1,9 @@
 package com.locked.shingranicommunity.dashboard.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Item(
     var _id: String? = null,
     var updatedAt: String? = null,
@@ -17,17 +21,17 @@ data class Item(
     var successMes: String ="",
     var isAttending: Boolean? = false
 
-){
+): Parcelable{
 }
-
+@Parcelize
 data class Field(
 
     var name: String? = null,
     var value: String? = null
-    ) {
+    ):Parcelable {
 }
-
-data class Icon( var url: String? = null) {
+@Parcelize
+data class Icon( var url: String? = null):Parcelable {
 }
 data class ErrorBodyResponse(
     val errors: ArrayList<Error>

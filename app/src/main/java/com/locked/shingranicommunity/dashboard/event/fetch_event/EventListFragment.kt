@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity.dashboard.event.fetch_event
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +13,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -21,11 +23,14 @@ import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
+import com.locked.shingranicommunity.dashboard.event.OnItemClickListener
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
+import com.locked.shingranicommunity.dashboard.event.details.DetailsActivity
+import com.locked.shingranicommunity.dashboard.event.details.DetailsFragment
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import javax.inject.Inject
 
-class EventListFragment : Fragment(),OnInvitedListener {
+class EventListFragment : Fragment(),OnInvitedListener,OnItemClickListener {
 
     val ARG_TOKEN = "token"
     val ARG_PARAM2 = "param2"
@@ -143,5 +148,12 @@ class EventListFragment : Fragment(),OnInvitedListener {
                 //mBinding.txtMessageEvent.text = it
             }
         })
+    }
+
+    @SuppressLint("ResourceType")
+    override fun onItemClick(position: Int, item: Item) {
+       var intent: Intent = Intent(activity, DetailsActivity::class.java)
+        intent.putExtra("extra_item",item)
+        startActivity(intent)
     }
 }

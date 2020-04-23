@@ -9,7 +9,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="not_match_password">Password is not matched</string>
     <string name="login_failed">"Login failed"</string>
-
     <string name="create">Create</string>
     <string name="action_member">Members</string>
     <string name="action_back">Back</string>
@@ -20,7 +19,6 @@
     <string name="action_logout">Logout</string>
     <string name="action_settings">Setting</string>
     <string name="section_format">Hello World from section: %1$d</string>
-
     <string name="txt_khatamal_quran">Khatam al Quran</string>
     <string name="announcement_txt">This is a fun event for us.</string>
     <string name="txt_host_name">From %1$s</string>
@@ -28,9 +26,7 @@
     <string name="txt_location">location</string>
     <string name="time">Time</string>
     <string name="date">Date</string>
-
     <string name="txt_title_of_invitation">Title of the Invitation</string>
-
     <string name="registration_user">Join Community</string>
     <string name="submit_user">Submit</string>
     <string name="sign_in_user">Login</string>
@@ -61,34 +57,16 @@
     <string name="alert_dialog_cancel">Cancel</string>
     <string name="fohtia">Fateah</string>
     <string name="txt_wedding_message">are getting married on</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="honor_messages">The honor of your presence is requested at the marriage of</string>
     <string name="txt_message_value">this is the item for announcement this is the item for announcement this is the item for announcement this is the item for announcement this is the item for announcement</string>
-
-
     <string name="event_prompt">Types</string>
-
-    <string-array name="events_arrays">
-        <item>Wedding</item>
-        <item>Event</item>
-        <item>Party</item>
-        <item>Fundraising</item>
-        <item>Funeral</item>
-        <item>Gathering</item>
-        <item>Meeting</item>
-    </string-array>
     <string name="title_activity_settings">Settings</string>
-
-    <!-- Preference Titles -->
     <string name="hide_email_header">Hide email</string>
     <string name="show_email_header">Show email</string>
     <string name="hide_phone_header">Hide phone number</string>
     <string name="show_phone_header">Show phone number</string>
     <string name="logout_header">Logout</string>
-
-    <!-- Preference key -->
     <string name="key_hide_email">KEY_HIDE_EMAIL</string>
     <string name="key_show_email">KEY_SHOW_EMAIL</string>
     <string name="key_hide_phone">KEY_HIDE_PHONE</string>
@@ -102,4 +80,13 @@
     <string name="existing_account">Existing Account? Login</string>
     <string name="register">Register</string>
     <string name="password_confirm">Retype Password</string>
+    <string-array name="events_arrays">
+        <item>Wedding</item>
+        <item>Event</item>
+        <item>Party</item>
+        <item>Fundraising</item>
+        <item>Funeral</item>
+        <item>Gathering</item>
+        <item>Meeting</item>
+    </string-array>
 </resources>
