@@ -12,10 +12,10 @@
     <dimen name="header_6">12sp</dimen>
     <dimen name="header_7">10sp</dimen>
     <dimen name="header_8">8sp</dimen>
-    <dimen name="header_8dp">8dp</dimen>
-    <dimen name="header_10dp">10dp</dimen>
-    <dimen name="header_12dp">12dp</dimen>
     <dimen name="login_text_size">15sp</dimen>
     <dimen name="mainScreen_text_size">15sp</dimen>
     <dimen name="mainScreen_hint_size">18sp</dimen>
+    <dimen name="header_8dp">8dp</dimen>
+    <dimen name="header_10dp">10dp</dimen>
+    <dimen name="header_12dp">12dp</dimen>
 </resources>

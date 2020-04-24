@@ -13,7 +13,6 @@
         android:layout_marginRight="16dp"
         android:padding="10dp"
         app:cardElevation="10dp"
-        app:cardCornerRadius="15dp"
         >
 
         <LinearLayout
@@ -23,11 +22,6 @@
             android:layout_margin="10dp"
             android:padding="10dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="10dp">
 
 
 
@@ -130,16 +124,14 @@
 
             </LinearLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#D6D6D6"/>
+
 
             <LinearLayout
                 android:id="@+id/time_layout"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginVertical="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -150,19 +142,32 @@
         </LinearLayout>
 
 
-                    <TextView
-                        android:id="@+id/txt_event_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:drawableLeft="@drawable/ic_date_range_black_24dp"
-                        android:drawablePadding="5dp"
-                        android:text="Date"
-                        android:paddingLeft="10dp"
-                        android:layout_weight="1"
-                        android:gravity="center_vertical"
-                        android:textSize="@dimen/mainScreen_text_size"
-                        android:layout_marginRight="10dp"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#D6D6D6"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                >
+
+
+                <TextView
+                    android:id="@+id/txt_event_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:drawableLeft="@drawable/ic_date_range_black_24dp"
+                    android:drawablePadding="5dp"
+                    android:text="Date"
+                    android:paddingLeft="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:textSize="@dimen/mainScreen_text_size"
+                    android:layout_marginRight="10dp"/>
 
 
                 <TextView
@@ -175,6 +180,9 @@
                     android:gravity="center_vertical"
                     android:text="Time"
                     android:textSize="@dimen/mainScreen_text_size" />
+
+            </LinearLayout>
+
 
             </LinearLayout>
 
@@ -207,32 +215,29 @@
 />
 
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="going"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/is_attending"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="not Going"
+                        tools:visibility="visible"
+                        android:visibility="gone"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:id="@+id/is_not_attending"/>
 
                 </LinearLayout>
 
 
-            </LinearLayout>
 
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="going"
-                tools:visibility="visible"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/is_attending"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="not Going"
-                tools:visibility="visible"
-                android:visibility="gone"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:id="@+id/is_not_attending"/>
 
 
     </androidx.cardview.widget.CardView>
