@@ -121,9 +121,16 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: 
             if (v?.id == R.id.img_h_dot){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
                 var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
-                menuItem.isVisible = !mHideItem
-                popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
-                popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
+                if (mHideItem && currentUser._id != mEvents?.get(adapterPosition)?.creator){
+                    menuItem.isVisible = false
+                    popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
+                    popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
+                }else if (currentUser._id == mEvents?.get(adapterPosition)?.creator){
+                    popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this).isVisible = false
+                    popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this).isVisible = false
+                }else{
+
+                }
                 popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)
 
             }

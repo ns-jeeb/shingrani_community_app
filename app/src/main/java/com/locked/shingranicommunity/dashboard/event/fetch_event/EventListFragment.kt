@@ -93,7 +93,7 @@ class EventListFragment : Fragment(),OnInvitedListener {
             if (eventViewModel.getAdminUser()?._id == eventViewModel.getCurrentUser()._id){
                 hideDeleteMenu = false
             }
-            adapter = eventViewModel.getCurrentUser()?.let { it1 -> EventsListAdapter(it, it1,hideDeleteMenu)}
+            adapter = EventsListAdapter(it, eventViewModel.getCurrentUser(),hideDeleteMenu,this)
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter.setOnInvitedEvent(this)
             mBinding.eventRecyclerView.layoutManager = layoutManager
