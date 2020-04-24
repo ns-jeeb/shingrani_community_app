@@ -20,6 +20,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:layout_margin="10dp">
 
 
@@ -134,6 +141,13 @@
                 android:layout_height="40dp"
                 android:orientation="horizontal">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="member attends"
+                android:id="@+id/txt_members_attended"/>
+
+        </LinearLayout>
 
 
                     <TextView
@@ -200,6 +214,25 @@
             </LinearLayout>
 
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="going"
+                tools:visibility="visible"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/is_attending"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="not Going"
+                tools:visibility="visible"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:id="@+id/is_not_attending"/>
 
 
     </androidx.cardview.widget.CardView>

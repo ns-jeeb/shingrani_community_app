@@ -14,7 +14,9 @@ data class Item(
     var colorDarker: String? = null,
     var colorOriginal: String? = null,
     var errorMessage: String? ="",
-    var successMes: String =""
+    var successMes: String ="",
+    var isAttending: Boolean? = false
+
 ){
 }
 
@@ -37,3 +39,10 @@ data class Error(
 ){
 
 }
+data class RsvpObject(
+    val rsvp: Rsvp?
+)
+data class Rsvp(
+    var type: String,
+    var user: String
+)

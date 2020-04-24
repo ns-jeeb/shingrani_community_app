@@ -10,29 +10,54 @@
         android:layout_margin="10dp"
         >
 
-        <TextView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:text="Events"
             android:gravity="center"
             app:layout_constraintHeight_percent="0.1"
+<<<<<<< HEAD
             app:layout_constraintWidth_percent="0.3"
             android:id="@+id/txt_page_title"
             android:visibility="gone"
+=======
+            android:id="@+id/title_message_layout"
+            android:orientation="horizontal"
+            android:weightSum="1"
+>>>>>>> 28e58f2b9b590f6b858f7782ddb39ff9590ba8db
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="User state"
+                android:gravity="center"
+                android:id="@+id/txt_user_state"
+                app:layout_constraintStart_toEndOf="@+id/txt_members_attend"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="member attends"
+                android:layout_weight="0.5"
+                android:gravity="center"
+                android:id="@+id/txt_members_error"
+                app:layout_constraintStart_toEndOf="@+id/txt_user_state"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </LinearLayout>
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:text="User state"
+            android:text="Events"
             android:gravity="center"
             android:visibility="gone"
             app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintWidth_percent="0.3"
-            android:id="@+id/user_state"
-            app:layout_constraintStart_toEndOf="@+id/txt_page_title"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/txt_message_event"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_message_layout"/>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -41,8 +66,10 @@
             android:layout_height="0dp"
             android:background="@android:color/transparent"
             app:layout_constraintHeight_percent="0.9"
+<<<<<<< HEAD
             app:layout_constraintStart_toEndOf="@+id/progress_event"
-            app:layout_constraintTop_toBottomOf="@+id/txt_page_title" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_page_title"
+            app:layout_constraintTop_toBottomOf="@+id/txt_message_event"/>
 
         <ProgressBar
             android:layout_width="wrap_content"

@@ -12,6 +12,8 @@ import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.data.Rsvp
+import com.locked.shingranicommunity.dashboard.data.RsvpObject
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import com.locked.shingranicommunity.utail.AuthResource
@@ -156,14 +158,41 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
         return item
     }
 
-    override fun updateItem(fields: ArrayList<Field>?, itemId: String?) : String{
-        var message : MutableLiveData<String> = MutableLiveData()
+    override fun accepted(rsvp: RsvpObject, itemId: String?): MutableLiveData<String>? {
+        var message : MutableLiveData<String> = MutableLiveData<String>()
+
+        var call = lockedApiService.accepted(userManager.token,rsvp, itemId!!)
+        call.enqueue(object : Callback, retrofit2.Callback<RsvpObject>{
+            override fun onFailure(call: Call<RsvpObject>, t: Throwable) {
+                Log.d("OnFailed","failed")
+                message.value = t.message
+            }
+
+            override fun onResponse(call: Call<RsvpObject>, response: Response<RsvpObject>) {
+                if (response.isSuccessful) {
+                    message.value = ""
+                    Log.d("update_response","value of my Response ${response.body()}")
+                }else{
+
+                    var autherror = AuthResource.error("message",response.errorBody())
+                    message.value = parsingJson(response.errorBody())
+                    Log.d("update_response","value of my Error Response ${autherror.status} + ${autherror.message}")
+                }
+            }
+
+        })
+        return message
+    }
+
+    override fun updateItem(fields: ArrayList<Field>?, itemId: String?) : MutableLiveData<String>?{
+        var message : MutableLiveData<String> = MutableLiveData<String>()
         var eventBodyMap: HashMap<String, Any> = HashMap()
         eventBodyMap["fields"] = fields!!
         var call = lockedApiService.updateItem(userManager.token,eventBodyMap, itemId!!)
         call.enqueue(object : Callback, retrofit2.Callback<Item>{
             override fun onFailure(call: Call<Item>, t: Throwable) {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.d("OnFailed","failed")
+                message.value = t.message
             }
 
             override fun onResponse(call: Call<Item>, response: Response<Item>) {
@@ -173,14 +202,40 @@ class DashboardRepositor @Inject constructor(var userManager: UserManager) : Das
                 }else{
 
                     var autherror = AuthResource.error("message",response.errorBody())
-                    parsingJson(response.errorBody())
+                    message.value = parsingJson(response.errorBody())
                     Log.d("update_response","value of my Error Response ${autherror.status} + ${autherror.message}")
                 }
             }
 
         })
-        return message.value!!
+        return message
     }
+
+    override fun rejected(rsvp: RsvpObject, itemId: String?): MutableLiveData<String>? {
+        var message : MutableLiveData<String> = MutableLiveData<String>()
+        var call = lockedApiService.rejected(userManager.token,rsvp, itemId!!)
+        call.enqueue(object : Callback, retrofit2.Callback<RsvpObject>{
+            override fun onFailure(call: Call<RsvpObject>, t: Throwable) {
+                Log.d("OnFailed","failed")
+                message.value = t.message
+            }
+
+            override fun onResponse(call: Call<RsvpObject>, response: Response<RsvpObject>) {
+                if (response.isSuccessful) {
+                    message.value = ""
+                    Log.d("update_response","value of my Response ${response.body()}")
+                }else{
+
+                    var autherror = AuthResource.error("message",response.errorBody())
+                    message.value = parsingJson(response.errorBody())
+                    Log.d("update_response","value of my Error Response ${autherror.status} + ${autherror.message}")
+                }
+            }
+
+        })
+        return message
+    }
+
     override suspend fun fetchNewItem() {
         withContext(Dispatchers.Main) {
         }

@@ -11,8 +11,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.viewpager.widget.ViewPager
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.Constant_Utils.ONE_00
 import com.locked.shingranicommunity.Constant_Utils.ONE_01
+import com.locked.shingranicommunity.Constant_Utils.ONE_02
 import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
@@ -105,6 +107,8 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
                 Toast.makeText(this,"Item is created ${data?.getStringExtra("response_message")}",Toast.LENGTH_LONG).show()
                 dashBoardViewModel.loadItem(this)
                 setpuViewPager()
+            }else if (requestCode == ONE_02){
+                finish()
             }
         }
     }
@@ -117,10 +121,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
             mBinding.loadingItemProgress.visibility = View.GONE
             mBinding.txtLoadingItem.visibility = View.GONE
         }
-
-
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_user_list,menu)
@@ -139,7 +140,8 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
             }
             R.id.action_settings -> {
                 var intent = Intent(this, SettingsActivity::class.java)
-                startActivity(intent)
+                startActivityForResult(intent,Constant_Utils.ONE_02)
+                finish()
             }
         }
         return super.onOptionsItemSelected(item)

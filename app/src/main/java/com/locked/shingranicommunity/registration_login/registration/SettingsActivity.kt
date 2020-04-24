@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.SettingsActivityBinding
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 
@@ -38,7 +40,8 @@ class SettingsActivity : AppCompatActivity(),PreferenceFragmentCompat.OnPreferen
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         mBinding.backPress.setOnClickListener {
-            onBackPressed()
+            startDashBoardActivity()
+            finish()
         }
 
     }
@@ -47,6 +50,10 @@ class SettingsActivity : AppCompatActivity(),PreferenceFragmentCompat.OnPreferen
         super.onSaveInstanceState(outState)
         // Save current activity title so we can set it again after a configuration change
         outState.putCharSequence(TITLE_TAG, title)
+    }
+    fun startDashBoardActivity(){
+        var intent = Intent(this,DashBoardViewPagerActivity::class.java)
+        startActivity(intent)
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -77,7 +84,10 @@ class SettingsActivity : AppCompatActivity(),PreferenceFragmentCompat.OnPreferen
         title = pref.title
         return true
     }
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startDashBoardActivity()
+    }
     class SettingFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.setting_preferences, rootKey)
@@ -88,8 +98,8 @@ class SettingsActivity : AppCompatActivity(),PreferenceFragmentCompat.OnPreferen
                 getString(R.string.key_logout_)-> {
                     activity?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.putString("token", "")?.apply()
                     var intent = Intent(activity, LoginActivity::class.java)
-                    startActivity(intent)
                     activity?.finish()
+                    startActivity(intent)
                     true
                 }
                 getString(R.string.key_hide_phone)->{
@@ -104,8 +114,6 @@ class SettingsActivity : AppCompatActivity(),PreferenceFragmentCompat.OnPreferen
                     super.onPreferenceTreeClick(preference)
                 }
             }
-
-
         }
     }
 }

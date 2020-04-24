@@ -1,15 +1,16 @@
 package com.locked.shingranicommunity.dashboard
-
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.dashboard.data.RsvpObject
 
 interface DashboardItemRequestListener {
 
     fun deleteFields(itemId:String): MutableLiveData<String>?
     fun fetchEvent(): MutableLiveData<ArrayList<Item>>?
-    fun updateItem(fields: ArrayList<Field>?,itemId: String?): String
+    fun updateItem(fields: ArrayList<Field>?,itemId: String?): MutableLiveData<String>?
+    fun accepted(rsvp: RsvpObject, itemId: String?): MutableLiveData<String>?
+    fun rejected(rsvp: RsvpObject, itemId: String?): MutableLiveData<String>?
     fun fetchAnnouncement(): MutableLiveData<ArrayList<Item>>?
     fun createAnnouncement(fields: ArrayList<Field>): MutableLiveData<String>
     fun createEvent(fields: ArrayList<Field>): MutableLiveData<String>?
