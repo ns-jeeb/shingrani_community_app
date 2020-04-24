@@ -69,8 +69,10 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
             var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
             if (v?.id == R.id.img_h_dot){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
-                var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
-                menuItem.isVisible = !mHideItem
+                popupMenu.menu.findItem(R.id.popup_accept).isVisible =false
+                popupMenu.menu.findItem(R.id.popup_reject).isVisible =false
+                var deleteMenuItem = popupMenu.menu.findItem(R.id.popup_delete)
+                deleteMenuItem.isVisible = !mHideItem
                 popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)
@@ -82,12 +84,12 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             var id = item?.itemId
             when (id) {
-                R.id.popup_accept -> {
-                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,adapterPosition) }
-                }
-                R.id.popup_reject -> {
-                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onRejected(it) }
-                }
+//                R.id.popup_accept -> {
+//                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,adapterPosition) }
+//                }
+//                R.id.popup_reject -> {
+//                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onRejected(it) }
+//                }
                 R.id.popup_delete -> {
                     mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onDeleted(it,"Deleted") }
                 }
