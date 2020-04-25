@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/colorAccent"
         android:padding="15dp">
 
         <TextView
@@ -20,7 +19,6 @@
         <EditText
             android:id="@+id/ed_member_name"
             android:layout_width="match_parent"
-            android:textColor="@color/pre_view_text_top_color"
             android:layout_height="wrap_content"
             android:hint="Optional name"
             app:layout_constraintTop_toBottomOf="@+id/ed_member_email" />
@@ -30,7 +28,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:textColor="@color/pre_view_text_top_color"
             android:hint="Email address"
             android:inputType="textEmailAddress"
             android:selectAllOnFocus="true"

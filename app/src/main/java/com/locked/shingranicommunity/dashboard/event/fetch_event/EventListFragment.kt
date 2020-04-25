@@ -25,17 +25,12 @@ import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActi
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import javax.inject.Inject
 
-class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
-
-    interface OnEventFragmentTransaction {
-        fun onFragmentInteraction(uri: Uri)
-    }
+class EventListFragment : Fragment(),OnInvitedListener {
 
     val ARG_TOKEN = "token"
     val ARG_PARAM2 = "param2"
     private var mToken: String? = null
     private var mParam2: String? = null
-    private var mListener: OnEventFragmentTransaction? = null
     private lateinit var mBinding : FragmentEventListBinding
     private var isChecked= false
 
@@ -56,12 +51,7 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is OnEventFragmentTransaction) {
-            mListener = context
-        } else {
-            throw RuntimeException("$context must implement OnEventFragmentTransaction")
-        }
-        (activity!! as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
+        (activity!! as DashBoardViewPagerActivity).dashboardComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -91,12 +81,6 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
 
         mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_event_list, container, false)
         eventViewModel = ViewModelProviders.of(this,viewModelProviders).get(EventViewModel::class.java)
-        mBinding.fabCreateEvent.setOnClickListener(this)
-        if (eventViewModel.getAdminUser()?._id!= null){
-            mBinding.fabCreateEvent.visibility =View.VISIBLE
-        }else{
-            mBinding.fabCreateEvent.visibility = View.GONE
-        }
        setupListViewAdapter()
 
         return mBinding.root
@@ -106,11 +90,6 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
     fun setupListViewAdapter() {
         var hideDeleteMenu = true
         eventViewModel.itemsLoaded().observe(this, Observer {
-            if (it != null) {
-                (activity as DashBoardViewPagerActivity).hideOrShowProgress(false)
-            } else {
-                (activity as DashBoardViewPagerActivity).hideOrShowProgress(true)
-            }
             if (eventViewModel.getAdminUser()?._id == eventViewModel.getCurrentUser()._id){
                 hideDeleteMenu = false
             }
@@ -122,18 +101,6 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
             mBinding.progressEvent.visibility = View.GONE
             adapter.notifyDataSetChanged()
         })
-
-        if (eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id) != null) {
-//                Log.d("Admin_user","user = ${it.admins[0].name}")
-            mBinding.txtUserState.text = "${eventViewModel.userManager.getAdminUser(eventViewModel.getCurrentUser()._id)?.name}: Admin"
-        } else {
-            mBinding.txtUserState.text = "Regular User"
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        mListener = null
     }
 
     override fun onAccepted(eventitem: Item, position: Int) {
@@ -170,21 +137,11 @@ class EventListFragment : Fragment(),OnInvitedListener,View.OnClickListener {
         eventViewModel.itemDelete(eventitem._id!!)?.observe(this@EventListFragment, Observer {
             if (it.isNullOrBlank()){
                 setupListViewAdapter()
-                mBinding.txtMessageEvent.visibility = View.GONE
+                //mBinding.txtMessageEvent.visibility = View.GONE
             }else{
-                mBinding.txtMessageEvent.visibility = View.VISIBLE
-                mBinding.txtMessageEvent.text = it
+                //mBinding.txtMessageEvent.visibility = View.VISIBLE
+                //mBinding.txtMessageEvent.text = it
             }
         })
-    }
-
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.fab_create_event){
-            createItem()
-        }
-    }
-    private fun createItem(){
-        var inten = Intent(activity, CreateItemActivity::class.java)
-        startActivityForResult(inten, Constant_Utils.ONE_00)
     }
 }

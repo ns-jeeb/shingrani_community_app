@@ -9,7 +9,7 @@ import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_TEMPLATE_MODEL
 import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_CURRENT_USER
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.members.User
-import com.locked.shingranicommunity.models.TemplateModel
+import com.locked.shingranicommunity.models.AppModel
 import javax.inject.Inject
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -53,13 +53,13 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
 //
 //    }
 
-    override fun getTemplateModel(): TemplateModel? {
+    override fun getAppModel(): AppModel? {
         val sharedPr = context.getSharedPreferences(SHARED_PREF_TEMPLATE_MODEL,Context.MODE_PRIVATE)
-        return Gson().fromJson<TemplateModel>(sharedPr.getString(TEMPLATE_MODEL,""))
+        return Gson().fromJson<AppModel>(sharedPr.getString(TEMPLATE_MODEL,""))
     }
 
-    override fun setTemplateModel(templateModel: TemplateModel) {
+    override fun setAppModel(appModel: AppModel) {
         val sharedPr = context.getSharedPreferences(SHARED_PREF_TEMPLATE_MODEL,Context.MODE_PRIVATE).edit()
-        sharedPr.putString(TEMPLATE_MODEL,Gson().toJson(templateModel)).apply()
+        sharedPr.putString(TEMPLATE_MODEL,Gson().toJson(appModel)).apply()
     }
 }

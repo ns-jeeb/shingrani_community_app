@@ -1,21 +1,25 @@
 package com.locked.shingranicommunity.dashboard
 
 import android.content.Context
-import android.widget.Toast
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
 
-class DashBoardViewModel @Inject constructor(private val dashboardRepositor: DashboardRepositor,val userManager: UserManager):ViewModel() {
-    fun loadItem(context: Context){
-        dashboardRepositor.fetchEvent()
+class DashBoardViewModel @Inject constructor(
+    private val dashboardRepository: DashboardRepositor,
+    val userManager: UserManager)
+    :ViewModel() {
+
+    val showCreateFab : LiveData<Boolean>
+
+    init {
+        showCreateFab = MutableLiveData<Boolean>(userManager.isAdminUser())
     }
-    fun getToken(): String{
-        return if (userManager.token.isNotBlank()){
-            userManager.token
-        }else{
-            ""
-        }
+
+    fun loadItem(context: Context){
+        dashboardRepository.fetchEvent()
     }
 }

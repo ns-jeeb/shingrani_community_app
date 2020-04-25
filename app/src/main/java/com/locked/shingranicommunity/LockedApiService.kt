@@ -1,11 +1,9 @@
 package com.locked.shingranicommunity
 
-import com.facebook.stetho.okhttp3.StethoInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.util.concurrent.TimeUnit
 
 class LockedApiService  {
@@ -27,7 +25,6 @@ class LockedApiService  {
             val client = OkHttpClient.Builder().addInterceptor(
                 interceptor
             )
-                .addNetworkInterceptor(StethoInterceptor())
                 .connectTimeout(30, TimeUnit.MINUTES).readTimeout(30, TimeUnit.MINUTES)
                 .build()
 
@@ -44,7 +41,6 @@ class LockedApiService  {
                 .build()
 
             mRetrofit = Retrofit.Builder().baseUrl(NEW_BASE_URL).client(client)
-                .addConverterFactory(ScalarsConverterFactory.create())
                 .build()
         }
 
@@ -63,7 +59,6 @@ class LockedApiService  {
                 val request = chain.request().newBuilder().addHeader("Authorization", "Bearer $token").build()
                 chain.proceed(request)
             }
-                .addNetworkInterceptor(StethoInterceptor())
                 .connectTimeout(30, TimeUnit.MINUTES).readTimeout(30, TimeUnit.MINUTES)
                 .build()
 

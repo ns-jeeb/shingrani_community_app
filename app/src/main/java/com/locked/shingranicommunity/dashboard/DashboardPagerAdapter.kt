@@ -4,26 +4,25 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class DashboardPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter (manager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class DashboardPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+    private val fragmentList: ArrayList<Fragment> = ArrayList()
+    private val fragmentTitleList: ArrayList<String> = ArrayList()
 
     override fun getItem(position: Int): Fragment {
-        return mFragmentList[position]
+        return fragmentList[position]
     }
-
-    private val mFragmentList: ArrayList<Fragment> = ArrayList()
-    private val mFragmentTitleList: ArrayList<String> = ArrayList()
 
     override fun getCount(): Int {
-        return mFragmentList.size
-    }
-    override fun getPageTitle(position: Int): CharSequence {
-        return mFragmentTitleList[position]
+        return fragmentList.size
     }
 
+    override fun getPageTitle(position: Int): CharSequence {
+        return fragmentTitleList[position]
+    }
 
     fun addFragment(fragment: Fragment, title: String) {
-        mFragmentList.add(fragment)
-        mFragmentTitleList.add(title)
-
+        fragmentList.add(fragment)
+        fragmentTitleList.add(title)
     }
 }

@@ -1,23 +1,20 @@
 package com.locked.shingranicommunity.dashboard
 
-import android.content.Context
 import android.content.Intent
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.viewpager.widget.ViewPager
+import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.Constant_Utils.ONE_00
-import com.locked.shingranicommunity.Constant_Utils.ONE_01
 import com.locked.shingranicommunity.Constant_Utils.ONE_02
-import com.viewpagerindicator.TitlePageIndicator
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
+import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
@@ -25,103 +22,68 @@ import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.SettingsActivity
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEventFragmentTransaction, View.OnClickListener {
-    override fun onClick(v: View?) {
-    }
-
-    override fun onFragmentInteraction(uri: Uri) {
-    }
+class DashBoardViewPagerActivity : AppCompatActivity(), View.OnClickListener {
 
     @Inject
-    lateinit var  dashBoardViewModel: DashBoardViewModel
-    @Inject
-    lateinit var dashboardCompunent : DashboardComponent
+    lateinit var  dashboardViewModel: DashBoardViewModel
 
-    private lateinit var mBinding : ActivityDashBoradViewPagerBinding
-    private lateinit var tabs: TitlePageIndicator
-    private lateinit var pager: ViewPager
-    var token = ""
+    @Inject
+    lateinit var dashboardComponent : DashboardComponent
+
+    private lateinit var adapter: DashboardPagerAdapter
+    private lateinit var binding : ActivityDashBoradViewPagerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        dashboardCompunent = (application as MyApplication).appComponent.dashBoardComponent().create()
-        dashboardCompunent.inject(this)
+        dashboardComponent = (application as MyApplication).appComponent.dashBoardComponent().create()
+        dashboardComponent.inject(this)
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_dash_borad_view_pager)
-        setSupportActionBar(mBinding.toolbar)
-        var token = getSharedPreferences("token", Context.MODE_PRIVATE).getString("token","")
-        this.token = token
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_dash_borad_view_pager)
+        adapter = DashboardPagerAdapter(supportFragmentManager)
         initViews()
-        setpuViewPager()
     }
 
     private fun initViews() {
-        tabs = mBinding.tabs
-        pager = mBinding.dashBorderPager
+        setSupportActionBar(binding.toolbar)
+        setupViewPager()
+        initFab()
     }
 
-    override fun onStart() {
-        super.onStart()
+    private fun setupViewPager(){
+        val eventFragment = EventListFragment.newInstance(false)
+        val announcementFragment = AnnounceFragment.newInstance()
+        adapter.addFragment(eventFragment, getString(R.string.event_tab))
+        adapter.addFragment(announcementFragment, getString(R.string.announcement_tab))
+        binding.pager.adapter = adapter
+        binding.tabLayout.setupWithViewPager(binding.pager)
     }
 
-    fun setpuViewPager(){
-
-        val adapter = DashboardPagerAdapter(supportFragmentManager)
-
-        var eventFragment = EventListFragment.newInstance(false)
-        var announcementFragment = AnnounceFragment.newInstance()
-
-        val density = resources.displayMetrics.density
-        tabs.setBackgroundColor(MyApplication.instance.getColor(R.color.colorPrimary))
-
-        tabs.isSelectedBold = true
-        tabs.footerColor = MyApplication.instance.getColor(R.color.colorAccent)
-        tabs.setOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-//                Toast.makeText(CommunityApp.instance,"Tab Scrolled",Toast.LENGTH_LONG).show()
-
+    private fun initFab() {
+        dashboardViewModel.showCreateFab.observe(this, Observer {
+            if (it) {
+                binding.fab.visibility = View.VISIBLE
+            } else {
+                binding.fab.visibility = View.GONE
             }
-
-            override fun onPageSelected(position: Int) {
-//                Toast.makeText(CommunityApp.instance,"Tab Selected",Toast.LENGTH_LONG).show()
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-//                Toast.makeText(CommunityApp.instance,"Tab Page Selected",Toast.LENGTH_LONG).show()
-            }
-
         })
-        adapter.addFragment(eventFragment,"Event")
-        adapter.addFragment(announcementFragment, "Announcement")
-        pager.adapter = adapter
-        tabs.setViewPager(pager)
-
+        binding.fab.setOnClickListener(this)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null){
             if (requestCode == ONE_00) {
                 Toast.makeText(this,"Item is created ${data?.getStringExtra("response_message")}",Toast.LENGTH_LONG).show()
-                dashBoardViewModel.loadItem(this)
-                setpuViewPager()
-            }else if (requestCode == ONE_02){
+                dashboardViewModel.loadItem(this)
+                setupViewPager()
+            } else if (requestCode == ONE_02){
                 finish()
             }
         }
     }
 
-    fun hideOrShowProgress(showProgress: Boolean) {
-        if (showProgress) {
-            mBinding.loadingItemProgress.visibility = View.VISIBLE
-            mBinding.txtLoadingItem.visibility = View.VISIBLE
-        }else{
-            mBinding.loadingItemProgress.visibility = View.GONE
-            mBinding.txtLoadingItem.visibility = View.GONE
-        }
-    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_user_list,menu)
@@ -129,9 +91,7 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        var id = item?.itemId
-        when (id) {
+        when(item?.itemId) {
             R.id.action_members -> {
                 var intent = Intent(this, MemberActivity::class.java)
                 intent.putExtra("create_event",false)
@@ -145,5 +105,21 @@ class DashBoardViewPagerActivity : AppCompatActivity(), EventListFragment.OnEven
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onClick(view: View?) {
+        if (view == binding.fab) {
+            create()
+        }
+    }
+
+    private fun create() {
+        if (binding.pager.currentItem == 0) {
+            val intent = Intent(this, CreateItemActivity::class.java)
+            startActivityForResult(intent, Constant_Utils.ONE_00)
+        } else if (binding.pager.currentItem == 1) {
+            val intent = Intent(this, CreateAnnouncementActivity::class.java)
+            startActivityForResult(intent, 102)
+        }
     }
 }

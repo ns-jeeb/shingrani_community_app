@@ -6,8 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
 import com.locked.shingranicommunity.dashboard.data.Field
-import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
@@ -26,7 +24,7 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
                 fields?.add(it)
             }
 
-        var adminUsers = userManger.getTemplateModel()?.admins
+        var adminUsers = userManger.getAppModel()?.admins
             for (i in 0 until adminUsers?.size!!){
                 return if (userManger.getCurrentUser()?._id?.contentEquals(adminUsers[i]._id)!!) {
                     requestResponse.createAnnouncement(fields!!)

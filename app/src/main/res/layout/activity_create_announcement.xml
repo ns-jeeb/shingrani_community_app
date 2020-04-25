@@ -18,7 +18,8 @@
             android:background="?attr/colorPrimary"
             android:layout_marginBottom="@dimen/header_1"
             app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@android:color/white">
+            app:titleTextColor="@android:color/white"
+            app:title="Title">
 
             <ImageView
                 android:id="@+id/back_press"
