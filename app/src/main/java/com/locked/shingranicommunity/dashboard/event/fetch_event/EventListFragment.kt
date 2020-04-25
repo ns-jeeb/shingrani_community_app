@@ -86,6 +86,7 @@ class EventListFragment : Fragment(),OnInvitedListener {
         return mBinding.root
     }
     private lateinit var adapter: EventsListAdapter
+
     @SuppressLint("SetTextI18n")
     fun setupListViewAdapter() {
         var hideDeleteMenu = true
