@@ -5,71 +5,69 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         tools:context=".dashboard.DashBoardViewPagerActivity"
-        android:background="@color/gray_background_tint">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
             android:background="@drawable/toolbar_background2"
-            app:layout_constraintBottom_toBottomOf="@+id/dash_border_pager"
+            app:layout_constraintHeight_percent="0.3"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <androidx.appcompat.widget.Toolbar
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:paddingTop="25dp"
-            android:paddingLeft="10dp"
-            android:minHeight="?attr/actionBarSize"
-            app:titleTextColor="@android:color/white"
-            android:background="@android:color/transparent"
-            android:id="@+id/toolbar"
-            tools:ignore="MissingConstraints"
-            style="@style/tabsColor"
-            android:layout_marginBottom="10dp"/>
-
-        <com.viewpagerindicator.TitlePageIndicator
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/dash_border_pager"
+        <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.8"
-            app:layout_constraintBottom_toTopOf="@+id/tabs"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/loading_item_progress"
-            android:orientation="vertical"
+            android:fitsSystemWindows="true"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            app:layout_constraintBottom_toTopOf="@+id/tab_layout">
 
-            <ProgressBar
+            <com.google.android.material.appbar.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:titleTextColor="?attr/colorOnPrimary"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_scrollFlags="scroll|snap|enterAlways" />
+
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/pager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/loading_item"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/txt_loading_item"
-                android:layout_gravity="center_horizontal"
-                android:text="loading item ..."/>
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_add_black_24dp"
+                app:layout_anchor="@id/pager"
+                app:layout_anchorGravity="bottom|right|end"
+                app:fabSize="normal"
+                tools:visibility="visible"/>
 
-        </LinearLayout>
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
+        <com.google.android.material.tabs.TabLayout
+            style="@style/Widget.MaterialComponents.TabLayout.Colored"
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:elevation="5dp"
+            app:tabIndicatorHeight="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

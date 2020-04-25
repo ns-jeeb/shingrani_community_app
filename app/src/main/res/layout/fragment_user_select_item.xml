@@ -112,8 +112,7 @@
             android:layout_gravity="end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_weight="0.4"
-            android:src="@drawable/ic_dou"/>
+            android:layout_weight="0.4"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

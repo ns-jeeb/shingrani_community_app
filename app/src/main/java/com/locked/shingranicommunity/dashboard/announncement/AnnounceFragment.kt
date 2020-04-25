@@ -22,7 +22,7 @@ import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
 import javax.inject.Inject
 
-class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
+class AnnounceFragment : Fragment(), OnInvitedListener {
     companion object {
         fun newInstance() = AnnounceFragment()
     }
@@ -46,12 +46,6 @@ class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
                 viewModel.onRefresh()
             }
         }
-        if (viewModel.getAdminUser()?._id!= null){
-            mBinding?.fabCreateAnnouncement?.visibility =View.VISIBLE
-        }else{
-            mBinding?.fabCreateAnnouncement?.visibility = View.GONE
-        }
-        mBinding?.fabCreateAnnouncement?.setOnClickListener(this)
         setupListViewAdapter()
         return mBinding!!.root
     }
@@ -70,12 +64,6 @@ class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
 
         })
     }
-    override fun onClick(v: View?) {
-        if (v?.id == R.id.fab_create_announcement){
-            var intent = Intent(activity, CreateAnnouncementActivity::class.java)
-            startActivityForResult(intent, 102)
-        }
-    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null){
@@ -87,7 +75,7 @@ class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as DashBoardViewPagerActivity).dashboardCompunent.inject(this)
+        (activity as DashBoardViewPagerActivity).dashboardComponent.inject(this)
     }
 
     override fun onAccepted(eventitem: Item, position: Int) {
@@ -108,7 +96,7 @@ class AnnounceFragment : Fragment(),View.OnClickListener,OnInvitedListener {
                 viewModel.load()
                 setupListViewAdapter()
             }else{
-                mBinding?.txtErrorAnnounceMessage?.text = it
+                //mBinding?.txtErrorAnnounceMessage?.text = it // todo properly
             }
         })
     }

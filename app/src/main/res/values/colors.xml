@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#0d5da6</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#E8F4F3</color>
-    <color name="green_sides">#03A9F4</color>
-    <color name="red_center">#c903382a</color>
-    <color name="app_bg_color_start">#009688</color>
-    <color name="app_bg_color_end">#c9182b26</color>
-    <color name="pre_view_text_top_color">#df1c2522</color>
-    <color name="pre_view_text_bottom_color">#00BCD4</color>
-    <color name="btn_auth_selected_color">#C93A3C3C</color>
-    <color name="login_transparency">#A90FF326</color>
-    <color name="login_text_color">#FFFFFF</color>
-    <color name="login_welcome_color">#55FFFFFF</color>
-    <color name="transparent">#00FFFFFF</color>
-    <color name="gray_background_tint">#eef1f6</color>
+    <color name="colorSecondary">#00BCD4</color>
+    <color name="colorBackground">@android:color/white</color>
+    <color name="colorError">#FF5722</color>
+    <color name="colorSurface">@android:color/white</color>
+    <color name="colorOnPrimary">@android:color/white</color>
+    <color name="colorOnSecondary">@android:color/white</color>
+    <color name="colorOnBackground">@android:color/white</color>
+    <color name="colorOnError">@android:color/white</color>
+    <color name="colorOnSurface">@color/colorPrimary</color>
+    <color name="colorLoginGradientStart">#0D5DA6</color>
+    <color name="colorLoginGradientEnd">#8000BCD4</color>
 </resources>

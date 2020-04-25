@@ -42,8 +42,7 @@
                         android:id="@+id/user_profile_pic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_person_black_40dp"
-                        android:background="@color/gray_background_tint"/>
+                        android:src="@drawable/ic_person_black_40dp"/>
 
 
                     <LinearLayout

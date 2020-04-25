@@ -4,7 +4,7 @@
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome !"</string>
+    <string name="welcome">"Welcome"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="not_match_password">Password is not matched</string>
@@ -34,7 +34,7 @@
     <string name="registration_user">Join Community</string>
     <string name="submit_user">Submit</string>
     <string name="sign_in_user">Login</string>
-    <string name="user_name">User Name</string>
+    <string name="user_name">Username</string>
     <string name="last_name">Last Name</string>
     <string name="first_name">First Name</string>
     <string name="address">Address</string>
@@ -94,4 +94,12 @@
     <string name="key_hide_phone">KEY_HIDE_PHONE</string>
     <string name="key_show_phone">KEY_SHOW_PHONE</string>
     <string name="key_logout_">KEY_LOGOUT</string>
+    <string name="lets_start">Let\'s Start!</string>
+    <string name="password">Password</string>
+    <string name="invited">Invited?</string>
+    <string name="login">Login</string>
+    <string name="create_account">Let\'s Create Account</string>
+    <string name="existing_account">Existing Account? Login</string>
+    <string name="register">Register</string>
+    <string name="password_confirm">Retype Password</string>
 </resources>
