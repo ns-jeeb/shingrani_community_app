@@ -1,4 +1,3 @@
-
 package com.locked.shingranicommunity.registration_login.registration.enterdetails
 
 import android.content.Context
@@ -12,50 +11,48 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.FragmentEnterDetailsBinding
+import com.locked.shingranicommunity.databinding.FragmentRegisterBinding
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
 import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import javax.inject.Inject
 
-class EnterDetailsFragment : Fragment() {
+class RegisterFragment : Fragment() {
 
     @Inject
     lateinit var registrationViewModel: RegistrationViewModel
     @Inject
     lateinit var enterDetailsViewModel: EnterDetailsViewModel
-    lateinit var mBinding: FragmentEnterDetailsBinding
+
+    lateinit var binding: FragmentRegisterBinding
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        mBinding = DataBindingUtil.inflate(inflater,R.layout.fragment_enter_details, container, false)
+        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_register, container, false)
         enterDetailsViewModel.enterDetailsState.observe(this,
             Observer<EnterDetailsViewState> { state ->
                 when (state) {
                     is EnterDetailsSuccess -> {
-                        registrationViewModel.updateUserData( mBinding.registerUsername.text.toString(), mBinding.registerPassword.text.toString(),mBinding.registerName.text.toString())
+                        registrationViewModel.updateUserData( binding.registerUsername.text.toString(), binding.registerPassword.text.toString(),binding.registerName.text.toString())
                         registrationViewModel.registerUser()
-                        enterDetailsViewModel.registerUser(mBinding.registerUsername.text.toString(),mBinding.registerPassword.text.toString(),mBinding.registerName.text.toString()).observe(this,
+                        enterDetailsViewModel.registerUser(binding.registerUsername.text.toString(),binding.registerPassword.text.toString(),binding.registerName.text.toString()).observe(this,
                             Observer {
                                 if (it.isDataValid){
                                     var intent = Intent(activity, LoginActivity::class.java)
                                     startActivity(intent)
                                     activity?.finish()
                                 }
-                                mBinding.txtError.text = it.message
-                                mBinding.txtRegisterName.text = it.message
+                                binding.txtError.text = it.message
                             })
-
-                        (activity as RegistrationActivity).onTermsAndConditionsAccepted()
                     }
                     is EnterDetailsError -> {
-                        mBinding.txtError.text = state.error
-                        mBinding.txtError.visibility = View.VISIBLE
+                        binding.txtError.text = state.error
+                        binding.txtError.visibility = View.VISIBLE
                     }
                 }
             })
 
         setupViews()
-        return mBinding.root
+        return binding.root
     }
 
     override fun onAttach(context: Context) {
@@ -65,20 +62,20 @@ class EnterDetailsFragment : Fragment() {
 
     private fun setupViews() {
 
-        mBinding.registerUsername.doOnTextChanged { _, _, _, _ -> mBinding.txtError.visibility = View.INVISIBLE }
+        binding.registerUsername.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
 
-        mBinding.registerPassword.doOnTextChanged { _, _, _, _ -> mBinding.txtError.visibility = View.INVISIBLE }
-        mBinding.registerPasswordConform.doOnTextChanged { _, _, _, _ -> mBinding.txtError.visibility = View.INVISIBLE }
+        binding.registerPassword.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
+        binding.registerPasswordConform.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
 
-       mBinding.btnRegister.setOnClickListener {
-            enterDetailsViewModel.validateInput(mBinding.registerUsername.text.toString(),
-                mBinding.registerPassword.text.toString(),
-                mBinding.registerPasswordConform.text.toString(),
-                mBinding.registerName.text.toString()
+       binding.btnRegister.setOnClickListener {
+            enterDetailsViewModel.validateInput(binding.registerUsername.text.toString(),
+                binding.registerPassword.text.toString(),
+                binding.registerPasswordConform.text.toString(),
+                binding.registerName.text.toString()
             )
 
         }
-        mBinding.btnJoiningPermission.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             var intent = Intent(activity, LoginActivity::class.java)
             intent.putExtra("message","registrationViewModel.message")
             startActivity(intent)

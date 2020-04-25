@@ -49,9 +49,5 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViews() {
-        binding.btnJoiningPermission.setOnClickListener {
-            startActivity(Intent(this,DashBoardViewPagerActivity::class.java))
-
-        }
     }
 }
