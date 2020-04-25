@@ -21,7 +21,7 @@ import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBindi
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.registration_login.registration.MyApplication
-import com.locked.shingranicommunity.registration_login.registration.SettingsActivity
+import com.locked.shingranicommunity.settings.SettingsActivity
 import javax.inject.Inject
 
 @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -86,22 +86,19 @@ class DashBoardViewPagerActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.menu_user_list,menu)
+        menuInflater.inflate(R.menu.menu_dashboard,menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.action_members -> {
-                var intent = Intent(this, MemberActivity::class.java)
-                intent.putExtra("create_event",false)
-                startActivity(intent)
+                startActivity(Intent(this, MemberActivity::class.java))
                 return true
             }
             R.id.action_settings -> {
-                var intent = Intent(this, SettingsActivity::class.java)
-                startActivityForResult(intent,Constant_Utils.ONE_02)
-                finish()
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
             }
         }
         return super.onOptionsItemSelected(item)
