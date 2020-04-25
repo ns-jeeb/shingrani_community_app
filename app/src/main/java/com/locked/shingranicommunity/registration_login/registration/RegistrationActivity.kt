@@ -7,7 +7,7 @@ import androidx.databinding.DataBindingUtil
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.ActivityRegistrationBinding
 import com.locked.shingranicommunity.di.RegisterComponent
-import com.locked.shingranicommunity.registration_login.registration.enterdetails.EnterDetailsFragment
+import com.locked.shingranicommunity.registration_login.registration.enterdetails.RegisterFragment
 import javax.inject.Inject
 
 class RegistrationActivity : AppCompatActivity() {
@@ -16,24 +16,17 @@ class RegistrationActivity : AppCompatActivity() {
     lateinit var registrationViewModel: RegistrationViewModel
     @Inject
     lateinit var registerComponent: RegisterComponent
-    lateinit var mBinding : ActivityRegistrationBinding
+
+    lateinit var binding : ActivityRegistrationBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         registerComponent = (application as MyApplication).appComponent.registerComponent().create()
         registerComponent.inject(this)
         super.onCreate(savedInstanceState)
-        mBinding = DataBindingUtil.setContentView(this,R.layout.activity_registration)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_registration)
         supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_holder, EnterDetailsFragment())
+            .add(R.id.fragment, RegisterFragment())
             .commit()
-    }
-
-
-    /**
-     * Callback from T&CsFragment when TCs have been accepted
-     */
-    fun onTermsAndConditionsAccepted() {
-//        startActivity(Intent(this, LoginActivity::class.java))
     }
 
     override fun onBackPressed() {

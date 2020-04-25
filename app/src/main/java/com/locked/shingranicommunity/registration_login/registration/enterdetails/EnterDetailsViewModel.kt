@@ -11,7 +11,7 @@ import javax.inject.Inject
 const val MAX_LENGTH = 5
 
 /**
- * EnterDetailsViewModel is the ViewModel that [EnterDetailsFragment] uses to
+ * EnterDetailsViewModel is the ViewModel that [RegisterFragment] uses to
  * obtain to validate user's input data.
  */
 class EnterDetailsViewModel @Inject constructor(var repository: UserDataRepository) {

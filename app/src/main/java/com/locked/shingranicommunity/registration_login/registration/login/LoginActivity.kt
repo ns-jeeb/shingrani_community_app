@@ -39,15 +39,15 @@ class LoginActivity : AppCompatActivity() {
         }
         loginViewModel =
             ViewModelProviders.of(this, viewModelProvider).get(LoginViewModel::class.java)
-        mBinding.loading.visibility = View.VISIBLE
+        //mBinding.loading.visibility = View.VISIBLE
 
         if (!loginViewModel.getToken().isBlank() && loginViewModel.getCurrentUser() != null) {
-            hideOrShowProgress(false)
+            //hideOrShowProgress(false)
             loginViewModel.fetchedSingleApi()
             startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
             finish()
         } else {
-            hideOrShowProgress(false)
+            //hideOrShowProgress(false)
         }
 
         loginViewModel.loginState.observe(this, Observer {
@@ -61,13 +61,13 @@ class LoginActivity : AppCompatActivity() {
         })
         loginViewModel.loginResult.observe(this, Observer {
             var loginResult = it ?: return@Observer
-            mBinding.loading.visibility = View.GONE
+            //mBinding.loading.visibility = View.GONE
             if (loginResult.error != null) {
                 Toast.makeText(this, "login is Field", Toast.LENGTH_LONG).show()
             }
             when {
                 loginResult.error != null -> {
-                    mBinding.loading.visibility = View.GONE
+                    //mBinding.loading.visibility = View.GONE
                     Toast.makeText(this, "login is Failed", Toast.LENGTH_LONG).show()
                 }
                 loginResult.success -> {
@@ -133,25 +133,11 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
         }
-        mBinding.btnJoiningPermission.setOnClickListener {
+        mBinding.btnInvited.setOnClickListener {
             loginViewModel.unregister()
             val intent = Intent(this, RegistrationActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                    Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
-    }
-
-    fun hideOrShowProgress(showProgress: Boolean) {
-        if (showProgress) {
-            mBinding.loading.visibility = View.VISIBLE
-            mBinding.loading.visibility = View.VISIBLE
-        } else {
-            mBinding.loading.visibility = View.GONE
-            mBinding.loading.visibility = View.GONE
-        }
-
     }
 }
 

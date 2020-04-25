@@ -14,27 +14,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".registration_login.registration.login.LoginActivity">
+        <activity
+            android:name=".registration_login.registration.login.LoginActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".registration_login.registration.SettingsActivity"
-            android:label="@string/title_activity_settings" />
-        <activity android:name=".members.MemberActivity" />
-        <activity android:name=".dashboard.announncement.create_announce.CreateAnnouncementActivity" />
-        <activity android:name=".registration_login.registration.RegistrationActivity" />
+            android:name=".registration_login.registration.RegistrationActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleInstance"/>
+        <activity
+            android:name=".dashboard.DashBoardViewPagerActivity"
+            android:launchMode="singleInstance"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".dashboard.announncement.create_announce.CreateAnnouncementActivity" />
         <activity
             android:name=".dashboard.event.create_event.CreateItemActivity"
             android:label="Create Event">
         </activity>
+        <activity android:name=".members.MemberActivity" />
         <activity
-            android:name=".dashboard.DashBoardViewPagerActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".registration_login.registration.SettingsActivity"
+            android:label="@string/title_activity_settings" />
     </application>
 
 </manifest>
