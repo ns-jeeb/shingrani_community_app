@@ -1,10 +1,9 @@
 package com.locked.shingranicommunity
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.Rsvp
 import com.locked.shingranicommunity.dashboard.data.RsvpObject
 import com.locked.shingranicommunity.members.LoginResponse
 import com.locked.shingranicommunity.members.ShingraniMember
-import com.locked.shingranicommunity.models.TemplateModel
+import com.locked.shingranicommunity.models.AppModel
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -35,7 +34,7 @@ interface LockedApiServiceInterface {
     @POST("/api/v2/app/5d4a348f88fb44130084f903/invite")
     fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access-token") token: String): Call<ShingraniMember>
     @GET("/api/v2/app/{appid}")
-    fun fetchedSingleApi(@Header("x-access-token") token: String,@Path("appid")apiId: String ):Call<TemplateModel>
+    fun fetchedSingleApi(@Header("x-access-token") token: String,@Path("appid")apiId: String ):Call<AppModel>
 
     @PUT("api/v2/item/{itemid}")
     fun updateItem( @Header("x-access-token") token: String,@Body body: HashMap<String,Any>, @Path("itemid") itemID: String):Call<Item>

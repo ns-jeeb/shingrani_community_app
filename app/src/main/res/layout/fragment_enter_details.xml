@@ -123,7 +123,6 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="Create Your Account"
-        android:textColor="@color/login_text_color"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/register_form"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +133,6 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:textSize="20sp"
-        android:background="@color/login_welcome_color"
-        android:textColor="@color/login_text_color"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -149,7 +146,6 @@ xmlns:tools="http://schemas.android.com/tools">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/login_text_color"
         app:layout_constraintBottom_toTopOf="@+id/btn_register"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_percent="0.1"
@@ -173,8 +169,6 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/header_1"
             android:background="@drawable/rounded_edittext"
-            android:textColor="@color/login_text_color"
-            android:textColorHint="@color/login_text_color"
             app:hintEnabled="false">
 
             <AutoCompleteTextView
@@ -186,8 +180,6 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:maxLines="1"
                 android:singleLine="true"
                 android:paddingLeft="15dp"
-                android:textColor="@color/login_text_color"
-                android:textColorHint="@color/login_text_color"
                 android:textSize="15sp"
                 android:backgroundTint="@android:color/transparent"/>
 
@@ -198,8 +190,6 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/header_1"
             android:background="@drawable/rounded_edittext"
-            android:textColor="@color/login_text_color"
-            android:textColorHint="@color/login_text_color"
             app:hintEnabled="false">
 
             <AutoCompleteTextView
@@ -211,8 +201,6 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:maxLines="1"
                 android:singleLine="true"
                 android:paddingLeft="15dp"
-                android:textColor="@color/login_text_color"
-                android:textColorHint="@color/login_text_color"
                 android:textSize="15sp"
                 android:backgroundTint="@android:color/transparent" />
 
@@ -223,8 +211,6 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/header_1"
             android:background="@drawable/rounded_edittext"
-            android:textColor="@color/login_text_color"
-            android:textColorHint="@color/login_text_color"
             app:hintEnabled="false">
 
             <AutoCompleteTextView
@@ -239,8 +225,6 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:maxLines="1"
                 android:singleLine="true"
                 android:paddingLeft="15dp"
-                android:textColor="@color/login_text_color"
-                android:textColorHint="@color/login_text_color"
                 android:textSize="15sp"
                 android:backgroundTint="@android:color/transparent" />
 
@@ -250,8 +234,6 @@ xmlns:tools="http://schemas.android.com/tools">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_edittext"
-            android:textColor="@color/login_text_color"
-            android:textColorHint="@color/login_text_color"
             app:hintEnabled="false">
 
             <AutoCompleteTextView
@@ -266,8 +248,6 @@ xmlns:tools="http://schemas.android.com/tools">
                 android:maxLines="1"
                 android:singleLine="true"
                 android:paddingLeft="15dp"
-                android:textColor="@color/login_text_color"
-                android:textColorHint="@color/login_text_color"
                 android:textSize="15sp"
                 android:backgroundTint="@android:color/transparent" />
 
@@ -286,7 +266,6 @@ xmlns:tools="http://schemas.android.com/tools">
         android:background="@drawable/rounded_button"
         android:gravity="center"
         android:text="Register"
-        android:textColor="@color/login_text_color"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/register_form"
@@ -304,8 +283,7 @@ xmlns:tools="http://schemas.android.com/tools">
         app:layout_constraintBottom_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_register"
-        android:textColor="@color/login_text_color" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_register" />
 
     <ProgressBar
         android:id="@+id/loading"

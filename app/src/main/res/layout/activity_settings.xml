@@ -30,7 +30,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/colorAccent"
         android:text="logout"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"

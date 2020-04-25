@@ -7,7 +7,7 @@ import com.locked.shingranicommunity.di.UserComponent
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.members.User
 import com.locked.shingranicommunity.models.Admin
-import com.locked.shingranicommunity.models.TemplateModel
+import com.locked.shingranicommunity.models.AppModel
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -86,21 +86,31 @@ class UserManager @Inject constructor(val storage: Storage, private val userFact
     }
 
     fun getAdminUser(id: String): Admin? {
-        if (getTemplateModel() != null){
-            for (i in 0 until getTemplateModel()?.admins?.size!!){
-                if (id == getTemplateModel()?.admins?.get(i)?._id){
-                    return getTemplateModel()?.admins?.get(i)
+        if (getAppModel() != null){
+            for (i in 0 until getAppModel()?.admins?.size!!){
+                if (id == getAppModel()?.admins?.get(i)?._id){
+                    return getAppModel()?.admins?.get(i)
                 }
             }
         }
         return null
     }
 
-
-    fun getTemplateModel(): TemplateModel?{
-        return storage.getTemplateModel()
+    fun isAdminUser(): Boolean {
+        if (getAppModel() != null) {
+            for (admin in getAppModel()?.admins!!) {
+                if (getCurrentUser()?._id == admin._id) {
+                    return true
+                }
+            }
+        }
+        return false
     }
-    fun setTemplateModel(templateModel: TemplateModel){
-        storage.setTemplateModel(templateModel)
+
+    fun getAppModel(): AppModel?{
+        return storage.getAppModel()
+    }
+    fun setAppModel(appModel: AppModel){
+        storage.setAppModel(appModel)
     }
 }

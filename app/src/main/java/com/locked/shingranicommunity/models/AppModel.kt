@@ -1,6 +1,6 @@
 package com.locked.shingranicommunity.models
 
-data class TemplateModel(
+data class AppModel(
     val __v: Int,
     val _id: String,
     val admins: List<Admin>,

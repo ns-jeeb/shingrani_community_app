@@ -7,7 +7,7 @@ import com.locked.shingranicommunity.LockedApiService
 import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.di.ResponseEvent
 import com.locked.shingranicommunity.members.LoginResponse
-import com.locked.shingranicommunity.models.TemplateModel
+import com.locked.shingranicommunity.models.AppModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import com.locked.shingranicommunity.registration_login.registration.login.LoginFormState
 import okhttp3.ResponseBody
@@ -134,15 +134,15 @@ class UserDataRepository @Inject constructor (private val userManager: UserManag
 
     override fun fetchedSingleApi() {
         val call = lockedApiService.fetchedSingleApi(userManager.token,"5d4a348f88fb44130084f903")
-        call.enqueue(object : Callback, retrofit2.Callback<TemplateModel>{
-            override fun onFailure(call: Call<TemplateModel>, t: Throwable) {
+        call.enqueue(object : Callback, retrofit2.Callback<AppModel>{
+            override fun onFailure(call: Call<AppModel>, t: Throwable) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
-            override fun onResponse(call: Call<TemplateModel>, response: Response<TemplateModel>) {
+            override fun onResponse(call: Call<AppModel>, response: Response<AppModel>) {
                 if (response.isSuccessful) {
                     Log.d("SingleApiCall","is success ${response.body()}")
-                    userManager.setTemplateModel(response.body()!!)
+                    userManager.setAppModel(response.body()!!)
                 }else{
                     Log.d("SingleApiCall","is Failed ${response.body()}")
                 }
