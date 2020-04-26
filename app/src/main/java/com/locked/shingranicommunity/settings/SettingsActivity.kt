@@ -58,7 +58,7 @@ class SettingsActivity : AppCompatActivity() {
                 getString(R.string.key_logout_)-> {
                     activity?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.putString("token", "")?.apply()
                     val intent = Intent(activity, LoginActivity::class.java)
-                    activity?.finish()
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                     true
                 }

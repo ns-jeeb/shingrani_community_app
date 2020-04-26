@@ -125,8 +125,9 @@ class LoginActivity : AppCompatActivity() {
             ).observe(this, Observer {
                 if (it.isDataValid) {
                     loginViewModel.fetchedSingleApi()
-                    startActivity(Intent(this, DashBoardViewPagerActivity::class.java))
-                    finish()
+                    val intent = Intent(this, DashBoardViewPagerActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
                 } else {
                     mBinding.txtError.visibility = View.VISIBLE
                     mBinding.txtError.text = it.message

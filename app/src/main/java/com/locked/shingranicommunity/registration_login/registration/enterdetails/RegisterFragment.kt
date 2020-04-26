@@ -78,8 +78,8 @@ class RegisterFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             var intent = Intent(activity, LoginActivity::class.java)
             intent.putExtra("message","registrationViewModel.message")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            activity?.finish()
         }
     }
 }

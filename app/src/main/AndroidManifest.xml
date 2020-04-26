@@ -16,8 +16,8 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".registration_login.registration.login.LoginActivity"
-            android:launchMode="singleInstance"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -25,11 +25,10 @@
         </activity>
         <activity
             android:name=".registration_login.registration.RegistrationActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleInstance"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".dashboard.DashBoardViewPagerActivity"
-            android:launchMode="singleInstance"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".dashboard.announncement.create_announce.CreateAnnouncementActivity" />
