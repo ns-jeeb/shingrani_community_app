@@ -7,16 +7,37 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         tools:context=".dashboard.DashBoardViewPagerActivity"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground">
 
-        <View
+        <ImageView
+            android:id="@+id/background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/toolbar_background2"
-            app:layout_constraintHeight_percent="0.3"
+            android:scaleType="centerCrop"
+            android:src="@drawable/login_background"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/gradient_1"
+            app:layout_constraintStart_toStartOf="@+id/background"
+            app:layout_constraintEnd_toEndOf="@+id/background"
+            app:layout_constraintTop_toTopOf="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@+id/background" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/gradient_2"
+            app:layout_constraintStart_toStartOf="@+id/background"
+            app:layout_constraintEnd_toEndOf="@+id/background"
+            app:layout_constraintTop_toTopOf="@+id/background"
+            app:layout_constraintBottom_toBottomOf="@+id/background" />
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/main_content"
