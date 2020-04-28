@@ -3,7 +3,7 @@ package com.locked.shingranicommunity.models
 data class AppModel(
     val __v: Int,
     val _id: String,
-    val admins: List<Admin>,
+    val admins: List<User>,
     val createdAt: String,
     val creator: Any,
     val dataAccessType: String,
@@ -13,12 +13,6 @@ data class AppModel(
     val registrationConfig: RegistrationConfig,
     val templates: List<Template>,
     val updatedAt: String
-)
-
-data class Admin(
-    val _id: String,
-    val name: String,
-    val username: String
 )
 
 data class RegistrationConfig(

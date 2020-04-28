@@ -7,14 +7,11 @@ import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_TIMPLATE_ID
 import com.locked.shingranicommunity.Constant_Utils.APP_ID
 import com.locked.shingranicommunity.Constant_Utils.EVENT_TIMPLATE_ID
 import com.locked.shingranicommunity.Constant_Utils.OWNER_ID
-import com.locked.shingranicommunity.Constant_Utils.TEMPLATE_MODEL
-import com.locked.shingranicommunity.LockedApiService
-import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.dashboard.data.Field
 import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.Rsvp
 import com.locked.shingranicommunity.dashboard.data.RsvpObject
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import com.locked.shingranicommunity.utail.AuthResource
 import kotlinx.coroutines.Dispatchers
@@ -31,7 +28,8 @@ import javax.security.auth.callback.Callback
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST", "CAST_NEVER_SUCCEEDS")
 class DashboardRepositor @Inject constructor(var userManager: UserManager) : DashboardItemRequestListener {
 
-    private var lockedApiService: LockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
+    private var lockedApiService: LockedApiService = com.locked.shingranicommunity.LockedApiService().getClient().create(
+        LockedApiService::class.java)
     var item: MutableLiveData<ArrayList<Item>>?  =  MutableLiveData()
 
     override fun deleteFields(itemId: String): MutableLiveData<String>? {// 5e879c8992fc4115007c7cdb

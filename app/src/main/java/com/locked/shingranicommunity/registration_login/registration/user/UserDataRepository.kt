@@ -3,10 +3,9 @@ package com.locked.shingranicommunity.registration_login.registration.user
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.locked.shingranicommunity.LockedApiService
-import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.di.ResponseEvent
-import com.locked.shingranicommunity.members.LoginResponse
+import com.locked.shingranicommunity.locked.LockedApiService
+import com.locked.shingranicommunity.models.LoginResponse
 import com.locked.shingranicommunity.models.AppModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import com.locked.shingranicommunity.registration_login.registration.login.LoginFormState
@@ -21,7 +20,7 @@ import javax.security.auth.callback.Callback
 import kotlin.collections.HashMap
 
 class UserDataRepository @Inject constructor (private val userManager: UserManager): ResponseEvent {
-    private var lockedApiService = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
+    private var lockedApiService = com.locked.shingranicommunity.LockedApiService().getClient().create(LockedApiService::class.java)
     val username: String
         get() = userManager.username
 

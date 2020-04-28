@@ -8,7 +8,7 @@ import com.locked.shingranicommunity.Constant_Utils.CURRENT_USER
 import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_TEMPLATE_MODEL
 import com.locked.shingranicommunity.Constant_Utils.SHARED_PREF_CURRENT_USER
 import com.locked.shingranicommunity.di.Storage
-import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.models.AppModel
 import javax.inject.Inject
 

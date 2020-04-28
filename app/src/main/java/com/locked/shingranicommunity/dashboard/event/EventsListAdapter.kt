@@ -12,11 +12,11 @@ import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.EventItemBinding
-import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.utail.Utils
 import kotlin.properties.Delegates
 
-class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val hide: Boolean) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
+class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val hide: Boolean) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): EventViewHolder {
         return EventViewHolder(viewGroup)

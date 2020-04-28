@@ -35,8 +35,7 @@
     <string name="submit_user">Submit</string>
     <string name="sign_in_user">Login</string>
     <string name="user_name">Username</string>
-    <string name="last_name">Last Name</string>
-    <string name="first_name">First Name</string>
+    <string name="name">Full Name</string>
     <string name="address">Address</string>
     <string name="postal_code">Postal Code</string>
     <string name="province">Province</string>
@@ -96,10 +95,12 @@
     <string name="key_logout_">KEY_LOGOUT</string>
     <string name="lets_start">Let\'s Start!</string>
     <string name="password">Password</string>
-    <string name="invited">Invited?</string>
+    <string name="invited">Invited? Register</string>
     <string name="login">Login</string>
     <string name="create_account">Let\'s Create Account</string>
     <string name="existing_account">Existing Account? Login</string>
     <string name="register">Register</string>
     <string name="password_confirm">Retype Password</string>
+    <string name="please_wait">Please wait</string>
+    <string name="welcome_user">Welcome %s</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity
+package com.locked.shingranicommunity.di2.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

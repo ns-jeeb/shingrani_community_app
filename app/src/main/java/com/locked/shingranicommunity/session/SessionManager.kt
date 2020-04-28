@@ -1,0 +1,127 @@
+package com.locked.shingranicommunity.session
+
+import android.annotation.SuppressLint
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.locked.shingranicommunity.Constant_Utils
+import com.locked.shingranicommunity.di2.AppScope
+import com.locked.shingranicommunity.models.User
+import javax.inject.Inject
+
+@SuppressLint("ApplySharedPref")
+@AppScope
+class SessionManager @Inject constructor(private val app: Application) : Session {
+
+    private val KEY_ADMIN_LIST: String = "KEY_ADMIN_LIST"
+    private val KEY_SESSION_USER: String = "KEY_SESSION_USER"
+    private val KEY_SESSION_TOKEN: String = "KEY_SESSION_TOKEN"
+
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)
+    private val session: SessionData = SessionData()
+
+    init {
+        initialize()
+    }
+
+    private fun initialize() {
+        val sessionUser = preferences.getString(KEY_SESSION_USER, null)
+        val sessionToken: String = preferences.getString(KEY_SESSION_TOKEN, "")!!
+        if (sessionUser == null) {
+            session.user = null
+            session.isAdmin = false
+            session.isLoggedIn = false
+            session.token = ""
+        } else {
+            session.user = Gson().fromJson(sessionUser, User::class.java)
+            session.isAdmin = isAdmin(session.user!!)
+            session.isLoggedIn = true
+            session.token = sessionToken
+        }
+    }
+
+    private fun isAdmin(user: User): Boolean {
+        val adminList = preferences.getString(KEY_ADMIN_LIST, null)
+        if (!adminList.isNullOrEmpty()) {
+            val userListType = object : TypeToken<List<User>>() {}.type
+            val admins = Gson().fromJson<List<User>>(adminList, userListType)
+            for (admin in admins) {
+                if (user._id == admin._id) return true
+            }
+        }
+        return false
+    }
+
+    fun setAdminList(adminList: List<User> = emptyList()) {
+        preferences.edit().putString(KEY_ADMIN_LIST, Gson().toJson(adminList)).commit()
+        initialize()
+    }
+
+    fun setLoggedInUser(user: User?) {
+        user?.let {
+            preferences.edit().putString(KEY_SESSION_USER, Gson().toJson(user)).commit()
+            // todo remove when the whole app uses the SessionManager
+            app.getSharedPreferences(Constant_Utils.SHARED_PREF_CURRENT_USER, Context.MODE_PRIVATE)
+                .edit()
+                .putString(Constant_Utils.CURRENT_USER, Gson().toJson(user))
+                .apply()
+        }
+        initialize()
+    }
+
+    fun setSessionToken(token: String?) {
+        var _token = ""
+        token?.let { _token = token }
+        preferences.edit().putString(KEY_SESSION_TOKEN, _token).commit()
+        initialize()
+
+        // todo remove when the whole app uses the SessionManager
+        app.getSharedPreferences("token", Context.MODE_PRIVATE)
+            .edit()
+            .putString("token", _token).apply()
+    }
+
+    fun logout() {
+        preferences.edit().clear().commit()
+        initialize()
+    }
+
+    override fun getToken(): String {
+        return session.token
+    }
+
+    override fun getUser(): User? {
+        return session.user
+    }
+
+    override fun getUserId(): String? {
+        return session.user?._id
+    }
+
+    override fun getFullName(): String? {
+        return session.user?.name
+    }
+
+    override fun getUsername(): String? {
+        return session.user?.username
+    }
+
+    override fun isUserAdmin(): Boolean {
+        return session.isAdmin
+    }
+
+    override fun isLoggedIn(): Boolean {
+        return session.isLoggedIn
+    }
+}
+
+class SessionData {
+    var isLoggedIn: Boolean = false
+    var isAdmin: Boolean = false
+    var user: User? = null
+    var token: String = ""
+    // todo app
+}

@@ -3,17 +3,15 @@ package com.locked.shingranicommunity.members
 import android.content.Context
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.provider.Settings.Global.getString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.MemberFragmentBinding
 import javax.inject.Inject
 

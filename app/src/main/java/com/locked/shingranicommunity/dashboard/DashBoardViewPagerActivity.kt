@@ -20,7 +20,7 @@ import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragme
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.members.MemberActivity
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.SettingsActivity
 import javax.inject.Inject
 

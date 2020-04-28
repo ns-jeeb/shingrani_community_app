@@ -2,7 +2,8 @@ package com.locked.shingranicommunity.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.di2.viewmodel.ViewModelKey
+import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceViewModel
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnounceViewModel
@@ -10,7 +11,6 @@ import com.locked.shingranicommunity.dashboard.event.create_event.CreateEventVie
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventViewModel
 import com.locked.shingranicommunity.members.FragmentMemberViewModel
 import com.locked.shingranicommunity.members.MemberViewModel
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
 import com.locked.shingranicommunity.registration_login.registration.login.LoginViewModel
 import dagger.Binds
@@ -24,47 +24,47 @@ abstract class ViewModelProviderModul {
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(LoginViewModel::class)
+    @ViewModelKey(LoginViewModel::class)
     abstract fun loginViewModel(loginViewModel: LoginViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(RegistrationViewModel::class)
+    @ViewModelKey(RegistrationViewModel::class)
     abstract fun registerViewModel(regiViewModel: RegistrationViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(DashBoardViewModel::class)
+    @ViewModelKey(DashBoardViewModel::class)
     abstract fun dashboarViewModel(dashboardViewModel:DashBoardViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(EventViewModel::class)
+    @ViewModelKey(EventViewModel::class)
     abstract fun eventViewModel(eventViewModel: EventViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(CreateEventViewModel::class)
+    @ViewModelKey(CreateEventViewModel::class)
     abstract fun createEventViewModel(createEventViewModel: CreateEventViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(AnnounceViewModel::class)
+    @ViewModelKey(AnnounceViewModel::class)
     abstract fun announcementViewModel(announceViewModel: AnnounceViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(MemberViewModel::class)
+    @ViewModelKey(MemberViewModel::class)
     abstract fun memberViewModel(memberViewModel: MemberViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(FragmentMemberViewModel::class)
+    @ViewModelKey(FragmentMemberViewModel::class)
     abstract fun fragmentMemberViewModel(fragmenMemberViewModel: FragmentMemberViewModel):ViewModel
 
     @Binds
     @IntoMap
-    @MyApplication.ViewModelKey(CreateAnnounceViewModel::class)
+    @ViewModelKey(CreateAnnounceViewModel::class)
     abstract fun createAnnounceViewModel(createAnnounceViewModel: CreateAnnounceViewModel):ViewModel
 
 }

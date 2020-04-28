@@ -1,13 +1,22 @@
-package com.locked.shingranicommunity
+package com.locked.shingranicommunity.locked
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.data.RsvpObject
-import com.locked.shingranicommunity.members.LoginResponse
+import com.locked.shingranicommunity.locked.models.LoginRequestBody
+import com.locked.shingranicommunity.models.LoginResponse
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.models.AppModel
 import retrofit2.Call
 import retrofit2.http.*
 
-interface LockedApiServiceInterface {
+interface LockedApiService {
+
+    @POST("/api/v2/login")
+    @Headers("Content-Type: application/json")
+    fun login(@Body body: LoginRequestBody): Call<LoginResponse>
+
+    @GET("/api/v2/app/{appid}")
+    fun app(@Path("appid") appId: String): Call<AppModel>
+
     @POST("/api/v2/login")
     @Headers("Content-Type: application/json")
     fun userLogin(@Body body: Map<String, String>, @Header("appid")apiId: String): Call<LoginResponse>

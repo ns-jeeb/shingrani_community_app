@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.di.Storage
 import com.locked.shingranicommunity.di.UserComponent
 import com.locked.shingranicommunity.members.ShingraniMember
-import com.locked.shingranicommunity.members.User
-import com.locked.shingranicommunity.models.Admin
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.models.AppModel
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -85,7 +84,7 @@ class UserManager @Inject constructor(val storage: Storage, private val userFact
 
     }
 
-    fun getAdminUser(id: String): Admin? {
+    fun getAdminUser(id: String): User? {
         if (getAppModel() != null){
             for (i in 0 until getAppModel()?.admins?.size!!){
                 if (id == getAppModel()?.admins?.get(i)?._id){

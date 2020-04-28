@@ -13,7 +13,7 @@ import androidx.lifecycle.*
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.databinding.ActivityLoginBinding
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.registration_login.registration.RegistrationActivity
 import javax.inject.Inject
 

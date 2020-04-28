@@ -7,8 +7,7 @@ import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.data.Rsvp
 import com.locked.shingranicommunity.dashboard.data.RsvpObject
-import com.locked.shingranicommunity.members.User
-import com.locked.shingranicommunity.models.Admin
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
@@ -73,7 +72,7 @@ class EventViewModel @Inject constructor(private val itemEventHandler: Dashboard
         return message
     }
 
-    fun getAdminUser(): Admin?{
+    fun getAdminUser(): User?{
         return userManager.getAdminUser(userManager.getCurrentUser()?._id!!)
     }
 }
