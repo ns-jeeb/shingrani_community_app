@@ -39,11 +39,15 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.event_details_fragment, container, false)
-        mBinding.attendees.text = viewModel.getItem()?.fields?.get(5)?.value?.split(",")?.size.toString()
         var item = arguments?.getParcelable<Item>("extra_item")
         viewModel = ViewModelProviders.of(this,viewModelProvider).get(DetailsViewModel::class.java)
-        mBinding.attendees.text = "${item?.fields?.get(5)?.value?.split(",")?.size} : Attend/s"
-        mBinding.notAttendees.text = "${item?.fields?.get(6)?.value?.split(",")?.size} : Not Attend"
+        if (!item?.fields?.get(5)?.value.isNullOrBlank()){
+            mBinding.attendees.text = "${item?.fields?.get(5)?.value?.split(",")?.size} : Attend/s"
+        }
+        if (!item?.fields?.get(6)?.value.isNullOrBlank()){
+            mBinding.notAttendees.text = "${item?.fields?.get(6)?.value?.split(",")?.size} : Not Attend"
+        }
+
         return mBinding.root
     }
 

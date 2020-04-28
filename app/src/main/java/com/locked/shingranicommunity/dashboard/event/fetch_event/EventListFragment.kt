@@ -56,15 +56,15 @@ class EventListFragment : Fragment(),OnInvitedListener,OnItemClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity!! as DashBoardViewPagerActivity).dashboardComponent.inject(this)
+        (activity as DashBoardViewPagerActivity).dashboardComponent.inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (arguments != null) {
-            mToken = arguments!!.getString(ARG_TOKEN)
-            mParam2 = arguments!!.getString(ARG_PARAM2)
+            mToken = requireArguments().getString(ARG_TOKEN)
+            mParam2 = requireArguments().getString(ARG_PARAM2)
         }
     }
 
@@ -95,10 +95,7 @@ class EventListFragment : Fragment(),OnInvitedListener,OnItemClickListener {
     fun setupListViewAdapter() {
         var hideDeleteMenu = true
         eventViewModel.itemsLoaded().observe(this, Observer {
-            if (eventViewModel.getAdminUser()?._id == eventViewModel.getCurrentUser()._id){
-                hideDeleteMenu = false
-            }
-            adapter = EventsListAdapter(it, eventViewModel.getCurrentUser(),hideDeleteMenu,this)
+            adapter = EventsListAdapter(it, eventViewModel.getCurrentUser(),eventViewModel.userManager.isAdminUser(),this)
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter.setOnInvitedEvent(this)
             mBinding.eventRecyclerView.layoutManager = layoutManager
