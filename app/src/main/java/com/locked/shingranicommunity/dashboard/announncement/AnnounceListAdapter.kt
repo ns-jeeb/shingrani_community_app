@@ -16,7 +16,6 @@ import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
 import com.locked.shingranicommunity.utail.Utils
-import okhttp3.internal.Util
 
 class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: Boolean) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
 
@@ -68,11 +67,9 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
         override fun onClick(v: View?) {
             var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
             if (v?.id == R.id.img_h_dot){
-                popupMenu.menuInflater.inflate(R.menu.popup_menu,popupMenu.menu)
+                popupMenu.menuInflater.inflate(R.menu.popup_menu_announcement,popupMenu.menu)
                 var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
                 menuItem.isVisible = !mHideItem
-                popupMenu.menu.findItem(R.id.popup_reject).setOnMenuItemClickListener(this)
-                popupMenu.menu.findItem(R.id.popup_accept).setOnMenuItemClickListener(this)
                 popupMenu.menu.findItem(R.id.popup_delete).setOnMenuItemClickListener(this)
 
             }
@@ -82,12 +79,6 @@ class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: 
         override fun onMenuItemClick(item: MenuItem?): Boolean {
             var id = item?.itemId
             when (id) {
-                R.id.popup_accept -> {
-                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onAccepted(it,adapterPosition) }
-                }
-                R.id.popup_reject -> {
-                    mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onRejected(it) }
-                }
                 R.id.popup_delete -> {
                     mAnnouncements?.get(adapterPosition)?.let {onInvitedListener.onDeleted(it,"Deleted") }
                 }
