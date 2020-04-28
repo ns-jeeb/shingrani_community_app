@@ -2,6 +2,7 @@ package com.locked.shingranicommunity.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.google.gson.Gson
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
@@ -28,8 +29,15 @@ class UserRepository @Inject constructor(
 
     init {
         if (sessionManager.isLoggedIn()) {
-            _loginData.postValue(LoginData(true))
+            _loginData.value = LoginData(true)
         }
+        sessionManager.logoutEvent.observeForever(object: Observer<Boolean> {
+            override fun onChanged(t: Boolean?) {
+                if (t!!) {
+                    _loginData.value = LoginData(false)
+                }
+            }
+        })
     }
 
     fun login(username: String, password: String) {

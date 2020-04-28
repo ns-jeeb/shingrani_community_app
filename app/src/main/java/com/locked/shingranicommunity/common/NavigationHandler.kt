@@ -14,7 +14,7 @@ class NavigationHandler(private val context: AppCompatActivity) {
 
     private var activity: Class<out AppCompatActivity>? = null
     private var fragment: Class<out Fragment>? = null
-    private var addToBackStack: Boolean = false
+    private var addToBackStack: Boolean = true
 
     fun setActivity(activity: Class<out AppCompatActivity>?): NavigationHandler {
         this.activity = activity
@@ -36,6 +36,9 @@ class NavigationHandler(private val context: AppCompatActivity) {
             val intent = Intent(context, activity)
             if (fragment != null) {
                 intent.putExtra(EXTRA_FRAGMENT_CLASS, fragment)
+            }
+            if (!addToBackStack) {
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
             context.startActivity(intent)
         } else if (fragment != null) {

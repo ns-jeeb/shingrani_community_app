@@ -38,7 +38,7 @@ class LoginViewModel @Inject constructor(
     private val appStateObserver: Observer<AppRepository.Data> = Observer<AppRepository.Data> {
         it?.let {
             data.loading.postValue(false)
-            if (it.success) {
+            if (it.success && session.isLoggedIn()) {
                 data.message.postValue(resourceProvider.getString(R.string.welcome_user).format(session.getFullName()))
                 navigation.navigateToNext()
             } else {

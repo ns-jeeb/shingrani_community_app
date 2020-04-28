@@ -49,11 +49,6 @@ class LoginFragment : Fragment() {
                 binding.loginEmail.setText(it)
             }
         })
-        viewModel.password.observe(viewLifecycleOwner, Observer {
-            if (!it.isNullOrEmpty() && !it.equals(binding.loginPassword.text.toString())) {
-                binding.loginPassword.setText(it)
-            }
-        })
     }
 
     private fun enableControls(enable: Boolean) {

@@ -4,6 +4,7 @@ import android.app.Application
 import com.locked.shingranicommunity.di2.auth.AuthComponent
 import com.locked.shingranicommunity.di2.locked.LockedApiServiceModule
 import com.locked.shingranicommunity.di2.viewmodel.ViewModelFactoryModule
+import com.locked.shingranicommunity.settings.SettingsActivity
 import com.locked.shingranicommunity.storage.StorageModule
 import dagger.BindsInstance
 import dagger.Component
@@ -20,4 +21,6 @@ interface AppComponent {
     }
 
     val authComponentFactory : AuthComponent.Factory
+
+    fun inject(settingFragment: SettingsActivity.SettingFragment)
 }

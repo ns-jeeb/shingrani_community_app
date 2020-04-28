@@ -30,6 +30,7 @@ class AuthNavigation @Inject constructor(val activity: AppCompatActivity) : Navi
     override fun navigateToNext() {
         NavigationHandler(activity)
             .setActivity(DashBoardViewPagerActivity::class.java)
+            .addToBackStack(false)
             .navigate()
     }
 }

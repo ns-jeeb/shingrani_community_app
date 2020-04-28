@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -22,6 +24,8 @@ class SessionManager @Inject constructor(private val app: Application) : Session
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)
     private val session: SessionData = SessionData()
+    private val _logoutEvent: MutableLiveData<Boolean> = MutableLiveData()
+    val logoutEvent: LiveData<Boolean> = _logoutEvent
 
     init {
         initialize()
@@ -87,6 +91,7 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     fun logout() {
         preferences.edit().clear().commit()
         initialize()
+        _logoutEvent.postValue(true)
     }
 
     override fun getToken(): String {

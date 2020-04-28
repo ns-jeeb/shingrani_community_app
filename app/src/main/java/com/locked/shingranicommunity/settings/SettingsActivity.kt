@@ -9,9 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.auth.AuthActivity
+import com.locked.shingranicommunity.auth.AuthComponentProvider
+import com.locked.shingranicommunity.auth.LoginFragment
+import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.databinding.SettingsActivityBinding
 import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
+import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
 
 class SettingsActivity : AppCompatActivity() {
@@ -49,6 +55,14 @@ class SettingsActivity : AppCompatActivity() {
 
     class SettingFragment : PreferenceFragmentCompat() {
 
+        @Inject
+        lateinit var sessionManager: SessionManager
+
+        override fun onAttach(context: Context) {
+            super.onAttach(context)
+            (activity?.application as MyApplication).appComponent2.inject(this)
+        }
+
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.setting_preferences, rootKey)
         }
@@ -57,9 +71,12 @@ class SettingsActivity : AppCompatActivity() {
             return when (preference?.key) {
                 getString(R.string.key_logout_)-> {
                     activity?.getSharedPreferences("token", Context.MODE_PRIVATE)?.edit()?.putString("token", "")?.apply()
-                    val intent = Intent(activity, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    sessionManager.logout()
+                    NavigationHandler(activity as AppCompatActivity)
+                        .setFragment(LoginFragment::class.java)
+                        .setActivity(AuthActivity::class.java)
+                        .addToBackStack(false)
+                        .navigate()
                     true
                 }
                 getString(R.string.key_hide_email)->{
