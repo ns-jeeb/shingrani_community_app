@@ -38,6 +38,7 @@
             android:label="Create Event">
         </activity>
         <activity android:name=".members.MemberActivity" />
+        <activity android:name=".dashboard.event.details.DetailsActivity"/>
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
