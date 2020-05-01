@@ -55,9 +55,6 @@ class UserRepository @Inject constructor(
     }
 
     fun register(username: String,password: String,name: String) {
-        Log.d("RegisterNewUser",username)
-        Log.d("RegisterNewUser",password)
-        Log.d("RegisterNewUser",name)
         val call = apiService.register(RegisterRequestBody(name,password,username))
         call.enqueue(object: LockedCallback<RegisterResponse>() {
             override fun success(response: RegisterResponse) {
@@ -72,6 +69,5 @@ class UserRepository @Inject constructor(
     data class LoginData(var loggedInSuccess: Boolean = false,
                          var loginMessage: String? = null)
     data class RegisterData(var registerSuccess: Boolean = false,
-                         var registerMessage: String? = null,
-                            var isUiValid: Boolean = false)
+                         var registerMessage: String? = null)
 }

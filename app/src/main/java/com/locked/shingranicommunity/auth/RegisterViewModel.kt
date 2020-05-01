@@ -40,7 +40,6 @@ class RegisterViewModel @Inject constructor(
 
     fun setEmail(email: String) {
         data.email.postValue(email)
-        isUserNameValid(email)
     }
     fun setName(name: String) {
         data.name.postValue(name)
@@ -53,8 +52,7 @@ class RegisterViewModel @Inject constructor(
     }
     fun onRegisterPress() {
         when {
-            isUserNameValid(data.name.value!!) && validateEmail(data.email.value!!) && validatePassword(data.password.value!!, data.passwordConfirm.value!!) -> {
-                data.loading.postValue(true)
+            validateName(data.name.value!!) && validateEmail(data.email.value!!) && validatePassword(data.password.value!!, data.passwordConfirm.value!!) -> {
                 data.email.value?.let { email -> data.password.value?.let { password -> data.name.value?.let { name -> userRepository.register(email, password, name) } } }
             }
             else -> {
@@ -64,30 +62,37 @@ class RegisterViewModel @Inject constructor(
     }
 
     private fun validateEmail(email: String): Boolean{
-        return if (email.isBlank() || !email.contains("@")){
+        return if (email.isNullOrBlank()){
             Patterns.EMAIL_ADDRESS.matcher(email).matches()
             data.message.postValue(resourceProvider.getString(R.string.error_invalid_email))
             false
-        }else{
-            data.email.postValue(email)
-            true
-        }
+        }else email.contains("@")
     }
     private fun validatePassword(password: String, conformPassword: String):Boolean{
-        return if (password.isNotBlank()|| conformPassword.isNotBlank()){
-            if (password == conformPassword){
-                true
-            }else{
+        return (when {
+            password.isNullOrBlank() -> {
+                data.message.postValue(resourceProvider.getString(R.string.error_incorrect_password))
+                false
+            }
+            conformPassword.isNullOrBlank() ->{
+                data.message.postValue(resourceProvider.getString(R.string.confirm_incorrect_password))
+                false
+            }
+            password != conformPassword -> {
                 data.message.postValue(resourceProvider.getString(R.string.not_match_password))
                 false
             }
-        }else{
-            data.message.postValue(resourceProvider.getString(R.string.error_incorrect_password))
-            false
-        }
+            password.length < 6 -> {
+                data.message.postValue(resourceProvider.getString(R.string.invalid_password))
+                false
+            }
+            else -> {
+                true
+            }
+        })
     }
-    private fun isUserNameValid(name: String):Boolean{
-        return if (name.isBlank() || name.length < 4){
+    private fun validateName(name: String):Boolean{
+        return if (name.isBlank() || name.length < 2){
             data.message.postValue(resourceProvider.getString(R.string.invalid_username))
             false
         }else{
