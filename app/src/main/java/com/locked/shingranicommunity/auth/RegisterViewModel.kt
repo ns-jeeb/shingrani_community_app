@@ -117,4 +117,8 @@ class RegisterViewModel @Inject constructor(
         val message: MutableLiveData<String> = MutableLiveData()
         val loading: MutableLiveData<Boolean> = MutableLiveData(false)
     }
+
+    fun messageHandled() {
+        data.message.value = null
+    }
 }

@@ -96,6 +96,7 @@
     <string name="lets_start">Let\'s Start!</string>
     <string name="password">Password</string>
     <string name="invited">Invited? Register</string>
+
     <string name="login">Login</string>
     <string name="create_account">Let\'s Create Account</string>
     <string name="existing_account">Existing Account? Login</string>
