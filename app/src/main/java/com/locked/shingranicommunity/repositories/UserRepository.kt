@@ -3,20 +3,14 @@ package com.locked.shingranicommunity.repositories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.models.Error
-import com.locked.shingranicommunity.models.ErrorMessage
-import com.locked.shingranicommunity.models.LoginResponse
-import com.locked.shingranicommunity.models.User
-import com.locked.shingranicommunity.session.Session
+import com.locked.shingranicommunity.locked.models.RegisterResponseBody
+import com.locked.shingranicommunity.models.*
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AppScope
@@ -26,6 +20,9 @@ class UserRepository @Inject constructor(
 
     private val _loginData = MutableLiveData<LoginData>()
     var loginState: LiveData<LoginData> = _loginData
+
+    private val _registerData = MutableLiveData<RegisterData>()
+    var registerState: LiveData<RegisterData> = _registerData
 
     init {
         if (sessionManager.isLoggedIn()) {
@@ -56,10 +53,20 @@ class UserRepository @Inject constructor(
         })
     }
 
-    fun register() {
-        // todo
+    fun register(username: String,password: String,name: String) {
+        val call = apiService.register(RegisterResponseBody(name, password, username))
+        call.enqueue(object: LockedCallback<RegisterResponse>() {
+            override fun success(response: RegisterResponse) {
+                _registerData.postValue(RegisterData(true, response.message))
+            }
+            override fun fail(message: String, details: List<Error>) {
+                _registerData.postValue(RegisterData(false, message))
+            }
+        })
     }
 
     data class LoginData(var loggedInSuccess: Boolean = false,
                          var loginMessage: String? = null)
+    data class RegisterData(var registerSuccess: Boolean = false,
+                         var registerMessage: String? = null)
 }
