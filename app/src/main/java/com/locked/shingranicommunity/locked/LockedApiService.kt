@@ -1,13 +1,11 @@
 package com.locked.shingranicommunity.locked
+
 import com.locked.shingranicommunity.locked.models.LockResponse
-import com.locked.shingranicommunity.models.Item
-import com.locked.shingranicommunity.locked.models.RsvpObject
 import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.models.LoginResponse
+import com.locked.shingranicommunity.locked.models.RegisterRequestBody
+import com.locked.shingranicommunity.locked.models.RsvpObject
 import com.locked.shingranicommunity.members.ShingraniMember
-import com.locked.shingranicommunity.models.AppModel
-import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.repositories.EventRepository
+import com.locked.shingranicommunity.models.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -16,6 +14,10 @@ interface LockedApiService {
     @POST("/api/v2/login")
     @Headers("Content-Type: application/json")
     fun login(@Body body: LoginRequestBody): Call<LoginResponse>
+
+    @POST("/api/v2/register")
+    @Headers("Content-Type: application/json")
+    fun register(@Body body: RegisterRequestBody): Call<RegisterResponse>
 
     @GET("/api/v2/app/{appid}")
     fun app(@Path("appid") appId: String): Call<AppModel>
@@ -64,6 +66,6 @@ interface LockedApiService {
     fun accepted(@Header("x-access-token") token: String, @Body body: RsvpObject, @Path("itemid") itemID: String): Call<RsvpObject>
 
     @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun rejected(@Header("x-access-token") token: String, @Body body: RsvpObject, @Path("itemid") itemID: String): Call<RsvpObject>
+    fun rejected( @Header("x-access-token") token: String,@Body body: RsvpObject, @Path("itemid") itemID: String): Call<RsvpObject>
 
 }

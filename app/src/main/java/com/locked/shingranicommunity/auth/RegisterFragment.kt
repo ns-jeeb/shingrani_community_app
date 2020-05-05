@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -30,22 +32,23 @@ class RegisterFragment : Fragment() {
     }
 
     private fun setupViews() {
-        binding.registerUsername.doOnTextChanged { text, start, count, after -> viewModel.setEmail(text.toString()) }
-        binding.registerName.doOnTextChanged { text, start, count, after -> viewModel.setName(text.toString()) }
-        binding.registerPassword.doOnTextChanged { text, start, count, after -> viewModel.setPassword(text.toString()) }
-        binding.registerPasswordConform.doOnTextChanged { text, start, count, after -> viewModel.setPasswordConfirm(text.toString()) }
-        binding.btnRegister.setOnClickListener { viewModel.onRegisterPress() }
+        binding.registerEmail.doOnTextChanged { text, _, _, _ ->viewModel.setEmail(text.toString())}
+        binding.registerName.doOnTextChanged { text, _, _, _ ->viewModel.setName(text.toString())}
+        binding.registerPassword.doOnTextChanged { text, _, _, _ ->viewModel.setPassword(text.toString())}
+        binding.registerPasswordConform.doOnTextChanged {text, _, _, _ ->viewModel.setPasswordConfirm(text.toString())}
         binding.btnLogin.setOnClickListener { viewModel.onLoginPress() }
+        binding.btnRegister.setOnClickListener { viewModel.onRegisterPress() }
         viewModel.message.observe(viewLifecycleOwner, Observer {
             it?.let { Snackbar.make(binding.coordinator, it, Snackbar.LENGTH_SHORT).show() }
         })
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             enableControls(!loading)
+            viewModel.messageHandled()
         })
     }
 
     private fun enableControls(enable: Boolean) {
-        binding.registerUsername.isEnabled = enable
+        binding.registerEmail.isEnabled = enable
         binding.registerName.isEnabled = enable
         binding.registerPassword.isEnabled = enable
         binding.registerPasswordConform.isEnabled = enable

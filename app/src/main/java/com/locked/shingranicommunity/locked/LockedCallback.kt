@@ -1,8 +1,8 @@
 package com.locked.shingranicommunity.locked
 
 import com.google.gson.Gson
-import com.locked.shingranicommunity.locked.models.Error
 import com.locked.shingranicommunity.locked.models.ErrorMessage
+import com.locked.shingranicommunity.locked.models.Error
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

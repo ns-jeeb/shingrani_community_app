@@ -5,8 +5,8 @@
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="invalid_username">User name should be at lest 2 or more characters</string>
+    <string name="invalid_password">Password must be >6 characters</string>
     <string name="not_match_password">Password is not matched</string>
     <string name="login_failed">"Login failed"</string>
 
@@ -19,7 +19,6 @@
     <string name="popup_delete">Delete</string>
     <string name="action_logout">Logout</string>
     <string name="action_settings">Setting</string>
-    <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="txt_khatamal_quran">Khatam al Quran</string>
     <string name="announcement_txt">This is a fun event for us.</string>
@@ -35,7 +34,7 @@
     <string name="submit_user">Submit</string>
     <string name="sign_in_user">Login</string>
     <string name="user_name">Username</string>
-    <string name="name">Full Name</string>
+    <string name="user_full_name">Full Name</string>
     <string name="address">Address</string>
     <string name="postal_code">Postal Code</string>
     <string name="province">Province</string>
@@ -51,6 +50,7 @@
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="confirm_incorrect_password">Confirm password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
     <string name="do_save_user_info">Do want the system remember you</string>
@@ -96,6 +96,7 @@
     <string name="lets_start">Let\'s Start!</string>
     <string name="password">Password</string>
     <string name="invited">Invited? Register</string>
+
     <string name="login">Login</string>
     <string name="create_account">Let\'s Create Account</string>
     <string name="existing_account">Existing Account? Login</string>
