@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.repositories
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -8,7 +7,7 @@ import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.locked.models.RegisterRequestBody
+import com.locked.shingranicommunity.locked.models.RegisterResponseBody
 import com.locked.shingranicommunity.models.*
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
@@ -55,7 +54,7 @@ class UserRepository @Inject constructor(
     }
 
     fun register(username: String,password: String,name: String) {
-        val call = apiService.register(RegisterRequestBody(name,password,username))
+        val call = apiService.register(RegisterResponseBody(name, password, username))
         call.enqueue(object: LockedCallback<RegisterResponse>() {
             override fun success(response: RegisterResponse) {
                 _registerData.postValue(RegisterData(true, response.message))

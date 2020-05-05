@@ -40,10 +40,10 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener { viewModel.onRegisterPress() }
         viewModel.message.observe(viewLifecycleOwner, Observer {
             it?.let { Snackbar.make(binding.coordinator, it, Snackbar.LENGTH_SHORT).show() }
-            viewModel.messageHandled()
         })
         viewModel.loading.observe(viewLifecycleOwner, Observer { loading ->
             enableControls(!loading)
+            viewModel.messageHandled()
         })
     }
 

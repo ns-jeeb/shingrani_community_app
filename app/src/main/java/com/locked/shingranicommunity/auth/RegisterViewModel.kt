@@ -53,20 +53,20 @@ class RegisterViewModel @Inject constructor(
     fun onRegisterPress() {
         when {
             validateName(data.name.value!!) && validateEmail(data.email.value!!) && validatePassword(data.password.value!!, data.passwordConfirm.value!!) -> {
-                data.email.value?.let { email -> data.password.value?.let { password -> data.name.value?.let { name -> userRepository.register(email, password, name) } } }
-            }
-            else -> {
-                data.loading.postValue(false)
+                data.loading.postValue(true)
+                userRepository.register(data.email.value!!, data.password.value!!, data.name.value!!)
             }
         }
     }
 
     private fun validateEmail(email: String): Boolean{
-        return if (email.isNullOrBlank()){
+        return if (email.isNullOrBlank()||!email.contains("@")){
             Patterns.EMAIL_ADDRESS.matcher(email).matches()
             data.message.postValue(resourceProvider.getString(R.string.error_invalid_email))
             false
-        }else email.contains("@")
+        }else {
+            true
+        }
     }
     private fun validatePassword(password: String, conformPassword: String):Boolean{
         return (when {

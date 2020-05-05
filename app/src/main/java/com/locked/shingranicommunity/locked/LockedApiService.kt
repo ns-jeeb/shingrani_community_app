@@ -2,10 +2,10 @@ package com.locked.shingranicommunity.locked
 import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.dashboard.data.RsvpObject
 import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.locked.models.RegisterRequestBody
 import com.locked.shingranicommunity.models.LoginResponse
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.models.AppModel
+import com.locked.shingranicommunity.locked.models.RegisterResponseBody
 import com.locked.shingranicommunity.models.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -29,7 +29,7 @@ interface LockedApiService {
 
     @POST("/api/v2/register")
     @Headers("Content-Type: application/json")
-    fun register(@Body body: RegisterRequestBody): Call<RegisterResponse>
+    fun register(@Body body: RegisterResponseBody): Call<RegisterResponse>
 
 
     @GET("/api/v2/app/5d4a348f88fb44130084f903/item")
