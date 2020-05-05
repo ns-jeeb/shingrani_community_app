@@ -3,20 +3,14 @@ package com.locked.shingranicommunity.repositories
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.google.gson.Gson
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.models.Error
-import com.locked.shingranicommunity.models.ErrorMessage
+import com.locked.shingranicommunity.locked.models.Error
 import com.locked.shingranicommunity.models.LoginResponse
-import com.locked.shingranicommunity.models.User
-import com.locked.shingranicommunity.session.Session
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AppScope

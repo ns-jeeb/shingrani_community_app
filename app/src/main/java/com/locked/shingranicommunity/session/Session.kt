@@ -14,6 +14,12 @@ interface Session {
 
     fun getUsername(): String?
 
+    fun getAppId(): String
+
+    fun getEventTemplateId(): String
+
+    fun getAnnouncementTemplateId(): String
+
     fun isUserAdmin(): Boolean
 
     fun isLoggedIn(): Boolean

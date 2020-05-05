@@ -1,6 +1,6 @@
 package com.locked.shingranicommunity.members
 
-import com.locked.shingranicommunity.models.Error
+import com.locked.shingranicommunity.locked.models.Error
 import com.locked.shingranicommunity.models.User
 
 data class ShingraniMember(

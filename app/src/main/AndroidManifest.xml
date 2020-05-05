@@ -49,6 +49,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".dashboard2.DashboardActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -7,9 +7,9 @@ import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_TIMPLATE_ID
 import com.locked.shingranicommunity.Constant_Utils.APP_ID
 import com.locked.shingranicommunity.Constant_Utils.EVENT_TIMPLATE_ID
 import com.locked.shingranicommunity.Constant_Utils.OWNER_ID
-import com.locked.shingranicommunity.dashboard.data.Field
-import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.dashboard.data.RsvpObject
+import com.locked.shingranicommunity.models.Field
+import com.locked.shingranicommunity.models.Item
+import com.locked.shingranicommunity.locked.models.RsvpObject
 import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager

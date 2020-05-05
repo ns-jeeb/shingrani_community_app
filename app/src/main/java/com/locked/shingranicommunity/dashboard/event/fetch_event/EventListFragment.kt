@@ -3,7 +3,6 @@ package com.locked.shingranicommunity.dashboard.event.fetch_event
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.locked.shingranicommunity.R
@@ -16,12 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Item
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
-import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import javax.inject.Inject
 

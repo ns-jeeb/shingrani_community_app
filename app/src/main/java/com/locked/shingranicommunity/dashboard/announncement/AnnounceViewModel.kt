@@ -2,7 +2,7 @@ package com.locked.shingranicommunity.dashboard.announncement
 
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Item
 import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch

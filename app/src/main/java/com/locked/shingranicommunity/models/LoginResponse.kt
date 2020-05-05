@@ -1,5 +1,7 @@
 package com.locked.shingranicommunity.models
 
+import com.locked.shingranicommunity.locked.models.Error
+
 data class LoginResponse(
     val message: String,
     val token: String,

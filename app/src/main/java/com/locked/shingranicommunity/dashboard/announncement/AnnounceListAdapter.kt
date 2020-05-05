@@ -11,14 +11,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.data.Field
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Field
+import com.locked.shingranicommunity.models.Item
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
 import com.locked.shingranicommunity.utail.Utils
-import okhttp3.internal.Util
 
-class AnnounceListAdapter ( val mAnnouncements: List<Item>?,val hideDeleteMenu: Boolean) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
+class AnnounceListAdapter (val mAnnouncements: List<Item>?, val hideDeleteMenu: Boolean) : RecyclerView.Adapter<AnnounceListAdapter.AnnounceViewHolder>() {
 
     private var mHideItem: Boolean = false
     lateinit var onInvitedListener: OnInvitedListener

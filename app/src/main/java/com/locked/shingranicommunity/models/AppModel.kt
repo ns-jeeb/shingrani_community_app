@@ -39,17 +39,3 @@ data class Template(
     val updatedAt: String
 )
 
-data class Field(
-    val example: Any,
-    val hidden: Boolean,
-    val important: Boolean,
-    val name: String,
-    val required: Boolean,
-    val sensitive: Boolean,
-    val type: String,
-    val value: String
-)
-
-data class Icon(
-    val url: String
-)

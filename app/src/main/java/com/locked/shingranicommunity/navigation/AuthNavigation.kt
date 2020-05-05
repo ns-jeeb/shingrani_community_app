@@ -7,6 +7,7 @@ import com.locked.shingranicommunity.auth.Navigation
 import com.locked.shingranicommunity.auth.RegisterFragment
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
+import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import javax.inject.Inject
 
 class AuthNavigation @Inject constructor(val activity: AppCompatActivity) : Navigation {
@@ -29,7 +30,7 @@ class AuthNavigation @Inject constructor(val activity: AppCompatActivity) : Navi
 
     override fun navigateToNext() {
         NavigationHandler(activity)
-            .setActivity(DashBoardViewPagerActivity::class.java)
+            .setActivity(DashboardActivity::class.java)
             .addToBackStack(false)
             .navigate()
     }

@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Item
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.utail.Utils
@@ -52,7 +52,7 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val hide
         }
         @SuppressLint("SetTextI18n")
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(event:Item, position: Int) {
+        fun bind(event: Item, position: Int) {
             var name: String? =""
             var type: String? =""
             var address: String? =""
@@ -149,8 +149,8 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val hide
     }
 }
 interface OnInvitedListener{
-    fun onAccepted(eventitem: Item,position: Int)
+    fun onAccepted(eventitem: Item, position: Int)
     fun onRejected(eventitem : Item)
-    fun onUpdate(eventitem : Item,update: String)
-    fun onDeleted(eventitem : Item,deleted: String)
+    fun onUpdate(eventitem : Item, update: String)
+    fun onDeleted(eventitem : Item, deleted: String)
 }

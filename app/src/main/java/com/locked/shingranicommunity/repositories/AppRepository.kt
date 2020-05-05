@@ -10,13 +10,10 @@ import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
-import com.locked.shingranicommunity.locked.models.LoginRequestBody
+import com.locked.shingranicommunity.locked.models.Error
 import com.locked.shingranicommunity.models.*
-import com.locked.shingranicommunity.session.Session
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 @AppScope
@@ -29,8 +26,8 @@ class AppRepository @Inject constructor(
     lateinit var appContext: Application
 
     private val _fetchApp: MutableLiveData<Data> = MutableLiveData<Data>()
-    var app: AppModel? = null
     val fetchApp: LiveData<Data> = _fetchApp
+    var app: AppModel? = null
 
     fun fetchApp() {
         val call: Call<AppModel> = apiService.app(BuildConfig.LOCKEDAPI_APP_ID)
@@ -38,6 +35,7 @@ class AppRepository @Inject constructor(
             override fun success(response: AppModel) {
                 app = response
                 sessionManager.setAdminList(response.admins)
+                sessionManager.setTemplateIds(getEventTemplate(response), getAnnouncementTemplate(response))
                 setAppModel(response)
                 _fetchApp.postValue(Data(true))
             }
@@ -46,6 +44,14 @@ class AppRepository @Inject constructor(
                 _fetchApp.postValue(Data(false, message))
             }
         })
+    }
+
+    private fun getAnnouncementTemplate(app: AppModel): String {
+        return app.templates.find { it.title == "Announcement" }?._id ?: ""
+    }
+
+    private fun getEventTemplate(app: AppModel): String {
+        return app.templates.find { it.title == "Event" }?._id ?: ""
     }
 
     // todo remove when the whole app uses the SessionManager

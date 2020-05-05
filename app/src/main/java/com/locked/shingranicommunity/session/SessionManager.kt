@@ -9,6 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.locked.shingranicommunity.BuildConfig
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.models.User
@@ -19,6 +20,8 @@ import javax.inject.Inject
 class SessionManager @Inject constructor(private val app: Application) : Session {
 
     private val KEY_ADMIN_LIST: String = "KEY_ADMIN_LIST"
+    private val KEY_TEMPLATE_EVENT: String = "KEY_TEMPLATE_EVENT"
+    private val KEY_TEMPLATE_ANNOUNCEMENT: String = "KEY_TEMPLATE_ANNOUNCEMENT"
     private val KEY_SESSION_USER: String = "KEY_SESSION_USER"
     private val KEY_SESSION_TOKEN: String = "KEY_SESSION_TOKEN"
 
@@ -88,6 +91,14 @@ class SessionManager @Inject constructor(private val app: Application) : Session
             .putString("token", _token).apply()
     }
 
+    fun setTemplateIds(eventTemplate: String, announcementTemplate: String) {
+        preferences.edit()
+            .putString(KEY_TEMPLATE_EVENT, eventTemplate)
+            .putString(KEY_TEMPLATE_ANNOUNCEMENT, announcementTemplate)
+            .commit()
+        initialize()
+    }
+
     fun logout() {
         preferences.edit().clear().commit()
         initialize()
@@ -106,12 +117,24 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         return session.user?._id
     }
 
+    override fun getAppId(): String {
+        return session.appId
+    }
+
     override fun getFullName(): String? {
         return session.user?.name
     }
 
     override fun getUsername(): String? {
         return session.user?.username
+    }
+
+    override fun getEventTemplateId(): String {
+        return preferences.getString(KEY_TEMPLATE_EVENT, "")!!
+    }
+
+    override fun getAnnouncementTemplateId(): String {
+        return preferences.getString(KEY_TEMPLATE_ANNOUNCEMENT, "")!!
     }
 
     override fun isUserAdmin(): Boolean {
@@ -128,5 +151,5 @@ class SessionData {
     var isAdmin: Boolean = false
     var user: User? = null
     var token: String = ""
-    // todo app
+    var appId: String = BuildConfig.LOCKEDAPI_APP_ID
 }
