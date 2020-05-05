@@ -58,15 +58,14 @@ class RegisterViewModel @Inject constructor(
             }
         }
     }
-
-    private fun validateEmail(email: String): Boolean{
-        return if (email.isNullOrBlank()||!email.contains("@")){
-            Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    private fun validateEmail(email: String): Boolean {
+        return if (email.isNullOrBlank()){
             data.message.postValue(resourceProvider.getString(R.string.error_invalid_email))
             false
-        }else {
-            true
-        }
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            data.message.postValue(resourceProvider.getString(R.string.error_invalid_email))
+            false
+        } else true
     }
     private fun validatePassword(password: String, conformPassword: String):Boolean{
         return (when {
