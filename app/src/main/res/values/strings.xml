@@ -70,8 +70,8 @@
     <string name="event_prompt">Types</string>
 
     <string-array name="events_arrays">
-        <item>Wedding</item>
         <item>Event</item>
+        <item>Wedding</item>
         <item>Party</item>
         <item>Fundraising</item>
         <item>Funeral</item>
@@ -105,4 +105,5 @@
     <string name="please_wait">Please wait</string>
     <string name="welcome_user">Welcome %s</string>
     <string name="version">Version</string>
+
 </resources>

@@ -30,8 +30,8 @@ class LoginFragment : Fragment() {
     }
 
     private fun setupViews() {
-        binding.loginEmail.doOnTextChanged { text, start, count, after -> viewModel.setEmail(text.toString()) }
-        binding.loginPassword.doOnTextChanged { text, start, count, after -> viewModel.setPassword(text.toString()) }
+        binding.loginEmail.doOnTextChanged { text, _, _, _ -> viewModel.setEmail(text.toString()) }
+        binding.loginPassword.doOnTextChanged { text, _, _, _ -> viewModel.setPassword(text.toString()) }
         binding.btnLogin.setOnClickListener { viewModel.onLoginPress() }
         binding.btnInvited.setOnClickListener { viewModel.onRegisterPress() }
 
@@ -45,7 +45,7 @@ class LoginFragment : Fragment() {
             enableControls(!loading)
         })
         viewModel.email.observe(viewLifecycleOwner, Observer {
-            if (!it.isNullOrEmpty() && !it.equals(binding.loginEmail.text.toString())) {
+            if (!it.isNullOrEmpty() && it != binding.loginEmail.text.toString()) {
                 binding.loginEmail.setText(it)
             }
         })
