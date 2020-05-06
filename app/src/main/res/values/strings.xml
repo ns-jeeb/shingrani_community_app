@@ -80,6 +80,8 @@
     <string name="existing_account">Existing Account? Login</string>
     <string name="register">Register</string>
     <string name="password_confirm">Retype Password</string>
+    <string name="version">Version</string>
+
     <string-array name="events_arrays">
         <item>Wedding</item>
         <item>Event</item>

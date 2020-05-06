@@ -71,12 +71,12 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val isAdmi
                 event.fields?.get(5)!!.value?.split(",")?.let { getAccepted(it) }
                 event.fields?.get(6)!!.value?.split(",")?.let { getRejected(it) }
             }else{
-                binding?.txtMembersAttended?.text = "${event.fields?.get(5)!!.value?.split(",")?.size} Guests"
-            }
+                binding?.txtMembersAttended?.text = "${event.fields?.get(5)!!.value?.split(",")?.size}" // The word "Guests" used to be added here
+            }                                                                                                 // ^ up there
 
             binding?.txtEventName?.text = name
             binding?.txtEventType?.text = type
-            binding?.txtEventAddress?.text = address
+//          binding?.txtEventAddress?.text = address
 //            this substring is just display for now we have make it dynamic
             var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
             binding?.txtEventDate?.text = date?.get(0)

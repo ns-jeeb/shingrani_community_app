@@ -40,7 +40,7 @@
         <activity android:name=".members.MemberActivity" />
         <activity android:name=".dashboard.event.details.DetailsActivity"/>
         <activity
-            android:name=".registration_login.registration.SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
     </application>
 
