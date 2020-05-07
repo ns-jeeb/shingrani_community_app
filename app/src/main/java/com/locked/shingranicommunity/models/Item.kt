@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity.models
 
 import kotlin.properties.Delegates
+import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
 open class Item {
@@ -27,25 +28,25 @@ open class Item {
 }
 
 open class EventItem() : Item() {
-    val name: String? by Delegate(fields, "Name")
-    val type: String? by Delegate(fields, "Type")
-    val address: String? by Delegate(fields, "Address")
-    val time: String? by Delegate(fields, "Time")
-    val detail: String? by Delegate(fields, "Detail")
-    val accepted: String? by Delegate(fields, "Accepted")
-    val rejected: String? by Delegate(fields, "Rejected")
+    val name: String? by Delegate(this::fields, "Name")
+    val type: String? by Delegate(this::fields, "Type")
+    val address: String? by Delegate(this::fields, "Address")
+    val time: String? by Delegate(this::fields, "Time")
+    val detail: String? by Delegate(this::fields, "Detail")
+    val accepted: String? by Delegate(this::fields, "Accepted")
+    val rejected: String? by Delegate(this::fields, "Rejected")
 }
 
 open class AnnouncementItem : Item() {
-    val title: String? by Delegate(fields, "Title")
-    val text: String? by Delegate(fields, "Text")
-    val timestamp: String? by Delegate(fields, "Timestamp")
+    val title: String? by Delegate(this::fields, "Title")
+    val text: String? by Delegate(this::fields, "Text")
+    val timestamp: String? by Delegate(this::fields, "Timestamp")
 }
 
-class Delegate(val fields: MutableList<Field>, val propName: String) {
+class Delegate(val fields: KMutableProperty0<MutableList<Field>>, val propName: String) {
     operator fun getValue(thisRef: Any?, prop: KProperty<*>): String? {
-        for (field in fields) {
-            if (field.name == propName) {
+        for (field in fields.get()) {
+            if (field.name != null && field.name!!.toLowerCase() == propName.toLowerCase()) {
                 return field.value
             }
         }
@@ -54,15 +55,15 @@ class Delegate(val fields: MutableList<Field>, val propName: String) {
 
     operator fun setValue(thisRef: Any?, prop: KProperty<*>, value: String) {
         var foundField: Field? = null
-        for (field in fields) {
-            if (field.name == propName) {
+        for (field in fields.get()) {
+            if (field.name != null && field.name!!.toLowerCase() == propName.toLowerCase()) {
                 foundField = field
                 break
             }
         }
         if (foundField == null) {
             foundField = Field(propName)
-            fields.add(foundField)
+            fields.get().add(foundField)
         }
         foundField.value = value
     }
