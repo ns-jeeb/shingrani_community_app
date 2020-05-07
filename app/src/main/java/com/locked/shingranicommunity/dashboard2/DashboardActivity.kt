@@ -5,20 +5,16 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.locked.shingranicommunity.Constant_Utils
-import com.locked.shingranicommunity.Constant_Utils.ONE_00
-import com.locked.shingranicommunity.Constant_Utils.ONE_02
+import androidx.viewpager.widget.ViewPager
 import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.announcement.AnnouncementListFragment
-import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
-import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
+import com.locked.shingranicommunity.di2.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di2.event.EventComponent
 import com.locked.shingranicommunity.event.EventComponentProvider
 import com.locked.shingranicommunity.event.EventListFragment
@@ -31,6 +27,7 @@ class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnCl
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
+    lateinit var dashboardComponent: DashboardComponent
     override lateinit var eventComponent: EventComponent
 
     private lateinit var viewModel: DashboardViewModel
@@ -38,7 +35,8 @@ class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnCl
     private lateinit var adapter: DashboardPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        MyApplication.instance.appComponent2.inject(this)
+        dashboardComponent = MyApplication.instance.appComponent2.dashboardComponentFactory.create(this)
+        dashboardComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DashboardViewModel::class.java)
         eventComponent = MyApplication.instance.appComponent2.eventComponentFactory.create(this)
         super.onCreate(savedInstanceState)
@@ -60,6 +58,24 @@ class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnCl
         adapter.addFragment(announcementFragment, getString(R.string.announcement_tab))
         binding.pager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.pager)
+        binding.pager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(state: Int) {}
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+            override fun onPageSelected(position: Int) {
+                when (viewModel.currPage.value) {
+                    DashboardViewModel.PAGE_EVENTS -> if (position == 1) viewModel.pageChanged(DashboardViewModel.PAGE_ANNOUNCEMENTS)
+                    DashboardViewModel.PAGE_ANNOUNCEMENTS -> if (position == 0) viewModel.pageChanged(DashboardViewModel.PAGE_EVENTS)
+                }
+            }
+        })
+        viewModel.currPage.observe(this, Observer {
+            it?.let {
+                when (it) {
+                    DashboardViewModel.PAGE_EVENTS -> binding.pager.setCurrentItem(0, true)
+                    DashboardViewModel.PAGE_ANNOUNCEMENTS -> binding.pager.setCurrentItem(1, true)
+                }
+            }
+        })
     }
 
     private fun initFab() {
@@ -71,18 +87,6 @@ class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnCl
             }
         })
         binding.fab.setOnClickListener(this)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (data != null){
-            if (requestCode == ONE_00) {
-                // todo fix toast
-                Toast.makeText(this,"Item is created ${data?.getStringExtra("response_message")}",Toast.LENGTH_LONG).show()
-            } else if (requestCode == ONE_02){
-                finish()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -107,19 +111,7 @@ class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnCl
 
     override fun onClick(view: View?) {
         if (view == binding.fab) {
-            create()
-        }
-    }
-
-    private fun create() {
-        if (binding.pager.currentItem == 0) {
-            // todo: fix to use Navigation
-            val intent = Intent(this, CreateItemActivity::class.java)
-            startActivityForResult(intent, Constant_Utils.ONE_00)
-        } else if (binding.pager.currentItem == 1) {
-            // todo: fix to use Navigation
-            val intent = Intent(this, CreateAnnouncementActivity::class.java)
-            startActivityForResult(intent, 102)
+            viewModel.fabPressed()
         }
     }
 }

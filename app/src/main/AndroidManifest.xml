@@ -54,6 +54,8 @@
             android:name=".dashboard2.DashboardActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".common.FragmentActivity" />
+        <activity android:name=".event.EventActivity" />
     </application>
 
 </manifest>

@@ -5,7 +5,9 @@ import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
 open class Item {
+    @Transient
     private var onStatusChanged: MutableSet<((String?, String?) -> Unit)> = mutableSetOf()
+    @delegate:Transient
     var status by Delegates.observable<String?>(null) { _, old, new ->
         for (callback in onStatusChanged) {
             callback.invoke(old, new)
@@ -28,19 +30,19 @@ open class Item {
 }
 
 open class EventItem() : Item() {
-    val name: String? by Delegate(this::fields, "Name")
-    val type: String? by Delegate(this::fields, "Type")
-    val address: String? by Delegate(this::fields, "Address")
-    val time: String? by Delegate(this::fields, "Time")
-    val detail: String? by Delegate(this::fields, "Detail")
-    val accepted: String? by Delegate(this::fields, "Accepted")
-    val rejected: String? by Delegate(this::fields, "Rejected")
+    @delegate:Transient val name: String? by Delegate(this::fields, "Name")
+    @delegate:Transient val type: String? by Delegate(this::fields, "Type")
+    @delegate:Transient val address: String? by Delegate(this::fields, "Address")
+    @delegate:Transient val time: String? by Delegate(this::fields, "Time")
+    @delegate:Transient val detail: String? by Delegate(this::fields, "Detail")
+    @delegate:Transient val accepted: String? by Delegate(this::fields, "Accepted")
+    @delegate:Transient val rejected: String? by Delegate(this::fields, "Rejected")
 }
 
 open class AnnouncementItem : Item() {
-    val title: String? by Delegate(this::fields, "Title")
-    val text: String? by Delegate(this::fields, "Text")
-    val timestamp: String? by Delegate(this::fields, "Timestamp")
+    @delegate:Transient val title: String? by Delegate(this::fields, "Title")
+    @delegate:Transient val text: String? by Delegate(this::fields, "Text")
+    @delegate:Transient val timestamp: String? by Delegate(this::fields, "Timestamp")
 }
 
 class Delegate(val fields: KMutableProperty0<MutableList<Field>>, val propName: String) {
@@ -67,8 +69,6 @@ class Delegate(val fields: KMutableProperty0<MutableList<Field>>, val propName: 
         }
         foundField.value = value
     }
-
-
 }
 
 class Status {
