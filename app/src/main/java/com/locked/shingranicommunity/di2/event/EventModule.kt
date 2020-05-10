@@ -1,7 +1,6 @@
 package com.locked.shingranicommunity.di2.event
 
 import androidx.lifecycle.ViewModel
-import com.locked.shingranicommunity.auth.LoginViewModel
 import com.locked.shingranicommunity.di2.viewmodel.ViewModelKey
 import com.locked.shingranicommunity.event.EventListViewModel
 import com.locked.shingranicommunity.event.Navigation
