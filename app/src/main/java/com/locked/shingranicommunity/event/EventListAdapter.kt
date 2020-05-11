@@ -75,6 +75,11 @@ class EventListAdapter@Inject constructor(val viewModel: EventListViewModel): Re
 
         fun bind(eventItem: EventItem) {
             setFields(eventItem)
+            if (viewModel.isAdminUser()){
+                binding?.imgDeleteItem?.visibility = View.VISIBLE
+            }else{
+                binding?.imgDeleteItem?.visibility = View.GONE
+            }
             binding?.imgDeleteItem?.setOnClickListener(this)
             binding?.imgAcceptedAttending?.setOnClickListener(this)
             binding?.imgRejectedAttending?.setOnClickListener(this)

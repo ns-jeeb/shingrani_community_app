@@ -75,24 +75,18 @@
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"/>
 
-
-
-
-
                     <ImageView
                         android:id="@+id/img_delete_item"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:visibility=
+                            "gone"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:src="@drawable/delete_icon" />
 
-
                 </RelativeLayout>
             </LinearLayout>
-
-
-
 
             <LinearLayout
                 android:id="@+id/info_layout"
@@ -184,7 +178,6 @@
 
                     </RelativeLayout>
 
-
                 </LinearLayout>
 
 
@@ -192,8 +185,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-
 
                     <TextView
                         android:id="@+id/txt_event_type"
@@ -241,7 +232,7 @@
                     android:ellipsize="end"
                     android:lines="3"
                     android:maxLines="3"
-                    android:text="This is the description of the event, here you can talk about whats happening and what your expected to do and if you are needed to bring anything"
+                    tools:text="This is the description of the event, here you can talk about whats happening and what your expected to do and if you are needed to bring anything"
                     android:textSize="@dimen/header_12dp" />
 
 
