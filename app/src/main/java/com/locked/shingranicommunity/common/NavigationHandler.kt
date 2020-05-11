@@ -1,10 +1,15 @@
 package com.locked.shingranicommunity.common
 
 import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.locked.shingranicommunity.R
+import java.util.*
 
 class NavigationHandler(private val context: AppCompatActivity) {
 
@@ -53,5 +58,14 @@ class NavigationHandler(private val context: AppCompatActivity) {
         } else {
             throw IllegalStateException("Can't handle this situation. You must at least provide either activity or fragment to navigate.")
         }
+    }
+    fun showMap(string: String, address: String) {
+//        val intent = Intent(Intent.ACTION_VIEW).apply {
+//            data = Uri.parse("$string?q=20+Esterbrooke+ave" )
+//        }
+//        if (intent.resolveActivity(context.packageManager) != null) {
+//            intent.setPackage("com.google.android.apps.maps")
+//            startActivity(context,intent,null)
+//        }
     }
 }

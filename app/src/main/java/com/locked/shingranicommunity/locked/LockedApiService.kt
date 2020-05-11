@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.locked
 
+import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.locked.models.LockResponse
 import com.locked.shingranicommunity.locked.models.LoginRequestBody
 import com.locked.shingranicommunity.locked.models.RegisterRequestBody
@@ -63,9 +64,9 @@ interface LockedApiService {
     fun updateItem( @Header("x-access-token") token: String,@Body body: HashMap<String,Any>, @Path("itemid") itemID: String):Call<Item>
 
     @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun accepted(@Header("x-access-token") token: String, @Body body: RsvpObject, @Path("itemid") itemID: String): Call<RsvpObject>
+    fun accepted(@Body body: RsvpObject, @Path("itemid") itemID: String): Call<MutableLiveData<RsvpObject>>
 
     @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun rejected( @Header("x-access-token") token: String,@Body body: RsvpObject, @Path("itemid") itemID: String): Call<RsvpObject>
+    fun rejected(@Body body: RsvpObject, @Path("itemid") itemID: String): Call<MutableLiveData<RsvpObject>>
 
 }

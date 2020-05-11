@@ -7,6 +7,7 @@ import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.Error
 import com.locked.shingranicommunity.locked.models.LockResponse
+import com.locked.shingranicommunity.locked.models.RsvpObject
 import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.models.Status
 import com.locked.shingranicommunity.session.Session
@@ -35,7 +36,7 @@ class EventRepository @Inject constructor(
        }
     }
 
-    fun refreshEvents() {
+    private fun refreshEvents() {
         if (!loading) {
             loading = true
             apiService.getEventList(session.getAppId(), session.getEventTemplateId())
@@ -58,6 +59,40 @@ class EventRepository @Inject constructor(
     fun deleteEvent(event: EventItem) {
         apiService.deleteEvent(event._id!!)
             .enqueue(DeleteEventListener(event))
+    }
+
+    fun acceptedAttending(rsvp: RsvpObject, _id: String?) {
+        apiService.accepted(rsvp,_id!!).enqueue(AcceptedListener())
+    }
+
+    fun rejectedAttending(rsvp: RsvpObject, _id: String?) {
+        apiService.rejected(rsvp,_id!!).enqueue(RejectedListener())
+    }
+
+    @Suppress("UNREACHABLE_CODE")
+    private inner class AcceptedListener(): LockedCallback<MutableLiveData<RsvpObject>>() {
+        override fun success(response: MutableLiveData<RsvpObject>) {
+            refreshEvents()
+            loading = false
+            _fetchEvents.postValue(Data(true))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            loading = false
+            _fetchEvents.postValue(Data(true))
+        }
+    }
+
+    @Suppress("UNREACHABLE_CODE")
+    private inner class RejectedListener(): LockedCallback<MutableLiveData<RsvpObject>>() {
+        override fun success(response: MutableLiveData<RsvpObject>) {
+            loading = false
+            refreshEvents()
+            _fetchEvents.postValue(Data(true))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            loading = false
+            _fetchEvents.postValue(Data(true))
+        }
     }
 
     @Suppress("UNREACHABLE_CODE")

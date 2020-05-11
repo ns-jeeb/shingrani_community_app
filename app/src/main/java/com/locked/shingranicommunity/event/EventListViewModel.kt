@@ -1,19 +1,29 @@
 package com.locked.shingranicommunity.event
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.locked.shingranicommunity.common.BaseActivity
 import com.locked.shingranicommunity.common.ResourceProvider
+import com.locked.shingranicommunity.dashboard2.DashboardActivity
+import com.locked.shingranicommunity.locked.models.Rsvp
+import com.locked.shingranicommunity.locked.models.RsvpObject
 import com.locked.shingranicommunity.models.EventItem
+import com.locked.shingranicommunity.models.Item
 import com.locked.shingranicommunity.models.Status
 import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 import javax.inject.Inject
 
+@RequiresApi(Build.VERSION_CODES.O)
 class EventListViewModel @Inject constructor(
     private val repository: EventRepository,
     private val session: Session,
@@ -58,28 +68,6 @@ class EventListViewModel @Inject constructor(
             entry.value.onCleared()
         }
     }
-
-//    fun accepted(item: Item): MutableLiveData<String>? {
-//        val rsvp: RsvpObject? =
-//                RsvpObject(
-//                        Rsvp(
-//                                "Accepted",
-//                                session.getUserId()!!
-//                        )
-//                )
-//        return repository.accepted(rsvp!!,item._id)
-//    }
-//
-//    fun rejected(item: Item): MutableLiveData<String>? {
-//        var rsvp: RsvpObject? =
-//                RsvpObject(
-//                        Rsvp(
-//                                "Rejected",
-//                                session.getUserId()!!
-//                        )
-//                )
-//        return itemEventHandler.rejected(rsvp!!,item._id)
-//    }
 
     // use this onBind() of List Adapter
     fun getItemViewModel(itemIndex: Int): ItemViewModel? {
@@ -130,7 +118,7 @@ class EventListViewModel @Inject constructor(
             desc = MutableLiveData(descStr)
             // init date & time
             val timeStr = eventItem.time ?: ""
-            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             val dt: Date = fromFormat.parse(timeStr)
             val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
             val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
@@ -150,15 +138,29 @@ class EventListViewModel @Inject constructor(
         }
 
         fun accept() {
-            // todo
+            val rsvp: RsvpObject? =
+                    RsvpObject(
+                            Rsvp(
+                                    "Accepted",
+                                    session.getUserId()!!
+                            )
+                    )
+            repository.acceptedAttending(rsvp!!,eventItem._id)
         }
 
         fun reject() {
-            // todo
+            var rsvp: RsvpObject? =
+                    RsvpObject(
+                            Rsvp(
+                                    "Rejected",
+                                    session.getUserId()!!
+                            )
+                    )
+            repository.rejectedAttending(rsvp!!,eventItem._id)
         }
 
-        fun openMap() {
-            // todo
+        fun openMap(address: String) {
+            navigation.navigateToNext(address)
         }
 
         fun share() {
@@ -166,7 +168,6 @@ class EventListViewModel @Inject constructor(
         }
 
         fun delete() {
-            // todo
             eventItem.observeStatus(this::onStatusChanged)
             repository.deleteEvent(eventItem)
         }
@@ -183,5 +184,4 @@ class EventListViewModel @Inject constructor(
             eventItem.deObserveStatus(this::onStatusChanged)
         }
     }
-
 }

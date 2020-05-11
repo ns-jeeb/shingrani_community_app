@@ -55,7 +55,7 @@
 
 
                     <ImageView
-                        android:id="@+id/txt_event_address"
+                        android:id="@+id/img_event_location"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentRight="true"
@@ -80,7 +80,7 @@
 
 
                     <ImageView
-                        android:id="@+id/img_h_dot"
+                        android:id="@+id/img_delete_item"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentRight="true"
@@ -159,6 +159,7 @@
                         <ImageButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:id="@+id/img_share_event"
                             android:src="@drawable/share_icon"
                             android:layout_alignParentStart="true"
                             style="@style/Widget.MaterialComponents.Button.TextButton"/>
@@ -166,6 +167,7 @@
                         <ImageButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:id="@+id/img_accepted_attending"
                             android:layout_centerHorizontal="true"
                             android:layout_marginHorizontal="10dp"
                             android:src="@drawable/accept_icon"
@@ -174,6 +176,7 @@
                         <ImageButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:id="@+id/img_rejected_attending"
                             android:src="@drawable/reject_icon"
                             android:layout_alignParentEnd="true"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
