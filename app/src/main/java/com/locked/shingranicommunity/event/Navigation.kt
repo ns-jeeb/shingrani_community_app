@@ -1,5 +1,9 @@
 package com.locked.shingranicommunity.event
 
+import com.locked.shingranicommunity.models.EventItem
+
 interface Navigation {
-    fun navigateToNext(address: String)
+    fun navigateToMap(address: String)
+    fun navigateShare(data: EventItem)
+    fun navigateToEventDetails(eventId: String)
 }

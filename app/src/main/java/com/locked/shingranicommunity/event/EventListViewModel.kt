@@ -160,7 +160,8 @@ class EventListViewModel @Inject constructor(
         }
 
         fun openMap(address: String) {
-            navigation.navigateToNext(address)
+            //todo valid address need to pass address need to check before event created
+            navigation.navigateToMap("5 esterbrooke ave")
         }
 
         fun share() {
