@@ -82,6 +82,7 @@
     <string name="password_confirm">Retype Password</string>
     <string name="version">Version</string>
 
+    <string name="title_activity_maps">Map</string>
     <string-array name="events_arrays">
         <item>Wedding</item>
         <item>Event</item>
