@@ -73,6 +73,39 @@ class EventRepository @Inject constructor(
     }
 
     @Suppress("UNREACHABLE_CODE")
+    private inner class FetchEventsListener(): LockedCallback<MutableList<EventItem>>() {
+        override fun success(response: MutableList<EventItem>) {
+            events.clear()
+            events.addAll(response)
+            loading = false
+            _fetchEvents.postValue(Data(true))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            loading = false
+            _fetchEvents.postValue(Data(true))
+        }
+    }
+
+    private inner class CreateEventListener(val event: EventItem): LockedCallback<EventItem>() {
+        override fun success(response: EventItem) {
+            events.add(event)
+            event.status = EventStatus.CREATED.toString()
+        }
+        override fun fail(message: String, details: List<Error>) {
+            event.status = EventStatus.CREATE_FAILED.toString()
+        }
+    }
+
+    private inner class DeleteEventListener(val event: EventItem): LockedCallback<LockResponse>() {
+        override fun success(response: LockResponse) {
+            events.remove(event)
+            event.status = EventStatus.DELETED.toString()
+        }
+        override fun fail(message: String, details: List<Error>) {
+            event.status = EventStatus.DELETE_FAILED.toString()
+        }
+    }
+
     private inner class AcceptedListener(val event: EventItem): LockedCallback<MutableLiveData<RsvpObject>>() {
         override fun success(response: MutableLiveData<RsvpObject>) {
             // update the accepted list
@@ -101,7 +134,6 @@ class EventRepository @Inject constructor(
         }
     }
 
-    @Suppress("UNREACHABLE_CODE")
     private inner class RejectedListener(val event: EventItem): LockedCallback<MutableLiveData<RsvpObject>>() {
         override fun success(response: MutableLiveData<RsvpObject>) {
             // update the accepted list
@@ -127,42 +159,6 @@ class EventRepository @Inject constructor(
         }
         override fun fail(message: String, details: List<Error>) {
             event.status = EventStatus.REJECT_FAILED.toString()
-        }
-    }
-
-    @Suppress("UNREACHABLE_CODE")
-    private inner class FetchEventsListener(): LockedCallback<MutableList<EventItem>>() {
-        override fun success(response: MutableList<EventItem>) {
-            events.clear()
-            events.addAll(response)
-            loading = false
-            _fetchEvents.postValue(Data(true))
-        }
-        override fun fail(message: String, details: List<Error>) {
-            loading = false
-            _fetchEvents.postValue(Data(true))
-        }
-    }
-
-    @Suppress("UNREACHABLE_CODE")
-    private inner class CreateEventListener(val event: EventItem): LockedCallback<EventItem>() {
-        override fun success(response: EventItem) {
-            events.add(event)
-            event.status = EventStatus.CREATED.toString()
-        }
-        override fun fail(message: String, details: List<Error>) {
-            event.status = EventStatus.CREATE_FAILED.toString()
-        }
-    }
-
-    @Suppress("UNREACHABLE_CODE")
-    private inner class DeleteEventListener(val event: EventItem): LockedCallback<LockResponse>() {
-        override fun success(response: LockResponse) {
-            events.remove(event)
-            event.status = EventStatus.DELETED.toString()
-        }
-        override fun fail(message: String, details: List<Error>) {
-            event.status = EventStatus.DELETE_FAILED.toString()
         }
     }
 
