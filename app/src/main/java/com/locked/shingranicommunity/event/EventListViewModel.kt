@@ -1,13 +1,15 @@
 package com.locked.shingranicommunity.event
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.ResourceProvider
 import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.models.Status
-import com.locked.shingranicommunity.models.User
+import com.locked.shingranicommunity.models.EventStatus
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.SimpleDateFormat
@@ -37,14 +39,16 @@ class EventListViewModel @Inject constructor(
         }
     }
 
-    fun isAdminUser(): Boolean{return session.isUserAdmin()}
-    fun currentUser(): User?{return session.getUser()}
     init {
         repository.fetchEvents.observeForever(fetchEventsObserver)
     }
 
     fun load() {
         repository.fetchEvents()
+    }
+
+    fun messageHandled() {
+        data.message.value = null
     }
 
     override fun onCleared() {
@@ -58,28 +62,6 @@ class EventListViewModel @Inject constructor(
             entry.value.onCleared()
         }
     }
-
-//    fun accepted(item: Item): MutableLiveData<String>? {
-//        val rsvp: RsvpObject? =
-//                RsvpObject(
-//                        Rsvp(
-//                                "Accepted",
-//                                session.getUserId()!!
-//                        )
-//                )
-//        return repository.accepted(rsvp!!,item._id)
-//    }
-//
-//    fun rejected(item: Item): MutableLiveData<String>? {
-//        var rsvp: RsvpObject? =
-//                RsvpObject(
-//                        Rsvp(
-//                                "Rejected",
-//                                session.getUserId()!!
-//                        )
-//                )
-//        return itemEventHandler.rejected(rsvp!!,item._id)
-//    }
 
     // use this onBind() of List Adapter
     fun getItemViewModel(itemIndex: Int): ItemViewModel? {
@@ -111,70 +93,87 @@ class EventListViewModel @Inject constructor(
         private val navigation: Navigation,
         private val repository: EventRepository) {
 
-        val name: LiveData<String>
-        val desc: LiveData<String>
-        val date: LiveData<String>
-        val time: LiveData<String>
-        val showAccept: LiveData<Boolean>
-        val showReject: LiveData<Boolean>
-        val showDelete: LiveData<Boolean>
-        val showShare: LiveData<Boolean>
-        val showMap: LiveData<Boolean>
+        val deleteConfirmationTitle = resourceProvider.getString(R.string.delete_event_confirm_title)
+        val deleteConfirmationDesc = resourceProvider.getString(R.string.delete_event_confirm_desc).format(eventItem.name)
+
+        val data: ItemData = ItemData()
+        val name: LiveData<String> = data.name
+        val desc: LiveData<String> = data.desc
+        val type: LiveData<String> = data.type
+        val date: LiveData<String> = data.date
+        val time: LiveData<String> = data.time
+        val attendees: LiveData<Int> = data.attendees
+        val showAccept: LiveData<Boolean> = data.showAccept
+        val showReject: LiveData<Boolean> = data.showReject
+        val showDelete: LiveData<Boolean> = data.showDelete
+        val showShare: LiveData<Boolean> = data.showShare
+        val showMap: LiveData<Boolean> = data.showMap
+        val showDeleteConfirmation: LiveData<Boolean> = data.showDeleteConfirmation
 
         init {
+            eventItem.observeStatus(this::onStatusChanged)
             // init name
             val nameStr = eventItem.name ?: ""
-            name = MutableLiveData(nameStr)
+            data.name.value = nameStr
             // init desc
             val descStr = eventItem.detail ?: ""
-            desc = MutableLiveData(descStr)
+            data.desc.value = descStr
+            // init type
+            val typeStr = eventItem.type ?: "Event"
+            data.type.value = typeStr
             // init date & time
             val timeStr = eventItem.time ?: ""
-            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault())
+            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
             val dt: Date = fromFormat.parse(timeStr)
             val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
             val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
-            date = MutableLiveData(toDateFormat.format(dt))
-            time = MutableLiveData(toTimeFormat.format(dt))
+            data.date.value = toDateFormat.format(dt)
+            data.time.value = toTimeFormat.format(dt)
             // init accept/reject buttons
+            initAcceptReject()
+            // init delete
+            data.showDelete.value = session.isUserAdmin()
+        }
+
+        private fun initAcceptReject() {
             val acceptedStr = eventItem.accepted ?: ""
             val rejectedStr = eventItem.rejected ?: ""
-            showAccept = MutableLiveData(!acceptedStr.contains(session.getUserId()!!))
-            showReject = MutableLiveData(!rejectedStr.contains(session.getUserId()!!))
-            // init delete
-            showDelete = MutableLiveData(session.isUserAdmin())
-            // init share
-            showShare = MutableLiveData(true)
-            // init map
-            showMap = MutableLiveData(true)
+            data.showAccept.postValue(!acceptedStr.contains(session.getUserId()!!))
+            data.showReject.postValue(!rejectedStr.contains(session.getUserId()!!))
+            data.attendees.postValue(eventItem.accepted?.split(",")?.size)
         }
 
         fun accept() {
-            // todo
+            repository.accept(eventItem)
         }
 
         fun reject() {
-            // todo
+            repository.reject(eventItem)
         }
 
         fun openMap() {
-            // todo
+            navigation.navigateToMap(eventItem.address!!)
         }
 
         fun share() {
             // todo
         }
 
-        fun delete() {
-            // todo
-            eventItem.observeStatus(this::onStatusChanged)
-            repository.deleteEvent(eventItem)
+        fun delete(confirmed: Boolean = false) {
+            if (confirmed) {
+                data.showDeleteConfirmation.value = false
+                repository.deleteEvent(eventItem)
+            } else {
+                data.showDeleteConfirmation.postValue(true)
+            }
         }
 
         private fun onStatusChanged(oldStatus: String?, newStatus: String?) {
             newStatus?.let {
-                if (newStatus == Status.DELETED) {
-                    this@EventListViewModel.eventDeleted(eventItem)
+                when(newStatus) {
+                    EventStatus.DELETED.toString() -> this@EventListViewModel.eventDeleted(eventItem)
+                    EventStatus.ACCEPTED.toString() -> initAcceptReject()
+                    EventStatus.REJECTED.toString() -> initAcceptReject()
                 }
             }
         }
@@ -184,4 +183,18 @@ class EventListViewModel @Inject constructor(
         }
     }
 
+    data class ItemData(
+        val name: MutableLiveData<String> = MutableLiveData(""),
+        val desc: MutableLiveData<String> = MutableLiveData(""),
+        val type: MutableLiveData<String> = MutableLiveData("Event"),
+        val date: MutableLiveData<String> = MutableLiveData(""),
+        val time: MutableLiveData<String> = MutableLiveData(""),
+        val attendees: MutableLiveData<Int> = MutableLiveData(0),
+        val showAccept: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showReject: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showDelete: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showShare: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showMap: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showDeleteConfirmation: MutableLiveData<Boolean> = MutableLiveData(false)
+    )
 }

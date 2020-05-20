@@ -61,12 +61,12 @@ class AnnounceListAdapter (val mAnnouncements: List<Item>?, val hideDeleteMenu: 
             binding?.txtAnnouncementTitleItem?.text = title
             binding?.txtAnnouncementMessage?.text = text
             binding?.txtDateItemCreated?.text = "${Utils.formatStringDateTime(timeStamp!!)}"
-            binding?.imgHDot?.setOnClickListener(this)
+            binding?.imgDeleteItem?.setOnClickListener(this)
 
         }
         override fun onClick(v: View?) {
-            var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
-            if (v?.id == R.id.img_h_dot){
+            var popupMenu = PopupMenu(parent.context,binding?.imgDeleteItem)
+            if (v?.id == R.id.img_delete_item){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu_announcement,popupMenu.menu)
                 var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
                 menuItem.isVisible = !mHideItem

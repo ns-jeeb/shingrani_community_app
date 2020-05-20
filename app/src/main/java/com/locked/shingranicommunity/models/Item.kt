@@ -28,13 +28,13 @@ open class Item {
 }
 
 open class EventItem() : Item() {
-    val name: String? by Delegate(this::fields, "Name")
-    val type: String? by Delegate(this::fields, "Type")
-    val address: String? by Delegate(this::fields, "Address")
-    val time: String? by Delegate(this::fields, "Time")
-    val detail: String? by Delegate(this::fields, "Detail")
-    val accepted: String? by Delegate(this::fields, "Accepted")
-    val rejected: String? by Delegate(this::fields, "Rejected")
+    var name: String? by Delegate(this::fields, "Name")
+    var type: String? by Delegate(this::fields, "Type")
+    var address: String? by Delegate(this::fields, "Address")
+    var time: String? by Delegate(this::fields, "Time")
+    var detail: String? by Delegate(this::fields, "Detail")
+    var accepted: String? by Delegate(this::fields, "Accepted")
+    var rejected: String? by Delegate(this::fields, "Rejected")
 }
 
 open class AnnouncementItem : Item() {
@@ -53,7 +53,7 @@ class Delegate(val fields: KMutableProperty0<MutableList<Field>>, val propName: 
         return null
     }
 
-    operator fun setValue(thisRef: Any?, prop: KProperty<*>, value: String) {
+    operator fun setValue(thisRef: Any?, prop: KProperty<*>, value: String?) {
         var foundField: Field? = null
         for (field in fields.get()) {
             if (field.name != null && field.name!!.toLowerCase() == propName.toLowerCase()) {
@@ -67,15 +67,15 @@ class Delegate(val fields: KMutableProperty0<MutableList<Field>>, val propName: 
         }
         foundField.value = value
     }
-
-
 }
 
-class Status {
-    companion object {
-        val CREATED = "CREATED"
-        val CREATE_FAILED = "CREATE_FAILED"
-        val DELETED = "DELETED"
-        val DELETE_FAILED = "DELETE_FAILED"
-    }
+enum class EventStatus() {
+    CREATED,
+    CREATE_FAILED,
+    DELETED,
+    DELETE_FAILED,
+    ACCEPTED,
+    ACCEPT_FAILED,
+    REJECTED,
+    REJECT_FAILED
 }
