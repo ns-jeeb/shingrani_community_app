@@ -1,134 +1,119 @@
 package com.locked.shingranicommunity.event
 
-import android.annotation.SuppressLint
-import android.os.Build
-import android.util.Log
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.EventItemBinding
 import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.utail.Utils
-import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
-class EventListAdapter@Inject constructor(val viewModel: EventListViewModel): RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
+class EventListAdapter(
+    private val viewModel: EventListViewModel,
+    private val lifeCycleOwner: LifecycleOwner
+): RecyclerView.Adapter<EventListAdapter.EventViewHolder>() {
+
     val list: MutableList<EventItem> = mutableListOf()
-    private var address:String? = null
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
-        return EventViewHolder(parent)
-    }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
-        viewModel.getItemViewModel(position)
-        list.let { holder.bind(it[position]) }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventViewHolder {
+        return EventViewHolder(parent)
     }
-    @SuppressLint("SetTextI18n")
-    @RequiresApi(Build.VERSION_CODES.O)
+
+    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+        val itemViewModel = viewModel.getItemViewModel(position)
+        itemViewModel?.let {
+            holder.bind(itemViewModel)
+        }
+    }
+
     inner class EventViewHolder(val parent: ViewGroup) :
-            RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.event_item,parent,false)),
-            View.OnClickListener {
+        RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.event_item, parent,false)),
+        View.OnClickListener {
 
-        internal var binding: EventItemBinding? = null
-        init {
-            binding = DataBindingUtil.bind(itemView)
-        }
-        private fun setFields(eventItem:  EventItem){
-            Log.d("eventItem",eventItem.fields[adapterPosition].name)
-            for (i in 0 until eventItem.fields.size){
-                when (eventItem.fields[i].name) {
-                    "Accepted" -> {
-                        eventItem.accepted?.split(",")?.let { getAccepted(it) }
-                    }
-                    "Rejected" -> {
-                        eventItem.rejected?.split(",")?.let { getRejected(it) }
-                    }
-                    "Name" -> {
-                        binding?.txtEventName?.text = viewModel.getItemViewModel(adapterPosition)?.name?.value
-                    }
-                    "Address" -> {
-                        address = eventItem.address
-                    }
-                    "Detail" -> {
-                        binding?.eventDescription?.text = viewModel.getItemViewModel(adapterPosition)?.desc?.value
-                    }
-                    "Type" -> {
-                        binding?.txtEventType?.text = eventItem.type
-                    }
-                    "Time" -> {
-                        var date = Utils.formatStringDateTime(eventItem.time!!)?.split(" : ")
-                        binding?.txtEventDate?.text = viewModel.getItemViewModel(adapterPosition)?.date?.value
-                        binding?.txtEventTime?.text = viewModel.getItemViewModel(adapterPosition)?.time?.value
-                    }
-                }
-            }
+        private var binding: EventItemBinding = DataBindingUtil.bind(itemView)!!
+        private var itemViewModel: EventListViewModel.ItemViewModel? = null
 
-        }
-
-        fun bind(eventItem: EventItem) {
-            setFields(eventItem)
-            if (viewModel.isAdminUser()){
-                binding?.imgDeleteItem?.visibility = View.VISIBLE
-            }else{
-                binding?.imgDeleteItem?.visibility = View.GONE
-            }
-            binding?.imgDeleteItem?.setOnClickListener(this)
-            binding?.imgAcceptedAttending?.setOnClickListener(this)
-            binding?.imgRejectedAttending?.setOnClickListener(this)
-            binding?.imgShareEvent?.setOnClickListener(this)
-            binding?.imgEventLocation?.setOnClickListener(this)
-        }
-        private fun getAccepted(accepted: List<String>){
-            for (element in accepted) {
-                if (!element.isBlank()){
-                    if (element == viewModel.currentUser()?._id){
-                        binding?.txtMembersAttended?.text = "${accepted.size} incl you"
-                        binding?.imgAcceptedAttending?.visibility = View.GONE
-                        binding?.imgRejectedAttending?.visibility = View.VISIBLE
-                    }else {
-                        binding?.txtMembersAttended?.text = "${accepted.size} Member"
-                    }
-                }
-            }
+        fun bind(itemViewModel: EventListViewModel.ItemViewModel) {
+            this.itemViewModel = itemViewModel
+            itemViewModel.name.observe(lifeCycleOwner, Observer {
+                binding.txtEventName.text = it
+            })
+            itemViewModel.desc.observe(lifeCycleOwner, Observer {
+                binding.eventDescription.text = it
+            })
+            itemViewModel.type.observe(lifeCycleOwner, Observer {
+                binding.txtEventType.text = it
+            })
+            itemViewModel.showAccept.observe(lifeCycleOwner, Observer {
+                binding.imgAcceptedAttending.isVisible = it!!
+            })
+            itemViewModel.showReject.observe(lifeCycleOwner, Observer {
+                binding.imgRejectedAttending.isVisible = it!!
+            })
+            itemViewModel.attendees.observe(lifeCycleOwner, Observer {
+                binding.txtMembersAttended.text = it.toString()
+            })
+            itemViewModel.showDelete.observe(lifeCycleOwner, Observer {
+                binding.imgDeleteItem.isVisible = it!!
+            })
+            itemViewModel.showDeleteConfirmation.observe(lifeCycleOwner, Observer {
+                if (it) showDeleteAlert(itemViewModel)
+            })
+            itemViewModel.showShare.observe(lifeCycleOwner, Observer {
+                binding.imgShareEvent.isVisible = it!!
+            })
+            itemViewModel.showMap.observe(lifeCycleOwner, Observer {
+                binding.imgEventLocation.isVisible = it!!
+            })
+            itemViewModel.date.observe(lifeCycleOwner, Observer {
+                binding.txtEventDate.text = it!!
+            })
+            itemViewModel.time.observe(lifeCycleOwner, Observer {
+                binding.txtEventTime.text = it!!
+            })
+            binding.imgDeleteItem.setOnClickListener(this)
+            binding.imgAcceptedAttending.setOnClickListener(this)
+            binding.imgRejectedAttending.setOnClickListener(this)
+            binding.imgShareEvent.setOnClickListener(this)
+            binding.imgEventLocation.setOnClickListener(this)
         }
 
-
-        private fun getRejected(rejects: List<String>) {
-            for (element in rejects) {
-                if(!element.isBlank()){
-                    if (element == viewModel.currentUser()?._id) {
-                        binding?.imgAcceptedAttending?.visibility = View.VISIBLE
-                        binding?.imgRejectedAttending?.visibility = View.GONE
+        private fun showDeleteAlert(itemViewModel: EventListViewModel.ItemViewModel) {
+            AlertDialog.Builder(itemView.context)
+                .setTitle(itemViewModel.deleteConfirmationTitle)
+                .setMessage(itemViewModel.deleteConfirmationDesc)
+                .setPositiveButton(itemView.context.getString(R.string.alert_dialog_yes), object: DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {
+                        itemViewModel.delete(true)
                     }
-                }
-            }
+                }).setNegativeButton(itemView.context.getString(R.string.alert_dialog_no), object: DialogInterface.OnClickListener {
+                    override fun onClick(p0: DialogInterface?, p1: Int) {}
+                }).show()
         }
+
         override fun onClick(v: View?) {
-            when (v?.id){
-                R.id.img_accepted_attending ->{
-                    list[adapterPosition].let {
-                        viewModel.getItemViewModel(position)?.accept()
-                    }
+            when (v?.id) {
+                R.id.img_accepted_attending -> {
+                    itemViewModel?.accept()
                 }
-                R.id.img_rejected_attending ->{
-                    list[adapterPosition].let {
-                        viewModel.getItemViewModel(position)?.reject()}
+                R.id.img_rejected_attending -> {
+                    itemViewModel?.reject()
                 }
                 R.id.img_delete_item -> {
-                    list[adapterPosition].let {
-                        viewModel.getItemViewModel(position)?.delete()}
+                    itemViewModel?.delete()
                 }
-                R.id.img_event_location ->{
-                    list[adapterPosition].let {
-                        viewModel.getItemViewModel(position)?.openMap(address!!)}
+                R.id.img_event_location -> {
+                    itemViewModel?.openMap()
                 }
             }
         }

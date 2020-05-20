@@ -1,26 +1,20 @@
 package com.locked.shingranicommunity.event
 
-import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.locked.shingranicommunity.Constant_Utils
+import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
-import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.models.Item
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.O)
 class EventListFragment : Fragment() {
 
     @Inject
@@ -31,13 +25,13 @@ class EventListFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_list, container, false)
-        adapter = EventListAdapter(viewModel)
+        adapter = EventListAdapter(viewModel, viewLifecycleOwner)
         setupViews()
-        binding.progressEvent.visibility = View.VISIBLE
         return binding.root
     }
 
     private fun setupViews() {
+        binding.progressEvent.visibility = View.VISIBLE
         viewModel.list.observe(viewLifecycleOwner, Observer {
             adapter.list.apply {
                 this.clear()
@@ -49,6 +43,12 @@ class EventListFragment : Fragment() {
                 binding.progressEvent.visibility = View.GONE
             }
             adapter.notifyDataSetChanged()
+        })
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                Snackbar.make(binding.root, it, Snackbar.LENGTH_SHORT).show()
+                viewModel.messageHandled()
+            }
         })
     }
 

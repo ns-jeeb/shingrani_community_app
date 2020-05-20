@@ -32,6 +32,9 @@ interface LockedApiService {
     @GET("/api/v2/app/{appid}/item")
     fun getEventList(@Path("appid") appId: String, @Query("template") templateId: String): Call<MutableList<EventItem>>
 
+    @POST("api/v2/urcommunity/rsvp/{itemid}")
+    fun accept(@Path("itemid") itemID: String, @Body body: RsvpObject): Call<MutableLiveData<RsvpObject>>
+
     @POST("/api/v2/login")
     @Headers("Content-Type: application/json")
     fun userLogin(@Body body: Map<String, String>, @Header("appid")apiId: String): Call<LoginResponse>

@@ -36,7 +36,7 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
         TODO("Not yet implemented")
     }
 
-    override fun navigateToEventDetails(eventId: String) {
+    override fun navigateToEventDetail(eventId: String) {
         TODO("Not yet implemented")
     }
 
