@@ -32,9 +32,9 @@ class RegisterFragment : Fragment() {
             Observer<EnterDetailsViewState> { state ->
                 when (state) {
                     is EnterDetailsSuccess -> {
-                        registrationViewModel.updateUserData( binding.registerUsername.text.toString(), binding.registerPassword.text.toString(),binding.registerName.text.toString())
+                        registrationViewModel.updateUserData( binding.registerEmail.text.toString(), binding.registerPassword.text.toString(),binding.registerName.text.toString())
                         registrationViewModel.registerUser()
-                        enterDetailsViewModel.registerUser(binding.registerUsername.text.toString(),binding.registerPassword.text.toString(),binding.registerName.text.toString()).observe(this,
+                        enterDetailsViewModel.registerUser(binding.registerEmail.text.toString(),binding.registerPassword.text.toString(),binding.registerName.text.toString()).observe(this,
                             Observer {
                                 if (it.isDataValid){
                                     var intent = Intent(activity, LoginActivity::class.java)
@@ -62,13 +62,13 @@ class RegisterFragment : Fragment() {
 
     private fun setupViews() {
 
-        binding.registerUsername.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
+        binding.registerEmail.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
 
         binding.registerPassword.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
         binding.registerPasswordConform.doOnTextChanged { _, _, _, _ -> binding.txtError.visibility = View.INVISIBLE }
 
        binding.btnRegister.setOnClickListener {
-            enterDetailsViewModel.validateInput(binding.registerUsername.text.toString(),
+            enterDetailsViewModel.validateInput(binding.registerEmail.text.toString(),
                 binding.registerPassword.text.toString(),
                 binding.registerPasswordConform.text.toString(),
                 binding.registerName.text.toString()
@@ -78,8 +78,8 @@ class RegisterFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             var intent = Intent(activity, LoginActivity::class.java)
             intent.putExtra("message","registrationViewModel.message")
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
-            activity?.finish()
         }
     }
 }

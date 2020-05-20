@@ -1,8 +1,6 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -27,6 +25,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"https://pure-river-66033-staging.herokuapp.com"'
+            buildConfigField "String", "LOCKEDAPI_APP_ID", '"5d4a348f88fb44130084f903"'
+        }
+        debug {
+            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"https://pure-river-66033-staging.herokuapp.com"'
+            buildConfigField "String", "LOCKEDAPI_APP_ID", '"5d4a348f88fb44130084f903"'
         }
     }
     dataBinding {
@@ -90,9 +94,12 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:2.2.0"
 
     implementation "com.google.dagger:dagger:2.25.2"
-    implementation 'com.google.dagger:dagger-android:2.17'
-    implementation 'com.google.dagger:dagger-android-support:2.17'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.17'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.17'
+    implementation "com.google.dagger:dagger-android:2.25.2"
+    implementation "com.google.dagger:dagger-android-support:2.25.2"
     kapt "com.google.dagger:dagger-compiler:2.25.2"
+    kapt "com.google.dagger:dagger-android-processor:2.25.2"
+}
+
+kapt {
+    correctErrorTypes true
 }

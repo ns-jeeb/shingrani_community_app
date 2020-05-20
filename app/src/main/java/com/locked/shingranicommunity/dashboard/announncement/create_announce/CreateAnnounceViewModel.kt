@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.dashboard.DashboardRepositor
-import com.locked.shingranicommunity.dashboard.data.Field
+import com.locked.shingranicommunity.models.Field
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import javax.inject.Inject
 
@@ -13,8 +13,16 @@ class CreateAnnounceViewModel@Inject constructor(val userManger: UserManager,val
     fun <T : Any?> MutableLiveData<T>.default(initialValue: T) = apply { setValue(initialValue) }
     fun createAnnouncement(title: String, details: String): LiveData<String>{
         var fields: ArrayList<Field>? = ArrayList()
-        var fieldTitle: Field? = Field(name = "name", value = title)
-        var fieldDetails: Field? = Field(name = "name", value = details)
+        var fieldTitle: Field? =
+            Field(
+                name = "name",
+                value = title
+            )
+        var fieldDetails: Field? =
+            Field(
+                name = "name",
+                value = details
+            )
         var createdItem = MutableLiveData<String>()
         createdItem.value = "You don't have permission to create announcement"
             fieldTitle?.let {

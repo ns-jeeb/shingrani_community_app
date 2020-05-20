@@ -2,9 +2,8 @@ package com.locked.shingranicommunity.members
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.locked.shingranicommunity.LockedApiService
-import com.locked.shingranicommunity.LockedApiServiceInterface
 import com.locked.shingranicommunity.di.Storage
+import com.locked.shingranicommunity.locked.LockedApiService
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONException
@@ -15,7 +14,7 @@ import javax.inject.Inject
 import javax.security.auth.callback.Callback
 
 class MemberApiRequest @Inject constructor(val storage: Storage) : MemberApiRequestListener {
-    var lockedApiServiceInterface = LockedApiService().getClient().create(LockedApiServiceInterface::class.java)
+    var lockedApiServiceInterface = com.locked.shingranicommunity.LockedApiService().getClient().create(LockedApiService::class.java)
     var mtableLiveData = MutableLiveData<ArrayList<ShingraniMember>>()
     override fun members(token: String): MutableLiveData<ArrayList<ShingraniMember>>{
         var call = lockedApiServiceInterface.getMembers(token)

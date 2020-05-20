@@ -55,7 +55,7 @@
 
 
                     <ImageView
-                        android:id="@+id/txt_event_address"
+                        android:id="@+id/img_event_location"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
                         android:layout_alignParentRight="true"
@@ -75,24 +75,18 @@
                         android:textColor="#FFFFFF"
                         android:textSize="14sp"/>
 
-
-
-
-
                     <ImageView
-                        android:id="@+id/img_h_dot"
+                        android:id="@+id/img_delete_item"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:visibility=
+                            "gone"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
                         android:src="@drawable/delete_icon" />
 
-
                 </RelativeLayout>
             </LinearLayout>
-
-
-
 
             <LinearLayout
                 android:id="@+id/info_layout"
@@ -159,6 +153,7 @@
                         <ImageButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:id="@+id/img_share_event"
                             android:src="@drawable/share_icon"
                             android:layout_alignParentStart="true"
                             style="@style/Widget.MaterialComponents.Button.TextButton"/>
@@ -166,6 +161,7 @@
                         <ImageButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:id="@+id/img_accepted_attending"
                             android:layout_centerHorizontal="true"
                             android:layout_marginHorizontal="10dp"
                             android:src="@drawable/accept_icon"
@@ -174,13 +170,13 @@
                         <ImageButton
                             android:layout_width="24dp"
                             android:layout_height="24dp"
+                            android:id="@+id/img_rejected_attending"
                             android:src="@drawable/reject_icon"
                             android:layout_alignParentEnd="true"
                             style="@style/Widget.MaterialComponents.Button.TextButton"
                             />
 
                     </RelativeLayout>
-
 
                 </LinearLayout>
 
@@ -189,8 +185,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
-
-
 
                     <TextView
                         android:id="@+id/txt_event_type"
@@ -238,7 +232,7 @@
                     android:ellipsize="end"
                     android:lines="3"
                     android:maxLines="3"
-                    android:text="This is the description of the event, here you can talk about whats happening and what your expected to do and if you are needed to bring anything"
+                    tools:text="This is the description of the event, here you can talk about whats happening and what your expected to do and if you are needed to bring anything"
                     android:textSize="@dimen/header_12dp" />
 
 

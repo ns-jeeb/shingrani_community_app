@@ -1,7 +1,7 @@
 package com.locked.shingranicommunity.dashboard.event.details
 
 import androidx.lifecycle.ViewModel
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Item
 import javax.inject.Inject
 
 class DetailsViewModel@Inject constructor() : ViewModel() {

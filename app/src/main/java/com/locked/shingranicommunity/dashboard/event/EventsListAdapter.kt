@@ -10,14 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.data.Item
 import com.locked.shingranicommunity.databinding.EventItemBinding
-import com.locked.shingranicommunity.members.User
-import com.locked.shingranicommunity.models.Admin
+import com.locked.shingranicommunity.models.Item
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.utail.Utils
 import kotlin.properties.Delegates
 
-class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val isAdmin: Boolean,val onItemClick: OnItemClickListener) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
+class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val isAdmin: Boolean, val onItemClick: OnItemClickListener) : RecyclerView.Adapter<EventsListAdapter.EventViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): EventViewHolder {
         return EventViewHolder(viewGroup)
@@ -53,7 +52,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val isAdmi
         }
         @SuppressLint("SetTextI18n")
         @RequiresApi(Build.VERSION_CODES.O)
-        fun bind(event:Item, position: Int) {
+        fun bind(event: Item, position: Int) {
             var name: String? =""
             var type: String? =""
             var address: String? =""
@@ -81,7 +80,7 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val isAdmi
             var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
             binding?.txtEventDate?.text = date?.get(0)
             binding?.txtEventTime?.text = "${date?.get(1)}"
-            binding?.imgHDot?.setOnClickListener(this)
+            binding?.imgDeleteItem?.setOnClickListener(this)
             itemView.setOnClickListener(this)
         }
         @SuppressLint("SetTextI18n")
@@ -119,8 +118,8 @@ class EventsListAdapter(val mEvents:List<Item>?,val currentUser: User,val isAdmi
         }
 
         override fun onClick(v: View?) {
-            var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
-            if (v?.id == R.id.img_h_dot){
+            var popupMenu = PopupMenu(parent.context,binding?.imgDeleteItem)
+            if (v?.id == R.id.img_delete_item){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu_event,popupMenu.menu)
                 var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
                 if (isAdmin){

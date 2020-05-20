@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.Constant_Utils.ONE_00
 import com.locked.shingranicommunity.Constant_Utils.ONE_02
+import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
@@ -20,7 +21,6 @@ import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragme
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 import com.locked.shingranicommunity.di.DashboardComponent
 import com.locked.shingranicommunity.members.MemberActivity
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
 import com.locked.shingranicommunity.settings.SettingsActivity
 import javax.inject.Inject
 

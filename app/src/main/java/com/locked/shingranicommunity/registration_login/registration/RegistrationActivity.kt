@@ -4,6 +4,7 @@ package com.locked.shingranicommunity.registration_login.registration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.ActivityRegistrationBinding
 import com.locked.shingranicommunity.di.RegisterComponent

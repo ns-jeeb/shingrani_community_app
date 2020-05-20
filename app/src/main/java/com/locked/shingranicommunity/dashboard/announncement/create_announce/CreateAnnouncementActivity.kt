@@ -4,20 +4,14 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_CREATED
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.ActivityCreateAnnouncementBinding
-import com.locked.shingranicommunity.di.ViewModelProviderModul
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.MyApplication
 import javax.inject.Inject
 
 class CreateAnnouncementActivity : AppCompatActivity() {

@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +21,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
 import com.locked.shingranicommunity.Constant_Utils.ONE_01
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import com.locked.shingranicommunity.members.MemberActivity
 import javax.inject.Inject

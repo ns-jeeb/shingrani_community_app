@@ -1,12 +1,10 @@
-package com.locked.shingranicommunity.registration_login.registration
+package com.locked.shingranicommunity
 
 import android.app.Application
-import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.di.AppComponent
 import com.locked.shingranicommunity.di.DaggerAppComponent
-import dagger.MapKey
-import kotlin.reflect.KClass
 
+// todo rename to UrCommunityApplication
 open class MyApplication : Application() {
 
     companion object {
@@ -17,14 +15,12 @@ open class MyApplication : Application() {
         DaggerAppComponent.factory().create(applicationContext)
     }
 
+    val appComponent2: com.locked.shingranicommunity.di2.AppComponent by lazy {
+        com.locked.shingranicommunity.di2.DaggerAppComponent.factory().create(this)
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
     }
-
-    @MustBeDocumented
-    @Target(AnnotationTarget.FUNCTION)
-    @Retention(AnnotationRetention.RUNTIME)
-    @MapKey
-    internal annotation class ViewModelKey(val value :KClass<out ViewModel>)
 }
