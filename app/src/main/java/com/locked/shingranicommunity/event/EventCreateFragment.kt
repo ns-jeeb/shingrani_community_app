@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,7 +29,30 @@ class EventCreateFragment : Fragment() {
     }
 
     private fun setupViews() {
-
+        binding.crEventName.doOnTextChanged { text, start, count, after ->
+            viewModel.title.postValue(text.toString())
+        }
+        binding.crEventAddress.doOnTextChanged { text, start, count, after ->
+            viewModel.location.postValue(text.toString())
+        }
+        binding.crEventTime.doOnTextChanged { text, start, count, after ->
+            viewModel.time.postValue(text.toString())
+        }
+        binding.crEventDate.doOnTextChanged { text, start, count, after ->
+            viewModel.date.postValue(text.toString())
+        }
+        binding.crEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                viewModel.type.postValue(p0?.adapter?.getItem(p2).toString())
+            }
+        }
+        binding.crEventDetails.doOnTextChanged { text, start, count, after ->
+            viewModel.desc.postValue(text.toString())
+        }
+        binding.btnCrEvent.setOnClickListener {
+            viewModel.create()
+        }
     }
 
     override fun onAttach(context: Context) {
