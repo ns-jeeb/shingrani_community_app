@@ -1,5 +1,12 @@
 <resources>
+
     <string name="app_name">Shingiran Community</string>
+
+    <string name="alert_dialog_yes">Yes</string>
+    <string name="alert_dialog_no">No</string>
+    <string name="alert_dialog_okk">OK</string>
+    <string name="alert_dialog_cancel">Cancel</string>
+
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -57,7 +64,6 @@
     <string name="country">Country</string>
     <string name="join">Click to join</string>
     <string name="alert_dialog_ok">Select</string>
-    <string name="alert_dialog_cancel">Cancel</string>
     <string name="fohtia">Fateah</string>
     <string name="txt_wedding_message">are getting married on</string>
 
@@ -105,5 +111,7 @@
     <string name="please_wait">Please wait</string>
     <string name="welcome_user">Welcome %s</string>
     <string name="version">Version</string>
+    <string name="delete_event_confirm_title">Delete</string>
+    <string name="delete_event_confirm_desc">Are you sure you\'d like to delete %s event?</string>
 
 </resources>

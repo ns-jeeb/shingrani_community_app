@@ -80,7 +80,7 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val isAd
             var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
             binding?.txtEventDate?.text = date?.get(0)
             binding?.txtEventTime?.text = "${date?.get(1)}"
-            binding?.imgHDot?.setOnClickListener(this)
+            binding?.imgDeleteItem?.setOnClickListener(this)
             itemView.setOnClickListener(this)
         }
         @SuppressLint("SetTextI18n")
@@ -118,8 +118,8 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val isAd
         }
 
         override fun onClick(v: View?) {
-            var popupMenu = PopupMenu(parent.context,binding?.imgHDot)
-            if (v?.id == R.id.img_h_dot){
+            var popupMenu = PopupMenu(parent.context,binding?.imgDeleteItem)
+            if (v?.id == R.id.img_delete_item){
                 popupMenu.menuInflater.inflate(R.menu.popup_menu_event,popupMenu.menu)
                 var menuItem = popupMenu.menu.findItem(R.id.popup_delete)
                 if (isAdmin){
