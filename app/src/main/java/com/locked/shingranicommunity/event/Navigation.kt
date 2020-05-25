@@ -6,4 +6,5 @@ interface Navigation {
     fun navigateToMap(address: String)
     fun navigateShare(data: EventItem)
     fun navigateToEventDetail(eventId: String)
+    fun createFinished()
 }

@@ -32,6 +32,10 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
         }
     }
 
+    override fun createFinished() {
+        TODO("Not yet implemented")
+    }
+
     override fun navigateShare(data: EventItem) {
         TODO("Not yet implemented")
     }

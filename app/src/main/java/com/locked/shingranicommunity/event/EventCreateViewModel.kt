@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.models.EventItem
+import com.locked.shingranicommunity.models.EventStatus
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.SimpleDateFormat
@@ -12,7 +13,8 @@ import javax.inject.Inject
 
 class EventCreateViewModel @Inject constructor(
     private val repository: EventRepository,
-    private val session: Session)
+    private val session: Session,
+    private val navigation: Navigation)
     : ViewModel() {
 
     val title: MutableLiveData<String> = MutableLiveData()
@@ -38,7 +40,20 @@ class EventCreateViewModel @Inject constructor(
         event.detail = desc.value
         event.app = session.getAppId()
         event.template = session.getEventTemplateId()
+        event.observeStatus(this::onStatusChanged)
         repository.createEvent(event)
+    }
+
+    private fun onStatusChanged(old: String?, new: String?) {
+        when (new) {
+            EventStatus.CREATED.toString() -> {
+                data.message.postValue("Event Created")
+                navigation.createFinished()
+            }
+            EventStatus.CREATE_FAILED.toString() -> {
+                data.message.postValue("Failed to Create Event")
+            }
+        }
     }
 
     private fun getDateTime(): String {
