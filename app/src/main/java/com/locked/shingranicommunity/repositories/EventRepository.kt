@@ -5,10 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
-import com.locked.shingranicommunity.locked.models.Error
-import com.locked.shingranicommunity.locked.models.LockResponse
-import com.locked.shingranicommunity.locked.models.Rsvp
-import com.locked.shingranicommunity.locked.models.RsvpObject
+import com.locked.shingranicommunity.locked.models.*
 import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.models.EventStatus
 import com.locked.shingranicommunity.session.Session
@@ -86,8 +83,9 @@ class EventRepository @Inject constructor(
         }
     }
 
-    private inner class CreateEventListener(val event: EventItem): LockedCallback<EventItem>() {
-        override fun success(response: EventItem) {
+    private inner class CreateEventListener(val event: EventItem): LockedCallback<CreateResponse<EventItem>>() {
+        override fun success(response: CreateResponse<EventItem>) {
+            response.item?.let { event.update(it) }
             events.add(event)
             event.status = EventStatus.CREATED.toString()
         }

@@ -1,10 +1,7 @@
 package com.locked.shingranicommunity.locked
 
 import androidx.lifecycle.MutableLiveData
-import com.locked.shingranicommunity.locked.models.LockResponse
-import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.locked.models.RegisterRequestBody
-import com.locked.shingranicommunity.locked.models.RsvpObject
+import com.locked.shingranicommunity.locked.models.*
 import com.locked.shingranicommunity.members.ShingraniMember
 import com.locked.shingranicommunity.models.*
 import retrofit2.Call
@@ -24,7 +21,7 @@ interface LockedApiService {
     fun app(@Path("appid") appId: String): Call<AppModel>
 
     @POST("/api/v2/item")
-    fun createEvent(@Body body: EventItem): Call<EventItem>
+    fun createEvent(@Body body: EventItem): Call<CreateResponse<EventItem>>
 
     @DELETE("/api/v2/item/{eventId}")
     fun deleteEvent(@Path("eventId") itemId: String): Call<LockResponse>

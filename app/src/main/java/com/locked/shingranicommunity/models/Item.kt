@@ -27,6 +27,18 @@ open class Item {
     fun deObserveStatus(observer: (String?, String?) -> Unit) {
         onStatusChanged.remove(observer)
     }
+    open fun update(item: Item) {
+        item.let {
+            _id = item._id
+            updatedAt = item.updatedAt
+            createdAt = item.createdAt
+            owner = item.owner
+            creator = item.creator
+            app = item.app
+            template = item.template
+            fields = item.fields
+        }
+    }
 }
 
 open class EventItem() : Item() {
