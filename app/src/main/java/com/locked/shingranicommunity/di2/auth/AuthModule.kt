@@ -11,7 +11,7 @@ import dagger.Module
 import dagger.multibindings.IntoMap
 
 @Module
-abstract class AuthViewModelsModule {
+abstract class AuthModule {
 
     /**
      * Any class that requires ViewModel with key LoginViewModel, then inject an instance of

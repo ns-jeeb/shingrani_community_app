@@ -12,6 +12,7 @@ import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.models.EventStatus
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -122,25 +123,34 @@ class EventListViewModel @Inject constructor(
             val typeStr = eventItem.type ?: "Event"
             data.type.value = typeStr
             // init date & time
-            val timeStr = eventItem.time ?: ""
-            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-            val dt: Date = fromFormat.parse(timeStr)
-            val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
-            val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
-            data.date.value = toDateFormat.format(dt)
-            data.time.value = toTimeFormat.format(dt)
+            initDateTime()
             // init accept/reject buttons
             initAcceptReject()
             // init delete
             data.showDelete.value = session.isUserAdmin()
         }
 
+        private fun initDateTime() {
+            val timeStr = eventItem.time ?: ""
+            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
+            val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
+            try {
+                val dt: Date = fromFormat.parse(timeStr)
+                data.date.value = toDateFormat.format(dt)
+                data.time.value = toTimeFormat.format(dt)
+            } catch (e: ParseException) {
+                data.date.value = "-"
+                data.time.value = "-"
+            }
+        }
+
         private fun initAcceptReject() {
-            val acceptedStr = eventItem.accepted ?: ""
-            val rejectedStr = eventItem.rejected ?: ""
+            val acceptedStr = eventItem.accepted?.trim() ?: ""
+            val rejectedStr = eventItem.rejected?.trim() ?: ""
             data.showAccept.postValue(!acceptedStr.contains(session.getUserId()!!))
             data.showReject.postValue(!rejectedStr.contains(session.getUserId()!!))
-            data.attendees.postValue(eventItem.accepted?.split(",")?.size)
+            data.attendees.postValue(if (acceptedStr.isNotBlank()) { acceptedStr.split(",").size } else { 0 })
         }
 
         fun accept() {

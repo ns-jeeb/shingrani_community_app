@@ -3,6 +3,7 @@ package com.locked.shingranicommunity.di2
 import android.app.Application
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import com.locked.shingranicommunity.di2.auth.AuthComponent
+import com.locked.shingranicommunity.di2.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di2.dashboard.DashboardModule
 import com.locked.shingranicommunity.di2.event.EventComponent
 import com.locked.shingranicommunity.di2.locked.LockedApiServiceModule
@@ -16,8 +17,7 @@ import dagger.Component
 @Component(modules = [
     AppModule::class,
     ViewModelFactoryModule::class,
-    LockedApiServiceModule::class,
-    DashboardModule::class])
+    LockedApiServiceModule::class])
 interface AppComponent {
 
     @Component.Factory
@@ -26,8 +26,8 @@ interface AppComponent {
     }
 
     val authComponentFactory : AuthComponent.Factory
+    val dashboardComponentFactory : DashboardComponent.Factory
     val eventComponentFactory : EventComponent.Factory
 
-    fun inject(activity: DashboardActivity)
     fun inject(settingFragment: SettingsActivity.SettingFragment)
 }

@@ -5,7 +5,9 @@ import kotlin.reflect.KMutableProperty0
 import kotlin.reflect.KProperty
 
 open class Item {
+    @Transient
     private var onStatusChanged: MutableSet<((String?, String?) -> Unit)> = mutableSetOf()
+    @delegate:Transient
     var status by Delegates.observable<String?>(null) { _, old, new ->
         for (callback in onStatusChanged) {
             callback.invoke(old, new)
@@ -25,22 +27,34 @@ open class Item {
     fun deObserveStatus(observer: (String?, String?) -> Unit) {
         onStatusChanged.remove(observer)
     }
+    open fun update(item: Item) {
+        item.let {
+            _id = item._id
+            updatedAt = item.updatedAt
+            createdAt = item.createdAt
+            owner = item.owner
+            creator = item.creator
+            app = item.app
+            template = item.template
+            fields = item.fields
+        }
+    }
 }
 
 open class EventItem() : Item() {
-    var name: String? by Delegate(this::fields, "Name")
-    var type: String? by Delegate(this::fields, "Type")
-    var address: String? by Delegate(this::fields, "Address")
-    var time: String? by Delegate(this::fields, "Time")
-    var detail: String? by Delegate(this::fields, "Detail")
-    var accepted: String? by Delegate(this::fields, "Accepted")
-    var rejected: String? by Delegate(this::fields, "Rejected")
+    @delegate:Transient var name: String? by Delegate(this::fields, "Name")
+    @delegate:Transient var type: String? by Delegate(this::fields, "Type")
+    @delegate:Transient var address: String? by Delegate(this::fields, "Address")
+    @delegate:Transient var time: String? by Delegate(this::fields, "Time")
+    @delegate:Transient var detail: String? by Delegate(this::fields, "Detail")
+    @delegate:Transient var accepted: String? by Delegate(this::fields, "Accepted")
+    @delegate:Transient var rejected: String? by Delegate(this::fields, "Rejected")
 }
 
 open class AnnouncementItem : Item() {
-    val title: String? by Delegate(this::fields, "Title")
-    val text: String? by Delegate(this::fields, "Text")
-    val timestamp: String? by Delegate(this::fields, "Timestamp")
+    @delegate:Transient var title: String? by Delegate(this::fields, "Title")
+    @delegate:Transient var text: String? by Delegate(this::fields, "Text")
+    @delegate:Transient var timestamp: String? by Delegate(this::fields, "Timestamp")
 }
 
 class Delegate(val fields: KMutableProperty0<MutableList<Field>>, val propName: String) {

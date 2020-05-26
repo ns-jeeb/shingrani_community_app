@@ -20,7 +20,7 @@ abstract class BaseActivity: AppCompatActivity() {
                     .addToBackStack(false)
                     .navigate()
             } else {
-                throw IllegalArgumentException("Please provide an AuthFragment")
+                throw IllegalArgumentException("Please provide a Fragment")
             }
         }
     }

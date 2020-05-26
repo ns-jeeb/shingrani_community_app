@@ -7,6 +7,8 @@ import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
+import com.locked.shingranicommunity.common.NavigationHandler
+import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import com.locked.shingranicommunity.event.Navigation
 import com.locked.shingranicommunity.models.EventItem
 import java.util.*
@@ -32,12 +34,19 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
         }
     }
 
+    override fun createFinished() {
+        NavigationHandler(activity)
+            .setActivity(DashboardActivity::class.java)
+            .addToBackStack(false)
+            .navigate()
+    }
+
     override fun navigateShare(data: EventItem) {
-        TODO("Not yet implemented")
+
     }
 
     override fun navigateToEventDetail(eventId: String) {
-        TODO("Not yet implemented")
+
     }
 
 }

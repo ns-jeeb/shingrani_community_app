@@ -2,6 +2,8 @@ package com.locked.shingranicommunity.di2.event
 
 import androidx.appcompat.app.AppCompatActivity
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
+import com.locked.shingranicommunity.event.EventActivity
+import com.locked.shingranicommunity.event.EventCreateFragment
 import com.locked.shingranicommunity.event.EventListFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
@@ -16,4 +18,6 @@ interface EventComponent {
     }
 
     fun inject(fragment: EventListFragment)
+    fun inject(fragment: EventCreateFragment)
+    fun inject(activity: EventActivity)
 }

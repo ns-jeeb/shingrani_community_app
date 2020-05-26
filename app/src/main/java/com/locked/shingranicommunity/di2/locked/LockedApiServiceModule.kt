@@ -23,7 +23,7 @@ class LockedApiServiceModule {
         val builder = OkHttpClient().newBuilder()
         if (BuildConfig.DEBUG) {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BASIC
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
             builder.addInterceptor(interceptor)
         }
         builder.addInterceptor { chain: Interceptor.Chain ->

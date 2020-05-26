@@ -2,6 +2,7 @@ package com.locked.shingranicommunity.di2.event
 
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.di2.viewmodel.ViewModelKey
+import com.locked.shingranicommunity.event.EventCreateViewModel
 import com.locked.shingranicommunity.event.EventListViewModel
 import com.locked.shingranicommunity.event.Navigation
 import com.locked.shingranicommunity.navigation.EventNavigation
@@ -20,7 +21,17 @@ abstract class EventModule {
     @EventScope
     @IntoMap
     @ViewModelKey(EventListViewModel::class)
-    abstract fun bindLoginViewModel(viewModel: EventListViewModel) : ViewModel
+    abstract fun bindEventListViewModel(viewModel: EventListViewModel) : ViewModel
+
+    /**
+     * Any class that requires ViewModel with key EventCreateViewModel, then inject an instance of
+     * EventCreateViewModel
+     */
+    @Binds
+    @EventScope
+    @IntoMap
+    @ViewModelKey(EventCreateViewModel::class)
+    abstract fun bindEventCreateViewModel(viewModel: EventCreateViewModel) : ViewModel
 
     @Binds
     @EventScope
