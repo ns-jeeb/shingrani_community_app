@@ -35,7 +35,7 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
 
     override fun getCurrentUser(): User? {
         var sharePr = context.getSharedPreferences(SHARED_PREF_CURRENT_USER,Context.MODE_PRIVATE)
-        return Gson().fromJson<User>(sharePr.getString(CURRENT_USER,""))
+        return Gson().fromJson<User>(sharePr.getString(CURRENT_USER,"")!!)
     }
 
     inline fun <reified T> Gson.fromJson(json: String) = fromJson<T>(json, object: TypeToken<T>() {}.type)
@@ -55,7 +55,7 @@ class SharedPreferencesStorage @Inject constructor(val context: Context) : Stora
 
     override fun getAppModel(): AppModel? {
         val sharedPr = context.getSharedPreferences(SHARED_PREF_TEMPLATE_MODEL,Context.MODE_PRIVATE)
-        return Gson().fromJson<AppModel>(sharedPr.getString(TEMPLATE_MODEL,""))
+        return Gson().fromJson<AppModel>(sharedPr.getString(TEMPLATE_MODEL,"")!!)
     }
 
     override fun setAppModel(appModel: AppModel) {

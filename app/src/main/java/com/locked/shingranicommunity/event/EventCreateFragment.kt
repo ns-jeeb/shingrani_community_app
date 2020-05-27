@@ -1,6 +1,7 @@
 package com.locked.shingranicommunity.event
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,11 @@ import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.dashboard.event.map.MapsActivity
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
+import com.locked.shingranicommunity.members.MemberActivity
 import javax.inject.Inject
 
 class EventCreateFragment : Fragment() {
@@ -32,8 +36,10 @@ class EventCreateFragment : Fragment() {
         binding.crEventName.doOnTextChanged { text, start, count, after ->
             viewModel.title.postValue(text.toString())
         }
-        binding.crEventAddress.doOnTextChanged { text, start, count, after ->
-            viewModel.location.postValue(text.toString())
+        binding.imgSearchLocation.setOnClickListener {
+            val intent = Intent(activity, MapsActivity::class.java)
+            intent.putExtra(Constant_Utils.CREATED_EVENT,true)
+            startActivityForResult(intent, Constant_Utils.ONE_01)
         }
         binding.crEventTime.doOnTextChanged { text, start, count, after ->
             viewModel.time.postValue(text.toString())

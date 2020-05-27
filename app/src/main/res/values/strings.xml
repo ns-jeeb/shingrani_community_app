@@ -74,7 +74,7 @@
 
 
     <string name="event_prompt">Types</string>
-
+    <string name="title_activity_maps">Map</string>
     <string-array name="events_arrays">
         <item>Event</item>
         <item>Wedding</item>
