@@ -1,8 +1,11 @@
 package com.locked.shingranicommunity.event
 
+import android.app.Activity.RESULT_CANCELED
+import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,15 +14,16 @@ import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.event.map.MapsActivity
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
-import com.locked.shingranicommunity.members.MemberActivity
 import javax.inject.Inject
 
 class EventCreateFragment : Fragment() {
 
+    private val TAG_Event = "EventCreateFragment"
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -37,9 +41,10 @@ class EventCreateFragment : Fragment() {
             viewModel.title.postValue(text.toString())
         }
         binding.imgSearchLocation.setOnClickListener {
-            val intent = Intent(activity, MapsActivity::class.java)
-            intent.putExtra(Constant_Utils.CREATED_EVENT,true)
-            startActivityForResult(intent, Constant_Utils.ONE_01)
+            viewModel.navigateToSearchAddress(requireActivity())
+        }
+        binding.crLocationSearch.doOnTextChanged{text, start, count, after ->
+            viewModel.location.postValue(text.toString())
         }
         binding.crEventTime.doOnTextChanged { text, start, count, after ->
             viewModel.time.postValue(text.toString())
@@ -65,5 +70,25 @@ class EventCreateFragment : Fragment() {
         super.onAttach(context)
         (activity as EventComponentProvider).eventComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(EventCreateViewModel::class.java)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (data != null) {
+            if (requestCode == Constant_Utils.ONE_03) {
+                when (resultCode) {
+                    RESULT_OK -> {
+                        val place = Autocomplete.getPlaceFromIntent(data)
+                        binding.crLocationSearch.setText("${place.address}")
+                    }
+                    AutocompleteActivity.RESULT_ERROR -> {
+                        val status = Autocomplete.getStatusFromIntent(data)
+                    }
+                    RESULT_CANCELED -> {
+                        Log.i(TAG_Event, "user canceled searching")
+                    }
+                }
+            }
+        }
     }
 }

@@ -7,4 +7,5 @@ interface Navigation {
     fun navigateShare(data: EventItem)
     fun navigateToEventDetail(eventId: String)
     fun createFinished()
+    fun navigateAutoComplete(addToBackStack: Boolean)
 }

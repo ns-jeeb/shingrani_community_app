@@ -41,7 +41,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
 import com.locked.shingranicommunity.Constant_Utils.ONE_01
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.dashboard.event.map.MapsActivity
 import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import com.locked.shingranicommunity.members.MemberActivity
@@ -116,10 +115,6 @@ class CreateEventFragment : Fragment() ,View.OnClickListener {
                 val intent = Intent(activity, MemberActivity::class.java)
                 intent.putExtra(CREATED_EVENT,true)
                 startActivityForResult(intent, ONE_01)
-            }
-            R.id.img_search_location ->{
-                var intent: Intent = Intent(activity, MapsActivity::class.java)
-                startActivity(intent)
             }
         }
     }

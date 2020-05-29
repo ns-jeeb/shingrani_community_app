@@ -84,7 +84,7 @@
                         <AutoCompleteTextView
                             android:id="@+id/cr_event_name"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:hint="eg. Bob's Wedding"
                             android:backgroundTint="#919090"
@@ -118,19 +118,20 @@
 
                         <com.google.android.material.textfield.TextInputLayout
                             android:layout_width="0dp"
-                            android:layout_height="0dp"
+                            android:layout_height="match_parent"
                             android:layout_weight="0.8"
                             app:hintEnabled="false">
 
                             <AutoCompleteTextView
                                 android:id="@+id/cr_location_search"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="match_parent"
                                 android:backgroundTint="#919090"
                                 android:drawablePadding="5dp"
                                 android:hint="Address"
                                 android:inputType="textPostalAddress"
                                 android:maxLines="1"
+                                android:enabled="false"
                                 android:paddingLeft="5dp"
                                 android:singleLine="true"
                                 android:textColor="#3C3C3C"

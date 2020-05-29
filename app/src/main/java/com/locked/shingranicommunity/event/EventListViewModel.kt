@@ -162,7 +162,9 @@ class EventListViewModel @Inject constructor(
         }
 
         fun openMap() {
-            navigation.navigateToMap(eventItem.address!!)
+            eventItem.address?.let {
+                navigation.navigateToMap(it)
+            }
         }
 
         fun share() {
