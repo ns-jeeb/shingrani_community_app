@@ -14,9 +14,12 @@ import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.ParseException
 import java.text.SimpleDateFormat
+import java.time.Instant
 import java.util.*
 import javax.inject.Inject
 
+
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class EventListViewModel @Inject constructor(
     private val repository: EventRepository,
     private val session: Session,
@@ -130,15 +133,16 @@ class EventListViewModel @Inject constructor(
             data.showDelete.value = session.isUserAdmin()
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         private fun initDateTime() {
             val timeStr = eventItem.time ?: ""
-            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.getDefault())
             val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
             val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
             try {
-                val dt: Date = fromFormat.parse(timeStr)
-                data.date.value = toDateFormat.format(dt)
-                data.time.value = toTimeFormat.format(dt)
+//                val dt: Date = fromFormat.parse(instant.toString())
+                data.date.value = timeStr.split("T")[0]
+                data.time.value = timeStr.split("T")[1]
             } catch (e: ParseException) {
                 data.date.value = "-"
                 data.time.value = "-"

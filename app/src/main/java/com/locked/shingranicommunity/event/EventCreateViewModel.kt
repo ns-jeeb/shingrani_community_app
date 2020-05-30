@@ -58,12 +58,12 @@ class EventCreateViewModel @Inject constructor(
     private fun getDateTime(): String {
         // init date & time
 //        val toFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-//        val dt: Date = fromFormat.parse(timeStr)
+//        val dt: Date = toFormat.parse(date.value)
 //        val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
 //        val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
-//        data.date.value = toDateFormat.format(dt)
-//        data.time.value = toTimeFormat.format(dt)
-        return date.value + "'T'" + time.value
+//        date.value = toDateFormat.format(dt)
+//        time.value = toTimeFormat.format(dt)
+        return date.value + "T" + time.value
     }
     fun navigateToSearchAddress(context: Context) {
         navigation.navigateAutoComplete(true)

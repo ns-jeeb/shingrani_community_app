@@ -2,16 +2,24 @@ package com.locked.shingranicommunity.event
 
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
+import android.app.DatePickerDialog
+import android.app.Dialog
+import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.DatePicker
+import android.widget.TextView
+import android.widget.TimePicker
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.libraries.places.widget.Autocomplete
@@ -64,6 +72,26 @@ class EventCreateFragment : Fragment() {
         binding.btnCrEvent.setOnClickListener {
             viewModel.create()
         }
+        binding.crEventDate.setOnClickListener {
+            showDatePicker(it)
+        }
+        binding.crEventTime.setOnClickListener {
+            showTimePicker(it)
+        }
+    }
+
+    fun showTimePicker(v: View){
+        activity?.supportFragmentManager?.let {
+            var timeFragment = TimePickerFragment(binding.crEventTime)
+            timeFragment.show(it,"timePicker") }
+    }
+
+    fun showDatePicker(v: View){
+        activity?.supportFragmentManager?.let {
+            var dateFragment = DatePickerFragment(binding.crEventDate)
+            dateFragment.show(it,"datePicker")
+
+        }
     }
 
     override fun onAttach(context: Context) {
@@ -91,4 +119,45 @@ class EventCreateFragment : Fragment() {
             }
         }
     }
+}
+
+class TimePickerFragment(var txtView: TextView) : DialogFragment(), TimePickerDialog.OnTimeSetListener {
+    var time: String = ""
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Use the current time as the default values for the picker
+        val c = Calendar.getInstance()
+        val hour = c.get(Calendar.HOUR_OF_DAY)
+        val minute = c.get(Calendar.MINUTE)
+
+        // Create a new instance of TimePickerDialog and return it
+        return TimePickerDialog(activity, this, hour, minute,true)
+    }
+    fun getTheTime():String{return time}
+
+    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
+        time = "$hourOfDay:$minute"
+        txtView.text = "$hourOfDay:$minute"
+    }
+}
+
+class DatePickerFragment(var txtView: TextView) : DialogFragment(), DatePickerDialog.OnDateSetListener {
+    var date: String = ""
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        // Use the current time as the default values for the picker
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        // Create a new instance of TimePickerDialog and return it
+        return DatePickerDialog(requireActivity(), this, year, month, day)
+    }
+    fun getTheDate():String{return date}
+
+
+    override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        date = "$year-$month-$dayOfMonth"
+        txtView.text = "$year-$month-$dayOfMonth"
+    }
+
 }
