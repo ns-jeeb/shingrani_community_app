@@ -162,9 +162,7 @@ class EventListViewModel @Inject constructor(
         }
 
         fun openMap() {
-            eventItem.address?.let {
-                navigation.navigateToMap(it)
-            }
+            navigation.navigateToMap(eventItem.address!!)
         }
 
         fun share() {
@@ -193,6 +191,11 @@ class EventListViewModel @Inject constructor(
         fun onCleared() {
             eventItem.deObserveStatus(this::onStatusChanged)
         }
+        init {
+            eventItem.address?.let {
+                data.showMap.value = true
+            }
+        }
     }
 
     data class ItemData(
@@ -206,7 +209,7 @@ class EventListViewModel @Inject constructor(
         val showReject: MutableLiveData<Boolean> = MutableLiveData(true),
         val showDelete: MutableLiveData<Boolean> = MutableLiveData(true),
         val showShare: MutableLiveData<Boolean> = MutableLiveData(true),
-        val showMap: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showMap: MutableLiveData<Boolean> = MutableLiveData(false),
         val showDeleteConfirmation: MutableLiveData<Boolean> = MutableLiveData(false)
     )
 }

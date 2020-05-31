@@ -47,7 +47,7 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
             .navigate()
     }
 
-    override fun navigateAutoComplete(addToBackStack: Boolean) {
+    override fun navigateSearchAddress(addToBackStack: Boolean) {
         if (!Places.isInitialized()) {
             Places.initialize(activity, activity.getString(R.string.google_maps_key), Locale.US)
         }
