@@ -65,7 +65,7 @@ class EventCreateViewModel @Inject constructor(
 //        data.time.value = toTimeFormat.format(dt)
         return date.value + "'T'" + time.value
     }
-    fun searchAddress(context: Context) {
+    fun searchAddress() {
         navigation.navigateSearchAddress(true)
     }
 
