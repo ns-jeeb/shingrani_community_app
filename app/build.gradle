@@ -93,7 +93,6 @@ dependencies {
     //noinspection UseOfBundledGooglePlayServices
     implementation 'com.google.android.gms:play-services-location:17.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation 'com.google.android.libraries.places:places:2.2.0'
 
     implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
     implementation "io.reactivex.rxjava2:rxjava:2.2.0"
@@ -103,12 +102,7 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:2.25.2"
     kapt "com.google.dagger:dagger-compiler:2.25.2"
     kapt "com.google.dagger:dagger-android-processor:2.25.2"
-
-    //noinspection UseOfBundledGooglePlayServices
-    implementation 'com.google.android.gms:play-services-location:17.0.0'
-    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.libraries.places:places:2.3.0'
-    implementation 'com.android.support:support-v4:29.0.0'
 }
 
 kapt {

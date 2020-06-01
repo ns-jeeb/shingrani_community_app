@@ -34,10 +34,6 @@ class EventActivity : FragmentActivity(), EventComponentProvider {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (data != null){
-            if (requestCode == Constant_Utils.ONE_03){
-                supportFragmentManager.findFragmentById(R.id.fragment)?.onActivityResult(requestCode,resultCode,data)
-            }
-        }
+        supportFragmentManager.findFragmentById(R.id.fragment)?.onActivityResult(requestCode,resultCode,data)
     }
 }

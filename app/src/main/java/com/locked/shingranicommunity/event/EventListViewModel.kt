@@ -131,6 +131,7 @@ class EventListViewModel @Inject constructor(
             initAcceptReject()
             // init delete
             data.showDelete.value = session.isUserAdmin()
+            eventItem.address?.let {data.showMap.value = true}
         }
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -166,9 +167,7 @@ class EventListViewModel @Inject constructor(
         }
 
         fun openMap() {
-            eventItem.address?.let {
-                navigation.navigateToMap(it)
-            }
+            navigation.navigateToMap(eventItem.address!!)
         }
 
         fun share() {
@@ -210,7 +209,7 @@ class EventListViewModel @Inject constructor(
         val showReject: MutableLiveData<Boolean> = MutableLiveData(true),
         val showDelete: MutableLiveData<Boolean> = MutableLiveData(true),
         val showShare: MutableLiveData<Boolean> = MutableLiveData(true),
-        val showMap: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showMap: MutableLiveData<Boolean> = MutableLiveData(false),
         val showDeleteConfirmation: MutableLiveData<Boolean> = MutableLiveData(false)
     )
 }
