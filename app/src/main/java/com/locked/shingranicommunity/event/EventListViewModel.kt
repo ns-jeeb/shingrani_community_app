@@ -128,6 +128,7 @@ class EventListViewModel @Inject constructor(
             initAcceptReject()
             // init delete
             data.showDelete.value = session.isUserAdmin()
+            eventItem.address?.let {data.showMap.value = true}
         }
 
         private fun initDateTime() {
@@ -190,11 +191,6 @@ class EventListViewModel @Inject constructor(
 
         fun onCleared() {
             eventItem.deObserveStatus(this::onStatusChanged)
-        }
-        init {
-            eventItem.address?.let {
-                data.showMap.value = true
-            }
         }
     }
 
