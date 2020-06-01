@@ -1,33 +1,54 @@
 package com.locked.shingranicommunity.dashboard.event.create_event
 
+import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.icu.util.Calendar
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.api.GoogleApiClient
+import com.google.android.gms.location.LocationListener
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
 import com.locked.shingranicommunity.Constant_Utils.ONE_01
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import com.locked.shingranicommunity.members.MemberActivity
+import java.io.IOException
 import javax.inject.Inject
 
 @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-class CreateEventFragment : Fragment() ,View.OnClickListener{
+class CreateEventFragment : Fragment() ,View.OnClickListener {
     var timeFragment : TimePickerFragment? = null
     var dateFragment : DatePickerFragment? = null
     lateinit var mBinding: CreateEventFragmentBinding
@@ -37,7 +58,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
     var type:String?  =null
 
     private fun getTypeItem():String{
-        val adapter = ArrayAdapter(context,android.R.layout.simple_spinner_item, resources.getStringArray(R.array.events_arrays))
+        val adapter = ArrayAdapter(requireContext(),android.R.layout.simple_spinner_item, resources.getStringArray(R.array.events_arrays))
         mBinding.crEventType.adapter = adapter
         var itemEvent = ""
         mBinding.crEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -74,6 +95,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
         type = getTypeItem()
         mBinding.crEventTime.setOnClickListener(this)
         mBinding.txtUserSelection.setOnClickListener(this)
+        mBinding.imgSearchLocation.setOnClickListener(this)
         return mBinding.root
     }
 
@@ -112,7 +134,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener{
             viewModel.createEvent(
                 mBinding.crEventName.text.toString(),
                 eventType,
-                mBinding.crEventAddress.text.toString(),
+                mBinding.crLocationSearch.text.toString(),
 
                 "${mBinding.crEventDate.text}T${mBinding.crEventTime.text}",
                 mBinding.crEventDetails.text.toString(),
@@ -162,7 +184,7 @@ class DatePickerFragment(var txtView: TextView) : DialogFragment(),DatePickerDia
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         // Create a new instance of TimePickerDialog and return it
-        return DatePickerDialog(activity, this, year, month, day)
+        return DatePickerDialog(requireActivity(), this, year, month, day)
     }
     fun getTheDate():String{return date}
 

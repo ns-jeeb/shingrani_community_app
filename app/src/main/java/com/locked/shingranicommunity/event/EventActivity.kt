@@ -1,11 +1,16 @@
 package com.locked.shingranicommunity.event
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
+import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.FragmentActivity
 import com.locked.shingranicommunity.di2.event.EventComponent
 
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class EventActivity : FragmentActivity(), EventComponentProvider {
 
     override lateinit var eventComponent: EventComponent
@@ -25,5 +30,10 @@ class EventActivity : FragmentActivity(), EventComponentProvider {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        supportFragmentManager.findFragmentById(R.id.fragment)?.onActivityResult(requestCode,resultCode,data)
     }
 }

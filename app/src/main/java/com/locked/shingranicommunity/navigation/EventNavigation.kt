@@ -1,12 +1,18 @@
 package com.locked.shingranicommunity.navigation
 
 import android.content.Intent
-import android.content.pm.ResolveInfo
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.widget.Autocomplete
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.locked.shingranicommunity.Constant_Utils
+import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import com.locked.shingranicommunity.event.Navigation
@@ -39,6 +45,15 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
             .setActivity(DashboardActivity::class.java)
             .addToBackStack(false)
             .navigate()
+    }
+
+    override fun navigateSearchAddress(addToBackStack: Boolean) {
+        if (!Places.isInitialized()) {
+            Places.initialize(activity, activity.getString(R.string.google_maps_key), Locale.US)
+        }
+        val fields = listOf(Place.Field.ID, Place.Field.ADDRESS ,Place.Field.NAME)
+        val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(activity)
+        startActivityForResult(activity,intent, Constant_Utils.ONE_03,null)
     }
 
     override fun navigateShare(data: EventItem) {

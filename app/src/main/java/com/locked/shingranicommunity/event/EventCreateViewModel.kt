@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.event
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,8 +8,6 @@ import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.models.EventStatus
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
-import java.text.SimpleDateFormat
-import java.util.*
 import javax.inject.Inject
 
 class EventCreateViewModel @Inject constructor(
@@ -66,6 +65,10 @@ class EventCreateViewModel @Inject constructor(
 //        data.time.value = toTimeFormat.format(dt)
         return date.value + "'T'" + time.value
     }
+    fun searchAddress() {
+        navigation.navigateSearchAddress(true)
+    }
+
 }
 
 data class Data(val message: MutableLiveData<String> = MutableLiveData())

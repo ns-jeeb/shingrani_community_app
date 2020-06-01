@@ -128,6 +128,7 @@ class EventListViewModel @Inject constructor(
             initAcceptReject()
             // init delete
             data.showDelete.value = session.isUserAdmin()
+            eventItem.address?.let {data.showMap.value = true}
         }
 
         private fun initDateTime() {
@@ -204,7 +205,7 @@ class EventListViewModel @Inject constructor(
         val showReject: MutableLiveData<Boolean> = MutableLiveData(true),
         val showDelete: MutableLiveData<Boolean> = MutableLiveData(true),
         val showShare: MutableLiveData<Boolean> = MutableLiveData(true),
-        val showMap: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showMap: MutableLiveData<Boolean> = MutableLiveData(false),
         val showDeleteConfirmation: MutableLiveData<Boolean> = MutableLiveData(false)
     )
 }
