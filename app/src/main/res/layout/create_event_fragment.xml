@@ -9,25 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_constraintHeight_percent="0.10"
-            android:minHeight="?attr/actionBarSize"
-            android:background="@color/colorPrimary"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="#FFFFFF"
-            app:title="Create Event"
-            app:navigationIcon="@drawable/ic_arrow_back">
-
-
-
-        </androidx.appcompat.widget.Toolbar>
-
-
-
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -42,21 +23,6 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingBottom="10dp"
                 android:layout_marginTop="10dp">
-
-
-                <!--                <TextView-->
-                <!--                android:id="@+id/textView3"-->
-                <!--                android:layout_width="wrap_content"-->
-                <!--                android:layout_height="wrap_content"-->
-                <!--                android:text="Create An Event!"-->
-                <!--                android:textSize="25sp"-->
-                <!--                app:layout_constraintBottom_toTopOf="@+id/register_form"-->
-                <!--                app:layout_constraintEnd_toEndOf="parent"-->
-                <!--                app:layout_constraintHorizontal_bias="0.497"-->
-                <!--                app:layout_constraintStart_toStartOf="parent"-->
-                <!--                app:layout_constraintTop_toTopOf="parent"-->
-                <!--                app:layout_constraintVertical_bias="0.083" />-->
-
 
                 <LinearLayout
                     android:id="@+id/register_form"
@@ -317,43 +283,10 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <!--        <TextView-->
-                <!--            android:id="@+id/txt_register_name"-->
-                <!--            android:layout_width="match_parent"-->
-                <!--            android:layout_height="0dp"-->
-                <!--            android:gravity="bottom"-->
-                <!--            android:text="Register"-->
-                <!--            app:layout_constraintHeight_percent="0.1"-->
-                <!--            app:layout_constraintStart_toStartOf="parent"-->
-                <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-
-
-
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+               </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <TextView
-            android:id="@+id/txt_register_name"
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:gravity="bottom"
-            android:text="Register"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
     </LinearLayout>
-
-
-
-
-
-
-
-
-
 
 </layout>

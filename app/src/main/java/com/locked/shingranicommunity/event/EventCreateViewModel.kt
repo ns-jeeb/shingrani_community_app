@@ -1,6 +1,12 @@
 package com.locked.shingranicommunity.event
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.content.Context
+import android.icu.util.Calendar
+import android.util.Log
+import android.view.View
+import android.widget.TimePicker
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -53,6 +59,19 @@ class EventCreateViewModel @Inject constructor(
                 data.message.postValue("Failed to Create Event")
             }
         }
+    }
+
+    fun showDatePicker(v: View) {
+        val c = Calendar.getInstance()
+        val dialog = DatePickerDialog(v.context, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
+            val _year = year.toString()
+            val _month = if (month + 1 < 10) "0" + (month + 1) else
+                (month + 1).toString()
+            val _date = if (dayOfMonth < 10) "0$dayOfMonth" else dayOfMonth.toString()
+            date.value = "$_year-$_month-$_date"
+        }, c[Calendar.YEAR], c[Calendar.MONTH], c[Calendar.MONTH])
+        dialog.datePicker.minDate = System.currentTimeMillis() - 1000
+        dialog.show()
     }
 
     private fun getDateTime(): String {

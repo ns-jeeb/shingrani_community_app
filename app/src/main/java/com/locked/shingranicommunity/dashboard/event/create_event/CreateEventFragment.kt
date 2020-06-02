@@ -147,7 +147,7 @@ class CreateEventFragment : Fragment() ,View.OnClickListener {
                     activity?.setResult(Activity.RESULT_OK, intent)
                     activity?.finish()
                 } else {
-                    mBinding.txtRegisterName.text = it
+
                 }
             })
         }
