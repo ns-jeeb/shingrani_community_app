@@ -24,11 +24,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.Constant_Utils.CREATED_EVENT
 import com.locked.shingranicommunity.Constant_Utils.INVITED_GUESTS
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.ViewModelProviderFactory
+import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.databinding.ActivityMemberBinding
 import com.locked.shingranicommunity.databinding.MemberItemBinding
 import com.locked.shingranicommunity.di.MemberComponent
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.MyApplication
 import javax.inject.Inject
 
 

@@ -9,7 +9,7 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
 import com.locked.shingranicommunity.databinding.CreateItemActivityBinding
 import com.locked.shingranicommunity.di.DashboardComponent
-import com.locked.shingranicommunity.registration_login.registration.MyApplication
+import com.locked.shingranicommunity.MyApplication
 import javax.inject.Inject
 
 class CreateItemActivity : AppCompatActivity() {

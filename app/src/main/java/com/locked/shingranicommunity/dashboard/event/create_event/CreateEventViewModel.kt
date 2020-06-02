@@ -1,26 +1,47 @@
 package com.locked.shingranicommunity.dashboard.event.create_event
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
-import com.locked.shingranicommunity.dashboard.data.Field
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Field
 import javax.inject.Inject
 
 class CreateEventViewModel@Inject constructor(val itemEventHandler: DashboardItemRequestListener, val context: Context) : ViewModel() {
 
     fun createEvent(name: String, type: String, address: String, dateTime: String, moreDetails: String, accepted: String, rejected: String, note: String): MutableLiveData<String> {
-        var nameField = Field(name = "name", value = name)
-        var typeField = Field(name = "type", value = type)
-        var addressField = Field(name = "address", value = address)
-        var dateTimeField = Field(name = "datetime", value = dateTime)
-        var moreDetails = Field(name = "moreDetails", value = moreDetails)
-        var acceptedField = Field(name = "Accepted", value = accepted)
-        var rejectedField = Field(name = "Rejected", value = rejected)
-        var noteField = Field(name = "note", value = note)
+        var nameField = Field(
+            name = "name",
+            value = name
+        )
+        var typeField = Field(
+            name = "type",
+            value = type
+        )
+        var addressField = Field(
+            name = "address",
+            value = address
+        )
+        var dateTimeField = Field(
+            name = "datetime",
+            value = dateTime
+        )
+        var moreDetails = Field(
+            name = "moreDetails",
+            value = moreDetails
+        )
+        var acceptedField = Field(
+            name = "Accepted",
+            value = accepted
+        )
+        var rejectedField = Field(
+            name = "Rejected",
+            value = rejected
+        )
+        var noteField = Field(
+            name = "note",
+            value = note
+        )
 
         var eventFields: ArrayList<Field> = ArrayList();
         eventFields.add(nameField)

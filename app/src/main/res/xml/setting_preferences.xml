@@ -1,19 +1,28 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <SwitchPreferenceCompat
-        app:icon="@drawable/ic_email"
-        app:key="@string/key_hide_email"
-        app:title="@string/hide_email_header" />
+    <PreferenceCategory
+        app:title="Account">
 
-    <SwitchPreferenceCompat
-        app:icon="@drawable/ic_phone"
-        app:key="@string/key_hide_phone"
-        app:title="@string/hide_phone_header" />
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_email"
+            app:key="@string/key_hide_email"
+            app:title="@string/hide_email_header" />
+
+        <Preference
+            app:icon="@drawable/ic_lock"
+            app:key="@string/key_logout_"
+            app:title="@string/logout_header" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Application">
 
     <Preference
-        app:icon="@drawable/ic_lock"
-        app:key="@string/key_logout_"
-        app:title="@string/logout_header" />
+        app:title="@string/version"
+        app:summary="v1.0"/>
+
+    </PreferenceCategory>
 
 </PreferenceScreen>

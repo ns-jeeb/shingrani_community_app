@@ -2,8 +2,8 @@ package com.locked.shingranicommunity.dashboard.announncement
 
 import androidx.lifecycle.*
 import com.locked.shingranicommunity.dashboard.DashboardItemRequestListener
-import com.locked.shingranicommunity.dashboard.data.Item
-import com.locked.shingranicommunity.models.Admin
+import com.locked.shingranicommunity.models.Item
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.registration_login.registration.user.UserManager
 import kotlinx.coroutines.launch
 import java.util.ArrayList
@@ -30,7 +30,7 @@ class AnnounceViewModel @Inject constructor(val eventListener: DashboardItemRequ
     fun loadedAnnouncements(): LiveData<ArrayList<Item>>{
         return eventListener.fetchAnnouncement()!!
     }
-    fun getAdminUser(): Admin?{
+    fun getAdminUser(): User?{
         return userManager.getAdminUser(userManager.getCurrentUser()?._id!!)
     }
     fun deleteAnnounce(itemId: String):MutableLiveData<String> {

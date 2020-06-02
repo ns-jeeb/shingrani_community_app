@@ -19,8 +19,8 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
     @Inject
     lateinit var repository: UserDataRepository
     private val _loginState = MutableLiveData<LoginFormState>()
-    val loginState: LiveData<LoginFormState>
-        get() = _loginState
+    var loginState: LiveData<LoginFormState> = MutableLiveData<LoginFormState>()
+
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult : LiveData<LoginResult>
         get() = _loginResult
@@ -31,9 +31,9 @@ class LoginViewModel @Inject constructor(private val userManager: UserManager):V
         if (userManager.loginUser()) {
             _loginState.value = LoginFormState(isDataValid = true)
         } else {
-            loginSuccess = repository.login(username,password)
+            loginState = repository.login(username,password)
         }
-        return loginSuccess!!
+        return loginState
     }
 
     fun unregister() {

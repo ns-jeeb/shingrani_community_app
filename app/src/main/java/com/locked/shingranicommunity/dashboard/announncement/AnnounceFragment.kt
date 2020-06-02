@@ -16,8 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.locked.shingranicommunity.Constant_Utils.ANNOUNCEMENT_CREATED
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
-import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
-import com.locked.shingranicommunity.dashboard.data.Item
+import com.locked.shingranicommunity.models.Item
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
 import javax.inject.Inject

@@ -1,7 +1,7 @@
 
 package com.locked.shingranicommunity.di
 
-import com.locked.shingranicommunity.members.User
+import com.locked.shingranicommunity.models.User
 import com.locked.shingranicommunity.models.AppModel
 
 interface Storage {

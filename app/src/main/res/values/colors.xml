@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#0d5da6</color>
     <color name="colorSecondary">#00BCD4</color>
-    <color name="colorBackground">@android:color/white</color>
+    <color name="colorBackground">#F5F5F5</color>
     <color name="colorError">#FF5722</color>
     <color name="colorSurface">@android:color/white</color>
     <color name="colorOnPrimary">@android:color/white</color>
@@ -10,6 +10,9 @@
     <color name="colorOnBackground">@android:color/white</color>
     <color name="colorOnError">@android:color/white</color>
     <color name="colorOnSurface">@color/colorPrimary</color>
-    <color name="colorLoginGradientStart">#0D5DA6</color>
-    <color name="colorLoginGradientEnd">#8000BCD4</color>
+    <color name="colorGradient1Start">#0D5DA6</color>
+    <color name="colorGradient1End">#8000BCD4</color>
+    <color name="colorGradient2Start">#0D5DA6</color>
+    <color name="colorGradient2End">#000D5DA6</color>
+    <color name="black">#000</color>
 </resources>
