@@ -61,19 +61,6 @@ class EventCreateViewModel @Inject constructor(
         }
     }
 
-    fun showDatePicker(v: View) {
-        val c = Calendar.getInstance()
-        val dialog = DatePickerDialog(v.context, DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-            val _year = year.toString()
-            val _month = if (month + 1 < 10) "0" + (month + 1) else
-                (month + 1).toString()
-            val _date = if (dayOfMonth < 10) "0$dayOfMonth" else dayOfMonth.toString()
-            date.value = "$_year-$_month-$_date"
-        }, c[Calendar.YEAR], c[Calendar.MONTH], c[Calendar.MONTH])
-        dialog.datePicker.minDate = System.currentTimeMillis() - 1000
-        dialog.show()
-    }
-
     private fun getDateTime(): String {
         // init date & time
 //        val toFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
