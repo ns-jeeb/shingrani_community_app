@@ -14,12 +14,9 @@ import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.Instant
 import java.util.*
 import javax.inject.Inject
 
-
-@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class EventListViewModel @Inject constructor(
     private val repository: EventRepository,
     private val session: Session,
