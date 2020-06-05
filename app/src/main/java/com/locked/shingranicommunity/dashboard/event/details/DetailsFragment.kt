@@ -7,29 +7,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import com.airbnb.lottie.LottieAnimationView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.EventDetailsFragmentBinding
-import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
-import com.locked.shingranicommunity.models.Item
+import com.locked.shingranicommunity.search_map.ItemDetailsComponentProvider
+import com.locked.shingranicommunity.search_map.ItemDetailsViewModel
 import javax.inject.Inject
+
 
 class DetailsFragment : Fragment() {
 
-    companion object {
-        fun newInstance(item: Item) :DetailsFragment {
-            var fragment = DetailsFragment()
-            var bundle: Bundle = Bundle()
-//            bundle.putParcelable("extra_item",item)
-            fragment.arguments = bundle
-            return fragment
-        }
-    }
-    @Inject
-    lateinit var viewModel: DetailsViewModel
+    lateinit var viewModel: ItemDetailsViewModel
     lateinit var mBinding: EventDetailsFragmentBinding
     @Inject
-    lateinit var viewModelProvider: ViewModelProviderFactory
+    lateinit var viewModelProvider: ViewModelProvider.Factory
 
 
     override fun onCreateView(
@@ -37,27 +30,19 @@ class DetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         mBinding = DataBindingUtil.inflate(inflater, R.layout.event_details_fragment, container, false)
-//        var item = arguments?.getParcelable<Item>("extra_item")
-        viewModel = ViewModelProviders.of(this,viewModelProvider).get(DetailsViewModel::class.java)
-//        if (!item?.fields?.get(5)?.value.isNullOrBlank()){
-//            mBinding.attendees.text = "${item?.fields?.get(5)?.value?.split(",")?.size} : Attend/s"
-//        }
-//        if (!item?.fields?.get(6)?.value.isNullOrBlank()){
-//            mBinding.notAttendees.text = "${item?.fields?.get(6)?.value?.split(",")?.size} : Not Attend"
-//        }
+        viewModel = ViewModelProviders.of(this,viewModelProvider).get(ItemDetailsViewModel::class.java)
 
+        val lottieAnimationView = mBinding.envelopOpen
+        lottieAnimationView.setImageAssetsFolder("images/")
+        lottieAnimationView.setAnimation("data.json")
+        lottieAnimationView.loop(false)
+        lottieAnimationView.playAnimation()
         return mBinding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(DetailsViewModel::class.java)
-        // TODO: Use the ViewModel
     }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        (activity as DetailsActivity).dashboardComponent.inject(this)
+        (activity as ItemDetailsComponentProvider).itemDetailsComponent.inject(this)
     }
 
 }

@@ -1,28 +1,26 @@
 package com.locked.shingranicommunity.dashboard.event.details
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
 import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.di.DashboardComponent
-import com.locked.shingranicommunity.models.Item
+import com.locked.shingranicommunity.common.FragmentActivity
+import com.locked.shingranicommunity.di2.item_details.ItemDetailsComponent
+import com.locked.shingranicommunity.search_map.ItemDetailsComponentProvider
 
-class DetailsActivity : AppCompatActivity() {
+class DetailsActivity : FragmentActivity(), ItemDetailsComponentProvider {
 
-    lateinit var dashboardComponent: DashboardComponent
+    override lateinit var itemDetailsComponent: ItemDetailsComponent
     override fun onCreate(savedInstanceState: Bundle?) {
-        dashboardComponent = (application as MyApplication).appComponent.dashBoardComponent().create()
-        dashboardComponent.inject(this)
+        itemDetailsComponent = MyApplication.instance.appComponent2.itemDetailsComponentFactory.create(this)
+        itemDetailsComponent.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
-//        var item : Item = intent.getParcelableExtra("extra_item")
-        var fragment: DetailsFragment? = supportFragmentManager.findFragmentById(R.id.details_container) as DetailsFragment?
+        var fragment: DetailsFragment? = supportFragmentManager.findFragmentById(R.id.fragment) as DetailsFragment?
         var transaction: FragmentTransaction? = null
         if (fragment == null){
             fragment  = DetailsFragment()
         }
-        transaction = supportFragmentManager.beginTransaction().replace(R.id.details_container,fragment)
+        transaction = supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment)
         transaction.commit()
     }
 }

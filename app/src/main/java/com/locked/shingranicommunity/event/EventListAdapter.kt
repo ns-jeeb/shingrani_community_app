@@ -86,6 +86,9 @@ class EventListAdapter(
             binding.imgRejectedAttending.setOnClickListener(this)
             binding.imgShareEvent.setOnClickListener(this)
             binding.imgEventLocation.setOnClickListener(this)
+            itemView.setOnClickListener {
+                itemViewModel.openDetails()
+            }
         }
 
         private fun showDeleteAlert(itemViewModel: EventListViewModel.ItemViewModel) {
