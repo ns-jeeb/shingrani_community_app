@@ -2,6 +2,8 @@ package com.locked.shingranicommunity.repositories
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import com.locked.shingranicommunity.auth.AuthConstants
 import com.locked.shingranicommunity.di2.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
@@ -20,9 +22,12 @@ class EventRepository @Inject constructor(
     private val _fetchEvents: MutableLiveData<Data> = MutableLiveData<Data>()
     private var loading: Boolean = false
     val fetchEvents: LiveData<Data> = _fetchEvents
+    val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
+    val authError: LiveData<Boolean> = _authError
     var events: MutableList<EventItem> = mutableListOf()
 
     init {
+        session.loginState.observeForever(Observer { _authError.value = !it })
         refreshEvents()
     }
 
@@ -50,6 +55,8 @@ class EventRepository @Inject constructor(
     }
 
     fun createEvent(event: EventItem) {
+        if (event.accepted == null) { event.accepted = "" }
+        if (event.rejected == null) { event.rejected = "" }
         apiService.createEvent(event)
             .enqueue(CreateEventListener(event))
     }
@@ -69,6 +76,14 @@ class EventRepository @Inject constructor(
         apiService.accept(event._id!!, rsvp).enqueue(RejectedListener(event))
     }
 
+    private fun checkForTokenError(details: List<Error>) {
+        details.forEach {
+            if (it.code == AuthConstants.TOKEN_ERROR) {
+                _authError.postValue(true)
+            }
+        }
+    }
+
     @Suppress("UNREACHABLE_CODE")
     private inner class FetchEventsListener(): LockedCallback<MutableList<EventItem>>() {
         override fun success(response: MutableList<EventItem>) {
@@ -79,7 +94,8 @@ class EventRepository @Inject constructor(
         }
         override fun fail(message: String, details: List<Error>) {
             loading = false
-            _fetchEvents.postValue(Data(true))
+            checkForTokenError(details)
+            _fetchEvents.postValue(Data(false))
         }
     }
 
@@ -90,6 +106,7 @@ class EventRepository @Inject constructor(
             event.status = EventStatus.CREATED.toString()
         }
         override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
             event.status = EventStatus.CREATE_FAILED.toString()
         }
     }
@@ -100,6 +117,7 @@ class EventRepository @Inject constructor(
             event.status = EventStatus.DELETED.toString()
         }
         override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
             event.status = EventStatus.DELETE_FAILED.toString()
         }
     }
@@ -128,6 +146,7 @@ class EventRepository @Inject constructor(
             event.status = EventStatus.ACCEPTED.toString()
         }
         override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
             event.status = EventStatus.ACCEPT_FAILED.toString()
         }
     }
@@ -156,6 +175,7 @@ class EventRepository @Inject constructor(
             event.status = EventStatus.REJECTED.toString()
         }
         override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
             event.status = EventStatus.REJECT_FAILED.toString()
         }
     }
