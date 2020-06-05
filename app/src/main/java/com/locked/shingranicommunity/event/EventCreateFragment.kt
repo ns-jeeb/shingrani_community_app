@@ -41,7 +41,7 @@ class EventCreateFragment : Fragment() {
             viewModel.title.postValue(text.toString())
         }
         binding.imgSearchLocation.setOnClickListener {
-            viewModel.searchAddress(requireActivity())
+            viewModel.searchAddress()
         }
         binding.crLocationSearch.doOnTextChanged{text, start, count, after ->
             viewModel.location.postValue(text.toString())

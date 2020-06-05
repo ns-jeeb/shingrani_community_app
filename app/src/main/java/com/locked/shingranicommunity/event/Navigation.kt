@@ -8,4 +8,5 @@ interface Navigation {
     fun navigateToEventDetail(eventId: String)
     fun createFinished()
     fun navigateSearchAddress(addToBackStack: Boolean)
+    fun navigateToLogin(clearSession: Boolean)
 }
