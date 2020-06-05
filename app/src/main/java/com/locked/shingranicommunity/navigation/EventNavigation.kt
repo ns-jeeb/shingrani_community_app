@@ -13,16 +13,18 @@ import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.auth.AuthActivity
+import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import com.locked.shingranicommunity.event.Navigation
 import com.locked.shingranicommunity.models.EventItem
+import com.locked.shingranicommunity.session.SessionManager
 import java.util.*
 import javax.inject.Inject
 
-
-class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navigation {
-
+class EventNavigation @Inject constructor(val activity: AppCompatActivity,
+                                          val sessionManager: SessionManager): Navigation {
 
     override fun navigateToMap(address: String) {
         val geocoder = Geocoder(activity, Locale.getDefault())
@@ -38,13 +40,6 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
             intent.setPackage("com.google.android.apps.maps")
             startActivity(activity, intent, null)
         }
-    }
-
-    override fun createFinished() {
-        NavigationHandler(activity)
-            .setActivity(DashboardActivity::class.java)
-            .addToBackStack(false)
-            .navigate()
     }
 
     override fun navigateSearchAddress(addToBackStack: Boolean) {
@@ -64,4 +59,21 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity): Navi
 
     }
 
+    override fun navigateToLogin(clearSession: Boolean) {
+        if (clearSession) {
+            sessionManager.logout()
+        }
+        NavigationHandler(activity)
+            .setFragment(LoginFragment::class.java)
+            .setActivity(AuthActivity::class.java)
+            .addToBackStack(false)
+            .navigate()
+    }
+
+    override fun createFinished() {
+        NavigationHandler(activity)
+            .setActivity(DashboardActivity::class.java)
+            .addToBackStack(false)
+            .navigate()
+    }
 }

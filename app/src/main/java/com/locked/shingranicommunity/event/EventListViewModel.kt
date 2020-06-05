@@ -1,7 +1,5 @@
 package com.locked.shingranicommunity.event
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -45,6 +43,15 @@ class EventListViewModel @Inject constructor(
 
     init {
         repository.fetchEvents.observeForever(fetchEventsObserver)
+        repository.authError.observeForever(Observer { authErrorOccurred(it) })
+    }
+
+    private fun authErrorOccurred(it: Boolean?) {
+        it?.let {
+            if (it) {
+                navigation.navigateToLogin(true)
+            }
+        }
     }
 
     fun load() {
@@ -156,7 +163,11 @@ class EventListViewModel @Inject constructor(
             val rejectedStr = eventItem.rejected?.trim() ?: ""
             data.showAccept.postValue(!acceptedStr.contains(session.getUserId()!!))
             data.showReject.postValue(!rejectedStr.contains(session.getUserId()!!))
-            data.attendees.postValue(if (acceptedStr.isNotBlank()) { acceptedStr.split(",").size } else { 0 })
+            data.attendees.postValue(
+                if (acceptedStr.isNotBlank()) {
+                    acceptedStr.split(",").filter { it.isNotBlank() }.size
+                } else { 0 }
+            )
         }
 
         fun accept() {
