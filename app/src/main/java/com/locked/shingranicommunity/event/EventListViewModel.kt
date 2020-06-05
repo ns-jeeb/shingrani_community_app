@@ -141,9 +141,10 @@ class EventListViewModel @Inject constructor(
             val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
             val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
             try {
-//                val dt: Date = fromFormat.parse(instant.toString())
-                data.date.value = timeStr.split("T")[0]
-                data.time.value = timeStr.split("T")[1]
+               val dt: Date = fromFormat.parse(timeStr)
+                data.date.value = toDateFormat.format(dt)
+                data.time.value = toTimeFormat.format(dt)
+//
             } catch (e: ParseException) {
                 data.date.value = "-"
                 data.time.value = "-"
