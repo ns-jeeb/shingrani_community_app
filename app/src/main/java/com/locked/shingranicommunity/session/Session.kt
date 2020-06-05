@@ -1,8 +1,11 @@
 package com.locked.shingranicommunity.session
 
+import androidx.lifecycle.LiveData
 import com.locked.shingranicommunity.models.User
 
 interface Session {
+
+    val loginState: LiveData<Boolean>
 
     fun getToken(): String
 

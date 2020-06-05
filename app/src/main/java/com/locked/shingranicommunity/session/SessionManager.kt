@@ -28,6 +28,8 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(app)
     private val session: SessionData = SessionData()
     private val _logoutEvent: MutableLiveData<Boolean> = MutableLiveData()
+    private val _loginState: MutableLiveData<Boolean> = MutableLiveData()
+    override val loginState: LiveData<Boolean> = _loginState
     val logoutEvent: LiveData<Boolean> = _logoutEvent
 
     init {
@@ -48,6 +50,8 @@ class SessionManager @Inject constructor(private val app: Application) : Session
             session.isLoggedIn = true
             session.token = sessionToken
         }
+        _logoutEvent.value = !session.isLoggedIn
+        _loginState.value = session.isLoggedIn
     }
 
     private fun isAdmin(user: User): Boolean {
@@ -84,6 +88,7 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         token?.let { _token = token }
         preferences.edit().putString(KEY_SESSION_TOKEN, _token).commit()
         initialize()
+        _loginState.postValue(session.isLoggedIn)
 
         // todo remove when the whole app uses the SessionManager
         app.getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -103,6 +108,7 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         preferences.edit().clear().commit()
         initialize()
         _logoutEvent.postValue(true)
+        _loginState.postValue(false)
     }
 
     override fun getToken(): String {
