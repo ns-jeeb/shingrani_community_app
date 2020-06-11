@@ -9,6 +9,17 @@
         android:layout_margin="10dp"
         android:padding="10dp">
 
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/envelop_open"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            app:lottie_fileName="envelop.json"
+            app:lottie_autoPlay="false"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
         <LinearLayout
             android:id="@+id/details_layout"
             android:layout_width="match_parent"
@@ -34,7 +45,6 @@
                     android:id="@+id/txt_event_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bob And Emily Engaged"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="this is the item for announcement" />
@@ -43,7 +53,7 @@
                     android:id="@+id/img_event_location"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
-                    android:text="Address"
+                    tools:text="Address"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txt_event_name" />
 
@@ -51,7 +61,7 @@
                     android:id="@+id/txt_event_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="yesterday"
+                    tools:text="yesterday"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_event_location" />
@@ -87,13 +97,13 @@
                     android:id="@+id/img_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lock" />
+                    tools:src="@drawable/ic_lock" />
 
                 <ImageView
                     android:id="@+id/img_star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_lock" />
+                    tools:src="@drawable/ic_lock" />
 
             </LinearLayout>
 
@@ -141,13 +151,5 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/envelop_open"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

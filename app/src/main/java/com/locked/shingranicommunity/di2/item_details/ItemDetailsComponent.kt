@@ -1,8 +1,8 @@
 package com.locked.shingranicommunity.di2.item_details
 
 import androidx.appcompat.app.AppCompatActivity
-import com.locked.shingranicommunity.dashboard.event.details.DetailsActivity
-import com.locked.shingranicommunity.dashboard.event.details.DetailsFragment
+import com.locked.shingranicommunity.details.DetailsActivity
+import com.locked.shingranicommunity.details.DetailsFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
 
