@@ -138,15 +138,17 @@ class EventListViewModel @Inject constructor(
             eventItem.address?.let {data.showMap.value = true}
         }
 
+        @RequiresApi(Build.VERSION_CODES.O)
         private fun initDateTime() {
             val timeStr = eventItem.time ?: ""
-            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val fromFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssz", Locale.getDefault())
             val toDateFormat = SimpleDateFormat("E, MMM dd", Locale.getDefault())
             val toTimeFormat = SimpleDateFormat("hh:mm", Locale.getDefault())
             try {
-                val dt: Date = fromFormat.parse(timeStr)
+               val dt: Date = fromFormat.parse(timeStr)
                 data.date.value = toDateFormat.format(dt)
                 data.time.value = toTimeFormat.format(dt)
+//
             } catch (e: ParseException) {
                 data.date.value = "-"
                 data.time.value = "-"
