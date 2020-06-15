@@ -8,8 +8,7 @@ import com.locked.shingranicommunity.dashboard.DashBoardViewModel
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceViewModel
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnounceViewModel
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateEventViewModel
-import com.locked.shingranicommunity.dashboard.event.details.DetailsFragment
-import com.locked.shingranicommunity.dashboard.event.details.DetailsViewModel
+import com.locked.shingranicommunity.details.DetailsViewModel
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventViewModel
 import com.locked.shingranicommunity.members.FragmentMemberViewModel
 import com.locked.shingranicommunity.members.MemberViewModel

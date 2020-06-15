@@ -179,6 +179,10 @@ class EventListViewModel @Inject constructor(
             navigation.navigateToMap(eventItem.address!!)
         }
 
+        fun openDetails() {
+            navigation.navigateToEventDetail(eventItem._id!!)
+        }
+
         fun share() {
             // todo
         }

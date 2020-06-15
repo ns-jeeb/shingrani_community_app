@@ -37,7 +37,7 @@
             android:name=".dashboard.event.create_event.CreateItemActivity"
             android:label="Create Event"/>
         <activity android:name=".members.MemberActivity" />
-        <activity android:name=".dashboard.event.details.DetailsActivity" />
+        <activity android:name="com.locked.shingranicommunity.details.DetailsActivity" />
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />

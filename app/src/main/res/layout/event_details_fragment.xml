@@ -5,87 +5,105 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:padding="10dp">
 
-        <LinearLayout
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/envelop_open"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            app:lottie_fileName="envelop.json"
+            app:lottie_autoPlay="false"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <LinearLayout
+            android:id="@+id/details_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="1"
-            android:id="@+id/details_layout"
             app:layout_constraintTop_toTopOf="parent">
+
             <ImageView
+                android:id="@+id/img_event"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
-                android:id="@+id/img_event"
-                android:layout_weight="0.40"/>
+                android:layout_weight="0.40" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginStart="@dimen/header_10dp"
-                android:layout_weight="0.50">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/txt_event_name"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Bob And Emily Engaged"
-                    tools:text="this is the item for announcement"/>
+                android:layout_weight="0.50"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/txt_event_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="this is the item for announcement" />
+
+                <TextView
+                    android:id="@+id/img_event_location"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
+                    tools:text="Address"
                     app:layout_constraintStart_toStartOf="parent"
-                    android:id="@+id/img_event_location"
-                    android:text="Address"
-                    app:layout_constraintTop_toBottomOf="@+id/txt_event_name"/>
+                    app:layout_constraintTop_toBottomOf="@+id/txt_event_name" />
 
                 <TextView
                     android:id="@+id/txt_event_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="yesterday"
+                    tools:text="yesterday"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/img_event_location" />
+
                 <TextView
+                    android:id="@+id/is_attending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="going"
-                    tools:visibility="visible"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:id="@+id/is_attending"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:visibility="visible" />
+
                 <TextView
+                    android:id="@+id/is_not_attending"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="not Going"
-                    tools:visibility="visible"
                     android:visibility="gone"
-                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:id="@+id/is_not_attending"/>
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:visibility="visible" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.10"
                 android:orientation="vertical">
+
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/img_location"
-                    android:src="@drawable/ic_lock"/>
-                  <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    tools:src="@drawable/ic_lock" />
+
+                <ImageView
                     android:id="@+id/img_star"
-                    android:src="@drawable/ic_lock"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:src="@drawable/ic_lock" />
 
             </LinearLayout>
 
@@ -97,38 +115,41 @@
             android:orientation="horizontal"
             app:layout_constraintTop_toBottomOf="@id/details_layout">
 
+            <TextView
+                android:id="@+id/attendees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                tools:text="number of attendees" />
+
+            <TextView
+                android:id="@+id/not_attendees"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="number of not attendees" />
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.40">
+
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/not_going"
-                    tools:text="No Going"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
-                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/going"
-                    tools:text="Going"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="No Going" />
+
+                <TextView
+                    android:id="@+id/going"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Going" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/attendees"
-                android:layout_weight="0.20"
-                tools:text="number of attendees"/>
-              <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/not_attendees"
-                tools:text="number of not attendees"/>
 
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

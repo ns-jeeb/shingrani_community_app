@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.dashboard.event.details
+package com.locked.shingranicommunity.details
 
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.models.Item

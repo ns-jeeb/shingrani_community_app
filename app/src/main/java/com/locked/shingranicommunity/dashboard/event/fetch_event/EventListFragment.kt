@@ -21,7 +21,7 @@ import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard.event.EventsListAdapter
 import com.locked.shingranicommunity.dashboard.event.OnInvitedListener
 import com.locked.shingranicommunity.dashboard.event.OnItemClickListener
-import com.locked.shingranicommunity.dashboard.event.details.DetailsActivity
+import com.locked.shingranicommunity.details.DetailsActivity
 import com.locked.shingranicommunity.databinding.FragmentEventListBinding
 import com.locked.shingranicommunity.models.Item
 import javax.inject.Inject
@@ -87,6 +87,7 @@ class EventListFragment : Fragment(),OnInvitedListener, OnItemClickListener {
         return mBinding.root
     }
     private lateinit var adapter: EventsListAdapter
+
     @SuppressLint("SetTextI18n")
     fun setupListViewAdapter() {
         var hideDeleteMenu = true

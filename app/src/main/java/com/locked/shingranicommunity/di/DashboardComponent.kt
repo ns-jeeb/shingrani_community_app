@@ -5,8 +5,8 @@ import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.dashboard.event.create_event.CreateEventFragment
-import com.locked.shingranicommunity.dashboard.event.details.DetailsActivity
-import com.locked.shingranicommunity.dashboard.event.details.DetailsFragment
+import com.locked.shingranicommunity.details.DetailsActivity
+import com.locked.shingranicommunity.details.DetailsFragment
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.di.scops.LoggedUserScope
 import dagger.Subcomponent
