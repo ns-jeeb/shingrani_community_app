@@ -17,6 +17,7 @@ import com.locked.shingranicommunity.auth.AuthActivity
 import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
+import com.locked.shingranicommunity.event.EventConstants
 import com.locked.shingranicommunity.event.Navigation
 import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.session.SessionManager
@@ -44,11 +45,12 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity,
 
     override fun navigateSearchAddress(addToBackStack: Boolean) {
         if (!Places.isInitialized()) {
-            Places.initialize(activity, activity.getString(R.string.google_maps_key), Locale.US)
+            Places.initialize(activity, activity.getString(R.string.google_maps_key))
         }
-        val fields = listOf(Place.Field.ID, Place.Field.ADDRESS ,Place.Field.NAME)
+        val fields = listOf(Place.Field.ID, Place.Field.ADDRESS, Place.Field.NAME)
         val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields).build(activity)
-        startActivityForResult(activity,intent, Constant_Utils.ONE_03,null)
+        startActivityForResult(activity, intent, EventConstants.REQUEST_CODE_SEARCH,null)
+        activity.overridePendingTransition(android.R.anim.fade_in, 0)
     }
 
     override fun navigateShare(data: EventItem) {

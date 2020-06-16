@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.event
 
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
@@ -14,22 +13,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.TextView
-import android.widget.TimePicker
+import android.widget.*
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
+import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import javax.inject.Inject
 
-class EventCreateFragment : Fragment() {
+class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
+    DatePickerDialog.OnDateSetListener {
 
     private val TAG_Event = "EventCreateFragment"
     @Inject
@@ -45,51 +44,141 @@ class EventCreateFragment : Fragment() {
     }
 
     private fun setupViews() {
-        binding.crEventName.doOnTextChanged { text, start, count, after ->
-            viewModel.title.postValue(text.toString())
+        // MESSAGE
+        viewModel.message.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrBlank()) {
+                Snackbar.make(binding.coordinator, it, Snackbar.LENGTH_SHORT).show()
+                viewModel.messageHandled()
+            }
+        })
+        // NAME
+        viewModel.title.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty() && it != binding.eventName.text.toString()) {
+                binding.eventName.setText(it)
+            }
+        })
+        binding.eventName.doOnTextChanged { text, start, count, after ->
+            binding.eventName.setError(null)
+            viewModel.setTitle(text.toString())
         }
-        binding.imgSearchLocation.setOnClickListener {
+        viewModel.isTitleValid.observe(viewLifecycleOwner, Observer {
+            binding.eventName.setError(it)
+        })
+        // LOCATION
+        viewModel.location.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty() && it != binding.eventLocation.text.toString()) {
+                binding.eventLocation.setText(it)
+            }
+        })
+        binding.eventLocation.doOnTextChanged{text, start, count, after ->
+            binding.eventLocation.setError(null)
+            viewModel.setLocation(text.toString())
+        }
+        binding.eventLocationTi.setEndIconOnClickListener {
             viewModel.searchAddress()
         }
-        binding.crLocationSearch.doOnTextChanged{text, start, count, after ->
-            viewModel.location.postValue(text.toString())
-        }
-        binding.crEventTime.doOnTextChanged { text, start, count, after ->
-            viewModel.time.postValue(text.toString())
-        }
-        binding.crEventDate.doOnTextChanged { text, start, count, after ->
-            viewModel.date.postValue(text.toString())
-        }
-        binding.crEventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-                viewModel.type.postValue(p0?.adapter?.getItem(p2).toString())
+        viewModel.isLocationValid.observe(viewLifecycleOwner, Observer {
+            binding.eventLocation.setError(it)
+        })
+        // DATE
+        viewModel.date.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty() && it != binding.eventDate.text.toString()) {
+                binding.eventDate.setText(it)
             }
-        }
-        binding.crEventDetails.doOnTextChanged { text, start, count, after ->
-            viewModel.desc.postValue(text.toString())
-        }
-        binding.btnCrEvent.setOnClickListener {
-            viewModel.create()
-        }
-        binding.crEventDate.setOnClickListener { it ->
+        })
+        binding.eventDate.setOnClickListener { it ->
+            binding.eventDate.setError(null)
             showDatePicker(it)
         }
-        binding.crEventTime.setOnClickListener {it ->
+        viewModel.isDateValid.observe(viewLifecycleOwner, Observer {
+            binding.eventDate.setError(it)
+        })
+        // TIME
+        viewModel.time.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty() && it != binding.eventTime.text.toString()) {
+                binding.eventTime.setText(it)
+            }
+        })
+        binding.eventTime.setOnClickListener {it ->
+            binding.eventTime.setError(null)
             showTimePicker(it)
         }
+        viewModel.isTimeValid.observe(viewLifecycleOwner, Observer {
+            binding.eventTime.setError(it)
+        })
+        // TYPE
+        val adapter: ArrayAdapter<String> = ArrayAdapter(
+            requireContext(),
+            R.layout.dropdown_menu_item,
+            viewModel.eventTypes
+        )
+        binding.eventType.setAdapter(adapter)
+        viewModel.type.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty() && it != binding.eventType.text.toString()) {
+                binding.eventType.setText(it, false)
+            }
+        })
+        binding.eventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, index: Int, p3: Long) {
+                binding.eventType.setError(null)
+                viewModel.setType(p0?.adapter?.getItem(index).toString())
+            }
+        }
+        viewModel.isTypeValid.observe(viewLifecycleOwner, Observer {
+            binding.eventType.setError(it)
+        })
+        // DETAIL
+        viewModel.desc.observe(viewLifecycleOwner, Observer {
+            if (!it.isNullOrEmpty() && it != binding.eventDetail.text.toString()) {
+                binding.eventDetail.setText(it)
+            }
+        })
+        binding.eventDetail.doOnTextChanged { text, start, count, after ->
+            binding.eventDetail.setError(null)
+            viewModel.setDescription(text.toString())
+        }
+        viewModel.isDescriptionValid.observe(viewLifecycleOwner, Observer {
+            binding.eventDetail.setError(it)
+        })
+        // CREATE
+        binding.create.setOnClickListener {
+            viewModel.create()
+        }
     }
+
     private fun showDatePicker(v: View) {
         activity?.supportFragmentManager?.let {
-            var dateFragment = DatePickerFragment(binding.crEventDate)
-            dateFragment.show(it,"datePicker") }
+            val calendar = Calendar.getInstance()
+            val datePickerDialog = DatePickerDialog(requireContext(),
+                this,
+                calendar[Calendar.YEAR],
+                calendar[Calendar.MONTH],
+                calendar[Calendar.MONTH]
+            )
+            datePickerDialog.datePicker.minDate = calendar.timeInMillis
+            datePickerDialog.show()
+        }
+    }
+
+    override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        viewModel.setDate(year, month, dayOfMonth)
     }
 
     private fun showTimePicker(v: View){
         activity?.supportFragmentManager?.let {
-            var timeFragment = TimePickerFragment(binding.crEventTime)
-            timeFragment.show(it,"timePicker") }
+            val calendar = Calendar.getInstance()
+            TimePickerDialog(requireContext(), this,
+                calendar[Calendar.HOUR_OF_DAY],
+                calendar[Calendar.MINUTE],
+                false).show()
+        }
     }
+
+    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
+        viewModel.setTime(hourOfDay, minute)
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         (activity as EventComponentProvider).eventComponent.inject(this)
@@ -99,47 +188,14 @@ class EventCreateFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (data != null) {
-            if (requestCode == Constant_Utils.ONE_03) {
+            if (requestCode == EventConstants.REQUEST_CODE_SEARCH) {
                 when (resultCode) {
                     RESULT_OK -> {
                         val place = Autocomplete.getPlaceFromIntent(data)
-                        binding.crLocationSearch.setText("${place.address}")
-                    }
-                    AutocompleteActivity.RESULT_ERROR -> {
-                        val status = Autocomplete.getStatusFromIntent(data)
-                    }
-                    RESULT_CANCELED -> {
-                        Log.i(TAG_Event, "user canceled searching")
+                        viewModel.setLocation("${place.address}")
                     }
                 }
             }
         }
-    }
-}
-
-@SuppressLint("SetTextI18n")
-class TimePickerFragment(var txtView: TextView) : DialogFragment(), TimePickerDialog.OnTimeSetListener {
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val c = Calendar.getInstance()
-        return TimePickerDialog(requireContext(),this,c[Calendar.HOUR_OF_DAY],c[Calendar.MINUTE],true)
-    }
-    override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
-        txtView.text = "$hourOfDay:$minute"
-    }
-}
-class DatePickerFragment(var txtView: TextView) : DialogFragment() {
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val c = Calendar.getInstance()
-        val dialog = DatePickerDialog(requireContext(),DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-                val _year = year.toString()
-                val _month = if (month + 1 < 10) "0" + (month + 1) else
-                    (month + 1).toString()
-                val _date = if (dayOfMonth < 10) "0$dayOfMonth" else dayOfMonth.toString()
-                txtView.text = "$_year-$_month-$_date"
-            },
-            c[Calendar.YEAR],c[Calendar.MONTH],c[Calendar.MONTH]
-        )
-        dialog.datePicker.minDate = System.currentTimeMillis() - 1000
-        return dialog
     }
 }
