@@ -74,7 +74,6 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val isAd
             }                                                                                                 // ^ up there
 
             binding?.txtEventName?.text = name
-            binding?.txtEventType?.text = type
 //          binding?.txtEventAddress?.text = address
 //            this substring is just display for now we have make it dynamic
             var date =  Utils.formatStringDateTime(time!!)?.split( " : ")
@@ -87,16 +86,6 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val isAd
         private fun getAccepted(accepted: List<String>){
             for (element in accepted) {
                 if (!element.isBlank()){
-                    if (element == currentUser._id){
-                        binding?.txtMembersAttended?.text = "${accepted.size} incl you"
-                        binding?.isNotAttending?.visibility = View.GONE
-                        binding?.isAttending?.visibility = View.VISIBLE
-                        return
-                    }else {
-                        binding?.txtMembersAttended?.text = "${accepted.size} Member"
-                        binding?.isAttending?.visibility = View.GONE
-                        binding?.isNotAttending?.visibility = View.VISIBLE
-                    }
                 }
             }
         }
@@ -105,14 +94,6 @@ class EventsListAdapter(val mEvents:List<Item>?, val currentUser: User, val isAd
         private fun getRejected(rejects: List<String>) {
             for (element in rejects) {
                 if(!element.isBlank()){
-                    if (element == currentUser._id) {
-                        binding?.isAttending?.visibility = View.GONE
-                        binding?.isNotAttending?.visibility = View.VISIBLE
-                        return
-                    }else{
-                        binding?.isNotAttending?.visibility = View.GONE
-                        binding?.isAttending?.visibility = View.VISIBLE
-                    }
                 }
             }
         }

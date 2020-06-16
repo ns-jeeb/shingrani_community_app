@@ -178,7 +178,7 @@ class EventListViewModel @Inject constructor(
         }
 
         fun share() {
-            // todo
+            navigation.navigateShare(eventItem)
         }
 
         fun delete(confirmed: Boolean = false) {

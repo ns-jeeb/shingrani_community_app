@@ -43,7 +43,7 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".auth.AuthActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.Auth"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

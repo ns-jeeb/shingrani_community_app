@@ -119,6 +119,8 @@
     <string name="validation_time">Required</string>
     <string name="validation_type">Required</string>
     <string name="validation_desc">Required. Minimum 10 characters</string>
+    <string name="by">created by</string>
+    <string name="send_to">Share this %s</string>
     <string-array name="event_types">
         <item>Event</item>
         <item>Wedding</item>

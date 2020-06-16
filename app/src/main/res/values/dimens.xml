@@ -22,4 +22,9 @@
     <dimen name="header_10dp">10dp</dimen>
     <dimen name="header_12dp">12dp</dimen>
     <dimen name="Event_Title_Size">20sp</dimen>
+    <dimen name="content_margin">16dp</dimen>
+    <dimen name="text_horizontal_margin">16dp</dimen>
+    <dimen name="text_vertical_margin">10dp</dimen>
+    <dimen name="content_text_medium">16sp</dimen>
+    <dimen name="space_margin">5dp</dimen>
 </resources>
