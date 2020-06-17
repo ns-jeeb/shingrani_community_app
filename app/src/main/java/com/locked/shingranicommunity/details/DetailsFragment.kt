@@ -46,7 +46,7 @@ class DetailsFragment : Fragment() {
                 mBinding.going.text = "Going"
                 mBinding.txtEventName.text = "in this event"
                 mBinding.envelopOpen.isEnabled = false
-                mBinding.imgEvent.setImageBitmap(viewModel.getBackgroundImage(requireContext()))
+//                mBinding.imgEvent.setImageBitmap(viewModel.getBackgroundImage(requireContext()))
             }
 
             override fun onAnimationCancel(animation: Animator?) {
@@ -58,9 +58,7 @@ class DetailsFragment : Fragment() {
             }
 
         })
-        mBinding.envelopOpen.setOnClickListener {
-            mBinding.envelopOpen.playAnimation()
-        }
+        mBinding.envelopOpen.playAnimation()
         return mBinding.root
     }
 
