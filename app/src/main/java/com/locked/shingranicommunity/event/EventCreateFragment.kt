@@ -117,9 +117,8 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
                 binding.eventType.setText(it, false)
             }
         })
-        binding.eventType.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(p0: AdapterView<*>?) {}
-            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, index: Int, p3: Long) {
+        binding.eventType.onItemClickListener = object : AdapterView.OnItemClickListener {
+            override fun onItemClick(p0: AdapterView<*>?, p1: View?, index: Int, p3: Long) {
                 binding.eventType.setError(null)
                 viewModel.setType(p0?.adapter?.getItem(index).toString())
             }

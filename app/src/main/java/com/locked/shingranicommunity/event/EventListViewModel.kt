@@ -5,15 +5,19 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.common.DrawableLoader
+import com.locked.shingranicommunity.common.ImageLoader
 import com.locked.shingranicommunity.common.ResourceProvider
 import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.models.EventStatus
+import com.locked.shingranicommunity.models.EventType
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.random.Random
 
 class EventListViewModel @Inject constructor(
     private val repository: EventRepository,
@@ -105,6 +109,7 @@ class EventListViewModel @Inject constructor(
         val deleteConfirmationDesc = resourceProvider.getString(R.string.delete_event_confirm_desc).format(eventItem.name)
 
         val data: ItemData = ItemData()
+        var backgroundImage: ImageLoader = DrawableLoader(R.drawable.img_event_1)
         val name: LiveData<String> = data.name
         val desc: LiveData<String> = data.desc
         val type: LiveData<String> = data.type
@@ -136,6 +141,55 @@ class EventListViewModel @Inject constructor(
             // init delete
             data.showDelete.value = session.isUserAdmin()
             eventItem.address?.let {data.showMap.value = true}
+            // init background image
+            initBackground()
+        }
+
+        private fun initBackground() {
+            when (eventItem.type) {
+                EventType.EVENT.type -> {
+                    backgroundImage = when((1..2).random()) {
+                        2 -> DrawableLoader(R.drawable.img_event_2)
+                        else -> DrawableLoader(R.drawable.img_event_1)
+                    }
+                }
+                EventType.BIRTHDAY.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_birthday_1)
+                }
+                EventType.FUNDRAISING.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_fundraising_1)
+                }
+                EventType.FUNERAL.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_funeral_1)
+                }
+                EventType.GATHERING.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_gathering_1)
+                }
+                EventType.MEETING.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_meeting_1)
+                }
+                EventType.PARTY.type -> {
+                    backgroundImage = when((1..2).random()) {
+                        2 -> DrawableLoader(R.drawable.img_party_2)
+                        else -> DrawableLoader(R.drawable.img_party_1)
+                    }
+                }
+                EventType.WEDDING.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_wedding_1)
+                }
+                EventType.ENGAGEMENT.type -> {
+                    backgroundImage = DrawableLoader(R.drawable.img_engagement_1)
+                }
+                EventType.OUTING.type -> {
+                    backgroundImage = when((1..5).random()) {
+                        2 -> DrawableLoader(R.drawable.img_outing_2)
+                        3 -> DrawableLoader(R.drawable.img_outing_3)
+                        4 -> DrawableLoader(R.drawable.img_outing_4)
+                        5 -> DrawableLoader(R.drawable.img_outing_5)
+                        else -> DrawableLoader(R.drawable.img_outing_1)
+                    }
+                }
+            }
         }
 
         private fun initDateTime() {

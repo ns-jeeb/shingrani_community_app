@@ -80,6 +80,7 @@ class EventListAdapter(
             itemViewModel.time.observe(lifeCycleOwner, Observer {
                 binding.txtEventTime.text = it!!
             })
+            itemViewModel.backgroundImage.load(binding.eventImage)
             binding.imgDeleteItem.setOnClickListener(this)
             binding.imgAcceptedAttending.setOnClickListener(this)
             binding.imgRejectedAttending.setOnClickListener(this)
