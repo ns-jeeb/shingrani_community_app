@@ -16,7 +16,6 @@ import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceFragment
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnouncementActivity
-import com.locked.shingranicommunity.dashboard.event.create_event.CreateItemActivity
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
 import com.locked.shingranicommunity.di.DashboardComponent
@@ -112,8 +111,6 @@ class DashBoardViewPagerActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun create() {
         if (binding.pager.currentItem == 0) {
-            val intent = Intent(this, CreateItemActivity::class.java)
-            startActivityForResult(intent, Constant_Utils.ONE_00)
         } else if (binding.pager.currentItem == 1) {
             val intent = Intent(this, CreateAnnouncementActivity::class.java)
             startActivityForResult(intent, 102)

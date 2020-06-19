@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- APP -->
     <color name="colorPrimary">#0d5da6</color>
     <color name="colorSecondary">#00BCD4</color>
     <color name="colorBackground">#F5F5F5</color>
@@ -7,9 +8,17 @@
     <color name="colorSurface">@android:color/white</color>
     <color name="colorOnPrimary">@android:color/white</color>
     <color name="colorOnSecondary">@android:color/white</color>
-    <color name="colorOnBackground">@android:color/white</color>
+    <color name="colorOnBackground">@android:color/black</color>
     <color name="colorOnError">@android:color/white</color>
     <color name="colorOnSurface">@color/colorPrimary</color>
+    <!-- AUTH -->
+    <color name="colorAuthSurface">@android:color/white</color>
+    <color name="colorAuthOnPrimary">@android:color/white</color>
+    <color name="colorAuthOnSecondary">@android:color/white</color>
+    <color name="colorAuthOnBackground">@android:color/white</color>
+    <color name="colorAuthOnError">@android:color/white</color>
+    <color name="colorAuthOnSurface">@color/colorPrimary</color>
+    <!-- OTHER -->
     <color name="colorGradient1Start">#0D5DA6</color>
     <color name="colorGradient1End">#8000BCD4</color>
     <color name="colorGradient2Start">#0D5DA6</color>

@@ -33,10 +33,11 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     val logoutEvent: LiveData<Boolean> = _logoutEvent
 
     init {
-        initialize()
+        initializeSession()
+        initializeState()
     }
 
-    private fun initialize() {
+    private fun initializeSession() {
         val sessionUser = preferences.getString(KEY_SESSION_USER, null)
         val sessionToken: String = preferences.getString(KEY_SESSION_TOKEN, "")!!
         if (sessionUser == null) {
@@ -50,8 +51,29 @@ class SessionManager @Inject constructor(private val app: Application) : Session
             session.isLoggedIn = true
             session.token = sessionToken
         }
+    }
+
+    private fun initializeState() {
         _logoutEvent.value = !session.isLoggedIn
         _loginState.value = session.isLoggedIn
+    }
+
+    private fun postLoggedIn() {
+        if (_loginState.value == false) {
+            _loginState.postValue(true)
+        }
+        if (_logoutEvent.value == true) {
+            _logoutEvent.postValue(false)
+        }
+    }
+
+    private fun postLoggedOut() {
+        if (_logoutEvent.value == false) {
+            _logoutEvent.postValue(true)
+        }
+        if (_loginState.value == true) {
+            _loginState.postValue(false)
+        }
     }
 
     private fun isAdmin(user: User): Boolean {
@@ -68,7 +90,7 @@ class SessionManager @Inject constructor(private val app: Application) : Session
 
     fun setAdminList(adminList: List<User> = emptyList()) {
         preferences.edit().putString(KEY_ADMIN_LIST, Gson().toJson(adminList)).commit()
-        initialize()
+        initializeSession()
     }
 
     fun setLoggedInUser(user: User?) {
@@ -80,15 +102,15 @@ class SessionManager @Inject constructor(private val app: Application) : Session
                 .putString(Constant_Utils.CURRENT_USER, Gson().toJson(user))
                 .apply()
         }
-        initialize()
+        initializeSession()
     }
 
     fun setSessionToken(token: String?) {
         var _token = ""
         token?.let { _token = token }
         preferences.edit().putString(KEY_SESSION_TOKEN, _token).commit()
-        initialize()
-        _loginState.postValue(session.isLoggedIn)
+        initializeSession()
+        postLoggedIn()
 
         // todo remove when the whole app uses the SessionManager
         app.getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -101,14 +123,13 @@ class SessionManager @Inject constructor(private val app: Application) : Session
             .putString(KEY_TEMPLATE_EVENT, eventTemplate)
             .putString(KEY_TEMPLATE_ANNOUNCEMENT, announcementTemplate)
             .commit()
-        initialize()
+        initializeSession()
     }
 
     fun logout() {
         preferences.edit().clear().commit()
-        initialize()
-        _logoutEvent.postValue(true)
-        _loginState.postValue(false)
+        initializeSession()
+        postLoggedOut()
     }
 
     override fun getToken(): String {
