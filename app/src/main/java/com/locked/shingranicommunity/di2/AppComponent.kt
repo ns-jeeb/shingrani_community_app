@@ -2,6 +2,7 @@ package com.locked.shingranicommunity.di2
 
 import android.app.Application
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
+import com.locked.shingranicommunity.di2.announcement.AnnouncementComponent
 import com.locked.shingranicommunity.di2.auth.AuthComponent
 import com.locked.shingranicommunity.di2.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di2.dashboard.DashboardModule
@@ -28,6 +29,7 @@ interface AppComponent {
     val authComponentFactory : AuthComponent.Factory
     val dashboardComponentFactory : DashboardComponent.Factory
     val eventComponentFactory : EventComponent.Factory
+    val announcementComponentFactory : AnnouncementComponent.Factory
 
     fun inject(settingFragment: SettingsActivity.SettingFragment)
 }
