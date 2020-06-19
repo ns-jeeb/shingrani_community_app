@@ -105,6 +105,7 @@
     <string name="delete_event_confirm_title">Delete</string>
     <string name="delete_event_confirm_desc">Are you sure you\'d like to delete %s event?</string>
     <string name="title_activity_auto_complele_place">Map</string>
+    <string name="event_create_page_title">Create an Event</string>
     <string name="event_name">Name</string>
     <string name="event_location">Location</string>
     <string name="event_type">Type</string>

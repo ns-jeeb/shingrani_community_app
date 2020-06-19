@@ -1,28 +1,26 @@
 package com.locked.shingranicommunity.event
 
-import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.app.DatePickerDialog
-import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.content.Intent
 import android.icu.util.Calendar
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
+import android.widget.DatePicker
+import android.widget.TimePicker
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.libraries.places.widget.Autocomplete
-import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.material.snackbar.Snackbar
-import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
 import javax.inject.Inject
@@ -30,7 +28,6 @@ import javax.inject.Inject
 class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     DatePickerDialog.OnDateSetListener {
 
-    private val TAG_Event = "EventCreateFragment"
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -44,6 +41,8 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     }
 
     private fun setupViews() {
+        // PAGE TITLE
+        requireActivity().title = viewModel.pageTitle
         // MESSAGE
         viewModel.message.observe(viewLifecycleOwner, Observer {
             if (!it.isNullOrBlank()) {

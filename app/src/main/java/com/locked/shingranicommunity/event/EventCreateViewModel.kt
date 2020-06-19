@@ -13,7 +13,6 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.math.abs
 
 class EventCreateViewModel @Inject constructor(
     private val repository: EventRepository,
@@ -27,6 +26,7 @@ class EventCreateViewModel @Inject constructor(
     var isFormValid: Boolean = validation.isValid()
     val eventTypes: Array<String> = res.getStringArray(R.array.event_types)
 
+    val pageTitle: String = res.getString(R.string.event_create_page_title)
     val title: LiveData<String> = data.title
     val location: LiveData<String> = data.location
     val time: LiveData<String> = data.time
