@@ -51,15 +51,16 @@ class ItemDetailsViewModel @Inject constructor(
         }
 
         var bitmap: Bitmap? = null
-        bitmap = try { //BitmapFactory is an Android graphics utility for images
-            BitmapFactory.decodeStream(`is`)
-        } finally { //Always clear and close
+        try {
+            bitmap = BitmapFactory.decodeStream(`is`)
+        }
+        finally { //Always clear and close
             try {
                 `is`?.close()
                 `is` = null
             } catch (e: IOException) {
             }
         }
-        return bitmap
+        return bitmap!!
     }
 }

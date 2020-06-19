@@ -46,7 +46,7 @@ class DetailsFragment : Fragment() {
                 mBinding.going.text = "Going"
                 mBinding.txtEventName.text = "in this event"
                 mBinding.envelopOpen.isEnabled = false
-//                mBinding.imgEvent.setImageBitmap(viewModel.getBackgroundImage(requireContext()))
+                mBinding.imgEvent.setImageBitmap(viewModel.getBackgroundImage(requireContext()))
             }
 
             override fun onAnimationCancel(animation: Animator?) {
