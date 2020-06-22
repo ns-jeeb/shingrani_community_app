@@ -1,67 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:padding="10dp"
+        android:layout_margin="10dp"
         app:cardElevation="10dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="10dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/img_delete_item"
-            android:src="@drawable/delete_24dp"
-            android:tint="?attr/colorOnSurface"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txt_announcement_title_item"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:text="Bob And Emily Engaged"
-            tools:text="this is the item for announcement"
-            android:layout_marginBottom="10dp"/>
+            android:paddingStart="@dimen/content_margin"
+            android:paddingBottom="@dimen/content_margin">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="3"
-            android:id="@+id/txt_announcement_message"
-            android:text="@string/txt_message_value"
-            app:layout_constraintTop_toBottomOf="@+id/txt_announcement_title_item"
-            android:lines="4"
-            android:maxLines="4"/>
+            <TextView
+                android:id="@+id/txt_date_item_created"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorOnSurface"
+                app:layout_constraintTop_toTopOf="@+id/layoutActions"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutActions"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="yesterday" />
 
-        <TextView
-            android:id="@+id/txt_date_item_created"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_marginRight="8dp"
-            android:text="yesterday"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_announcement_message" />
+            <LinearLayout
+                android:id="@+id/layoutActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_share_event"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/share_icon"
+                    android:tint="@color/colorOnSurface"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_delete_item"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:tint="@color/colorOnBackground"
+                    android:src="@drawable/delete_icon"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_announcement_title_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                app:layout_constraintTop_toBottomOf="@+id/layoutActions"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="this is the item for announcement" />
+
+            <TextView
+                android:id="@+id/txt_announcement_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_marginEnd="@dimen/content_margin"
+                app:layout_constraintTop_toBottomOf="@+id/txt_announcement_title_item"
+                tools:text="@string/txt_message_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
 
