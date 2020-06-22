@@ -32,6 +32,15 @@ interface LockedApiService {
     @POST("api/v2/urcommunity/rsvp/{itemid}")
     fun accept(@Path("itemid") itemID: String, @Body body: RsvpObject): Call<MutableLiveData<RsvpObject>>
 
+    @GET("/api/v2/app/{appid}/item")
+    fun getAnnouncementList(@Path("appid") appId: String, @Query("template") templateId: String): Call<MutableList<AnnouncementItem>>
+
+    @POST("/api/v2/item")
+    fun createAnnouncement(@Body body: AnnouncementItem): Call<CreateResponse<AnnouncementItem>>
+
+    @DELETE("/api/v2/item/{announcementId}")
+    fun deleteAnnouncement(@Path("announcementId") itemId: String): Call<LockResponse>
+
     @POST("/api/v2/login")
     @Headers("Content-Type: application/json")
     fun userLogin(@Body body: Map<String, String>, @Header("appid")apiId: String): Call<LoginResponse>

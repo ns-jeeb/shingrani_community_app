@@ -12,8 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.locked.shingranicommunity.MyApplication
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.announcement.AnnouncementComponentProvider
 import com.locked.shingranicommunity.announcement.AnnouncementListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
+import com.locked.shingranicommunity.di2.announcement.AnnouncementComponent
 import com.locked.shingranicommunity.di2.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di2.event.EventComponent
 import com.locked.shingranicommunity.event.EventComponentProvider
@@ -22,13 +24,17 @@ import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.settings.SettingsActivity
 import javax.inject.Inject
 
-class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnClickListener {
+class DashboardActivity : AppCompatActivity(),
+    EventComponentProvider,
+    AnnouncementComponentProvider,
+    View.OnClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var dashboardComponent: DashboardComponent
     override lateinit var eventComponent: EventComponent
+    override lateinit var announcementComponent: AnnouncementComponent
 
     private lateinit var viewModel: DashboardViewModel
     private lateinit var binding : ActivityDashBoradViewPagerBinding
@@ -39,6 +45,7 @@ class DashboardActivity : AppCompatActivity(), EventComponentProvider, View.OnCl
         dashboardComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DashboardViewModel::class.java)
         eventComponent = MyApplication.instance.appComponent2.eventComponentFactory.create(this)
+        announcementComponent = MyApplication.instance.appComponent2.announcementComponentFactory.create(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dash_borad_view_pager)
         adapter = DashboardPagerAdapter(supportFragmentManager)

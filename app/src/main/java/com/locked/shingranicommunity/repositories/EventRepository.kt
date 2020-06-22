@@ -19,10 +19,10 @@ class EventRepository @Inject constructor(
     val session: Session
 ) {
 
-    private val _fetchEvents: MutableLiveData<Data> = MutableLiveData<Data>()
     private var loading: Boolean = false
+    private val _fetchEvents: MutableLiveData<Data> = MutableLiveData<Data>()
+    private val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
     val fetchEvents: LiveData<Data> = _fetchEvents
-    val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
     val authError: LiveData<Boolean> = _authError
     var events: MutableList<EventItem> = mutableListOf()
 
@@ -84,7 +84,6 @@ class EventRepository @Inject constructor(
         }
     }
 
-    @Suppress("UNREACHABLE_CODE")
     private inner class FetchEventsListener(): LockedCallback<MutableList<EventItem>>() {
         override fun success(response: MutableList<EventItem>) {
             events.clear()

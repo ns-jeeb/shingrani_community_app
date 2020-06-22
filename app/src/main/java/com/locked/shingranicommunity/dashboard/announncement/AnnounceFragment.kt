@@ -50,15 +50,15 @@ class AnnounceFragment : Fragment(), OnInvitedListener {
     }
     private fun setupListViewAdapter(){
         var hideDeleteMenu = true
-        viewModel.loadedAnnouncements().observe(this, Observer {
+        viewModel.loadedAnnouncements().observe(viewLifecycleOwner, Observer {
             if (viewModel.getAdminUser()?._id == viewModel.userManager.getCurrentUser()?._id){
                 hideDeleteMenu = false
             }
             val adapter = AnnounceListAdapter(it,hideDeleteMenu)
             adapter.setOnInvitedEvent(this)
             val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            mBinding!!.announcementRecyclerView.layoutManager = layoutManager
-            mBinding!!.announcementRecyclerView.adapter = adapter
+            mBinding!!.recyclerView.layoutManager = layoutManager
+            mBinding!!.recyclerView.adapter = adapter
             adapter.notifyDataSetChanged()
 
         })

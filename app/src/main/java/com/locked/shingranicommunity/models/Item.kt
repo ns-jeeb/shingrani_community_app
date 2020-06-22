@@ -94,6 +94,13 @@ enum class EventStatus() {
     REJECT_FAILED
 }
 
+enum class AnnouncementStatus() {
+    CREATED,
+    CREATE_FAILED,
+    DELETED,
+    DELETE_FAILED
+}
+
 enum class EventType(val type: String) {
     EVENT("Event"),
     WEDDING("Wedding"),
