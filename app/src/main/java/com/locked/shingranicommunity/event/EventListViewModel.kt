@@ -22,7 +22,7 @@ class EventListViewModel @Inject constructor(
     private val repository: EventRepository,
     private val session: Session,
     private val navigation: Navigation,
-    private val resourceProvider: ResourceProvider
+    private val res: ResourceProvider
 ) : ViewModel() {
 
     private val data: Data = Data()
@@ -104,8 +104,8 @@ class EventListViewModel @Inject constructor(
         private val navigation: Navigation,
         private val repository: EventRepository) {
 
-        val deleteConfirmationTitle = resourceProvider.getString(R.string.delete_event_confirm_title)
-        val deleteConfirmationDesc = resourceProvider.getString(R.string.delete_event_confirm_desc).format(eventItem.name)
+        val deleteConfirmationTitle = res.getString(R.string.delete_event_confirm_title)
+        val deleteConfirmationDesc = res.getString(R.string.delete_event_confirm_desc).format(eventItem.name)
 
         val data: ItemData = ItemData()
         var backgroundImage: ImageLoader = DrawableLoader(R.drawable.img_event_1)

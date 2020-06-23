@@ -130,6 +130,15 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <Button
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:id="@+id/block"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Block"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/card_layout"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

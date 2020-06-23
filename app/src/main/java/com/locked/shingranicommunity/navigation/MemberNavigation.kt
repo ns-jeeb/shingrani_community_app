@@ -10,4 +10,8 @@ class MemberNavigation @Inject constructor(val activity: AppCompatActivity)
     override fun navigateToInvite() {
         // todo
     }
+
+    override fun navigateToLogin(clearSession: Boolean) {
+        // todo
+    }
 }
