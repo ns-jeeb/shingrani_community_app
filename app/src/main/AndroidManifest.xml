@@ -43,7 +43,7 @@
             android:label="@string/title_activity_settings" />
         <activity
             android:name=".auth.AuthActivity"
-            android:theme="@style/AppTheme.NoActionBar"
+            android:theme="@style/AppTheme.Auth"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,6 +56,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".common.FragmentActivity" />
         <activity android:name=".event.EventActivity" />
+        <activity android:name=".announcement.AnnouncementActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

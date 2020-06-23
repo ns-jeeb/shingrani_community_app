@@ -1,310 +1,195 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
-
+    xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardElevation="10dp"
         android:layout_margin="10dp"
+        app:cardElevation="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            >
+            android:paddingBottom="@dimen/content_margin">
 
             <ImageView
                 android:id="@+id/event_image"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/event_background"
+                android:src="@drawable/img_event_2"
+                app:layout_constraintDimensionRatio="16:7"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/info_layout"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
-            <View
+            <TextView
+                android:id="@+id/txt_event_name"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                app:layout_constraintBottom_toBottomOf="@+id/image_layout"
-                android:background="#77000000"/>
-
+                android:layout_height="0dp"
+                android:background="#77000000"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/colorOnPrimary"
+                android:textSize="@dimen/content_text_medium"
+                android:paddingHorizontal="@dimen/text_horizontal_margin"
+                android:paddingVertical="@dimen/text_vertical_margin"
+                android:gravity="bottom"
+                app:layout_constraintTop_toTopOf="@+id/event_image"
+                app:layout_constraintBottom_toBottomOf="@+id/event_image"
+                tools:text="Event Title\n2nd Line\n3rd Line" />
 
             <LinearLayout
-                android:id="@+id/image_layout"
-                android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:orientation="vertical"
-                android:gravity="bottom"
-                android:paddingHorizontal="12dp"
-                android:paddingTop="6dp"
-                android:paddingBottom="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/img_event_location"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:tint="@color/colorOnPrimary"
+                    android:src="@drawable/location_icon"
+                    android:background="?selectableItemBackground"/>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:id="@+id/img_share_event"
+                    android:src="@drawable/share_icon"
+                    android:tint="@color/colorOnPrimary"
+                    android:background="?selectableItemBackground"/>
 
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/img_delete_item"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:tint="@color/colorOnPrimary"
+                    android:src="@drawable/delete_icon"
+                    android:background="?selectableItemBackground"/>
 
-                    <ImageView
-                        android:id="@+id/img_event_location"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:src="@drawable/location_icon"
-                        android:layout_marginRight="30dp"/>
-
-
-                    <TextView
-                        android:id="@+id/txt_event_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:text="Event Title"
-                        android:layout_alignParentBottom="true"
-                        android:textColor="#FFFFFF"
-                        android:textSize="14sp"/>
-
-                    <ImageView
-                        android:id="@+id/img_delete_item"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:visibility=
-                            "gone"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:src="@drawable/delete_icon" />
-
-                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/info_layout"
+                android:id="@+id/dataLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:minHeight="40dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_layout"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="5dp">
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
-
-
-                    <TextView
-                        android:id="@+id/txt_event_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_horizontal"
-                        android:text="Date"
-                        android:textColor="#454545"
-                        android:layout_marginRight="10dp"
-                        android:textSize="14sp" />
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#D5D5D5"
-                        android:layout_gravity="center_vertical"/>
-
-
-                    <TextView
-                        android:id="@+id/txt_event_time"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_gravity="center_vertical"
-                        android:gravity="center_horizontal"
-                        android:text="Time"
-                        android:textColor="#454545"
-                        android:textSize="14sp"
-                        android:layout_marginHorizontal="10dp"/>
-
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:background="#D5D5D5"
-                        android:layout_gravity="center_vertical"/>
-
-                    <RelativeLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1">
-
-
-                        <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:id="@+id/img_share_event"
-                            android:src="@drawable/share_icon"
-                            android:layout_alignParentStart="true"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"/>
-
-                        <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:id="@+id/img_accepted_attending"
-                            android:layout_centerHorizontal="true"
-                            android:layout_marginHorizontal="10dp"
-                            android:src="@drawable/accept_icon"
-                            style="@style/Widget.MaterialComponents.Button.TextButton" />
-
-                        <ImageButton
-                            android:layout_width="24dp"
-                            android:layout_height="24dp"
-                            android:id="@+id/img_rejected_attending"
-                            android:src="@drawable/reject_icon"
-                            android:layout_alignParentEnd="true"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/txt_event_type"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:gravity="end"
-                        android:lines="1"
-                        android:maxLines="1"
-                        android:singleLine="true"
-                        android:text="Event type"
-                        android:layout_marginRight="5dp"
-                        android:layout_marginTop="10dp"
-                        android:textColor="#5A5A5A"
-                        android:textSize="18sp" />
-
-
-                    <TextView
-                        android:id="@+id/creatorText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Created By: "
-                        android:layout_gravity="bottom"
-                        android:textColor="#838383"
-                        android:textSize="14sp"
-                        />
-
-                    <TextView
-                        android:id="@+id/event_userName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="UserName"
-                        android:textColor="#FF838383"
-                        android:textSize="14sp"/>
-
-                </LinearLayout>
-
+                app:layout_constraintTop_toBottomOf="@+id/txt_event_name">
 
                 <TextView
-                    android:id="@+id/event_description"
+                    android:id="@+id/txt_event_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:ellipsize="end"
-                    android:lines="3"
-                    android:maxLines="3"
-                    tools:text="This is the description of the event, here you can talk about whats happening and what your expected to do and if you are needed to bring anything"
-                    android:textSize="@dimen/header_12dp" />
+                    android:minWidth="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:textColor="?attr/colorPrimary"
+                    tools:text="Date" />
 
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#D5D5D5"
+                    android:layout_marginHorizontal="@dimen/content_margin"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/txt_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:textColor="?attr/colorPrimary"
+                    tools:text="Time" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#D5D5D5"
+                    android:layout_marginHorizontal="@dimen/content_margin"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical">
 
                     <TextView
                         android:id="@+id/txt_members_attended"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="5dp"
-                        android:drawableLeft="@drawable/ic_person_outline_black_20dp"
-                        android:text="member attends"
-                        android:textSize="14sp"/>
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/content_margin"
+                        android:drawableStart="@drawable/ic_person_outline_black_20dp"
+                        android:drawablePadding="5dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:text="0" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/event_description">
+
+                    <ImageButton
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:id="@+id/img_rejected_attending"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:scaleType="centerInside"
+                        android:padding="15dp"
+                        android:src="@drawable/reject_icon"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                    <ImageButton
+                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        android:id="@+id/img_accepted_attending"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:scaleType="centerInside"
+                        android:padding="10dp"
+                        android:src="@drawable/accept_icon"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/attending_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:visibility="gone"
-                tools:ignore="MissingConstraints">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginHorizontal="10dp"
-                    android:gravity="center_vertical"
-                    android:text="Going"
-                    android:textSize="@dimen/mainScreen_text_size" />
-
-                <CheckBox
-                    android:id="@+id/is_attend"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="center_vertical"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/is_attending"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="going"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:visibility="visible" />
-
-                <TextView
-                    android:id="@+id/is_not_attending"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="not Going"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    tools:visibility="visible" />
-
-            </LinearLayout>
-
-
-
+            <TextView
+                android:id="@+id/event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_horizontal_margin"
+                android:layout_marginTop="@dimen/text_vertical_margin"
+                android:maxLines="5"
+                android:ellipsize="end"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dataLayout1"
+                tools:text="This is the description of the event, here you can talk
+                 about whats happening and what your expected to do and if you are needed to bring anything" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
-
 
 </layout>

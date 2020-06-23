@@ -7,9 +7,8 @@ import com.locked.shingranicommunity.di2.viewmodel.ViewModelProviderFactory
 import com.locked.shingranicommunity.dashboard.DashBoardViewModel
 import com.locked.shingranicommunity.dashboard.announncement.AnnounceViewModel
 import com.locked.shingranicommunity.dashboard.announncement.create_announce.CreateAnnounceViewModel
-import com.locked.shingranicommunity.dashboard.event.create_event.CreateEventViewModel
-import com.locked.shingranicommunity.details.DetailsViewModel
 import com.locked.shingranicommunity.dashboard.event.fetch_event.EventViewModel
+import com.locked.shingranicommunity.details.DetailsViewModel
 import com.locked.shingranicommunity.members.FragmentMemberViewModel
 import com.locked.shingranicommunity.members.MemberViewModel
 import com.locked.shingranicommunity.registration_login.registration.RegistrationViewModel
@@ -42,11 +41,6 @@ abstract class ViewModelProviderModul {
     @IntoMap
     @ViewModelKey(EventViewModel::class)
     abstract fun eventViewModel(eventViewModel: EventViewModel):ViewModel
-
-    @Binds
-    @IntoMap
-    @ViewModelKey(CreateEventViewModel::class)
-    abstract fun createEventViewModel(createEventViewModel: CreateEventViewModel):ViewModel
 
     @Binds
     @IntoMap

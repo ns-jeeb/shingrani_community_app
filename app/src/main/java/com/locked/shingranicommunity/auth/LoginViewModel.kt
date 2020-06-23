@@ -50,6 +50,7 @@ class LoginViewModel @Inject constructor(
     init {
         userRepository.loginState.observeForever(loginStateObserver)
         appRepository.fetchApp.observeForever(appStateObserver)
+        data.loading.value = true
     }
 
     fun setEmail(email: String) { data.email.value = email }

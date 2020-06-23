@@ -105,7 +105,24 @@
     <string name="delete_event_confirm_title">Delete</string>
     <string name="delete_event_confirm_desc">Are you sure you\'d like to delete %s event?</string>
     <string name="title_activity_auto_complele_place">Map</string>
-    <string-array name="events_arrays">
+    <string name="event_create_page_title">Create an Event</string>
+    <string name="event_name">Name</string>
+    <string name="event_location">Location</string>
+    <string name="event_type">Type</string>
+    <string name="event_detail">Detail</string>
+    <string name="event_date">Date</string>
+    <string name="event_time">Time</string>
+    <string name="event_name_example">John\'s Wedding Party</string>
+    <string name="event_location_example">125 Colborne Ave, Toronto ON</string>
+    <string name="validation_title">Required. Minimum 5 characters</string>
+    <string name="validation_location">Proper address required</string>
+    <string name="validation_date">Required</string>
+    <string name="validation_time">Required</string>
+    <string name="validation_type">Required</string>
+    <string name="validation_desc">Required. Minimum 10 characters</string>
+    <string name="by">created by</string>
+    <string name="send_to">Share this %s</string>
+    <string-array name="event_types">
         <item>Event</item>
         <item>Wedding</item>
         <item>Party</item>

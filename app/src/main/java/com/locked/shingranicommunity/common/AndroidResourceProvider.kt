@@ -8,4 +8,12 @@ class AndroidResourceProvider @Inject constructor(val application: Application) 
     override fun getString(resId: Int): String {
         return application.getString(resId)
     }
+
+    override fun getString(resId: Int, vararg args: String): String {
+        return application.getString(resId, args)
+    }
+
+    override fun getStringArray(resId: Int): Array<String> {
+        return application.resources.getStringArray(resId)
+    }
 }

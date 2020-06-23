@@ -52,7 +52,6 @@ class EventListAdapter(
                 binding.eventDescription.text = it
             })
             itemViewModel.type.observe(lifeCycleOwner, Observer {
-                binding.txtEventType.text = it
             })
             itemViewModel.showAccept.observe(lifeCycleOwner, Observer {
                 binding.imgAcceptedAttending.isVisible = it!!
@@ -81,6 +80,7 @@ class EventListAdapter(
             itemViewModel.time.observe(lifeCycleOwner, Observer {
                 binding.txtEventTime.text = it!!
             })
+            itemViewModel.backgroundImage.load(binding.eventImage)
             binding.imgDeleteItem.setOnClickListener(this)
             binding.imgAcceptedAttending.setOnClickListener(this)
             binding.imgRejectedAttending.setOnClickListener(this)
@@ -117,6 +117,9 @@ class EventListAdapter(
                 }
                 R.id.img_event_location -> {
                     itemViewModel?.openMap()
+                }
+                R.id.img_share_event -> {
+                    itemViewModel?.share()
                 }
             }
         }

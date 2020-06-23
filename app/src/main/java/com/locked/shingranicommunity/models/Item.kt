@@ -93,3 +93,16 @@ enum class EventStatus() {
     REJECTED,
     REJECT_FAILED
 }
+
+enum class EventType(val type: String) {
+    EVENT("Event"),
+    WEDDING("Wedding"),
+    ENGAGEMENT("Engagement"),
+    PARTY("Party"),
+    BIRTHDAY("Birthday"),
+    FUNDRAISING("Fundraising"),
+    FUNERAL("Funeral"),
+    GATHERING("Gathering"),
+    MEETING("Meeting"),
+    OUTING("Outing")
+}

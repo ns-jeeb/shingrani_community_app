@@ -20,6 +20,23 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Auth" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Original AppCompat attributes. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="android:colorBackground">@color/colorBackground</item>
+        <item name="colorError">@color/colorError</item>
+        <!-- New MaterialComponents attributes. -->
+        <item name="colorSurface">@color/colorAuthSurface</item>
+        <item name="colorOnPrimary">@color/colorAuthOnPrimary</item>
+        <item name="colorOnSecondary">@color/colorAuthOnSecondary</item>
+        <item name="colorOnBackground">@color/colorAuthOnBackground</item>
+        <item name="colorOnError">@color/colorAuthOnError</item>
+        <item name="colorOnSurface">@color/colorAuthOnSurface</item>
+    </style>
+
     <style name="ThemeDialog" parent="android:Theme.Holo.Dialog">
         <item name="android:windowMinWidthMajor">30%</item>
         <item name="android:panelColorBackground">#00B7FF</item>
