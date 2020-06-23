@@ -15,12 +15,5 @@ class DetailsActivity : FragmentActivity(), ItemDetailsComponentProvider {
         itemDetailsComponent = MyApplication.instance.appComponent2.itemDetailsComponentFactory.create(this)
         itemDetailsComponent.inject(this)
         super.onCreate(savedInstanceState)
-        var fragment: DetailsFragment? = supportFragmentManager.findFragmentById(R.id.fragment) as DetailsFragment?
-        var transaction: FragmentTransaction? = null
-        if (fragment == null){
-            fragment  = DetailsFragment()
-        }
-        transaction = supportFragmentManager.beginTransaction().replace(R.id.fragment,fragment)
-        transaction.commit()
     }
 }

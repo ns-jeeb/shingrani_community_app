@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
-            app:lottie_fileName="envelop.json"
+            app:lottie_fileName="data.json"
             app:lottie_autoPlay="false"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="parent"

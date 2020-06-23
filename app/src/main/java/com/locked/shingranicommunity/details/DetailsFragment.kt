@@ -58,9 +58,7 @@ class DetailsFragment : Fragment() {
             }
 
         })
-        mBinding.envelopOpen.setOnClickListener {
-            mBinding.envelopOpen.playAnimation()
-        }
+        mBinding.envelopOpen.playAnimation()
         return mBinding.root
     }
 

@@ -4,12 +4,9 @@ import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
-import android.provider.Settings.Global.getString
-import android.provider.Settings.Secure.getString
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
-import androidx.core.content.res.TypedArrayUtils.getString
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -21,6 +18,7 @@ import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import com.locked.shingranicommunity.details.DetailsActivity
 import com.locked.shingranicommunity.details.DetailsFragment
+import com.locked.shingranicommunity.common.ResourceProvider
 import com.locked.shingranicommunity.event.EventConstants
 import com.locked.shingranicommunity.event.Navigation
 import com.locked.shingranicommunity.models.EventItem
@@ -29,7 +27,9 @@ import java.util.*
 import javax.inject.Inject
 
 class EventNavigation @Inject constructor(val activity: AppCompatActivity,
-                                          val sessionManager: SessionManager): Navigation {
+                                          val sessionManager: SessionManager,
+                                          val res: ResourceProvider
+): Navigation {
 
     override fun navigateToMap(address: String) {
         val geocoder = Geocoder(activity, Locale.getDefault())
