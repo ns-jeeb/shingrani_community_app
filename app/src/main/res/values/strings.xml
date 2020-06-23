@@ -126,11 +126,15 @@
     <string name="validation_desc">Required. Minimum 10 characters</string>
     <string name="by">created by</string>
     <string name="send_to">Share this %s</string>
+    <string name="send_email_to">Send email to %s</string>
     <string name="must_be_admin">You must be an admin to perform this operation!</string>
     <string name="announcement_created">Announcement Created</string>
     <string name="announcement_create_failed">Failed to Create Event</string>
     <string name="event_created">Event Created</string>
     <string name="event_create_failed">Failed to Create Event</string>
+
+    <string name="send_email_to_body">&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;Shingiran Community Android</string>
+
     <string-array name="event_types">
         <item>Event</item>
         <item>Wedding</item>

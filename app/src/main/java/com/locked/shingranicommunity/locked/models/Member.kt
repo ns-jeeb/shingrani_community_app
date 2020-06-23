@@ -11,11 +11,14 @@ package com.locked.shingranicommunity.locked.models
     }
 */
 
-data class Member(val _id: String,
-                  val app: String,
-                  val email: String,
-                  val state: String,
-                  val user: User?)
+class Member(val _id: String,
+             val app: String,
+             val email: String,
+             val state: String,
+             val user: User?) {
+
+    @Transient var isAdmin: Boolean = false
+}
 
 enum class MemberState(val state: String) {
     PENDING("Pending"),

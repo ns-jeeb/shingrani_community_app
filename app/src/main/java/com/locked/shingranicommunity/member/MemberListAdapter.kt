@@ -47,9 +47,26 @@ class MemberListAdapter(
             this.itemViewModel = itemViewModel
             // todo
             // EMAIL
-            itemViewModel.email.observe(lifeCycleOwner, Observer {
-                binding.txtMemberAddress.text = it
+            itemViewModel.title.observe(lifeCycleOwner, Observer {
+                binding.title.text = it
             })
+            // ADMIN
+            itemViewModel.showAdmin.observe(lifeCycleOwner, Observer {
+                binding.admin.isVisible = it
+            })
+            // PHONE
+            itemViewModel.showPhone.observe(lifeCycleOwner, Observer {
+                binding.phone.isVisible = it
+            })
+            // TEXT
+            itemViewModel.showText.observe(lifeCycleOwner, Observer {
+                binding.text.isVisible = it
+            })
+            // EMAIL
+            itemViewModel.showEmail.observe(lifeCycleOwner, Observer {
+                binding.email.isVisible = it
+            })
+            binding.email.setOnClickListener { itemViewModel.sendEmail() }
             // BLOCK
             itemViewModel.showBlock.observe(lifeCycleOwner, Observer {
                 binding.block.isVisible = it

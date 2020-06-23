@@ -76,14 +76,10 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         }
     }
 
-    private fun isAdmin(user: User): Boolean {
-        val adminList = preferences.getString(KEY_ADMIN_LIST, null)
-        if (!adminList.isNullOrEmpty()) {
-            val userListType = object : TypeToken<List<User>>() {}.type
-            val admins = Gson().fromJson<List<User>>(adminList, userListType)
-            for (admin in admins) {
-                if (user._id == admin._id) return true
-            }
+    fun isAdmin(user: User): Boolean {
+        val admins = getAdminList()
+        for (admin in admins) {
+            if (user._id == admin._id) return true
         }
         return false
     }
@@ -91,6 +87,15 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     fun setAdminList(adminList: List<User> = emptyList()) {
         preferences.edit().putString(KEY_ADMIN_LIST, Gson().toJson(adminList)).commit()
         initializeSession()
+    }
+
+    fun getAdminList() : List<User> {
+        val adminList = preferences.getString(KEY_ADMIN_LIST, null)
+        if (!adminList.isNullOrEmpty()) {
+            val userListType = object : TypeToken<List<User>>() {}.type
+            return Gson().fromJson(adminList, userListType)
+        }
+        return mutableListOf()
     }
 
     fun setLoggedInUser(user: User?) {

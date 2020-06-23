@@ -8,12 +8,12 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.ResourceProvider
 import com.locked.shingranicommunity.locked.models.Member
 import com.locked.shingranicommunity.repositories.MemberRepository
-import com.locked.shingranicommunity.session.Session
+import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
 
 class MemberListViewModel @Inject constructor(
     private val repository: MemberRepository,
-    private val session: Session,
+    private val session: SessionManager,
     private val navigation: Navigation,
     private val res: ResourceProvider) : ViewModel() {
 
@@ -87,7 +87,7 @@ class MemberListViewModel @Inject constructor(
     }
 
     inner class ItemViewModel(private val member: Member,
-                              private val session: Session,
+                              private val session: SessionManager,
                               private val navigation: Navigation,
                               private val repository: MemberRepository) {
 
@@ -95,15 +95,28 @@ class MemberListViewModel @Inject constructor(
         val blockConfirmationDesc: String = res.getString(R.string.member_block_confirmation_desc)
 
         val data: ItemData = ItemData()
-        val email: LiveData<String> = data.email
+        val title: LiveData<String> = data.title
+        val showAdmin: LiveData<Boolean> = data.showAdmin
+        val showPhone: LiveData<Boolean> = data.showPhone
+        val showText: LiveData<Boolean> = data.showText
+        val showEmail: LiveData<Boolean> = data.showEmail
         val showBlock: LiveData<Boolean> = data.showBlock
         val showBlockConfirmation: LiveData<Boolean> = data.showBlockConfirmation
 
         init {
+            // TITLE
+            val title = member.user?.name?.capitalize() ?: member.email
+            data.title.value = title
+            // ADMIN
+            data.showAdmin.value = member.isAdmin
+            // PHONE
+            data.showPhone.value = false
+            // TEXT
+            data.showText.value = false
             // EMAIL
-            data.email.value = member.email
+            data.showEmail.value = member.email.isNotBlank()
             // BLOCK
-            data.showBlock.value = session.isUserAdmin()
+            data.showBlock.value = session.isUserAdmin() && !member.isAdmin
         }
 
         fun block(confirmed: Boolean = false) {
@@ -115,11 +128,19 @@ class MemberListViewModel @Inject constructor(
             }
         }
 
+        fun sendEmail() {
+            navigation.sendEmail(member.email)
+        }
+
         fun onCleared() {}
     }
 
     data class ItemData(
-        val email: MutableLiveData<String> = MutableLiveData(""),
+        val title: MutableLiveData<String> = MutableLiveData(""),
+        val showAdmin: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showPhone: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showText: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showEmail: MutableLiveData<Boolean> = MutableLiveData(false),
         val showBlock: MutableLiveData<Boolean> = MutableLiveData(true),
         val showBlockConfirmation: MutableLiveData<Boolean> = MutableLiveData(false)
     )

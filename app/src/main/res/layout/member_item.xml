@@ -1,144 +1,129 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:paddingTop="10dp">
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="5dp"
+        app:cardElevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/member_avatar_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.10">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/img_member_avatar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/border_onboarding"
-                android:src="@drawable/ic_perm_identity"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/card_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:layout_constraintStart_toEndOf="@+id/member_avatar_layout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.90">
+                android:id="@+id/icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/circle"
+                android:src="@drawable/ic_person_black_40dp"
+                android:tint="@color/colorOnPrimary"
+                android:layout_marginVertical="@dimen/content_margin"
+                android:layout_marginStart="@dimen/content_margin"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/txt_member_name"
-                android:layout_width="wrap_content"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:id="@+id/title"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingEnd="15dp"
-                android:paddingBottom="15dp"
-                tools:text="Bob And Emily"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <TextView
-                android:id="@+id/txt_member_status"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="15dp"
-                tools:text="Active"
-                app:layout_constraintStart_toEndOf="@id/txt_member_name"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/txt_member_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:paddingBottom="15dp"
-                tools:text="544-554-4554"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_member_name" />
-
-            <TextView
-                android:id="@+id/txt_member_address"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:paddingBottom="15dp"
-                tools:text="ns.jeeb@gmail.com"
-                app:layout_constraintStart_toEndOf="@+id/txt_member_phone"
-                app:layout_constraintTop_toBottomOf="@+id/txt_member_name" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/contact_layout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.21">
-
-
-            <CheckBox
-                android:id="@+id/ch_invite_guest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/border_onboarding"
-                android:visibility="gone"
+                android:minHeight="30dp"
+                android:layout_marginHorizontal="@dimen/content_margin"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:paddingBottom="14dp"
+                app:layout_constraintStart_toEndOf="@+id/icon"
+                app:layout_constraintTop_toTopOf="@+id/icon"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/img_member_chat" />
+                tools:text="Bob Smith" />
 
-            <ImageView
-                android:id="@+id/img_member_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_phone"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@+id/img_member_email"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <ImageView
-                android:id="@+id/img_member_chat"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:src="@drawable/ic_chat"
-                android:visibility="gone"
-                app:layout_constraintStart_toEndOf="@+id/img_member_phone"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <ImageView
-                android:id="@+id/img_member_email"
-                android:layout_width="wrap_content"
+            <TextView
+                style="@style/TextAppearance.AppCompat.Caption"
+                android:id="@+id/admin"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_email"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="Admin"
+                android:textStyle="bold"
+                android:textColor="@color/colorOnSurface"
+                app:layout_constraintStart_toStartOf="@+id/title"
+                app:layout_constraintBottom_toBottomOf="@+id/title"/>
 
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/divider"
+                android:layout_marginTop="@dimen/content_margin"
+                app:layout_constraintTop_toBottomOf="@+id/title"/>
+
+            <LinearLayout
+                android:id="@+id/contactActions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_margin"
+                android:gravity="end"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                app:layout_constraintStart_toStartOf="parent">
+
+                <Button
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/block"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Block"
+                    android:textColor="?attr/colorError"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"/>
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/phone"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_phone"
+                    android:tint="@color/colorOnSurface"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:layout_constraintStart_toEndOf="@+id/img_member_email"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/text"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_chat"
+                    android:tint="@color/colorOnSurface"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:layout_constraintStart_toEndOf="@+id/img_member_phone"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:id="@+id/email"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/ic_email"
+                    android:tint="@color/colorOnSurface"
+                    android:background="?selectableItemBackgroundBorderless"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:id="@+id/block"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Block"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/card_layout"
-            />
+    </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -9,15 +9,17 @@ import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.Error
 import com.locked.shingranicommunity.locked.models.Member
+import com.locked.shingranicommunity.locked.models.MemberState
+import com.locked.shingranicommunity.locked.models.User
 import com.locked.shingranicommunity.locked.models.request.InviteRequestBody
 import com.locked.shingranicommunity.locked.models.response.LockResponse
-import com.locked.shingranicommunity.session.Session
+import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
 
 @AppScope
 class MemberRepository @Inject constructor(
     val apiService: LockedApiService,
-    val session: Session) {
+    val session: SessionManager) {
 
     private var loading: Boolean = false
     private val _fetchMembers: MutableLiveData<Data> = MutableLiveData<Data>()
@@ -77,8 +79,16 @@ class MemberRepository @Inject constructor(
 
     private inner class FetchMembersListener(): LockedCallback<MutableList<Member>>() {
         override fun success(response: MutableList<Member>) {
+            val admins: List<User> = session.getAdminList()
+            admins.forEach {
+                response.add(0, Member("-1", session.getAppId(), it.username, MemberState.JOINED.state, it))
+            }
+            val loadedMembers = response.distinctBy { it.email }
+            loadedMembers.forEach { member ->
+                member.user?.let { member.isAdmin = session.isAdmin(it) }
+            }
             members.clear()
-            members.addAll(response)
+            members.addAll(loadedMembers)
             loading = false
             _fetchMembers.postValue(Data(true))
         }

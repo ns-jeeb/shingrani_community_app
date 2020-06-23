@@ -24,4 +24,5 @@
     <color name="colorGradient2Start">#0D5DA6</color>
     <color name="colorGradient2End">#000D5DA6</color>
     <color name="black">#000</color>
+    <color name="divider">#96B2B2B2</color>
 </resources>
