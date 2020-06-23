@@ -1,4 +1,4 @@
-package com.locked.shingranicommunity.models
+package com.locked.shingranicommunity.locked.models
 
 data class User(
     val _id: String,

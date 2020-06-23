@@ -7,10 +7,10 @@ import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.Error
-import com.locked.shingranicommunity.locked.models.LoginRequestBody
-import com.locked.shingranicommunity.locked.models.RegisterRequestBody
-import com.locked.shingranicommunity.models.LoginResponse
-import com.locked.shingranicommunity.models.RegisterResponse
+import com.locked.shingranicommunity.locked.models.request.LoginRequestBody
+import com.locked.shingranicommunity.locked.models.request.RegisterRequestBody
+import com.locked.shingranicommunity.locked.models.response.LoginResponse
+import com.locked.shingranicommunity.locked.models.response.RegisterResponse
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
 import javax.inject.Inject
@@ -40,7 +40,12 @@ class UserRepository @Inject constructor(
     }
 
     fun login(username: String, password: String) {
-        val call: Call<LoginResponse> = apiService.login(LoginRequestBody(username, password))
+        val call: Call<LoginResponse> = apiService.login(
+            LoginRequestBody(
+                username,
+                password
+            )
+        )
         call.enqueue(object: LockedCallback<LoginResponse>() {
             override fun success(response: LoginResponse) {
                 sessionManager.setLoggedInUser(response.user)
@@ -56,7 +61,13 @@ class UserRepository @Inject constructor(
     }
 
     fun register(username: String,password: String,name: String) {
-        val call = apiService.register(RegisterRequestBody(name, password, username))
+        val call = apiService.register(
+            RegisterRequestBody(
+                name,
+                password,
+                username
+            )
+        )
         call.enqueue(object: LockedCallback<RegisterResponse>() {
             override fun success(response: RegisterResponse) {
                 _registerData.postValue(RegisterData(true, response.message))

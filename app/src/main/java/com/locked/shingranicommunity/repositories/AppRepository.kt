@@ -11,7 +11,7 @@ import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.Error
-import com.locked.shingranicommunity.models.*
+import com.locked.shingranicommunity.locked.models.*
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
 import javax.inject.Inject

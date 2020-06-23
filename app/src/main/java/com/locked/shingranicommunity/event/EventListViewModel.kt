@@ -8,16 +8,15 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.DrawableLoader
 import com.locked.shingranicommunity.common.ImageLoader
 import com.locked.shingranicommunity.common.ResourceProvider
-import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.models.EventStatus
-import com.locked.shingranicommunity.models.EventType
+import com.locked.shingranicommunity.locked.models.EventItem
+import com.locked.shingranicommunity.locked.models.EventStatus
+import com.locked.shingranicommunity.locked.models.EventType
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.random.Random
 
 class EventListViewModel @Inject constructor(
     private val repository: EventRepository,

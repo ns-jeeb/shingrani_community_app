@@ -11,8 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
-import com.locked.shingranicommunity.event.EventListViewModel
-import com.locked.shingranicommunity.models.AnnouncementItem
+import com.locked.shingranicommunity.locked.models.AnnouncementItem
 
 class AnnouncementListAdapter(
     private val viewModel: AnnouncementListViewModel,

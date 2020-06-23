@@ -2,12 +2,10 @@ package com.locked.shingranicommunity.locked
 
 import com.google.gson.Gson
 import com.locked.shingranicommunity.locked.models.Error
-import com.locked.shingranicommunity.locked.models.LockResponse
-import com.locked.shingranicommunity.session.SessionManager
+import com.locked.shingranicommunity.locked.models.response.LockResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import javax.inject.Inject
 
 abstract class LockedCallback<T>(val formatError: Boolean = true) : Callback<T> {
 

@@ -2,7 +2,13 @@ package com.locked.shingranicommunity.locked
 
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.locked.models.*
-import com.locked.shingranicommunity.models.*
+import com.locked.shingranicommunity.locked.models.request.LoginRequestBody
+import com.locked.shingranicommunity.locked.models.request.RegisterRequestBody
+import com.locked.shingranicommunity.locked.models.request.RsvpRequestBody
+import com.locked.shingranicommunity.locked.models.response.CreateResponse
+import com.locked.shingranicommunity.locked.models.response.LockResponse
+import com.locked.shingranicommunity.locked.models.response.LoginResponse
+import com.locked.shingranicommunity.locked.models.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -29,7 +35,7 @@ interface LockedApiService {
     fun getEventList(@Path("appid") appId: String, @Query("template") templateId: String): Call<MutableList<EventItem>>
 
     @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun accept(@Path("itemid") itemID: String, @Body body: RsvpObject): Call<MutableLiveData<RsvpObject>>
+    fun accept(@Path("itemid") itemID: String, @Body body: RsvpRequestBody): Call<MutableLiveData<RsvpRequestBody>>
 
     @GET("/api/v2/app/{appid}/item")
     fun getAnnouncementList(@Path("appid") appId: String, @Query("template") templateId: String): Call<MutableList<AnnouncementItem>>

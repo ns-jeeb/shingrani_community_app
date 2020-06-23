@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.ResourceProvider
-import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.models.EventStatus
+import com.locked.shingranicommunity.locked.models.EventItem
+import com.locked.shingranicommunity.locked.models.EventStatus
 import com.locked.shingranicommunity.repositories.EventRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.NumberFormat

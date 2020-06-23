@@ -1,4 +1,6 @@
-package com.locked.shingranicommunity.models
+package com.locked.shingranicommunity.locked.models.response
+
+import com.locked.shingranicommunity.locked.models.Error
 
 data class RegisterResponse(
         val message: String,

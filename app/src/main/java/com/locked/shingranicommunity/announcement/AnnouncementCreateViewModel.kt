@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.ResourceProvider
-import com.locked.shingranicommunity.models.AnnouncementItem
-import com.locked.shingranicommunity.models.AnnouncementStatus
+import com.locked.shingranicommunity.locked.models.AnnouncementItem
+import com.locked.shingranicommunity.locked.models.AnnouncementStatus
 import com.locked.shingranicommunity.repositories.AnnouncementRepository
 import com.locked.shingranicommunity.session.Session
 import java.text.SimpleDateFormat

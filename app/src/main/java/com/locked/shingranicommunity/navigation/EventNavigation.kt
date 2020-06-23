@@ -19,7 +19,7 @@ import com.locked.shingranicommunity.common.ResourceProvider
 import com.locked.shingranicommunity.dashboard.DashboardActivity
 import com.locked.shingranicommunity.event.EventConstants
 import com.locked.shingranicommunity.event.Navigation
-import com.locked.shingranicommunity.models.EventItem
+import com.locked.shingranicommunity.locked.models.EventItem
 import com.locked.shingranicommunity.session.SessionManager
 import java.util.*
 import javax.inject.Inject

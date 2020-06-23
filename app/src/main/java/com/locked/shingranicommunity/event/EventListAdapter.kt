@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.EventItemBinding
-import com.locked.shingranicommunity.models.EventItem
+import com.locked.shingranicommunity.locked.models.EventItem
 
 class EventListAdapter(
     private val viewModel: EventListViewModel,

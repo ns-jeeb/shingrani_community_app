@@ -8,8 +8,11 @@ import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.*
-import com.locked.shingranicommunity.models.EventItem
-import com.locked.shingranicommunity.models.EventStatus
+import com.locked.shingranicommunity.locked.models.EventItem
+import com.locked.shingranicommunity.locked.models.EventStatus
+import com.locked.shingranicommunity.locked.models.request.RsvpRequestBody
+import com.locked.shingranicommunity.locked.models.response.CreateResponse
+import com.locked.shingranicommunity.locked.models.response.LockResponse
 import com.locked.shingranicommunity.session.Session
 import javax.inject.Inject
 
@@ -67,12 +70,18 @@ class EventRepository @Inject constructor(
     }
 
     fun accept(event: EventItem) {
-        val rsvp = RsvpObject(Rsvp("Accepted", session.getUserId()!!))
+        val rsvp =
+            RsvpRequestBody(
+                Rsvp("Accepted", session.getUserId()!!)
+            )
         apiService.accept(event._id!!, rsvp).enqueue(AcceptedListener(event))
     }
 
     fun reject(event: EventItem) {
-        val rsvp = RsvpObject(Rsvp("Rejected", session.getUserId()!!))
+        val rsvp =
+            RsvpRequestBody(
+                Rsvp("Rejected", session.getUserId()!!)
+            )
         apiService.accept(event._id!!, rsvp).enqueue(RejectedListener(event))
     }
 
@@ -121,8 +130,8 @@ class EventRepository @Inject constructor(
         }
     }
 
-    private inner class AcceptedListener(val event: EventItem): LockedCallback<MutableLiveData<RsvpObject>>() {
-        override fun success(response: MutableLiveData<RsvpObject>) {
+    private inner class AcceptedListener(val event: EventItem): LockedCallback<MutableLiveData<RsvpRequestBody>>() {
+        override fun success(response: MutableLiveData<RsvpRequestBody>) {
             // update the accepted list
             if (event.accepted == null) event.accepted = ""
             if (event.rejected == null) event.rejected = ""
@@ -150,8 +159,8 @@ class EventRepository @Inject constructor(
         }
     }
 
-    private inner class RejectedListener(val event: EventItem): LockedCallback<MutableLiveData<RsvpObject>>() {
-        override fun success(response: MutableLiveData<RsvpObject>) {
+    private inner class RejectedListener(val event: EventItem): LockedCallback<MutableLiveData<RsvpRequestBody>>() {
+        override fun success(response: MutableLiveData<RsvpRequestBody>) {
             // update the accepted list
             if (event.accepted == null) event.accepted = ""
             if (event.rejected == null) event.rejected = ""
