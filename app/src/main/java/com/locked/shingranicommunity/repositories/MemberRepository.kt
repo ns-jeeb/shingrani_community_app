@@ -7,10 +7,9 @@ import com.locked.shingranicommunity.auth.AuthConstants
 import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
-import com.locked.shingranicommunity.locked.models.*
-import com.locked.shingranicommunity.locked.models.AnnouncementItem
-import com.locked.shingranicommunity.locked.models.AnnouncementStatus
-import com.locked.shingranicommunity.locked.models.response.CreateResponse
+import com.locked.shingranicommunity.locked.models.Error
+import com.locked.shingranicommunity.locked.models.Member
+import com.locked.shingranicommunity.locked.models.request.InviteRequestBody
 import com.locked.shingranicommunity.locked.models.response.LockResponse
 import com.locked.shingranicommunity.session.Session
 import javax.inject.Inject
@@ -22,10 +21,14 @@ class MemberRepository @Inject constructor(
 
     private var loading: Boolean = false
     private val _fetchMembers: MutableLiveData<Data> = MutableLiveData<Data>()
+    private val _inviteMember: MutableLiveData<Data> = MutableLiveData<Data>()
+    private val _blockMember: MutableLiveData<Data> = MutableLiveData<Data>()
     private val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
     val fetchMembers: LiveData<Data> = _fetchMembers
+    val inviteMember: LiveData<Data> = _inviteMember
+    val blockMember: LiveData<Data> = _blockMember
     val authError: LiveData<Boolean> = _authError
-    var members: MutableList<AnnouncementItem> = mutableListOf()
+    var members: MutableList<Member> = mutableListOf()
 
     init {
         session.loginState.observeForever(Observer { _authError.value = !it })
@@ -43,26 +46,25 @@ class MemberRepository @Inject constructor(
     private fun refreshMembers() {
         if (!loading) {
             loading = true
-            apiService.getAnnouncementList(session.getAppId(), session.getAnnouncementTemplateId()) // todo
-                .enqueue(FetchMembersListener())
+            apiService.getMemberList(session.getAppId()).enqueue(FetchMembersListener())
         }
     }
 
-    fun fetchMember(memberId: String, callback: ((AnnouncementItem) -> Unit)) { // todo
+    fun fetchMember(memberId: String, callback: ((Member) -> Unit)) {
         val foundMember = members.find { it._id == memberId }
         if (foundMember != null) {
             callback.invoke(foundMember)
         }
     }
 
-    fun inviteMember(member: AnnouncementItem) {// todo
-        apiService.createAnnouncement(member)
-            .enqueue(CreateAnnouncementListener(member))
+    fun inviteMember(email: String) {
+        apiService.inviteMember(session.getAppId(), InviteRequestBody(email))
+            .enqueue(InviteMemberListener(email))
     }
 
-    fun removeMember(member: AnnouncementItem) {// todo
-        apiService.deleteAnnouncement(member._id!!)
-            .enqueue(DeleteAnnouncementListener(member))
+    fun blockMember(member: Member) {
+        apiService.blockMember(session.getAppId(), member._id)
+            .enqueue(BlockMemberListener(member))
     }
 
     private fun checkForTokenError(details: List<Error>) {
@@ -73,8 +75,8 @@ class MemberRepository @Inject constructor(
         }
     }
 
-    private inner class FetchMembersListener(): LockedCallback<MutableList<AnnouncementItem>>() {
-        override fun success(response: MutableList<AnnouncementItem>) {
+    private inner class FetchMembersListener(): LockedCallback<MutableList<Member>>() {
+        override fun success(response: MutableList<Member>) {
             members.clear()
             members.addAll(response)
             loading = false
@@ -87,26 +89,25 @@ class MemberRepository @Inject constructor(
         }
     }
 
-    private inner class CreateAnnouncementListener(val announcement: AnnouncementItem): LockedCallback<CreateResponse<AnnouncementItem>>() {
-        override fun success(response: CreateResponse<AnnouncementItem>) {
-            response.item?.let { announcement.update(it) }
-            members.add(announcement)
-            announcement.status = AnnouncementStatus.CREATED.toString()
+    private inner class InviteMemberListener(val email: String): LockedCallback<LockResponse>() {
+        override fun success(response: LockResponse) {
+            refreshMembers()
+            _inviteMember.postValue(Data(true, response.message))
         }
         override fun fail(message: String, details: List<Error>) {
             checkForTokenError(details)
-            announcement.status = AnnouncementStatus.CREATE_FAILED.toString()
+            _inviteMember.postValue(Data(false, message))
         }
     }
 
-    private inner class DeleteAnnouncementListener(val announcement: AnnouncementItem): LockedCallback<LockResponse>() {
+    private inner class BlockMemberListener(val member: Member): LockedCallback<LockResponse>() {
         override fun success(response: LockResponse) {
-            members.remove(announcement)
-            announcement.status = AnnouncementStatus.DELETED.toString()
+            refreshMembers()
+            _blockMember.postValue(Data(true, response.message))
         }
         override fun fail(message: String, details: List<Error>) {
             checkForTokenError(details)
-            announcement.status = AnnouncementStatus.DELETE_FAILED.toString()
+            _blockMember.postValue(Data(false, message))
         }
     }
 

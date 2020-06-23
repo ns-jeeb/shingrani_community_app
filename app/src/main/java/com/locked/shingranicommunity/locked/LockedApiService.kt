@@ -2,9 +2,7 @@ package com.locked.shingranicommunity.locked
 
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.locked.models.*
-import com.locked.shingranicommunity.locked.models.request.LoginRequestBody
-import com.locked.shingranicommunity.locked.models.request.RegisterRequestBody
-import com.locked.shingranicommunity.locked.models.request.RsvpRequestBody
+import com.locked.shingranicommunity.locked.models.request.*
 import com.locked.shingranicommunity.locked.models.response.CreateResponse
 import com.locked.shingranicommunity.locked.models.response.LockResponse
 import com.locked.shingranicommunity.locked.models.response.LoginResponse
@@ -46,9 +44,12 @@ interface LockedApiService {
     @DELETE("/api/v2/item/{announcementId}")
     fun deleteAnnouncement(@Path("announcementId") itemId: String): Call<LockResponse>
 
-    @GET("/api/v2/app/5d4a348f88fb44130084f903/member")
-    fun getMembers(@Header("x-access-token") token: String): Call<ArrayList<LockResponse>>
+    @GET("/api/v2/app/{appid}/member")
+    fun getMemberList(@Path("appid") appId: String): Call<MutableList<Member>>
 
-    @POST("/api/v2/app/5d4a348f88fb44130084f903/invite")
-    fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access-token") token: String): Call<LockResponse>
+    @POST("/api/v2/app/{appid}/invite")
+    fun inviteMember(@Path("appid") appId: String, @Body body: InviteRequestBody): Call<LockResponse>
+
+    @POST("/api/v2/app/{appid}/state/{memberid}")
+    fun blockMember(@Path("appid") appId: String, @Path("memberid") memberId: String, @Body body: BlockRequestBody = BlockRequestBody()): Call<LockResponse>
 }
