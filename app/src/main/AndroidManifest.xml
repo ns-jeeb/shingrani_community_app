@@ -18,7 +18,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".members.MemberActivity" />
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />
@@ -38,6 +37,7 @@
         <activity android:name=".common.FragmentActivity" />
         <activity android:name=".event.EventActivity" />
         <activity android:name=".announcement.AnnouncementActivity" />
+        <activity android:name=".member.MemberActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

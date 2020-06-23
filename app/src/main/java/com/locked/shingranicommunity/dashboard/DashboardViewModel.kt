@@ -35,6 +35,14 @@ class DashboardViewModel @Inject constructor(
         }
     }
 
+    fun memberPressed() {
+        navigation.navigateToMemberList(true)
+    }
+
+    fun settingsPressed() {
+        navigation.navigateToSettings(true)
+    }
+
     private data class Data(
         val currPage: MutableLiveData<Int> = MutableLiveData(PAGE_EVENTS),
         val showCreateFab : MutableLiveData<Boolean> = MutableLiveData(false)

@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.dashboard
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -10,8 +9,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.announcement.AnnouncementComponentProvider
 import com.locked.shingranicommunity.announcement.AnnouncementListFragment
 import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
@@ -20,7 +19,6 @@ import com.locked.shingranicommunity.di.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di.event.EventComponent
 import com.locked.shingranicommunity.event.EventComponentProvider
 import com.locked.shingranicommunity.event.EventListFragment
-import com.locked.shingranicommunity.settings.SettingsActivity
 import javax.inject.Inject
 
 class DashboardActivity : AppCompatActivity(),
@@ -104,11 +102,11 @@ class DashboardActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.action_members -> {
-                // todo
+                viewModel.memberPressed()
                 return true
             }
             R.id.action_settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
+                viewModel.settingsPressed()
                 return true
             }
         }
