@@ -7,7 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.locked.shingranicommunity.BuildConfig
 import com.locked.shingranicommunity.Constant_Utils
-import com.locked.shingranicommunity.di2.AppScope
+import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
 import com.locked.shingranicommunity.locked.models.Error

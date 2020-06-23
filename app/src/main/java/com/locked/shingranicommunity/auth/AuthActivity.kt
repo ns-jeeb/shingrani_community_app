@@ -7,7 +7,7 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.TestClass
 import com.locked.shingranicommunity.common.BaseActivity
 import com.locked.shingranicommunity.databinding.ActivityRegistrationBinding
-import com.locked.shingranicommunity.di2.auth.AuthComponent
+import com.locked.shingranicommunity.di.auth.AuthComponent
 import com.locked.shingranicommunity.common.NavigationHandler
 import javax.inject.Inject
 

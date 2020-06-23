@@ -32,7 +32,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".dashboard2.DashboardActivity"
+            android:name=".dashboard.DashboardActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".common.FragmentActivity" />

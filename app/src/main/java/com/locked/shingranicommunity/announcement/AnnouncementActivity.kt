@@ -6,7 +6,7 @@ import android.view.MenuItem
 import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.FragmentActivity
-import com.locked.shingranicommunity.di2.announcement.AnnouncementComponent
+import com.locked.shingranicommunity.di.announcement.AnnouncementComponent
 
 class AnnouncementActivity : FragmentActivity(), AnnouncementComponentProvider {
 

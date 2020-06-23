@@ -9,8 +9,8 @@ open class UrCommunityApplication : Application() {
             private set
     }
 
-    val appComponent2: com.locked.shingranicommunity.di2.AppComponent by lazy {
-        com.locked.shingranicommunity.di2.DaggerAppComponent.factory().create(this)
+    val appComponent2: com.locked.shingranicommunity.di.AppComponent by lazy {
+        com.locked.shingranicommunity.di.DaggerAppComponent.factory().create(this)
     }
 
     override fun onCreate() {
