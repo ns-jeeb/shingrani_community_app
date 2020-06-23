@@ -2,10 +2,8 @@ package com.locked.shingranicommunity.event
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import com.locked.shingranicommunity.Constant_Utils
-import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.FragmentActivity
 import com.locked.shingranicommunity.di2.event.EventComponent
@@ -15,7 +13,7 @@ class EventActivity : FragmentActivity(), EventComponentProvider {
     override lateinit var eventComponent: EventComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        eventComponent = MyApplication.instance.appComponent2.eventComponentFactory.create(this)
+        eventComponent = UrCommunityApplication.instance.appComponent2.eventComponentFactory.create(this)
         eventComponent.inject(this)
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

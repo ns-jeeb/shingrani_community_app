@@ -1,18 +1,12 @@
 package com.locked.shingranicommunity
 
 import android.app.Application
-import com.locked.shingranicommunity.di.AppComponent
-import com.locked.shingranicommunity.di.DaggerAppComponent
 
-// todo rename to UrCommunityApplication
-open class MyApplication : Application() {
+open class UrCommunityApplication : Application() {
 
     companion object {
-        lateinit var instance: MyApplication
+        lateinit var instance: UrCommunityApplication
             private set
-    }
-    val appComponent: AppComponent by lazy {
-        DaggerAppComponent.factory().create(applicationContext)
     }
 
     val appComponent2: com.locked.shingranicommunity.di2.AppComponent by lazy {

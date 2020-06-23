@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
-import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.announcement.AnnouncementComponentProvider
 import com.locked.shingranicommunity.announcement.AnnouncementListFragment
@@ -20,7 +20,6 @@ import com.locked.shingranicommunity.di2.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di2.event.EventComponent
 import com.locked.shingranicommunity.event.EventComponentProvider
 import com.locked.shingranicommunity.event.EventListFragment
-import com.locked.shingranicommunity.members.MemberActivity
 import com.locked.shingranicommunity.settings.SettingsActivity
 import javax.inject.Inject
 
@@ -41,11 +40,11 @@ class DashboardActivity : AppCompatActivity(),
     private lateinit var adapter: DashboardPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        dashboardComponent = MyApplication.instance.appComponent2.dashboardComponentFactory.create(this)
+        dashboardComponent = UrCommunityApplication.instance.appComponent2.dashboardComponentFactory.create(this)
         dashboardComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DashboardViewModel::class.java)
-        eventComponent = MyApplication.instance.appComponent2.eventComponentFactory.create(this)
-        announcementComponent = MyApplication.instance.appComponent2.announcementComponentFactory.create(this)
+        eventComponent = UrCommunityApplication.instance.appComponent2.eventComponentFactory.create(this)
+        announcementComponent = UrCommunityApplication.instance.appComponent2.announcementComponentFactory.create(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dash_borad_view_pager)
         adapter = DashboardPagerAdapter(supportFragmentManager)
@@ -105,7 +104,7 @@ class DashboardActivity : AppCompatActivity(),
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when(item?.itemId) {
             R.id.action_members -> {
-                startActivity(Intent(this, MemberActivity::class.java))
+                // todo
                 return true
             }
             R.id.action_settings -> {

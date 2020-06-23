@@ -9,7 +9,7 @@
          location permissions for the 'MyLocation' functionality.
     -->
     <application
-        android:name=".MyApplication"
+        android:name=".UrCommunityApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
@@ -18,26 +18,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity
-            android:name=".registration_login.registration.login.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask">
-
-        </activity>
-
-        <activity
-            android:name=".registration_login.registration.RegistrationActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".dashboard.DashBoardViewPagerActivity"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".dashboard.announncement.create_announce.CreateAnnouncementActivity" />
-        <activity
-            android:name=".dashboard.event.create_event.CreateItemActivity"
-            android:label="Create Event"/>
         <activity android:name=".members.MemberActivity" />
-        <activity android:name=".dashboard.event.details.DetailsActivity" />
         <activity
             android:name=".settings.SettingsActivity"
             android:label="@string/title_activity_settings" />

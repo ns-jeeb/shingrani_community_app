@@ -1,7 +1,6 @@
 package com.locked.shingranicommunity.settings
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -9,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.auth.AuthActivity
-import com.locked.shingranicommunity.auth.AuthComponentProvider
 import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.databinding.SettingsActivityBinding
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
 import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
 
@@ -60,7 +57,7 @@ class SettingsActivity : AppCompatActivity() {
 
         override fun onAttach(context: Context) {
             super.onAttach(context)
-            (activity?.application as MyApplication).appComponent2.inject(this)
+            (activity?.application as UrCommunityApplication).appComponent2.inject(this)
         }
 
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

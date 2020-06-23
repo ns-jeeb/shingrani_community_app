@@ -6,7 +6,6 @@ import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.auth.Navigation
 import com.locked.shingranicommunity.auth.RegisterFragment
 import com.locked.shingranicommunity.common.NavigationHandler
-import com.locked.shingranicommunity.dashboard.DashBoardViewPagerActivity
 import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import javax.inject.Inject
 

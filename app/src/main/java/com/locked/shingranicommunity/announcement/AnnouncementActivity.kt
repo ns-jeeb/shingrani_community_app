@@ -2,21 +2,18 @@ package com.locked.shingranicommunity.announcement
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import com.locked.shingranicommunity.Constant_Utils
-import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.FragmentActivity
 import com.locked.shingranicommunity.di2.announcement.AnnouncementComponent
-import com.locked.shingranicommunity.di2.event.EventComponent
 
 class AnnouncementActivity : FragmentActivity(), AnnouncementComponentProvider {
 
     override lateinit var announcementComponent: AnnouncementComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        announcementComponent = MyApplication.instance.appComponent2.announcementComponentFactory.create(this)
+        announcementComponent = UrCommunityApplication.instance.appComponent2.announcementComponentFactory.create(this)
         announcementComponent.inject(this)
         super.onCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
