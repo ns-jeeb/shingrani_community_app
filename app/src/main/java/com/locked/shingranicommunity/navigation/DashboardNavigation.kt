@@ -10,6 +10,7 @@ import com.locked.shingranicommunity.event.EventCreateFragment
 import javax.inject.Inject
 
 class DashboardNavigation @Inject constructor(val activity: AppCompatActivity): Navigation {
+
     override fun navigateToCreateEvent(addToBackStack: Boolean) {
         NavigationHandler(activity)
             .setActivity(EventActivity::class.java)

@@ -6,13 +6,14 @@ import com.locked.shingranicommunity.auth.AuthActivity
 import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.common.ResourceProvider
+import com.locked.shingranicommunity.dashboard2.DashboardActivity
 import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
 
 class AnnouncementNavigation @Inject constructor(val activity: AppCompatActivity,
                                                  val sessionManager: SessionManager,
-                                                 val res: ResourceProvider
-): Navigation {
+                                                 val res: ResourceProvider): Navigation {
+
     override fun navigateToLogin(clearSession: Boolean) {
         if (clearSession) {
             sessionManager.logout()
@@ -20,6 +21,13 @@ class AnnouncementNavigation @Inject constructor(val activity: AppCompatActivity
         NavigationHandler(activity)
             .setFragment(LoginFragment::class.java)
             .setActivity(AuthActivity::class.java)
+            .addToBackStack(false)
+            .navigate()
+    }
+
+    override fun createFinished() {
+        NavigationHandler(activity)
+            .setActivity(DashboardActivity::class.java)
             .addToBackStack(false)
             .navigate()
     }

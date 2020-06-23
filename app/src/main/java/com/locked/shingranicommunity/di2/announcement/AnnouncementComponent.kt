@@ -2,6 +2,7 @@ package com.locked.shingranicommunity.di2.announcement
 
 import androidx.appcompat.app.AppCompatActivity
 import com.locked.shingranicommunity.announcement.AnnouncementActivity
+import com.locked.shingranicommunity.announcement.AnnouncementCreateFragment
 import com.locked.shingranicommunity.announcement.AnnouncementListFragment
 import dagger.BindsInstance
 import dagger.Subcomponent
@@ -17,4 +18,5 @@ interface AnnouncementComponent {
 
     fun inject(activity: AnnouncementActivity)
     fun inject(fragment: AnnouncementListFragment)
+    fun inject(fragment: AnnouncementCreateFragment)
 }

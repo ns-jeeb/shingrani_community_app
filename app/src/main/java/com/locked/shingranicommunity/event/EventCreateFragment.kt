@@ -57,11 +57,11 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
         })
         binding.eventName.doOnTextChanged { text, start, count, after ->
-            binding.eventName.setError(null)
+            binding.eventName.error = null
             viewModel.setTitle(text.toString())
         }
         viewModel.isTitleValid.observe(viewLifecycleOwner, Observer {
-            binding.eventName.setError(it)
+            binding.eventName.error = it
         })
         // LOCATION
         viewModel.location.observe(viewLifecycleOwner, Observer {
@@ -70,14 +70,14 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
         })
         binding.eventLocation.doOnTextChanged{text, start, count, after ->
-            binding.eventLocation.setError(null)
+            binding.eventLocation.error = null
             viewModel.setLocation(text.toString())
         }
         binding.eventLocationTi.setEndIconOnClickListener {
             viewModel.searchAddress()
         }
         viewModel.isLocationValid.observe(viewLifecycleOwner, Observer {
-            binding.eventLocation.setError(it)
+            binding.eventLocation.error = it
         })
         // DATE
         viewModel.date.observe(viewLifecycleOwner, Observer {
@@ -86,11 +86,11 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
         })
         binding.eventDate.setOnClickListener { it ->
-            binding.eventDate.setError(null)
+            binding.eventDate.error = null
             showDatePicker(it)
         }
         viewModel.isDateValid.observe(viewLifecycleOwner, Observer {
-            binding.eventDate.setError(it)
+            binding.eventDate.error = it
         })
         // TIME
         viewModel.time.observe(viewLifecycleOwner, Observer {
@@ -99,11 +99,11 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
         })
         binding.eventTime.setOnClickListener {it ->
-            binding.eventTime.setError(null)
+            binding.eventTime.error = null
             showTimePicker(it)
         }
         viewModel.isTimeValid.observe(viewLifecycleOwner, Observer {
-            binding.eventTime.setError(it)
+            binding.eventTime.error = it
         })
         // TYPE
         val adapter: ArrayAdapter<String> = ArrayAdapter(
@@ -119,12 +119,12 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         })
         binding.eventType.onItemClickListener = object : AdapterView.OnItemClickListener {
             override fun onItemClick(p0: AdapterView<*>?, p1: View?, index: Int, p3: Long) {
-                binding.eventType.setError(null)
+                binding.eventType.error = null
                 viewModel.setType(p0?.adapter?.getItem(index).toString())
             }
         }
         viewModel.isTypeValid.observe(viewLifecycleOwner, Observer {
-            binding.eventType.setError(it)
+            binding.eventType.error = it
         })
         // DETAIL
         viewModel.desc.observe(viewLifecycleOwner, Observer {
@@ -133,11 +133,11 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
             }
         })
         binding.eventDetail.doOnTextChanged { text, start, count, after ->
-            binding.eventDetail.setError(null)
+            binding.eventDetail.error = null
             viewModel.setDescription(text.toString())
         }
         viewModel.isDescriptionValid.observe(viewLifecycleOwner, Observer {
-            binding.eventDetail.setError(it)
+            binding.eventDetail.error = it
         })
         // CREATE
         binding.create.setOnClickListener {

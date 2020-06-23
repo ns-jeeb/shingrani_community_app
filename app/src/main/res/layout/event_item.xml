@@ -95,6 +95,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/text_horizontal_margin"
                     android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
                     tools:text="Date" />
 
                 <View
@@ -112,6 +114,8 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center_horizontal"
                     android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
                     tools:text="Time" />
 
                 <View
@@ -138,6 +142,8 @@
                         android:drawablePadding="5dp"
                         android:textColor="?attr/colorPrimary"
                         android:drawableTint="?attr/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textStyle="bold"
                         android:text="0" />
 
                 </LinearLayout>

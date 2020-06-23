@@ -99,7 +99,7 @@ class EventCreateViewModel @Inject constructor(
 
     fun create() {
         if (!session.isUserAdmin()) {
-            data.message.postValue("You must be an admin to perform this operation!")
+            data.message.postValue(res.getString(R.string.must_be_admin))
             return
         }
         validateForm()
@@ -143,7 +143,7 @@ class EventCreateViewModel @Inject constructor(
         } else {
             validation.isTypeValid.value = null
         }
-        if (desc.value.isNullOrBlank() || desc.value!!.length < 5) {
+        if (desc.value.isNullOrBlank() || desc.value!!.length < 10) {
             validation.isDescriptionValid.value = res.getString(R.string.validation_desc)
         } else {
             validation.isDescriptionValid.value = null
@@ -154,11 +154,11 @@ class EventCreateViewModel @Inject constructor(
     private fun onStatusChanged(old: String?, new: String?) {
         when (new) {
             EventStatus.CREATED.toString() -> {
-                data.message.postValue("Event Created")
+                data.message.postValue(res.getString(R.string.event_created))
                 navigation.createFinished()
             }
             EventStatus.CREATE_FAILED.toString() -> {
-                data.message.postValue("Failed to Create Event")
+                data.message.postValue(res.getString(R.string.event_create_failed))
             }
         }
     }
@@ -178,6 +178,7 @@ data class Data(
     val type: MutableLiveData<String> = MutableLiveData(),
     val desc: MutableLiveData<String> = MutableLiveData(),
     val message: MutableLiveData<String> = MutableLiveData())
+
 data class DataValidation(
     val isTitleValid: MutableLiveData<String> = MutableLiveData(),
     val isLocationValid: MutableLiveData<String> = MutableLiveData(),
