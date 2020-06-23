@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity
 
+// TODO CLEAN/DELETE
 object Constant_Utils {
     const val EVENT_TIMPLATE_ID = "5d770cd8ea2f6b1300f03ca7"
     const val ANNOUNCEMENT_TIMPLATE_ID = "5d70430b09c81c13001cbb88"//5d70430b09c81c13001cbb88

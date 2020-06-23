@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -7,9 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        app:cardElevation="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:cardElevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -35,10 +34,10 @@
                 android:maxLines="2"
                 android:ellipsize="end"
                 android:textColor="@color/colorOnPrimary"
-                android:textSize="@dimen/content_text_medium"
                 android:paddingHorizontal="@dimen/text_horizontal_margin"
                 android:paddingVertical="@dimen/text_vertical_margin"
                 android:gravity="bottom"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
                 app:layout_constraintTop_toTopOf="@+id/event_image"
                 app:layout_constraintBottom_toBottomOf="@+id/event_image"
                 tools:text="Event Title\n2nd Line\n3rd Line" />
@@ -51,31 +50,31 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_share_event"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/share_icon"
+                    android:tint="@color/colorOnPrimary"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
                     android:id="@+id/img_event_location"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:tint="@color/colorOnPrimary"
                     android:src="@drawable/location_icon"
-                    android:background="?selectableItemBackground"/>
+                    android:background="?selectableItemBackgroundBorderless" />
 
                 <ImageButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:id="@+id/img_share_event"
-                    android:src="@drawable/share_icon"
-                    android:tint="@color/colorOnPrimary"
-                    android:background="?selectableItemBackground"/>
-
-                <ImageButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    style="@style/Widget.MaterialComponents.Button"
                     android:id="@+id/img_delete_item"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:tint="@color/colorOnPrimary"
                     android:src="@drawable/delete_icon"
-                    android:background="?selectableItemBackground"/>
+                    android:background="?selectableItemBackgroundBorderless" />
 
             </LinearLayout>
 
@@ -96,6 +95,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/text_horizontal_margin"
                     android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
                     tools:text="Date" />
 
                 <View
@@ -113,6 +114,8 @@
                     android:layout_gravity="center_vertical"
                     android:gravity="center_horizontal"
                     android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
                     tools:text="Time" />
 
                 <View
@@ -139,6 +142,8 @@
                         android:drawablePadding="5dp"
                         android:textColor="?attr/colorPrimary"
                         android:drawableTint="?attr/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textStyle="bold"
                         android:text="0" />
 
                 </LinearLayout>
@@ -152,7 +157,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/event_description">
 
                     <ImageButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:id="@+id/img_rejected_attending"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -162,7 +167,7 @@
                         android:background="?selectableItemBackgroundBorderless"/>
 
                     <ImageButton
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
+                        style="@style/Widget.MaterialComponents.Button"
                         android:id="@+id/img_accepted_attending"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -183,6 +188,7 @@
                 android:layout_marginTop="@dimen/text_vertical_margin"
                 android:maxLines="5"
                 android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/dataLayout1"
                 tools:text="This is the description of the event, here you can talk

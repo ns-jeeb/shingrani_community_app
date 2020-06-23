@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.EventDetailsFragmentBinding
-import com.locked.shingranicommunity.models.EventItem
 import com.locked.shingranicommunity.search_map.ItemDetailsComponentProvider
 import com.locked.shingranicommunity.search_map.ItemDetailsViewModel
 import javax.inject.Inject
@@ -46,7 +45,7 @@ class DetailsFragment : Fragment() {
                 mBinding.going.text = "Going"
                 mBinding.txtEventName.text = "in this event"
                 mBinding.envelopOpen.isEnabled = false
-                mBinding.imgEvent.setImageBitmap(viewModel.getBackgroundImage(requireContext()))
+//                mBinding.imgEvent.setImageBitmap(viewModel.getBackgroundImage(requireContext()))
             }
 
             override fun onAnimationCancel(animation: Animator?) {

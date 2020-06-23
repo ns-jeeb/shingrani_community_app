@@ -104,6 +104,8 @@
     <string name="version">Version</string>
     <string name="delete_event_confirm_title">Delete</string>
     <string name="delete_event_confirm_desc">Are you sure you\'d like to delete %s event?</string>
+    <string name="delete_announcement_confirm_title">Delete</string>
+    <string name="delete_announcement_confirm_desc">Are you sure you\'d like to delete %s announcement?</string>
     <string name="title_activity_auto_complele_place">Map</string>
     <string name="event_create_page_title">Create an Event</string>
     <string name="event_name">Name</string>
@@ -122,6 +124,11 @@
     <string name="validation_desc">Required. Minimum 10 characters</string>
     <string name="by">created by</string>
     <string name="send_to">Share this %s</string>
+    <string name="must_be_admin">You must be an admin to perform this operation!</string>
+    <string name="announcement_created">Announcement Created</string>
+    <string name="announcement_create_failed">Failed to Create Event</string>
+    <string name="event_created">Event Created</string>
+    <string name="event_create_failed">Failed to Create Event</string>
     <string-array name="event_types">
         <item>Event</item>
         <item>Wedding</item>

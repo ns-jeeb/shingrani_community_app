@@ -1,27 +1,36 @@
 package com.locked.shingranicommunity.di
 
-import android.content.Context
-import com.locked.shingranicommunity.dashboard.DashBoardManager
-import com.locked.shingranicommunity.registration_login.registration.login.LoginActivity
-import com.locked.shingranicommunity.registration_login.registration.user.UserManager
-import com.locked.shingranicommunity.storage.StorageModule
+import android.app.Application
+import com.locked.shingranicommunity.di.announcement.AnnouncementComponent
+import com.locked.shingranicommunity.di.auth.AuthComponent
+import com.locked.shingranicommunity.di.dashboard.DashboardComponent
+import com.locked.shingranicommunity.di.event.EventComponent
+import com.locked.shingranicommunity.di.locked.LockedApiServiceModule
+import com.locked.shingranicommunity.di.member.MemberComponent
+import com.locked.shingranicommunity.di.viewmodel.ViewModelFactoryModule
+import com.locked.shingranicommunity.di2.item_details.ItemDetailsComponent
+import com.locked.shingranicommunity.settings.SettingsActivity
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
 
-@Singleton
-@Component(modules = [StorageModule::class, CommAppSubComponent::class, ViewModelProviderModul::class])
+@AppScope
+@Component(modules = [
+    AppModule::class,
+    ViewModelFactoryModule::class,
+    LockedApiServiceModule::class])
 interface AppComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+        fun create(@BindsInstance app: Application): AppComponent
     }
-    fun registerComponent(): RegisterComponent.Factory
-    fun loginComponent(): LoginComponent.Factory
-    fun dashBoardComponent():DashboardComponent.Factory
-    fun userManager(): UserManager
-    fun memberComponent(): MemberComponent.Factory
 
-    fun inject(activity: LoginActivity)
+    val authComponentFactory : AuthComponent.Factory
+    val dashboardComponentFactory : DashboardComponent.Factory
+    val eventComponentFactory : EventComponent.Factory
+    val announcementComponentFactory : AnnouncementComponent.Factory
+    val memberComponentFactory : MemberComponent.Factory
+    val itemDetailsComponent : ItemDetailsComponent.Factory
+
+    fun inject(settingFragment: SettingsActivity.SettingFragment)
 }

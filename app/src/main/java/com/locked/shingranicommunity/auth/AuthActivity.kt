@@ -2,12 +2,12 @@ package com.locked.shingranicommunity.auth
 
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
-import com.locked.shingranicommunity.MyApplication
+import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.TestClass
 import com.locked.shingranicommunity.common.BaseActivity
 import com.locked.shingranicommunity.databinding.ActivityRegistrationBinding
-import com.locked.shingranicommunity.di2.auth.AuthComponent
+import com.locked.shingranicommunity.di.auth.AuthComponent
 import com.locked.shingranicommunity.common.NavigationHandler
 import javax.inject.Inject
 
@@ -20,7 +20,7 @@ class AuthActivity : BaseActivity(), AuthComponentProvider {
     override lateinit var authComponent: AuthComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        authComponent = MyApplication.instance.appComponent2.authComponentFactory.create(this);
+        authComponent = UrCommunityApplication.instance.appComponent2.authComponentFactory.create(this);
         authComponent.inject(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_registration)

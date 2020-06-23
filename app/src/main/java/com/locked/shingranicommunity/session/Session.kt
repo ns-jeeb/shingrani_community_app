@@ -1,7 +1,7 @@
 package com.locked.shingranicommunity.session
 
 import androidx.lifecycle.LiveData
-import com.locked.shingranicommunity.models.User
+import com.locked.shingranicommunity.locked.models.User
 
 interface Session {
 

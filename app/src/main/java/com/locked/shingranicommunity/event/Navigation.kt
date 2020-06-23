@@ -1,6 +1,6 @@
 package com.locked.shingranicommunity.event
 
-import com.locked.shingranicommunity.models.EventItem
+import com.locked.shingranicommunity.locked.models.EventItem
 
 interface Navigation {
     fun navigateToMap(address: String)

@@ -11,8 +11,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.locked.shingranicommunity.BuildConfig
 import com.locked.shingranicommunity.Constant_Utils
-import com.locked.shingranicommunity.di2.AppScope
-import com.locked.shingranicommunity.models.User
+import com.locked.shingranicommunity.di.AppScope
+import com.locked.shingranicommunity.locked.models.User
 import javax.inject.Inject
 
 @SuppressLint("ApplySharedPref")

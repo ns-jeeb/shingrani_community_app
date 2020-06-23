@@ -2,8 +2,11 @@ package com.locked.shingranicommunity.locked
 
 import androidx.lifecycle.MutableLiveData
 import com.locked.shingranicommunity.locked.models.*
-import com.locked.shingranicommunity.members.ShingraniMember
-import com.locked.shingranicommunity.models.*
+import com.locked.shingranicommunity.locked.models.request.*
+import com.locked.shingranicommunity.locked.models.response.CreateResponse
+import com.locked.shingranicommunity.locked.models.response.LockResponse
+import com.locked.shingranicommunity.locked.models.response.LoginResponse
+import com.locked.shingranicommunity.locked.models.response.RegisterResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -30,43 +33,23 @@ interface LockedApiService {
     fun getEventList(@Path("appid") appId: String, @Query("template") templateId: String): Call<MutableList<EventItem>>
 
     @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun accept(@Path("itemid") itemID: String, @Body body: RsvpObject): Call<MutableLiveData<RsvpObject>>
+    fun accept(@Path("itemid") itemID: String, @Body body: RsvpRequestBody): Call<MutableLiveData<RsvpRequestBody>>
 
-    @POST("/api/v2/login")
-    @Headers("Content-Type: application/json")
-    fun userLogin(@Body body: Map<String, String>, @Header("appid")apiId: String): Call<LoginResponse>
-
-    @Headers("Content-Type: application/json")
-    @POST("/api/v2/register")
-    fun registerUser(@Body body: Map<String, String>): Call<LoginResponse>
-
-    @GET("/api/v2/app/5d4a348f88fb44130084f903/item")
-    fun getItems(@Query("template") template: String ,@Header("x-access-token") token: String): Call<ArrayList<Item>>
-
-    @DELETE("/api/v2/item/{itemid}")
-    fun deleteItems(@Header("x-access-token") token: String,@Path(value = "itemid",encoded = true)itemId: String ):Call<Item>
+    @GET("/api/v2/app/{appid}/item")
+    fun getAnnouncementList(@Path("appid") appId: String, @Query("template") templateId: String): Call<MutableList<AnnouncementItem>>
 
     @POST("/api/v2/item")
-    fun createEventItem(@Header("x-access-token") token: String,@Body body:HashMap<String , Any>): Call<Item>
+    fun createAnnouncement(@Body body: AnnouncementItem): Call<CreateResponse<AnnouncementItem>>
 
-    @POST("/api/v2/item")
-    fun createAnnounce(@Header("x-access-token") token: String,@Body body:HashMap<String , Any>): Call<Item>
+    @DELETE("/api/v2/item/{announcementId}")
+    fun deleteAnnouncement(@Path("announcementId") itemId: String): Call<LockResponse>
 
-    @GET("/api/v2/app/5d4a348f88fb44130084f903/member")
-    fun getMembers(@Header("x-access-token") token: String): Call<ArrayList<ShingraniMember>>
+    @GET("/api/v2/app/{appid}/member")
+    fun getMemberList(@Path("appid") appId: String): Call<MutableList<Member>>
 
-    @POST("/api/v2/app/5d4a348f88fb44130084f903/invite")
-    fun inviteMember(@Body email: HashMap<String,String>, @Header("x-access-token") token: String): Call<ShingraniMember>
-    @GET("/api/v2/app/{appid}")
-    fun fetchedSingleApi(@Header("x-access-token") token: String,@Path("appid")apiId: String ):Call<AppModel>
+    @POST("/api/v2/app/{appid}/invite")
+    fun inviteMember(@Path("appid") appId: String, @Body body: InviteRequestBody): Call<LockResponse>
 
-    @PUT("api/v2/item/{itemid}")
-    fun updateItem( @Header("x-access-token") token: String,@Body body: HashMap<String,Any>, @Path("itemid") itemID: String):Call<Item>
-
-    @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun accepted(@Body body: RsvpObject, @Path("itemid") itemID: String): Call<MutableLiveData<RsvpObject>>
-
-    @POST("api/v2/urcommunity/rsvp/{itemid}")
-    fun rejected(@Body body: RsvpObject, @Path("itemid") itemID: String): Call<MutableLiveData<RsvpObject>>
-
+    @POST("/api/v2/app/{appid}/state/{memberid}")
+    fun blockMember(@Path("appid") appId: String, @Path("memberid") memberId: String, @Body body: BlockRequestBody = BlockRequestBody()): Call<LockResponse>
 }
