@@ -23,7 +23,7 @@ class AnnouncementCreateViewModel  @Inject constructor(
     private val validation = DataValidation()
     var isFormValid: Boolean = validation.isValid()
 
-    val pageTitle: String = res.getString(R.string.event_create_page_title)
+    val pageTitle: String = res.getString(R.string.announcement_create_page_title)
     val title: LiveData<String> = data.title
     val text: LiveData<String> = data.text
     val message: LiveData<String> = data.message

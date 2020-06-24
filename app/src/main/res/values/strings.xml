@@ -109,7 +109,7 @@
     <string name="member_block_confirmation_title">Block</string>
     <string name="member_block_confirmation_desc">Are you sure you\'d like to block %s?</string>
     <string name="title_activity_auto_complele_place">Map</string>
-    <string name="event_create_page_title">Create an Event</string>
+    <string name="event_create_page_title">Create Event</string>
     <string name="event_name">Name</string>
     <string name="event_location">Location</string>
     <string name="event_type">Type</string>
@@ -134,6 +134,7 @@
     <string name="event_create_failed">Failed to Create Event</string>
 
     <string name="send_email_to_body">&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;Shingiran Community Android</string>
+    <string name="announcement_create_page_title">Create Announcement</string>
 
     <string-array name="event_types">
         <item>Event</item>
