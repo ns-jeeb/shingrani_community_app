@@ -22,7 +22,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.CreateEventFragmentBinding
+import com.locked.shingranicommunity.databinding.FragmentEventCreateBinding
 import javax.inject.Inject
 
 class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
@@ -32,10 +32,10 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: EventCreateViewModel
-    private lateinit var binding: CreateEventFragmentBinding
+    private lateinit var binding: FragmentEventCreateBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.create_event_fragment, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_event_create, container, false)
         setupViews()
         return binding.root
     }
@@ -108,7 +108,7 @@ class EventCreateFragment : Fragment(), TimePickerDialog.OnTimeSetListener,
         // TYPE
         val adapter: ArrayAdapter<String> = ArrayAdapter(
             requireContext(),
-            R.layout.dropdown_menu_item,
+            R.layout.item_dropdown,
             viewModel.eventTypes
         )
         binding.eventType.setAdapter(adapter)

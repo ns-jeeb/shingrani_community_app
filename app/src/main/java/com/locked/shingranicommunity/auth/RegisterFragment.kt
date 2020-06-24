@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.EditorInfo
-import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -14,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.FragmentRegisterBinding
+import com.locked.shingranicommunity.databinding.FragmentAuthRegisterBinding
 import javax.inject.Inject
 
 class RegisterFragment : Fragment() {
@@ -23,10 +21,10 @@ class RegisterFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var viewModel: RegisterViewModel
-    lateinit var binding: FragmentRegisterBinding
+    lateinit var binding: FragmentAuthRegisterBinding
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_register, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth_register, container, false)
         setupViews()
         return binding.root
     }

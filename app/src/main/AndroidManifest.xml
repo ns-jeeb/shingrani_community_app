@@ -39,7 +39,7 @@
             android:launchMode="singleTask" />
         <activity
             android:name=".settings.SettingsActivity"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/settings" />
         <activity android:name=".common.FragmentActivity" />
         <activity android:name=".event.EventActivity" />
         <activity android:name=".announcement.AnnouncementActivity" />

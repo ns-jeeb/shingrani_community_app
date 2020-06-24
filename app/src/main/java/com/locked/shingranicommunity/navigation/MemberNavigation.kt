@@ -23,7 +23,7 @@ class MemberNavigation @Inject constructor(
         NavigationHandler(activity)
             .setActivity(MemberActivity::class.java)
             .setFragment(InviteMemberFragment::class.java)
-            .addToBackStack(false)
+            .addToBackStack(true)
             .navigate()
     }
 

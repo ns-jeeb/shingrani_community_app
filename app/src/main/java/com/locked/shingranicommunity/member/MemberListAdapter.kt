@@ -13,7 +13,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.MemberItemBinding
+import com.locked.shingranicommunity.databinding.ItemMemberBinding
 import com.locked.shingranicommunity.locked.models.Member
 
 class MemberListAdapter(
@@ -39,10 +39,10 @@ class MemberListAdapter(
     }
 
     inner class MemberViewHolder(val parent: ViewGroup) :
-        RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.member_item, parent,false)),
+        RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_member, parent,false)),
         View.OnClickListener {
 
-        private var binding: MemberItemBinding = DataBindingUtil.bind(itemView)!!
+        private var binding: ItemMemberBinding = DataBindingUtil.bind(itemView)!!
         private var itemViewModel: MemberListViewModel.ItemViewModel? = null
 
         fun bind(itemViewModel: MemberListViewModel.ItemViewModel) {

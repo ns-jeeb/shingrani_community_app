@@ -21,7 +21,7 @@ open class FragmentActivity : BaseActivity() {
         loadToolbar()
     }
 
-    private fun loadToolbar() {
+    open fun loadToolbar() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fragment)
         if (fragment != null && fragment is ToolbarProvider) {
             binding.toolbar.visibility = View.GONE

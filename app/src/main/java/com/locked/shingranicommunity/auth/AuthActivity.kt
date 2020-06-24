@@ -1,30 +1,29 @@
 package com.locked.shingranicommunity.auth
 
 import android.os.Bundle
-import androidx.databinding.DataBindingUtil
-import com.locked.shingranicommunity.UrCommunityApplication
-import com.locked.shingranicommunity.R
+import android.view.View
 import com.locked.shingranicommunity.TestClass
-import com.locked.shingranicommunity.common.BaseActivity
-import com.locked.shingranicommunity.databinding.ActivityRegistrationBinding
-import com.locked.shingranicommunity.di.auth.AuthComponent
+import com.locked.shingranicommunity.UrCommunityApplication
+import com.locked.shingranicommunity.common.FragmentActivity
 import com.locked.shingranicommunity.common.NavigationHandler
+import com.locked.shingranicommunity.di.auth.AuthComponent
 import javax.inject.Inject
 
-class AuthActivity : BaseActivity(), AuthComponentProvider {
+class AuthActivity : FragmentActivity(), AuthComponentProvider {
 
     @Inject
     lateinit var testClass: TestClass
 
-    lateinit var binding: ActivityRegistrationBinding
     override lateinit var authComponent: AuthComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
         authComponent = UrCommunityApplication.instance.appComponent2.authComponentFactory.create(this);
         authComponent.inject(this)
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_registration)
-        loadByNavigation()
+    }
+
+    override fun loadToolbar() {
+        binding.toolbar.visibility = View.GONE
     }
 
     override fun onActivityActionMain() {

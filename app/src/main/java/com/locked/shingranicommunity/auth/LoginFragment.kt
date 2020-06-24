@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.ActivityLoginBinding
+import com.locked.shingranicommunity.databinding.FragmentAuthLoginBinding
 import javax.inject.Inject
 
 class LoginFragment : Fragment() {
@@ -21,10 +21,10 @@ class LoginFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     lateinit var viewModel: LoginViewModel
-    lateinit var binding: ActivityLoginBinding
+    lateinit var binding: FragmentAuthLoginBinding
 
     override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.activity_login, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_auth_login, container, false)
         setupViews()
         return binding.root
     }

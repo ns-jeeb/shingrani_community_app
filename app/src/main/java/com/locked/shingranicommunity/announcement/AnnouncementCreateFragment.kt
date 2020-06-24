@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.FragmentCreateAnnouncementBinding
+import com.locked.shingranicommunity.databinding.FragmentAnnouncementCreateBinding
 import javax.inject.Inject
 
 class AnnouncementCreateFragment : Fragment() {
@@ -21,10 +21,10 @@ class AnnouncementCreateFragment : Fragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var viewModel: AnnouncementCreateViewModel
-    private lateinit var binding: FragmentCreateAnnouncementBinding
+    private lateinit var binding: FragmentAnnouncementCreateBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_create_announcement, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_announcement_create, container, false)
         setupViews()
         return binding.root
     }

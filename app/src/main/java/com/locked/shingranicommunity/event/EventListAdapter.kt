@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.EventItemBinding
+import com.locked.shingranicommunity.databinding.ItemEventBinding
 import com.locked.shingranicommunity.locked.models.EventItem
 
 class EventListAdapter(
@@ -37,10 +37,10 @@ class EventListAdapter(
     }
 
     inner class EventViewHolder(val parent: ViewGroup) :
-        RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.event_item, parent,false)),
+        RecyclerView.ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_event, parent,false)),
         View.OnClickListener {
 
-        private var binding: EventItemBinding = DataBindingUtil.bind(itemView)!!
+        private var binding: ItemEventBinding = DataBindingUtil.bind(itemView)!!
         private var itemViewModel: EventListViewModel.ItemViewModel? = null
 
         fun bind(itemViewModel: EventListViewModel.ItemViewModel) {

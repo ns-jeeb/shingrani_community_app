@@ -13,7 +13,7 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.auth.AuthActivity
 import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.common.NavigationHandler
-import com.locked.shingranicommunity.databinding.SettingsActivityBinding
+import com.locked.shingranicommunity.databinding.ActivitySettingsBinding
 import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
 
@@ -22,11 +22,11 @@ class SettingsActivity : AppCompatActivity() {
     @Inject
     lateinit var settingsViewModel: SettingsViewModel
 
-    lateinit var binding: SettingsActivityBinding
+    lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.settings_activity)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_settings)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment,

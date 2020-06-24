@@ -13,7 +13,7 @@ import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.announcement.AnnouncementComponentProvider
 import com.locked.shingranicommunity.announcement.AnnouncementListFragment
-import com.locked.shingranicommunity.databinding.ActivityDashBoradViewPagerBinding
+import com.locked.shingranicommunity.databinding.ActivityDashboardBinding
 import com.locked.shingranicommunity.di.announcement.AnnouncementComponent
 import com.locked.shingranicommunity.di.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di.event.EventComponent
@@ -34,7 +34,7 @@ class DashboardActivity : AppCompatActivity(),
     override lateinit var announcementComponent: AnnouncementComponent
 
     private lateinit var viewModel: DashboardViewModel
-    private lateinit var binding : ActivityDashBoradViewPagerBinding
+    private lateinit var binding : ActivityDashboardBinding
     private lateinit var adapter: DashboardPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class DashboardActivity : AppCompatActivity(),
         eventComponent = UrCommunityApplication.instance.appComponent2.eventComponentFactory.create(this)
         announcementComponent = UrCommunityApplication.instance.appComponent2.announcementComponentFactory.create(this)
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_dash_borad_view_pager)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         adapter = DashboardPagerAdapter(supportFragmentManager)
         setupViews()
     }

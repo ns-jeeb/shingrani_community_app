@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.FragmentAnnouncementBinding
+import com.locked.shingranicommunity.databinding.FragmentAnnouncementListBinding
 import javax.inject.Inject
 
 class AnnouncementListFragment : Fragment() {
@@ -20,11 +20,11 @@ class AnnouncementListFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: AnnouncementListViewModel
-    lateinit var binding: FragmentAnnouncementBinding
+    lateinit var binding: FragmentAnnouncementListBinding
     lateinit var adapter: AnnouncementListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_announcement, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_announcement_list, container, false)
         adapter = AnnouncementListAdapter(viewModel, viewLifecycleOwner)
         setupViews()
         return binding.root

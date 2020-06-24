@@ -10,7 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
-import com.locked.shingranicommunity.databinding.AnnouncementItemBinding
+import com.locked.shingranicommunity.databinding.ItemAnnouncementBinding
 import com.locked.shingranicommunity.locked.models.AnnouncementItem
 
 class AnnouncementListAdapter(
@@ -37,10 +37,10 @@ class AnnouncementListAdapter(
 
     inner class AnnouncementViewHolder(val parent: ViewGroup) :
         RecyclerView.ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.announcement_item, parent,false)),
+            LayoutInflater.from(parent.context).inflate(R.layout.item_announcement, parent,false)),
         View.OnClickListener {
 
-        private var binding: AnnouncementItemBinding = DataBindingUtil.bind(itemView)!!
+        private var binding: ItemAnnouncementBinding = DataBindingUtil.bind(itemView)!!
         private var itemViewModel: AnnouncementListViewModel.ItemViewModel? = null
 
         fun bind(itemViewModel: AnnouncementListViewModel.ItemViewModel) {
