@@ -92,7 +92,7 @@ class MemberListViewModel @Inject constructor(
                               private val repository: MemberRepository) {
 
         val blockConfirmationTitle: String = res.getString(R.string.member_block_confirmation_title)
-        val blockConfirmationDesc: String = res.getString(R.string.member_block_confirmation_desc)
+        val blockConfirmationDesc: String = res.getString(R.string.member_block_confirmation_desc).format(member.email)
 
         val data: ItemData = ItemData()
         val title: LiveData<String> = data.title

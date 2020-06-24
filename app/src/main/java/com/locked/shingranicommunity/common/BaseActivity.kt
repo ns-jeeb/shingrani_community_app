@@ -3,7 +3,6 @@ package com.locked.shingranicommunity.common
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import java.io.Serializable
-import java.lang.IllegalArgumentException
 
 abstract class BaseActivity: AppCompatActivity() {
 

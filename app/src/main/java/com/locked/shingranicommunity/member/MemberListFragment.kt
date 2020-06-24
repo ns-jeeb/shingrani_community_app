@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -12,10 +14,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.locked.shingranicommunity.R
+import com.locked.shingranicommunity.common.ToolbarProvider
 import com.locked.shingranicommunity.databinding.FragmentMemberListBinding
 import javax.inject.Inject
 
-class MemberListFragment : Fragment() {
+class MemberListFragment : Fragment(), ToolbarProvider {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -60,5 +63,9 @@ class MemberListFragment : Fragment() {
         super.onAttach(context)
         (activity as MemberComponentProvider).memberComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(MemberListViewModel::class.java)
+    }
+
+    override fun provideToolbar(): Toolbar {
+        return binding.toolbar
     }
 }

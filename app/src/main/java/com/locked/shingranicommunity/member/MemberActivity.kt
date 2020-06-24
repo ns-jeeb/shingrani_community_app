@@ -17,6 +17,10 @@ class MemberActivity : FragmentActivity(), MemberComponentProvider {
         memberComponent = UrCommunityApplication.instance.appComponent2.memberComponentFactory.create(this)
         memberComponent.inject(this)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

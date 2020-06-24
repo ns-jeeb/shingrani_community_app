@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginVertical="5dp"
+        android:layout_marginVertical="7dp"
+        app:cardCornerRadius="10dp"
         app:cardElevation="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,100 +28,98 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:id="@+id/title"
+            <LinearLayout
+                android:id="@+id/contentLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="30dp"
+                android:orientation="vertical"
                 android:layout_marginHorizontal="@dimen/content_margin"
-                android:maxLines="2"
-                android:ellipsize="end"
-                android:paddingBottom="14dp"
                 app:layout_constraintStart_toEndOf="@+id/icon"
                 app:layout_constraintTop_toTopOf="@+id/icon"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="Bob Smith" />
+                app:layout_constraintEnd_toEndOf="parent">
 
-            <TextView
-                style="@style/TextAppearance.AppCompat.Caption"
-                android:id="@+id/admin"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="Admin"
-                android:textStyle="bold"
-                android:textColor="@color/colorOnSurface"
-                app:layout_constraintStart_toStartOf="@+id/title"
-                app:layout_constraintBottom_toBottomOf="@+id/title"/>
-
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/divider"
-                android:layout_marginTop="@dimen/content_margin"
-                app:layout_constraintTop_toBottomOf="@+id/title"/>
-
-            <LinearLayout
-                android:id="@+id/contactActions"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="@dimen/space_margin"
-                android:gravity="end"
-                app:layout_constraintTop_toBottomOf="@+id/divider"
-                app:layout_constraintStart_toStartOf="parent">
-
-                <Button
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:id="@+id/block"
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Medium"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Block"
-                    android:textColor="?attr/colorError"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    android:minHeight="30dp"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    tools:text="Bob Smith" />
 
-                <Space
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"/>
+                <TextView
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:id="@+id/admin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Admin"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorOnSurface"/>
 
-                <ImageButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:id="@+id/phone"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_phone"
-                    android:tint="@color/colorOnSurface"
-                    android:background="?selectableItemBackgroundBorderless"
-                    app:layout_constraintStart_toEndOf="@+id/img_member_email"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <LinearLayout
+                    android:id="@+id/contactActions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/space_margin"
+                    android:gravity="start"
+                    android:layout_marginStart="-20dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:layout_constraintTop_toBottomOf="@+id/divider"
+                    app:layout_constraintStart_toStartOf="parent">
 
-                <ImageButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:id="@+id/text"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_chat"
-                    android:tint="@color/colorOnSurface"
-                    android:background="?selectableItemBackgroundBorderless"
-                    app:layout_constraintStart_toEndOf="@+id/img_member_phone"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageButton
+                        android:id="@+id/phone"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_phone"
+                        android:tint="@color/color_member_action"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:padding="14dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintStart_toEndOf="@+id/img_member_email"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    style="@style/Widget.MaterialComponents.Button.TextButton"
-                    android:id="@+id/email"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:src="@drawable/ic_email"
-                    android:tint="@color/colorOnSurface"
-                    android:background="?selectableItemBackgroundBorderless"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <ImageButton
+                        android:id="@+id/text"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_chat"
+                        android:tint="@color/color_member_action"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:padding="14dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintStart_toEndOf="@+id/img_member_phone"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageButton
+                        android:id="@+id/email"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:src="@drawable/ic_email"
+                        android:tint="@color/color_member_action"
+                        android:background="?selectableItemBackgroundBorderless"
+                        android:padding="14dp"
+                        android:scaleType="fitCenter"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        style="@style/Widget.MaterialComponents.Button.TextButton"                    android:id="@+id/block"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:text="Block"
+                        android:textColor="?attr/colorError"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        />
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

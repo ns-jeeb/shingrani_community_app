@@ -16,6 +16,10 @@ class EventActivity : FragmentActivity(), EventComponentProvider {
         eventComponent = UrCommunityApplication.instance.appComponent2.eventComponentFactory.create(this)
         eventComponent.inject(this)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

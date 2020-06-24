@@ -16,6 +16,10 @@ class AnnouncementActivity : FragmentActivity(), AnnouncementComponentProvider {
         announcementComponent = UrCommunityApplication.instance.appComponent2.announcementComponentFactory.create(this)
         announcementComponent.inject(this)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onPostCreate(savedInstanceState: Bundle?) {
+        super.onPostCreate(savedInstanceState)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 

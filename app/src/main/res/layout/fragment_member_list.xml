@@ -11,6 +11,24 @@
         android:clipChildren="false"
         android:clipToPadding="false">
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            app:elevation="0dp"
+            >
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@null"
+                app:elevation="0dp"
+                app:titleTextColor="?attr/colorOnSurface"
+                app:layout_scrollFlags="scroll" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
@@ -18,7 +36,9 @@
             android:paddingTop="5dp"
             android:paddingBottom="90dp"
             android:clipChildren="false"
-            android:clipToPadding="false"/>
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <ProgressBar
             android:id="@+id/progress"

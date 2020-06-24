@@ -25,4 +25,5 @@
     <color name="colorGradient2End">#000D5DA6</color>
     <color name="black">#000</color>
     <color name="divider">#96B2B2B2</color>
+    <color name="colorActionDisabled">#676767</color>
 </resources>
