@@ -10,54 +10,38 @@
         android:layout_height="match_parent"
         android:background="?android:attr/colorBackground">
 
-        <ImageView
-            android:id="@+id/background"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/login_background"
-            app:layout_constraintDimensionRatio="4:3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/gradient_1"
-            app:layout_constraintStart_toStartOf="@+id/background"
-            app:layout_constraintEnd_toEndOf="@+id/background"
-            app:layout_constraintTop_toTopOf="@+id/background"
-            app:layout_constraintBottom_toBottomOf="@+id/background" />
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/gradient_2"
-            app:layout_constraintStart_toStartOf="@+id/background"
-            app:layout_constraintEnd_toEndOf="@+id/background"
-            app:layout_constraintTop_toTopOf="@+id/background"
-            app:layout_constraintBottom_toBottomOf="@+id/background" />
-
         <androidx.coordinatorlayout.widget.CoordinatorLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:fitsSystemWindows="true"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/tab_layout">
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="112dp"
+                android:background="@drawable/toolbar_background"
+                android:elevation="10dp">
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:titleTextColor="?attr/colorOnPrimary"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_scrollFlags="scroll|snap|enterAlways" />
+                    android:layout_height="56dp"
+                    app:elevation="0dp"
+                    app:layout_scrollFlags="snap|scroll|enterAlways"
+                    app:titleTextColor="?attr/colorOnPrimary" />
+
+                <com.google.android.material.tabs.TabLayout
+                    style="@style/Widget.MaterialComponents.TabLayout.Colored"
+                    android:id="@+id/tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:background="@null"
+                    app:elevation="0dp"
+                    app:layout_scrollFlags="snap|scroll|enterAlways"
+                    app:tabMode="fixed"
+                    app:tabGravity="fill"
+                    app:tabIndicatorHeight="2dp"/>
 
             </com.google.android.material.appbar.AppBarLayout>
 
@@ -80,15 +64,6 @@
                 tools:visibility="visible"/>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <com.google.android.material.tabs.TabLayout
-            style="@style/Widget.MaterialComponents.TabLayout.Colored"
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:elevation="5dp"
-            app:tabIndicatorHeight="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
