@@ -93,23 +93,20 @@ class AnnouncementCreateViewModel  @Inject constructor(
             }
         }
     }
-}
 
+    private data class Data(
+        val title: MutableLiveData<String> = MutableLiveData(),
+        val text: MutableLiveData<String> = MutableLiveData(),
+        val message: MutableLiveData<String> = MutableLiveData())
 
-data class Data(
-    val title: MutableLiveData<String> = MutableLiveData(),
-    val text: MutableLiveData<String> = MutableLiveData(),
-    val message: MutableLiveData<String> = MutableLiveData()
-)
+    private data class DataValidation(
+        val isTitleValid: MutableLiveData<String> = MutableLiveData(),
+        val isTextValid: MutableLiveData<String> = MutableLiveData()) {
 
-data class DataValidation(
-    val isTitleValid: MutableLiveData<String> = MutableLiveData(),
-    val isTextValid: MutableLiveData<String> = MutableLiveData()
-) {
-
-    fun isValid(): Boolean {
-        return isTitleValid.value == null
-                && isTextValid.value == null
+        fun isValid(): Boolean {
+            return isTitleValid.value == null
+                    && isTextValid.value == null
+        }
     }
 }
 

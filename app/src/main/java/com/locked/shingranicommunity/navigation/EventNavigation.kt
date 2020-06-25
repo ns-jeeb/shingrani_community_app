@@ -65,7 +65,7 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity,
     }
 
     override fun navigateToEventDetail(eventId: String) {
-
+        // todo
     }
 
     override fun navigateToLogin(clearSession: Boolean) {

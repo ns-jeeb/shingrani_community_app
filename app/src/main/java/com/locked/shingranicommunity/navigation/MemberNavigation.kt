@@ -8,8 +8,10 @@ import com.locked.shingranicommunity.auth.AuthActivity
 import com.locked.shingranicommunity.auth.LoginFragment
 import com.locked.shingranicommunity.common.NavigationHandler
 import com.locked.shingranicommunity.common.ResourceProvider
+import com.locked.shingranicommunity.dashboard.DashboardActivity
 import com.locked.shingranicommunity.member.InviteMemberFragment
 import com.locked.shingranicommunity.member.MemberActivity
+import com.locked.shingranicommunity.member.MemberListFragment
 import com.locked.shingranicommunity.member.Navigation
 import com.locked.shingranicommunity.session.SessionManager
 import javax.inject.Inject
@@ -23,7 +25,7 @@ class MemberNavigation @Inject constructor(
         NavigationHandler(activity)
             .setActivity(MemberActivity::class.java)
             .setFragment(InviteMemberFragment::class.java)
-            .addToBackStack(true)
+            .addToBackStack(addToBackStack)
             .navigate()
     }
 
@@ -45,5 +47,9 @@ class MemberNavigation @Inject constructor(
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.setData(uri)
         activity.startActivity(Intent.createChooser(intent, res.getString(R.string.send_email_to, email)))
+    }
+
+    override fun inviteFinished() {
+        activity.finish()
     }
 }

@@ -23,11 +23,9 @@ class MemberRepository @Inject constructor(
 
     private var loading: Boolean = false
     private val _fetchMembers: MutableLiveData<Data> = MutableLiveData<Data>()
-    private val _inviteMember: MutableLiveData<Data> = MutableLiveData<Data>()
     private val _blockMember: MutableLiveData<Data> = MutableLiveData<Data>()
     private val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
     val fetchMembers: LiveData<Data> = _fetchMembers
-    val inviteMember: LiveData<Data> = _inviteMember
     val blockMember: LiveData<Data> = _blockMember
     val authError: LiveData<Boolean> = _authError
     var members: MutableList<Member> = mutableListOf()
@@ -59,9 +57,21 @@ class MemberRepository @Inject constructor(
         }
     }
 
-    fun inviteMember(email: String) {
+    fun inviteMember(email: String, callback: (Data) -> Unit) {
         apiService.inviteMember(session.getAppId(), InviteRequestBody(email))
-            .enqueue(InviteMemberListener(email))
+            .enqueue(InviteMemberListener(email, callback))
+    }
+
+    private inner class InviteMemberListener(val email: String, val callback: (Data) -> Unit)
+        : LockedCallback<LockResponse>() {
+        override fun success(response: LockResponse) {
+            refreshMembers()
+            callback.invoke(Data(true, response.message))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
+            callback.invoke(Data(false, message))
+        }
     }
 
     fun blockMember(member: Member) {
@@ -96,17 +106,6 @@ class MemberRepository @Inject constructor(
             loading = false
             checkForTokenError(details)
             _fetchMembers.postValue(Data(false))
-        }
-    }
-
-    private inner class InviteMemberListener(val email: String): LockedCallback<LockResponse>() {
-        override fun success(response: LockResponse) {
-            refreshMembers()
-            _inviteMember.postValue(Data(true, response.message))
-        }
-        override fun fail(message: String, details: List<Error>) {
-            checkForTokenError(details)
-            _inviteMember.postValue(Data(false, message))
         }
     }
 

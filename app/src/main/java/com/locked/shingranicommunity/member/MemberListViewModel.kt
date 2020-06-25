@@ -81,6 +81,10 @@ class MemberListViewModel @Inject constructor(
         return null
     }
 
+    fun invitePressed() {
+        navigation.navigateToInvite(true)
+    }
+
     private data class Data(
         val message: MutableLiveData<String> = MutableLiveData<String>()) {
         val list: MutableLiveData<MutableList<Member>> = MutableLiveData(mutableListOf())
