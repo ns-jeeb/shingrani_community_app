@@ -76,4 +76,6 @@
     <string name="invite_member">Invite Member</string>
     <string name="invite">Invite</string>
     <string name="email_example">name@domain.com</string>
+    <string name="blocked_success">%s successfully blocked</string>
+    <string name="blocked_failed">Failed to block %s</string>
 </resources>

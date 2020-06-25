@@ -50,6 +50,6 @@ interface LockedApiService {
     @POST("/api/v2/app/{appid}/invite")
     fun inviteMember(@Path("appid") appId: String, @Body body: InviteRequestBody): Call<LockResponse>
 
-    @POST("/api/v2/app/{appid}/state/{memberid}")
+    @PUT("/api/v2/app/{appid}/state/{memberid}")
     fun blockMember(@Path("appid") appId: String, @Path("memberid") memberId: String, @Body body: BlockRequestBody = BlockRequestBody()): Call<LockResponse>
 }

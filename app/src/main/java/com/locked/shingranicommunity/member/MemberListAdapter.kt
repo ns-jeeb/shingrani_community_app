@@ -46,11 +46,8 @@ class MemberListAdapter(
         private var itemViewModel: MemberListViewModel.ItemViewModel? = null
 
         fun bind(itemViewModel: MemberListViewModel.ItemViewModel) {
+            clearOldBindings()
             this.itemViewModel = itemViewModel
-//            binding.phone.imageTintList = getActionTint()
-//            binding.text.imageTintList = getActionTint()
-//            binding.email.imageTintList = getActionTint()
-            // todo
             // EMAIL
             itemViewModel.title.observe(lifeCycleOwner, Observer {
                 binding.title.text = it
@@ -76,16 +73,14 @@ class MemberListAdapter(
             itemViewModel.showBlock.observe(lifeCycleOwner, Observer {
                 binding.block.isVisible = it
             })
-            itemViewModel.showBlockConfirmation.observe(lifeCycleOwner, Observer {
-                if (it) {
-                    showBlockAlert(itemViewModel)
-                }
-            })
+            itemViewModel.showBlockConfirmation.observe(lifeCycleOwner, blockConfirmationObserver)
             binding.block.setOnClickListener { itemViewModel.block() }
         }
 
-        private fun getActionTint(): ColorStateList? {
-            return ContextCompat.getColorStateList(itemView.context, R.color.color_member_action)
+        private val blockConfirmationObserver: Observer<Boolean> = Observer {
+            if (it) {
+                showBlockAlert(itemViewModel!!)
+            }
         }
 
         private fun showBlockAlert(itemViewModel: MemberListViewModel.ItemViewModel) {
@@ -98,7 +93,9 @@ class MemberListAdapter(
                     }
                 }).setNegativeButton(itemView.context.getString(R.string.alert_dialog_no), object: DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {}
-                }).show()
+                }).setOnCancelListener {
+                    itemViewModel.cancelBlock()
+                }.show()
         }
 
         override fun onClick(v: View?) {
@@ -107,6 +104,10 @@ class MemberListAdapter(
                     itemViewModel?.block()
                 }
             }
+        }
+
+        private fun clearOldBindings() {
+            itemViewModel?.showBlockConfirmation?.removeObservers(lifeCycleOwner)
         }
     }
 }

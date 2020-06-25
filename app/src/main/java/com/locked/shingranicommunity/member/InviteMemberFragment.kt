@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -62,7 +60,6 @@ class InviteMemberFragment : Fragment() {
             viewModel.invite()
         }
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

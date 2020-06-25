@@ -23,10 +23,8 @@ class MemberRepository @Inject constructor(
 
     private var loading: Boolean = false
     private val _fetchMembers: MutableLiveData<Data> = MutableLiveData<Data>()
-    private val _blockMember: MutableLiveData<Data> = MutableLiveData<Data>()
     private val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
     val fetchMembers: LiveData<Data> = _fetchMembers
-    val blockMember: LiveData<Data> = _blockMember
     val authError: LiveData<Boolean> = _authError
     var members: MutableList<Member> = mutableListOf()
 
@@ -47,6 +45,28 @@ class MemberRepository @Inject constructor(
         if (!loading) {
             loading = true
             apiService.getMemberList(session.getAppId()).enqueue(FetchMembersListener())
+        }
+    }
+
+    private inner class FetchMembersListener(): LockedCallback<MutableList<Member>>() {
+        override fun success(response: MutableList<Member>) {
+            val admins: List<User> = session.getAdminList()
+            admins.forEach {
+                response.add(0, Member("-1", session.getAppId(), it.username, MemberState.JOINED.state, it))
+            }
+            val loadedMembers = response.distinctBy { it.email }
+            loadedMembers.forEach { member ->
+                member.user?.let { member.isAdmin = session.isAdmin(it) }
+            }
+            members.clear()
+            members.addAll(loadedMembers)
+            loading = false
+            _fetchMembers.postValue(Data(true))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            loading = false
+            checkForTokenError(details)
+            _fetchMembers.postValue(Data(false))
         }
     }
 
@@ -74,9 +94,20 @@ class MemberRepository @Inject constructor(
         }
     }
 
-    fun blockMember(member: Member) {
+    fun blockMember(member: Member, callback: (Data) -> Unit) {
         apiService.blockMember(session.getAppId(), member._id)
-            .enqueue(BlockMemberListener(member))
+            .enqueue(BlockMemberListener(member, callback))
+    }
+
+    private inner class BlockMemberListener(val member: Member, val callback: (Data) -> Unit): LockedCallback<LockResponse>() {
+        override fun success(response: LockResponse) {
+            refreshMembers()
+            callback.invoke(Data(true, response.message))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
+            callback.invoke(Data(false, message))
+        }
     }
 
     private fun checkForTokenError(details: List<Error>) {
@@ -84,39 +115,6 @@ class MemberRepository @Inject constructor(
             if (it.code == AuthConstants.TOKEN_ERROR) {
                 _authError.postValue(true)
             }
-        }
-    }
-
-    private inner class FetchMembersListener(): LockedCallback<MutableList<Member>>() {
-        override fun success(response: MutableList<Member>) {
-            val admins: List<User> = session.getAdminList()
-            admins.forEach {
-                response.add(0, Member("-1", session.getAppId(), it.username, MemberState.JOINED.state, it))
-            }
-            val loadedMembers = response.distinctBy { it.email }
-            loadedMembers.forEach { member ->
-                member.user?.let { member.isAdmin = session.isAdmin(it) }
-            }
-            members.clear()
-            members.addAll(loadedMembers)
-            loading = false
-            _fetchMembers.postValue(Data(true))
-        }
-        override fun fail(message: String, details: List<Error>) {
-            loading = false
-            checkForTokenError(details)
-            _fetchMembers.postValue(Data(false))
-        }
-    }
-
-    private inner class BlockMemberListener(val member: Member): LockedCallback<LockResponse>() {
-        override fun success(response: LockResponse) {
-            refreshMembers()
-            _blockMember.postValue(Data(true, response.message))
-        }
-        override fun fail(message: String, details: List<Error>) {
-            checkForTokenError(details)
-            _blockMember.postValue(Data(false, message))
         }
     }
 

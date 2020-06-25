@@ -22,6 +22,7 @@ class MemberListViewModel @Inject constructor(
     private val itemViewModelList: MutableMap<Member, ItemViewModel> = mutableMapOf()
     val message: LiveData<String> = data.message
     val list: LiveData<MutableList<Member>> = data.list
+    val showInvite: LiveData<Boolean> = data.showInvite
 
     private val fetchMembersObserver: Observer<in MemberRepository.Data> = Observer {
         it?.let {
@@ -88,6 +89,7 @@ class MemberListViewModel @Inject constructor(
     private data class Data(
         val message: MutableLiveData<String> = MutableLiveData<String>()) {
         val list: MutableLiveData<MutableList<Member>> = MutableLiveData(mutableListOf())
+        val showInvite: MutableLiveData<Boolean> = MutableLiveData(false)
     }
 
     inner class ItemViewModel(private val member: Member,
@@ -126,10 +128,20 @@ class MemberListViewModel @Inject constructor(
         fun block(confirmed: Boolean = false) {
             if (confirmed) {
                 data.showBlockConfirmation.value = false
-                repository.blockMember(member)
+                repository.blockMember(member) {
+                    if (it.success) {
+                        this@MemberListViewModel.data.message.postValue(res.getString(R.string.blocked_success).format(member.email))
+                    } else {
+                        this@MemberListViewModel.data.message.postValue(res.getString(R.string.blocked_failed).format(member.email))
+                    }
+                }
             } else {
-                data.showBlockConfirmation.postValue(true)
+                data.showBlockConfirmation.value = true
             }
+        }
+
+        fun cancelBlock() {
+            data.showBlockConfirmation.value = false
         }
 
         fun sendEmail() {

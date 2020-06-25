@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.ResourceProvider
-import com.locked.shingranicommunity.repositories.AnnouncementRepository
 import com.locked.shingranicommunity.repositories.MemberRepository
 import com.locked.shingranicommunity.session.Session
 import javax.inject.Inject

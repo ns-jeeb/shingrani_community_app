@@ -57,6 +57,11 @@ class MemberListFragment : Fragment(), ToolbarProvider {
             }
         })
         // INVITE
+        viewModel.showInvite.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                binding.invite.visibility = if (it) View.VISIBLE else View.GONE
+            }
+        })
         binding.invite.setOnClickListener {
             viewModel.invitePressed()
         }
