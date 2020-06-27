@@ -51,6 +51,7 @@ class DashboardActivity : AppCompatActivity(),
 
     private fun setupViews() {
         setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = ""
         setupViewPager()
         initFab()
     }

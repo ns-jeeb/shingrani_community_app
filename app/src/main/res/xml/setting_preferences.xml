@@ -22,6 +22,7 @@
         app:title="Application">
 
     <Preference
+        android:icon="@mipmap/ic_launcher_2_foreground"
         android:key="@string/key_version"
         app:title="@string/version"
         app:summary="v1.0"/>

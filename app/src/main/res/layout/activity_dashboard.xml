@@ -27,6 +27,8 @@
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
+                    app:navigationIcon="@drawable/ic_launcher_3_foreground"
+
                     app:elevation="0dp"
                     app:layout_scrollFlags="snap|scroll|enterAlways"
                     app:titleTextColor="?attr/colorOnPrimary" />

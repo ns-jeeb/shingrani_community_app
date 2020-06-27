@@ -47,6 +47,9 @@ class SettingsActivity : FragmentActivity() {
     }
 
     private fun setupViews() {
+        viewModel.title.observe(this, Observer {
+            title = it
+        })
         viewModel.fullName.observe(this, Observer {
             settingsBinding.name.text = it
         })
