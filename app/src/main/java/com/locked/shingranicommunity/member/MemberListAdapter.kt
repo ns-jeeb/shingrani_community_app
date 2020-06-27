@@ -1,12 +1,10 @@
 package com.locked.shingranicommunity.member
 
 import android.content.DialogInterface
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.LifecycleOwner
@@ -57,24 +55,40 @@ class MemberListAdapter(
                 binding.admin.visibility = if (it != null && it) View.VISIBLE else View.GONE
             })
             // PHONE
-            itemViewModel.showPhone.observe(lifeCycleOwner, Observer {
+            itemViewModel.showPhoneAction.observe(lifeCycleOwner, Observer {
                 binding.phone.isEnabled = it
             })
             // TEXT
-            itemViewModel.showText.observe(lifeCycleOwner, Observer {
+            itemViewModel.showTextAction.observe(lifeCycleOwner, Observer {
                 binding.text.isEnabled = it
             })
             // EMAIL
-            itemViewModel.showEmail.observe(lifeCycleOwner, Observer {
+            itemViewModel.showEmailAction.observe(lifeCycleOwner, Observer {
                 binding.email.isEnabled = it
             })
             binding.email.setOnClickListener { itemViewModel.sendEmail() }
+            // SETTING
+            itemViewModel.showSettingsAction.observe(lifeCycleOwner, Observer {
+                binding.settings.isVisible = it
+            })
+            binding.settings.setOnClickListener { itemViewModel.settings() }
+            // INVITED
+            itemViewModel.showInvited.observe(lifeCycleOwner, Observer {
+                binding.invited.isVisible = it
+            })
             // BLOCK
-            itemViewModel.showBlock.observe(lifeCycleOwner, Observer {
+            itemViewModel.showBlocked.observe(lifeCycleOwner, Observer {
+                binding.blocked.isVisible = it
+            })
+            itemViewModel.showBlockAction.observe(lifeCycleOwner, Observer {
                 binding.block.isVisible = it
+            })
+            itemViewModel.showUnblockAction.observe(lifeCycleOwner, Observer {
+                binding.unblock.isVisible = it
             })
             itemViewModel.showBlockConfirmation.observe(lifeCycleOwner, blockConfirmationObserver)
             binding.block.setOnClickListener { itemViewModel.block() }
+            binding.unblock.setOnClickListener { itemViewModel.unblock() }
         }
 
         private val blockConfirmationObserver: Observer<Boolean> = Observer {
@@ -87,15 +101,10 @@ class MemberListAdapter(
             AlertDialog.Builder(itemView.context)
                 .setTitle(itemViewModel.blockConfirmationTitle)
                 .setMessage(itemViewModel.blockConfirmationDesc)
-                .setPositiveButton(itemView.context.getString(R.string.alert_dialog_yes), object: DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        itemViewModel.block(true)
-                    }
-                }).setNegativeButton(itemView.context.getString(R.string.alert_dialog_no), object: DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {}
-                }).setOnCancelListener {
-                    itemViewModel.cancelBlock()
-                }.show()
+                .setPositiveButton(itemView.context.getString(R.string.alert_dialog_yes)) { p0, p1 -> itemViewModel.block(true) }
+                .setNegativeButton(itemView.context.getString(R.string.alert_dialog_no)) { p0, p1 -> itemViewModel.cancelBlock() }
+                .setOnCancelListener { itemViewModel.cancelBlock() }
+                .show()
         }
 
         override fun onClick(v: View?) {

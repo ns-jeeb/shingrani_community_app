@@ -6,6 +6,7 @@ import com.locked.shingranicommunity.locked.models.User
 interface Session {
 
     val loginState: LiveData<Boolean>
+    val appState: LiveData<Boolean>
 
     fun getToken(): String
 
@@ -23,7 +24,13 @@ interface Session {
 
     fun getAnnouncementTemplateId(): String
 
+    fun getAdminList(): List<User>
+
     fun isUserAdmin(): Boolean
 
     fun isLoggedIn(): Boolean
+
+    fun isMe(user: User?): Boolean
+
+    fun isAdmin(user: User?): Boolean
 }

@@ -78,4 +78,7 @@
     <string name="email_example">name@domain.com</string>
     <string name="blocked_success">%s successfully blocked</string>
     <string name="blocked_failed">Failed to block %s</string>
+    <string name="unblock_success">%s unblocked</string>
+    <string name="unblock_failed">Failed to unblock %s</string>
+    <string name="is_me">(Me)</string>
 </resources>

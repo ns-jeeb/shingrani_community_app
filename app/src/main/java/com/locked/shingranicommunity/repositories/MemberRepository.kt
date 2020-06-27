@@ -13,32 +13,35 @@ import com.locked.shingranicommunity.locked.models.MemberState
 import com.locked.shingranicommunity.locked.models.User
 import com.locked.shingranicommunity.locked.models.request.InviteRequestBody
 import com.locked.shingranicommunity.locked.models.response.LockResponse
-import com.locked.shingranicommunity.session.SessionManager
+import com.locked.shingranicommunity.session.Session
 import javax.inject.Inject
 
 @AppScope
 class MemberRepository @Inject constructor(
     val apiService: LockedApiService,
-    val session: SessionManager) {
+    val session: Session) {
 
     private var loading: Boolean = false
-    private val _fetchMembers: MutableLiveData<Data> = MutableLiveData<Data>()
     private val _authError: MutableLiveData<Boolean> = MutableLiveData(false)
-    val fetchMembers: LiveData<Data> = _fetchMembers
     val authError: LiveData<Boolean> = _authError
-    var members: MutableList<Member> = mutableListOf()
+    var members: MutableLiveData<MutableList<Member>> = MutableLiveData(mutableListOf())
 
     init {
-        session.loginState.observeForever(Observer { _authError.value = !it })
-        refreshMembers()
+        session.loginState.observeForever(Observer {
+            _authError.value = !it
+            if (it) {
+                refreshMembers()
+            }
+        })
+        session.appState.observeForever(Observer {
+            if (it) {
+                refreshMembers()
+            }
+        })
     }
 
     fun fetchMembers() {
-       if (members.isEmpty()) {
-           refreshMembers()
-       } else {
-           _fetchMembers.postValue(Data(true))
-       }
+        refreshMembers()
     }
 
     private fun refreshMembers() {
@@ -54,24 +57,24 @@ class MemberRepository @Inject constructor(
             admins.forEach {
                 response.add(0, Member("-1", session.getAppId(), it.username, MemberState.JOINED.state, it))
             }
-            val loadedMembers = response.distinctBy { it.email }
+            val loadedMembers: MutableList<Member> = response.distinctBy { it.email }.toMutableList()
             loadedMembers.forEach { member ->
-                member.user?.let { member.isAdmin = session.isAdmin(it) }
+                member.user?.let {
+                    member.isAdmin = session.isAdmin(it)
+                    member.isMe = session.isMe(it)
+                }
             }
-            members.clear()
-            members.addAll(loadedMembers)
+            members.postValue(loadedMembers)
             loading = false
-            _fetchMembers.postValue(Data(true))
         }
         override fun fail(message: String, details: List<Error>) {
             loading = false
             checkForTokenError(details)
-            _fetchMembers.postValue(Data(false))
         }
     }
 
     fun fetchMember(memberId: String, callback: ((Member) -> Unit)) {
-        val foundMember = members.find { it._id == memberId }
+        val foundMember = members.value?.find { it._id == memberId }
         if (foundMember != null) {
             callback.invoke(foundMember)
         }
@@ -100,6 +103,22 @@ class MemberRepository @Inject constructor(
     }
 
     private inner class BlockMemberListener(val member: Member, val callback: (Data) -> Unit): LockedCallback<LockResponse>() {
+        override fun success(response: LockResponse) {
+            refreshMembers()
+            callback.invoke(Data(true, response.message))
+        }
+        override fun fail(message: String, details: List<Error>) {
+            checkForTokenError(details)
+            callback.invoke(Data(false, message))
+        }
+    }
+
+    fun unblockMember(member: Member, callback: (Data) -> Unit) {
+        apiService.unblockMember(session.getAppId(), member._id)
+            .enqueue(UnblockMemberListener(member, callback))
+    }
+
+    private inner class UnblockMemberListener(val member: Member, val callback: (Data) -> Unit): LockedCallback<LockResponse>() {
         override fun success(response: LockResponse) {
             refreshMembers()
             callback.invoke(Data(true, response.message))

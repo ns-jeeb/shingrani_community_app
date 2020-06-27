@@ -8,3 +8,4 @@ package com.locked.shingranicommunity.locked.models.request
 class BlockRequestBody() {
     val state: String = com.locked.shingranicommunity.locked.models.MemberState.BLOCKED.state
 }
+

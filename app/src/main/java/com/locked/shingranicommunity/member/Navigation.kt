@@ -6,4 +6,5 @@ interface Navigation {
     fun navigateToLogin(clearSession: Boolean)
     fun sendEmail(email: String)
     fun inviteFinished()
+    fun navigateToSettings(addToBackStack: Boolean)
 }

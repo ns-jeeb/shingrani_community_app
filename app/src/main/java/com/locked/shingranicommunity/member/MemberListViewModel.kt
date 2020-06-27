@@ -1,19 +1,17 @@
 package com.locked.shingranicommunity.member
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.ResourceProvider
 import com.locked.shingranicommunity.locked.models.Member
+import com.locked.shingranicommunity.locked.models.MemberState
 import com.locked.shingranicommunity.repositories.MemberRepository
-import com.locked.shingranicommunity.session.SessionManager
+import com.locked.shingranicommunity.session.Session
 import javax.inject.Inject
 
 class MemberListViewModel @Inject constructor(
     private val repository: MemberRepository,
-    private val session: SessionManager,
+    private val session: Session,
     private val navigation: Navigation,
     private val res: ResourceProvider) : ViewModel() {
 
@@ -21,23 +19,24 @@ class MemberListViewModel @Inject constructor(
     private val data: Data = Data()
     private val itemViewModelList: MutableMap<Member, ItemViewModel> = mutableMapOf()
     val message: LiveData<String> = data.message
-    val list: LiveData<MutableList<Member>> = data.list
+    val list: LiveData<List<Member>> = data.list
     val showInvite: LiveData<Boolean> = data.showInvite
 
-    private val fetchMembersObserver: Observer<in MemberRepository.Data> = Observer {
-        it?.let {
-            if (it.success) {
-                // data loaded
-                data.list.postValue(repository.members)
-            } else {
-                data.message.postValue(it.message)
-            }
-        }
+    val observeAuthError: Observer<Boolean> = Observer {
+        it?.let { authErrorOccurred(it) }
+    }
+    val observeAppState: Observer<Boolean> = Observer {
+        it?.let { data.showInvite.value = session.isUserAdmin() }
     }
 
     init {
-        repository.fetchMembers.observeForever(fetchMembersObserver)
-        repository.authError.observeForever(Observer { authErrorOccurred(it) })
+        data.list.addSource(repository.members) { result ->
+            data.list.value = result
+                .filterNot { it.state == MemberState.BLOCKED.state && !session.isUserAdmin() }
+                .sortedWith(compareBy( {!it.isAdmin}, {!it.isMe}, {it.email}))
+        }
+        repository.authError.observeForever(observeAuthError)
+        session.appState.observeForever(observeAppState)
     }
 
     private fun authErrorOccurred(it: Boolean?) {
@@ -57,7 +56,8 @@ class MemberListViewModel @Inject constructor(
     }
 
     override fun onCleared() {
-        repository.fetchMembers.removeObserver(fetchMembersObserver)
+        repository.authError.removeObserver(observeAuthError)
+        session.appState.removeObserver(observeAppState)
         clearItemViewModels()
         super.onCleared()
     }
@@ -88,12 +88,12 @@ class MemberListViewModel @Inject constructor(
 
     private data class Data(
         val message: MutableLiveData<String> = MutableLiveData<String>()) {
-        val list: MutableLiveData<MutableList<Member>> = MutableLiveData(mutableListOf())
+        val list: MediatorLiveData<List<Member>> = MediatorLiveData()
         val showInvite: MutableLiveData<Boolean> = MutableLiveData(false)
     }
 
     inner class ItemViewModel(private val member: Member,
-                              private val session: SessionManager,
+                              private val session: Session,
                               private val navigation: Navigation,
                               private val repository: MemberRepository) {
 
@@ -103,26 +103,39 @@ class MemberListViewModel @Inject constructor(
         val data: ItemData = ItemData()
         val title: LiveData<String> = data.title
         val showAdmin: LiveData<Boolean> = data.showAdmin
-        val showPhone: LiveData<Boolean> = data.showPhone
-        val showText: LiveData<Boolean> = data.showText
-        val showEmail: LiveData<Boolean> = data.showEmail
-        val showBlock: LiveData<Boolean> = data.showBlock
+        val showBlocked: LiveData<Boolean> = data.showBlocked
+        val showInvited: LiveData<Boolean> = data.showInvited
+        val showPhoneAction: LiveData<Boolean> = data.showPhoneAction
+        val showTextAction: LiveData<Boolean> = data.showTextAction
+        val showEmailAction: LiveData<Boolean> = data.showEmailAction
+        val showSettingsAction: LiveData<Boolean> = data.showSettingsAction
+        val showBlockAction: LiveData<Boolean> = data.showBlockAction
+        val showUnblockAction: LiveData<Boolean> = data.showUnblockAction
         val showBlockConfirmation: LiveData<Boolean> = data.showBlockConfirmation
 
         init {
             // TITLE
-            val title = member.user?.name?.capitalize() ?: member.email
+            var title = member.user?.name?.capitalize() ?: member.email
+            if (member.isMe) {
+                title += " " + res.getString(R.string.is_me)
+            }
             data.title.value = title
             // ADMIN
             data.showAdmin.value = member.isAdmin
             // PHONE
-            data.showPhone.value = false
+            data.showPhoneAction.value = false
             // TEXT
-            data.showText.value = false
+            data.showTextAction.value = false
             // EMAIL
-            data.showEmail.value = member.email.isNotBlank()
+            data.showEmailAction.value = member.email.isNotBlank() && !member.isMe
+            // SETTINGS
+            data.showSettingsAction.value = member.isMe
             // BLOCK
-            data.showBlock.value = session.isUserAdmin() && !member.isAdmin
+            data.showBlockAction.value = session.isUserAdmin() && !member.isAdmin && member.state == MemberState.JOINED.state
+            data.showUnblockAction.value = session.isUserAdmin() && !member.isAdmin && member.state == MemberState.BLOCKED.state
+            data.showBlocked.value = session.isUserAdmin() && !member.isAdmin && member.state == MemberState.BLOCKED.state
+            // INVITED
+            data.showInvited.value = !member.isAdmin && member.state == MemberState.INVITED.state
         }
 
         fun block(confirmed: Boolean = false) {
@@ -140,6 +153,16 @@ class MemberListViewModel @Inject constructor(
             }
         }
 
+        fun unblock() {
+            repository.unblockMember(member) {
+                if (it.success) {
+                    this@MemberListViewModel.data.message.postValue(res.getString(R.string.unblock_success).format(member.email))
+                } else {
+                    this@MemberListViewModel.data.message.postValue(res.getString(R.string.unblock_failed).format(member.email))
+                }
+            }
+        }
+
         fun cancelBlock() {
             data.showBlockConfirmation.value = false
         }
@@ -148,16 +171,24 @@ class MemberListViewModel @Inject constructor(
             navigation.sendEmail(member.email)
         }
 
+        fun settings() {
+            navigation.navigateToSettings(true)
+        }
+
         fun onCleared() {}
     }
 
     data class ItemData(
         val title: MutableLiveData<String> = MutableLiveData(""),
         val showAdmin: MutableLiveData<Boolean> = MutableLiveData(false),
-        val showPhone: MutableLiveData<Boolean> = MutableLiveData(false),
-        val showText: MutableLiveData<Boolean> = MutableLiveData(false),
-        val showEmail: MutableLiveData<Boolean> = MutableLiveData(false),
-        val showBlock: MutableLiveData<Boolean> = MutableLiveData(true),
+        val showBlocked: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showInvited: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showPhoneAction: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showTextAction: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showEmailAction: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showSettingsAction: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showBlockAction: MutableLiveData<Boolean> = MutableLiveData(false),
+        val showUnblockAction: MutableLiveData<Boolean> = MutableLiveData(false),
         val showBlockConfirmation: MutableLiveData<Boolean> = MutableLiveData(false)
     )
 }

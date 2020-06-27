@@ -52,4 +52,7 @@ interface LockedApiService {
 
     @PUT("/api/v2/app/{appid}/state/{memberid}")
     fun blockMember(@Path("appid") appId: String, @Path("memberid") memberId: String, @Body body: BlockRequestBody = BlockRequestBody()): Call<LockResponse>
+
+    @PUT("/api/v2/app/{appid}/state/{memberid}")
+    fun unblockMember(@Path("appid") appId: String, @Path("memberid") memberId: String, @Body body: UnblockRequestBody = UnblockRequestBody()): Call<LockResponse>
 }

@@ -2,7 +2,6 @@ package com.locked.shingranicommunity.session
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,7 +9,6 @@ import androidx.preference.PreferenceManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.locked.shingranicommunity.BuildConfig
-import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.models.User
 import javax.inject.Inject
@@ -30,6 +28,8 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     private val _logoutEvent: MutableLiveData<Boolean> = MutableLiveData()
     private val _loginState: MutableLiveData<Boolean> = MutableLiveData()
     override val loginState: LiveData<Boolean> = _loginState
+    private val _appState: MutableLiveData<Boolean> = MutableLiveData()
+    override val appState: LiveData<Boolean> = _appState
     val logoutEvent: LiveData<Boolean> = _logoutEvent
 
     init {
@@ -38,6 +38,15 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     }
 
     private fun initializeSession() {
+        session.eventTemplateId = preferences.getString(KEY_TEMPLATE_EVENT, "")!!
+        session.announcementTemplateId = preferences.getString(KEY_TEMPLATE_ANNOUNCEMENT, "")!!
+        val adminList = preferences.getString(KEY_ADMIN_LIST, null)
+        if (!adminList.isNullOrEmpty()) {
+            val userListType = object : TypeToken<List<User>>() {}.type
+            session.adminList = Gson().fromJson(adminList, userListType)
+        } else {
+            session.adminList = null
+        }
         val sessionUser = preferences.getString(KEY_SESSION_USER, null)
         val sessionToken: String = preferences.getString(KEY_SESSION_TOKEN, "")!!
         if (sessionUser == null) {
@@ -56,6 +65,7 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     private fun initializeState() {
         _logoutEvent.value = !session.isLoggedIn
         _loginState.value = session.isLoggedIn
+        _appState.value = !session.adminList.isNullOrEmpty() && !session.announcementTemplateId.isNullOrEmpty() && !session.eventTemplateId.isNullOrEmpty()
     }
 
     private fun postLoggedIn() {
@@ -76,12 +86,16 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         }
     }
 
-    fun isAdmin(user: User): Boolean {
-        val admins = getAdminList()
-        for (admin in admins) {
-            if (user._id == admin._id) return true
+    fun postAppLoaded() {
+        if (_appState.value == false) {
+            _appState.postValue(true)
         }
-        return false
+    }
+
+    private fun postAppCleared() {
+        if (_appState.value == true) {
+            _appState.postValue(false)
+        }
     }
 
     fun setAdminList(adminList: List<User> = emptyList()) {
@@ -89,23 +103,9 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         initializeSession()
     }
 
-    fun getAdminList() : List<User> {
-        val adminList = preferences.getString(KEY_ADMIN_LIST, null)
-        if (!adminList.isNullOrEmpty()) {
-            val userListType = object : TypeToken<List<User>>() {}.type
-            return Gson().fromJson(adminList, userListType)
-        }
-        return mutableListOf()
-    }
-
     fun setLoggedInUser(user: User?) {
         user?.let {
             preferences.edit().putString(KEY_SESSION_USER, Gson().toJson(user)).commit()
-            // todo remove when the whole app uses the SessionManager
-            app.getSharedPreferences(Constant_Utils.SHARED_PREF_CURRENT_USER, Context.MODE_PRIVATE)
-                .edit()
-                .putString(Constant_Utils.CURRENT_USER, Gson().toJson(user))
-                .apply()
         }
         initializeSession()
     }
@@ -116,11 +116,6 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         preferences.edit().putString(KEY_SESSION_TOKEN, _token).commit()
         initializeSession()
         postLoggedIn()
-
-        // todo remove when the whole app uses the SessionManager
-        app.getSharedPreferences("token", Context.MODE_PRIVATE)
-            .edit()
-            .putString("token", _token).apply()
     }
 
     fun setTemplateIds(eventTemplate: String, announcementTemplate: String) {
@@ -135,6 +130,7 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         preferences.edit().clear().commit()
         initializeSession()
         postLoggedOut()
+        postAppCleared()
     }
 
     override fun getToken(): String {
@@ -162,15 +158,31 @@ class SessionManager @Inject constructor(private val app: Application) : Session
     }
 
     override fun getEventTemplateId(): String {
-        return preferences.getString(KEY_TEMPLATE_EVENT, "")!!
+        return session.eventTemplateId ?: ""
     }
 
     override fun getAnnouncementTemplateId(): String {
-        return preferences.getString(KEY_TEMPLATE_ANNOUNCEMENT, "")!!
+        return session.announcementTemplateId ?: ""
+    }
+
+    override fun getAdminList() : List<User> {
+        return session.adminList ?: emptyList()
     }
 
     override fun isUserAdmin(): Boolean {
         return session.isAdmin
+    }
+
+    override fun isMe(user: User?): Boolean {
+        return session.user?._id == user?._id
+    }
+
+    override fun isAdmin(user: User?): Boolean {
+        val admins = getAdminList()
+        for (admin in admins) {
+            if (user?._id == admin._id) return true
+        }
+        return false
     }
 
     override fun isLoggedIn(): Boolean {
@@ -184,4 +196,7 @@ class SessionData {
     var user: User? = null
     var token: String = ""
     var appId: String = BuildConfig.LOCKEDAPI_APP_ID
+    var eventTemplateId: String? = null
+    var announcementTemplateId: String? = null
+    var adminList: List<User>? = null
 }

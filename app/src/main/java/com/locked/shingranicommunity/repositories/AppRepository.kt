@@ -1,17 +1,13 @@
 package com.locked.shingranicommunity.repositories
 
-import android.app.Application
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.gson.Gson
 import com.locked.shingranicommunity.BuildConfig
-import com.locked.shingranicommunity.Constant_Utils
 import com.locked.shingranicommunity.di.AppScope
 import com.locked.shingranicommunity.locked.LockedApiService
 import com.locked.shingranicommunity.locked.LockedCallback
+import com.locked.shingranicommunity.locked.models.AppModel
 import com.locked.shingranicommunity.locked.models.Error
-import com.locked.shingranicommunity.locked.models.*
 import com.locked.shingranicommunity.session.SessionManager
 import retrofit2.Call
 import javax.inject.Inject
@@ -20,10 +16,6 @@ import javax.inject.Inject
 class AppRepository @Inject constructor(
     val apiService: LockedApiService,
     val sessionManager: SessionManager) {
-
-    // todo remove when the whole app uses the SessionManager
-    @Inject
-    lateinit var appContext: Application
 
     private val _fetchApp: MutableLiveData<Data> = MutableLiveData<Data>()
     val fetchApp: LiveData<Data> = _fetchApp
@@ -34,9 +26,9 @@ class AppRepository @Inject constructor(
         call.enqueue(object: LockedCallback<AppModel>() {
             override fun success(response: AppModel) {
                 app = response
-                sessionManager.setAdminList(response.admins)
                 sessionManager.setTemplateIds(getEventTemplate(response), getAnnouncementTemplate(response))
-                setAppModel(response)
+                sessionManager.setAdminList(response.admins)
+                sessionManager.postAppLoaded()
                 _fetchApp.postValue(Data(true))
             }
             override fun fail(message: String, details: List<Error>) {
@@ -52,14 +44,6 @@ class AppRepository @Inject constructor(
 
     private fun getEventTemplate(app: AppModel): String {
         return app.templates.find { it.title == "Event" }?._id ?: ""
-    }
-
-    // todo remove when the whole app uses the SessionManager
-    fun setAppModel(appModel: AppModel) {
-        appContext.getSharedPreferences(
-            Constant_Utils.SHARED_PREF_TEMPLATE_MODEL,
-            Context.MODE_PRIVATE).edit()
-            .putString(Constant_Utils.TEMPLATE_MODEL, Gson().toJson(appModel)).apply()
     }
 
     data class Data(var success: Boolean = false,

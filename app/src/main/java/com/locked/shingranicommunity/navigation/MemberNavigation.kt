@@ -12,6 +12,7 @@ import com.locked.shingranicommunity.member.InviteMemberFragment
 import com.locked.shingranicommunity.member.MemberActivity
 import com.locked.shingranicommunity.member.Navigation
 import com.locked.shingranicommunity.session.SessionManager
+import com.locked.shingranicommunity.settings.SettingsActivity
 import javax.inject.Inject
 
 class MemberNavigation @Inject constructor(
@@ -49,5 +50,12 @@ class MemberNavigation @Inject constructor(
 
     override fun inviteFinished() {
         activity.finish()
+    }
+
+    override fun navigateToSettings(addToBackStack: Boolean) {
+        NavigationHandler(activity)
+            .setActivity(SettingsActivity::class.java)
+            .addToBackStack(addToBackStack)
+            .navigate()
     }
 }

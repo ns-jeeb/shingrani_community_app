@@ -17,6 +17,7 @@ class Member(val _id: String,
              val state: String,
              val user: User?) {
 
+    @Transient var isMe: Boolean = false
     @Transient var isAdmin: Boolean = false
 }
 
