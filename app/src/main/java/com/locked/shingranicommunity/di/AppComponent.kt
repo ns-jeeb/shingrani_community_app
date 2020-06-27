@@ -7,8 +7,8 @@ import com.locked.shingranicommunity.di.dashboard.DashboardComponent
 import com.locked.shingranicommunity.di.event.EventComponent
 import com.locked.shingranicommunity.di.locked.LockedApiServiceModule
 import com.locked.shingranicommunity.di.member.MemberComponent
+import com.locked.shingranicommunity.di.settings.SettingsComponent
 import com.locked.shingranicommunity.di.viewmodel.ViewModelFactoryModule
-import com.locked.shingranicommunity.settings.SettingsActivity
 import dagger.BindsInstance
 import dagger.Component
 
@@ -29,6 +29,5 @@ interface AppComponent {
     val eventComponentFactory : EventComponent.Factory
     val announcementComponentFactory : AnnouncementComponent.Factory
     val memberComponentFactory : MemberComponent.Factory
-
-    fun inject(settingFragment: SettingsActivity.SettingFragment)
+    val settingsComponentFactory : SettingsComponent.Factory
 }

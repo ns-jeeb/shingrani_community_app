@@ -17,7 +17,7 @@ class AuthActivity : FragmentActivity(), AuthComponentProvider {
     override lateinit var authComponent: AuthComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        authComponent = UrCommunityApplication.instance.appComponent2.authComponentFactory.create(this);
+        authComponent = UrCommunityApplication.instance.appComponent.authComponentFactory.create(this);
         authComponent.inject(this)
         super.onCreate(savedInstanceState)
     }

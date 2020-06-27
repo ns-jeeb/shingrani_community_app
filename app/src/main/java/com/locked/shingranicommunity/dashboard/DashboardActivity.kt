@@ -38,11 +38,11 @@ class DashboardActivity : AppCompatActivity(),
     private lateinit var adapter: DashboardPagerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        dashboardComponent = UrCommunityApplication.instance.appComponent2.dashboardComponentFactory.create(this)
+        dashboardComponent = UrCommunityApplication.instance.appComponent.dashboardComponentFactory.create(this)
         dashboardComponent.inject(this)
         viewModel = ViewModelProvider(this, viewModelFactory).get(DashboardViewModel::class.java)
-        eventComponent = UrCommunityApplication.instance.appComponent2.eventComponentFactory.create(this)
-        announcementComponent = UrCommunityApplication.instance.appComponent2.announcementComponentFactory.create(this)
+        eventComponent = UrCommunityApplication.instance.appComponent.eventComponentFactory.create(this)
+        announcementComponent = UrCommunityApplication.instance.appComponent.announcementComponentFactory.create(this)
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dashboard)
         adapter = DashboardPagerAdapter(supportFragmentManager)

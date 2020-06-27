@@ -13,7 +13,7 @@ class AnnouncementActivity : FragmentActivity(), AnnouncementComponentProvider {
     override lateinit var announcementComponent: AnnouncementComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        announcementComponent = UrCommunityApplication.instance.appComponent2.announcementComponentFactory.create(this)
+        announcementComponent = UrCommunityApplication.instance.appComponent.announcementComponentFactory.create(this)
         announcementComponent.inject(this)
         super.onCreate(savedInstanceState)
     }

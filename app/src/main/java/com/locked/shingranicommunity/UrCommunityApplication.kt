@@ -1,6 +1,8 @@
 package com.locked.shingranicommunity
 
 import android.app.Application
+import com.locked.shingranicommunity.di.AppComponent
+import com.locked.shingranicommunity.di.DaggerAppComponent
 
 open class UrCommunityApplication : Application() {
 
@@ -9,8 +11,8 @@ open class UrCommunityApplication : Application() {
             private set
     }
 
-    val appComponent2: com.locked.shingranicommunity.di.AppComponent by lazy {
-        com.locked.shingranicommunity.di.DaggerAppComponent.factory().create(this)
+    val appComponent: AppComponent by lazy {
+        DaggerAppComponent.factory().create(this)
     }
 
     override fun onCreate() {

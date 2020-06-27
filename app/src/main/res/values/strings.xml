@@ -28,10 +28,11 @@
     <string name="confirm_incorrect_password">Confirm password is incorrect</string>
     <string name="txt_message_value">this is the item for announcement this is the item for announcement this is the item for announcement this is the item for announcement this is the item for announcement</string>
     <string name="settings">Settings</string>
-    <string name="hide_email_header">Hide email</string>
-    <string name="logout_header">Logout</string>
-    <string name="key_hide_email">KEY_HIDE_EMAIL</string>
-    <string name="key_logout_">KEY_LOGOUT</string>
+    <string name="hide_phone">Hide phone number</string>
+    <string name="logout">Logout</string>
+    <string name="key_hide_phone">KEY_HIDE_PHONE</string>
+    <string name="key_logout">KEY_LOGOUT</string>
+    <string name="key_version">KEY_VERSION</string>
     <string name="lets_start">Let\'s Start!</string>
     <string name="password">Password</string>
     <string name="invited">Invited? Register</string>

@@ -6,7 +6,6 @@ import android.view.MenuItem
 import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.common.FragmentActivity
-import com.locked.shingranicommunity.di.event.EventComponent
 import com.locked.shingranicommunity.di.member.MemberComponent
 
 class MemberActivity : FragmentActivity(), MemberComponentProvider {
@@ -14,7 +13,7 @@ class MemberActivity : FragmentActivity(), MemberComponentProvider {
     override lateinit var memberComponent: MemberComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        memberComponent = UrCommunityApplication.instance.appComponent2.memberComponentFactory.create(this)
+        memberComponent = UrCommunityApplication.instance.appComponent.memberComponentFactory.create(this)
         memberComponent.inject(this)
         super.onCreate(savedInstanceState)
     }

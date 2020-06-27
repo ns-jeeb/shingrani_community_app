@@ -13,7 +13,7 @@ class EventActivity : FragmentActivity(), EventComponentProvider {
     override lateinit var eventComponent: EventComponent
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        eventComponent = UrCommunityApplication.instance.appComponent2.eventComponentFactory.create(this)
+        eventComponent = UrCommunityApplication.instance.appComponent.eventComponentFactory.create(this)
         eventComponent.inject(this)
         super.onCreate(savedInstanceState)
     }

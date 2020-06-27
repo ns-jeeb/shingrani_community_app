@@ -1,18 +1,20 @@
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory
         app:title="Account">
 
         <SwitchPreferenceCompat
-            app:icon="@drawable/ic_email"
-            app:key="@string/key_hide_email"
-            app:title="@string/hide_email_header" />
+            app:icon="@drawable/ic_phone"
+            app:key="@string/key_hide_phone"
+            app:title="@string/hide_phone"
+
+            android:enabled="false"/>
 
         <Preference
             app:icon="@drawable/ic_lock"
-            app:key="@string/key_logout_"
-            app:title="@string/logout_header" />
+            app:key="@string/key_logout"
+            app:title="@string/logout"/>
 
     </PreferenceCategory>
 
@@ -20,6 +22,7 @@
         app:title="Application">
 
     <Preference
+        android:key="@string/key_version"
         app:title="@string/version"
         app:summary="v1.0"/>
 
