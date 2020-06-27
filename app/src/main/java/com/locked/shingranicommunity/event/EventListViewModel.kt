@@ -243,6 +243,10 @@ class EventListViewModel @Inject constructor(
             }
         }
 
+        fun cancelDelete() {
+            data.showDeleteConfirmation.value = false
+        }
+
         private fun onStatusChanged(oldStatus: String?, newStatus: String?) {
             newStatus?.let {
                 when(newStatus) {

@@ -92,13 +92,10 @@ class EventListAdapter(
             AlertDialog.Builder(itemView.context)
                 .setTitle(itemViewModel.deleteConfirmationTitle)
                 .setMessage(itemViewModel.deleteConfirmationDesc)
-                .setPositiveButton(itemView.context.getString(R.string.alert_dialog_yes), object: DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        itemViewModel.delete(true)
-                    }
-                }).setNegativeButton(itemView.context.getString(R.string.alert_dialog_no), object: DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {}
-                }).show()
+                .setPositiveButton(itemView.context.getString(R.string.alert_dialog_yes)) { p0, p1 -> itemViewModel.delete(true) }
+                .setNegativeButton(itemView.context.getString(R.string.alert_dialog_no)) { p0, p1 -> itemViewModel.cancelDelete() }
+                .setOnCancelListener {  itemViewModel.cancelDelete()  }
+                .show()
         }
 
         override fun onClick(v: View?) {
