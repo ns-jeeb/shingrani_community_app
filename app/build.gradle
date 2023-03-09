@@ -17,12 +17,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"https://pure-river-66033-staging.herokuapp.com"'
+            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"http://18.219.156.39:3000/"'
 //            buildConfigField "String", "LOCKEDAPI_APP_ID", '"5d4a348f88fb44130084f903"'
             buildConfigField "String", "LOCKEDAPI_APP_ID", '"601ae3cbd54bc1bf9d1e8573"'
         }
         debug {
-            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"https://pure-river-66033-staging.herokuapp.com"'
+            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"http://18.219.156.39:3000/"'
 //            buildConfigField "String", "LOCKEDAPI_APP_ID", '"5d4a348f88fb44130084f903"'
             buildConfigField "String", "LOCKEDAPI_APP_ID", '"601ae3cbd54bc1bf9d1e8573"'
         }
