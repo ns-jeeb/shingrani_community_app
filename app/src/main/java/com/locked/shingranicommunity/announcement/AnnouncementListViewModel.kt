@@ -72,7 +72,7 @@ class AnnouncementListViewModel @Inject constructor(
     }
 
     fun getItemViewModel(position: Int): ItemViewModel? {
-        val announceItem: AnnouncementItem? = list.value!!.getOrNull(position)
+        val announceItem: AnnouncementItem? = list.value!!.sortedByDescending { it.timestamp }.getOrNull(position)
         announceItem?.let {
             var itemViewModel: ItemViewModel? = itemViewModelList.get(announceItem)
             if (itemViewModel == null) {

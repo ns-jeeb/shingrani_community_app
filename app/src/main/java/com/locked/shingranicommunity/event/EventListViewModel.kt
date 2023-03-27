@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.event
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -17,6 +18,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.List
 
 class EventListViewModel @Inject constructor(
     private val repository: EventRepository,
@@ -76,12 +78,12 @@ class EventListViewModel @Inject constructor(
 
     // use this onBind() of List Adapter
     fun getItemViewModel(itemIndex: Int): ItemViewModel? {
-        val eventItem: EventItem? = list.value!!.getOrNull(itemIndex)
+        val eventItem: EventItem? = list.value!!.sortedByDescending { it.time }.getOrNull(itemIndex)
         eventItem?.let {
-            var itemViewModel: ItemViewModel? = itemViewModelList.get(eventItem)
+            var itemViewModel: ItemViewModel? = itemViewModelList[eventItem]
             if (itemViewModel == null) {
                 itemViewModel = ItemViewModel(eventItem, session, navigation, repository)
-                itemViewModelList.put(eventItem, itemViewModel)
+                itemViewModelList[eventItem] = itemViewModel
             }
             return itemViewModel
         }
