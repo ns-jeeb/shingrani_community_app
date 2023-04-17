@@ -1,0 +1,32 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        app:title="Account">
+
+        <SwitchPreferenceCompat
+            app:icon="@drawable/ic_phone"
+            app:key="@string/key_hide_phone"
+            app:title="@string/hide_phone"
+
+            android:enabled="false"/>
+
+        <Preference
+            app:icon="@drawable/ic_lock"
+            app:key="@string/key_logout"
+            app:title="@string/logout"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Application">
+
+    <Preference
+        android:icon="@mipmap/ic_launcher_2_foreground"
+        android:key="@string/key_version"
+        app:title="@string/version"
+        app:summary="v1.0"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="7dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/content_margin"
+            android:paddingBottom="@dimen/content_margin">
+
+            <TextView
+                android:id="@+id/txt_date_item_created"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorOnSurface"
+                app:layout_constraintTop_toTopOf="@+id/layoutActions"
+                app:layout_constraintBottom_toBottomOf="@+id/layoutActions"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="yesterday" />
+
+            <LinearLayout
+                android:id="@+id/layoutActions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_share_event"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/share_icon"
+                    android:tint="@color/colorOnSurface"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_delete_item"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:tint="@color/colorOnBackground"
+                    android:src="@drawable/delete_icon"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_announcement_title_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/content_margin"
+                android:textStyle="bold"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
+                app:layout_constraintTop_toBottomOf="@+id/layoutActions"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="this is the item for announcement" />
+
+            <TextView
+                android:id="@+id/txt_announcement_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_marginEnd="@dimen/content_margin"
+                app:layout_constraintTop_toBottomOf="@+id/txt_announcement_title_item"
+                tools:text="@string/txt_message_value" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

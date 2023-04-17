@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="7dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/content_margin">
+
+            <ImageView
+                android:id="@+id/event_image"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_event_2"
+                app:layout_constraintDimensionRatio="16:7"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/txt_event_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#77000000"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/colorOnPrimary"
+                android:paddingHorizontal="@dimen/text_horizontal_margin"
+                android:paddingVertical="@dimen/text_vertical_margin"
+                android:gravity="bottom"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                app:layout_constraintTop_toTopOf="@+id/event_image"
+                app:layout_constraintBottom_toBottomOf="@+id/event_image"
+                tools:text="Event Title\n2nd Line\n3rd Line" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_share_event"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@drawable/share_icon"
+                    android:tint="@color/colorOnPrimary"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_event_location"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:tint="@color/colorOnPrimary"
+                    android:src="@drawable/location_icon"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+                <ImageButton
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:id="@+id/img_delete_item"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:tint="@color/colorOnPrimary"
+                    android:src="@drawable/delete_icon"
+                    android:background="?selectableItemBackgroundBorderless" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/dataLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:minHeight="40dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_event_name">
+
+                <TextView
+                    android:id="@+id/txt_event_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
+                    tools:text="Date" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#D5D5D5"
+                    android:layout_marginHorizontal="@dimen/content_margin"
+                    android:layout_gravity="center_vertical"/>
+
+                <TextView
+                    android:id="@+id/txt_event_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minWidth="60dp"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_horizontal"
+                    android:textColor="?attr/colorPrimary"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    android:textStyle="bold"
+                    tools:text="Time" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#D5D5D5"
+                    android:layout_marginHorizontal="@dimen/content_margin"
+                    android:layout_gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:layout_gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/txt_members_attended"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="@dimen/content_margin"
+                        android:drawableStart="@drawable/ic_person_outline_black_20dp"
+                        android:drawablePadding="5dp"
+                        android:textColor="?attr/colorPrimary"
+                        android:drawableTint="?attr/colorPrimary"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textStyle="bold"
+                        android:text="0" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical|end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/event_description">
+
+                    <ImageButton
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:id="@+id/img_rejected_attending"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:scaleType="centerInside"
+                        android:padding="15dp"
+                        android:src="@drawable/reject_icon"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                    <ImageButton
+                        style="@style/Widget.MaterialComponents.Button"
+                        android:id="@+id/img_accepted_attending"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:scaleType="centerInside"
+                        android:padding="10dp"
+                        android:src="@drawable/accept_icon"
+                        android:background="?selectableItemBackgroundBorderless"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/text_horizontal_margin"
+                android:layout_marginTop="@dimen/text_vertical_margin"
+                android:maxLines="5"
+                android:ellipsize="end"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dataLayout1"
+                tools:text="This is the description of the event, here you can talk
+                 about whats happening and what your expected to do and if you are needed to bring anything" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>
