@@ -1,6 +1,5 @@
 package com.locked.shingranicommunity.member
 
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +56,9 @@ class MemberListAdapter(
             // PHONE
             itemViewModel.showPhoneAction.observe(lifeCycleOwner, Observer {
                 binding.phone.isEnabled = it
+                binding.phone.setOnClickListener {
+                    itemViewModel.makePhoneCall()
+                }
             })
             // TEXT
             itemViewModel.showTextAction.observe(lifeCycleOwner, Observer {

@@ -55,13 +55,15 @@ class MemberRepository @Inject constructor(
         override fun success(response: MutableList<Member>) {
             val admins: List<User> = session.getAdminList()
             admins.forEach {
-                response.add(0, Member("-1", session.getAppId(), it.username, MemberState.JOINED.state, it))
+                response.add(0, Member("-1", session.getAppId(), it.username, MemberState.JOINED.state, "(416) 554 - 4444",it))
             }
             val loadedMembers: MutableList<Member> = response.distinctBy { it.email }.toMutableList()
             loadedMembers.forEach { member ->
                 member.user?.let {
                     member.isAdmin = session.isAdmin(it)
                     member.isMe = session.isMe(it)
+                    // TODO:  his need to be removed once backend updated with phonenumber field
+                    member.phoneNumber = "(416) 552 -5656"
                 }
             }
             members.postValue(loadedMembers)

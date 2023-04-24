@@ -58,4 +58,10 @@ class MemberNavigation @Inject constructor(
             .addToBackStack(addToBackStack)
             .navigate()
     }
+
+    override fun makePhoneCall(phoneNumber: String) {
+        val intent = Intent(Intent.ACTION_DIAL)
+        intent.data = Uri.parse("tel:${phoneNumber}")
+        activity.startActivity(intent)
+    }
 }

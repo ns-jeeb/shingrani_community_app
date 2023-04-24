@@ -171,6 +171,12 @@ class MemberListViewModel @Inject constructor(
             navigation.sendEmail(member.email)
         }
 
+        fun makePhoneCall() {
+            if (!member.isMe && !member.phoneNumber.isNullOrEmpty()){
+                navigation.makePhoneCall(member.phoneNumber)
+            }
+        }
+
         fun settings() {
             navigation.navigateToSettings(true)
         }
