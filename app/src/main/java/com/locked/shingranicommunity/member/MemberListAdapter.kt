@@ -1,5 +1,6 @@
 package com.locked.shingranicommunity.member
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.databinding.ItemMemberBinding
 import com.locked.shingranicommunity.locked.models.Member
+import com.locked.shingranicommunity.locked.models.MemberState
 
 class MemberListAdapter(
     private val viewModel: MemberListViewModel,
@@ -69,6 +71,10 @@ class MemberListAdapter(
                 binding.email.isEnabled = it
             })
             binding.email.setOnClickListener { itemViewModel.sendEmail() }
+            //phone number
+            itemViewModel.phoneNumber.observe(lifeCycleOwner, Observer {
+                binding.phoneNumber.text = it
+            })
             // SETTING
             itemViewModel.showSettingsAction.observe(lifeCycleOwner, Observer {
                 binding.settings.isVisible = it
@@ -77,6 +83,11 @@ class MemberListAdapter(
             // INVITED
             itemViewModel.showInvited.observe(lifeCycleOwner, Observer {
                 binding.invited.isVisible = it
+                if (it || itemViewModel.member.isMe){
+                    binding.phoneNumber.visibility = View.GONE
+                }else{
+                    binding.phoneNumber.visibility = View.VISIBLE
+                }
             })
             // BLOCK
             itemViewModel.showBlocked.observe(lifeCycleOwner, Observer {
