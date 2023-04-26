@@ -86,6 +86,16 @@
                         android:layout_marginBottom="@dimen/content_margin"
                         tools:text="bob@smith.com" />
 
+                    <TextView
+                        style="@style/TextAppearance.AppCompat.Small"
+                        android:id="@+id/phone_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:minHeight="30dp"
+                        android:maxLines="1"
+                        android:layout_marginBottom="@dimen/content_margin"
+                        tools:text="(416) 555 - 5555" />
+
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

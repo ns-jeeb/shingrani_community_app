@@ -7,4 +7,5 @@ interface Navigation {
     fun sendEmail(email: String)
     fun inviteFinished()
     fun navigateToSettings(addToBackStack: Boolean)
+    fun makePhoneCall(phoneNumber: String)
 }

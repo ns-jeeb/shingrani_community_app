@@ -92,7 +92,7 @@ class MemberListViewModel @Inject constructor(
         val showInvite: MutableLiveData<Boolean> = MutableLiveData(false)
     }
 
-    inner class ItemViewModel(private val member: Member,
+    inner class ItemViewModel(val member: Member,
                               private val session: Session,
                               private val navigation: Navigation,
                               private val repository: MemberRepository) {
@@ -102,6 +102,7 @@ class MemberListViewModel @Inject constructor(
 
         val data: ItemData = ItemData()
         val title: LiveData<String> = data.title
+        val phoneNumber: LiveData<String> = data.phoneNumber
         val showAdmin: LiveData<Boolean> = data.showAdmin
         val showBlocked: LiveData<Boolean> = data.showBlocked
         val showInvited: LiveData<Boolean> = data.showInvited
@@ -123,9 +124,11 @@ class MemberListViewModel @Inject constructor(
             // ADMIN
             data.showAdmin.value = member.isAdmin
             // PHONE
-            data.showPhoneAction.value = false
+            data.showPhoneAction.value = true
             // TEXT
-            data.showTextAction.value = false
+            data.showTextAction.value = true
+            //phone number
+            data.phoneNumber.value = member.phoneNumber
             // EMAIL
             data.showEmailAction.value = member.email.isNotBlank() && !member.isMe
             // SETTINGS
@@ -171,6 +174,12 @@ class MemberListViewModel @Inject constructor(
             navigation.sendEmail(member.email)
         }
 
+        fun makePhoneCall() {
+            if (!member.isMe && !member.phoneNumber.isNullOrEmpty()){
+                navigation.makePhoneCall(member.phoneNumber)
+            }
+        }
+
         fun settings() {
             navigation.navigateToSettings(true)
         }
@@ -180,6 +189,7 @@ class MemberListViewModel @Inject constructor(
 
     data class ItemData(
         val title: MutableLiveData<String> = MutableLiveData(""),
+        val phoneNumber: MutableLiveData<String> = MutableLiveData(""),
         val showAdmin: MutableLiveData<Boolean> = MutableLiveData(false),
         val showBlocked: MutableLiveData<Boolean> = MutableLiveData(false),
         val showInvited: MutableLiveData<Boolean> = MutableLiveData(false),

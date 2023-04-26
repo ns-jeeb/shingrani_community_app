@@ -15,6 +15,7 @@ class Member(val _id: String,
              val app: String,
              val email: String,
              val state: String,
+             var phoneNumber: String,
              val user: User?) {
 
     @Transient var isMe: Boolean = false
