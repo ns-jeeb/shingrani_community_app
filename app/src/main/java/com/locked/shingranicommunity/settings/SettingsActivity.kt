@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.*
 import com.locked.shingranicommunity.UrCommunityApplication
 import com.locked.shingranicommunity.R
 import com.locked.shingranicommunity.announcement.AnnouncementComponentProvider
@@ -96,21 +95,49 @@ class SettingsActivity : FragmentActivity() {
             viewModel.appVersion.observe(viewLifecycleOwner, Observer {
                 preferenceScreen.findPreference<Preference>(getString(R.string.key_version))?.summary = it
             })
+            viewModel.hidePhoneNumber.observe(viewLifecycleOwner, Observer {
+                Log.e("Member_name_SettingsActivity", "$it")
+
+            })
         }
 
         override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-            return when (preference?.key) {
-                getString(R.string.key_logout)-> {
-                    viewModel.logout()
-                    true
+//            return when (preference?.key) {
+//                getString(R.string.key_logout)-> {
+//                    viewModel.logout()
+//                    true
+//                }
+//                getString(R.string.key_hide_phone)->{
+//                    if ()
+//                    viewModel.hideNumber(preference.isc)
+//                    return true
+//                }
+//                else -> {
+//                    super.onPreferenceTreeClick(preference)
+//                }
+//            }
+
+            when (preference) {
+                is SwitchPreferenceCompat -> {
+                    if (preference.key == getString(R.string.key_hide_phone)) {
+                        // TODO: this is not working we have create an API for this to update Member Model for the field
+                        //  hideNumber
+                        viewModel.hideNumber(preference.isChecked)
+                        return true
+                    } else{
+                        super.onPreferenceTreeClick(preference)
+                    }
                 }
-                getString(R.string.key_hide_phone)->{
-                    return true
-                }
-                else -> {
-                    super.onPreferenceTreeClick(preference)
+                is Preference -> {
+                    if (preference.key == getString(R.string.key_logout)) {
+                        this.viewModel.logout()
+                        return true
+                    } else {
+                        super.onPreferenceTreeClick(preference)
+                    }
                 }
             }
+            return false
         }
     }
 }

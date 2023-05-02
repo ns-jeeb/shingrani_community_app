@@ -124,7 +124,7 @@ class MemberListViewModel @Inject constructor(
             // ADMIN
             data.showAdmin.value = member.isAdmin
             // PHONE
-            data.showPhoneAction.value = true
+            member.user?.hideNumber?.let { data.showPhoneAction.value = !it}
             // TEXT
             data.showTextAction.value = true
             //phone number

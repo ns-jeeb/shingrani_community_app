@@ -46,6 +46,7 @@ class MemberListAdapter(
 
         fun bind(itemViewModel: MemberListViewModel.ItemViewModel) {
             clearOldBindings()
+            var invited = true
             this.itemViewModel = itemViewModel
             // EMAIL
             itemViewModel.title.observe(lifeCycleOwner, Observer {
@@ -57,9 +58,11 @@ class MemberListAdapter(
             })
             // PHONE
             itemViewModel.showPhoneAction.observe(lifeCycleOwner, Observer {
-                binding.phone.isEnabled = it
-                binding.phone.setOnClickListener {
-                    itemViewModel.makePhoneCall()
+                if (it != null){
+                    binding.phone.isEnabled = it
+                    binding.phone.setOnClickListener {
+                        itemViewModel.makePhoneCall()
+                    }
                 }
             })
             // TEXT
@@ -71,10 +74,6 @@ class MemberListAdapter(
                 binding.email.isEnabled = it
             })
             binding.email.setOnClickListener { itemViewModel.sendEmail() }
-            //phone number
-            itemViewModel.phoneNumber.observe(lifeCycleOwner, Observer {
-                binding.phoneNumber.text = it
-            })
             // SETTING
             itemViewModel.showSettingsAction.observe(lifeCycleOwner, Observer {
                 binding.settings.isVisible = it
@@ -83,11 +82,7 @@ class MemberListAdapter(
             // INVITED
             itemViewModel.showInvited.observe(lifeCycleOwner, Observer {
                 binding.invited.isVisible = it
-                if (it || itemViewModel.member.isMe){
-                    binding.phoneNumber.visibility = View.GONE
-                }else{
-                    binding.phoneNumber.visibility = View.VISIBLE
-                }
+                invited = it
             })
             // BLOCK
             itemViewModel.showBlocked.observe(lifeCycleOwner, Observer {
@@ -102,6 +97,24 @@ class MemberListAdapter(
             itemViewModel.showBlockConfirmation.observe(lifeCycleOwner, blockConfirmationObserver)
             binding.block.setOnClickListener { itemViewModel.block() }
             binding.unblock.setOnClickListener { itemViewModel.unblock() }
+
+            //phone number
+            itemViewModel.phoneNumber.observe(lifeCycleOwner, Observer {
+                binding.phoneNumber.text = it
+                Log.e("DEBUG_HIDE_PHONE_NUMBER", "${itemViewModel.member.user?.name} - >${itemViewModel.member.user?.hideNumber}")
+                if (itemViewModel.member.isMe){
+                    binding.phoneNumber.visibility = View.GONE
+                }else if (itemViewModel.member.user?.hideNumber == true){
+
+                    binding.phoneNumber.visibility = View.GONE
+                }else if (invited){
+                    binding.phoneNumber.visibility = View.GONE
+                }else {
+                    binding.phoneNumber.visibility = View.VISIBLE
+                }
+
+
+            })
         }
 
         private val blockConfirmationObserver: Observer<Boolean> = Observer {

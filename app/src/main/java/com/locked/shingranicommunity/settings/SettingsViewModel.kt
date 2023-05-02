@@ -18,16 +18,21 @@ class SettingsViewModel @Inject constructor(
     val email: LiveData<String>
     val fullName: LiveData<String>
     val appVersion: LiveData<String>
+    val hidePhoneNumber: LiveData<Boolean>
 
     init {
         title = MutableLiveData(res.getString(R.string.settings))
         email = MutableLiveData(session.getUsername())
         fullName = MutableLiveData(session.getFullName())
         appVersion = MutableLiveData(BuildConfig.VERSION_NAME)
+        hidePhoneNumber = MutableLiveData(session.hidePhoneNumber())
     }
 
     fun logout() {
         session.logout()
         navigation.navigateToLogin()
+    }
+    fun hideNumber(hide: Boolean){
+        session.getUser()?.hideNumber = hide
     }
 }

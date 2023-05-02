@@ -33,4 +33,5 @@ interface Session {
     fun isMe(user: User?): Boolean
 
     fun isAdmin(user: User?): Boolean
+    fun hidePhoneNumber(): Boolean?
 }

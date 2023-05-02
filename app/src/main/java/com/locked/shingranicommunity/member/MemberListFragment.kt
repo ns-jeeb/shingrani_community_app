@@ -42,6 +42,15 @@ class MemberListFragment : Fragment(), ToolbarProvider {
             adapter.list.apply {
                 this.clear()
             }.also { list ->
+                if (it.isNotEmpty()){
+                    // TODO: we have add a field for hideNumber on Member Model then we remove this
+                    it[0].user?.hideNumber = true
+                    it[1].user?.hideNumber = false
+                    it[2].user?.hideNumber = true
+                    it[3].user?.hideNumber = false
+                    it[4].user?.hideNumber = true
+                    it[5].user?.hideNumber = false
+                }
                 list.addAll(it)
                 val layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 binding.recyclerView.layoutManager = layoutManager

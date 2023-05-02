@@ -7,9 +7,7 @@
         <SwitchPreferenceCompat
             app:icon="@drawable/ic_phone"
             app:key="@string/key_hide_phone"
-            app:title="@string/hide_phone"
-
-            android:enabled="false"/>
+            app:title="@string/hide_phone"/>
 
         <Preference
             app:icon="@drawable/ic_lock"

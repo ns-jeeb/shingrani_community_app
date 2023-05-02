@@ -153,6 +153,10 @@ class SessionManager @Inject constructor(private val app: Application) : Session
         return session.user?.name
     }
 
+    override fun hidePhoneNumber(): Boolean? {
+        return session.user?.hideNumber
+    }
+
     override fun getUsername(): String? {
         return session.user?.username
     }
