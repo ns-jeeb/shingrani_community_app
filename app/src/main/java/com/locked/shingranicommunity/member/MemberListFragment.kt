@@ -43,7 +43,7 @@ class MemberListFragment : Fragment(), ToolbarProvider {
                 this.clear()
             }.also { list ->
                 if (it.isNotEmpty()){
-                    // TODO: we have add a field for hideNumber on Member Model then we remove this
+                    // TODO: we have to add a field for hideNumber on Member Model then we remove this
                     it[0].user?.hideNumber = true
                     it[1].user?.hideNumber = false
                     it[2].user?.hideNumber = true
