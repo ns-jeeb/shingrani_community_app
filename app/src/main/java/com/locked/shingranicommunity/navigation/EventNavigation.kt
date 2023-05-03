@@ -32,7 +32,7 @@ class EventNavigation @Inject constructor(val activity: AppCompatActivity,
     override fun navigateToMap(address: String) {
         val geocoder = Geocoder(activity, Locale.getDefault())
         var uri: String = ""
-        val addresses: List<Address> = geocoder.getFromLocationName(address, 1)
+        val addresses: List<Address> = geocoder.getFromLocationName(address, 1) as List<Address>
         for (i in addresses.indices) {
             uri = java.lang.String.format(Locale.getDefault(), "geo:%f,%f", addresses[i].latitude, addresses[i].longitude)
         }
