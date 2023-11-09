@@ -23,7 +23,7 @@ class EventActivity : FragmentActivity(), EventComponentProvider {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item?.itemId) {
             android.R.id.home -> {
                 onBackPressed()
