@@ -98,8 +98,8 @@ class SettingsActivity : FragmentActivity() {
             })
         }
 
-        override fun onPreferenceTreeClick(preference: Preference?): Boolean {
-            return when (preference?.key) {
+        override fun onPreferenceTreeClick(preference: Preference): Boolean {
+            return when (preference.key) {
                 getString(R.string.key_logout)-> {
                     viewModel.logout()
                     true
