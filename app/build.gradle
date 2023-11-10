@@ -17,7 +17,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"http://3.140.208.69:3000/"'
+            buildConfigField "String", "LOCKEDAPI_BASE_URL", '"http://3.140.208.69:3000"'
 //            buildConfigField "String", "LOCKEDAPI_APP_ID", '"5d4a348f88fb44130084f903"'
             buildConfigField "String", "LOCKEDAPI_APP_ID", '"601ae3cbd54bc1bf9d1e8573"'
         }
@@ -66,31 +66,20 @@ dependencies {
     annotationProcessor 'androidx.room:room-compiler:2.2.6'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-
-
     kapt 'androidx.room:room-compiler:2.0.0'
     kapt 'androidx.lifecycle:lifecycle-compiler:2.0.0'
 
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.15.1'
 
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.2'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2'
-    implementation 'com.jakewharton.retrofit:retrofit1-okhttp3-client:1.1.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
-    //noinspection UseOfBundledGooglePlayServices
+
     implementation 'com.google.android.gms:play-services-location:18.0.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
 
-    implementation "io.reactivex.rxjava3:rxandroid:3.0.0"
-    implementation "io.reactivex.rxjava2:rxjava:2.2.0"
-
     implementation 'com.google.dagger:dagger:2.42'
     implementation 'com.google.dagger:dagger-android:2.42'
-    implementation 'com.google.dagger:dagger-android-support:2.42'
     kapt 'com.google.dagger:dagger-compiler:2.42'
     kapt 'com.google.dagger:dagger-android-processor:2.42'
 
